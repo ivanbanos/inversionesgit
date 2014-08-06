@@ -63,11 +63,11 @@ public class InitEntitysService {
             try {
                 LOGGER.info("Iniciando variables");
                 Formularios formulario = new Formularios();
-                formulario.setTabla("Usuarios");
+                formulario.setTabla("Clientes");
                 formulario.setAccion("Create");
                 formulariosFacadeLocal.create(formulario);
                 Vistas vista = new Vistas();
-                vista.setNombreVista("AtributosSistemasView");
+                vista.setNombreVista("AtributosSistemaView");
                 vistasFacadeLocal.create(vista);
                 Perfiles perfil = new Perfiles();
                 perfil.setNombre("Administrador");
@@ -77,7 +77,7 @@ public class InitEntitysService {
                 perfil.getVistasList().add(vista);
                 perfilesFacadeLocal.create(perfil);
                 Usuarios usuario = new Usuarios();
-                usuario.setNombreUsuario("Administrador");
+                usuario.setNombreUsuario("admin");
                 usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
                 usuario.setIdPerfil(perfil);
                 usuariosFacadeLocal.create(usuario);
