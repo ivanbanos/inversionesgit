@@ -5,6 +5,7 @@
 package com.InvBF.EntityFacade;
 
 import com.invbf.adminclientesapi.Usuarios;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class UsuariosFacade extends AbstractFacade<Usuarios> implements UsuariosFacadeLocal {
+
     @PersistenceContext(unitName = "AdminClientesPU")
     private EntityManager em;
 
@@ -26,5 +28,13 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
     public UsuariosFacade() {
         super(Usuarios.class);
     }
+
+    @Override
+    public List<Usuarios> findByNombreUsuario(String nombreUsuario) {
+        return em.createNamedQuery("Usuarios.findByNombreUsuario")
+            .setParameter("nombreUsuario", nombreUsuario)
+            .getResultList();
+    }
+
     
 }

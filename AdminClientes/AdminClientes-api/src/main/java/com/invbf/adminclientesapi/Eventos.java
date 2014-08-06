@@ -54,6 +54,9 @@ public class Eventos implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @Column(name = "tipo")
+    private Integer tipo;
     @Column(name = "fechaInicio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
@@ -87,9 +90,10 @@ public class Eventos implements Serializable {
         this.idEvento = idEvento;
     }
 
-    public Eventos(Integer idEvento, String nombre) {
+    public Eventos(Integer idEvento, String nombre, Integer tipo) {
         this.idEvento = idEvento;
         this.nombre = nombre;
+        this.tipo = tipo;
     }
 
     public Integer getIdEvento() {
@@ -106,6 +110,14 @@ public class Eventos implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
 
     public Date getFechaInicio() {

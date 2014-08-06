@@ -4,11 +4,8 @@
  */
 package com.InvBF.facade.Impl;
 
-import com.InvBF.facade.AdminFacade;
+import com.invbf.adminclientesapi.facade.AdminFacade;
 import javax.ejb.Stateless;
-
-
-
 
 /**
  *
@@ -17,4 +14,5 @@ import javax.ejb.Stateless;
 @Stateless
 public class AdminFacadeImpl implements AdminFacade {
 
+   
 }

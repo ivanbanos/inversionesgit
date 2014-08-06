@@ -8,8 +8,8 @@
   <name>AdminClientes</name>
   <modules>
     <module>AdminClientes-ear</module>
-    <module>AdminClientes-web</module>
     <module>AdminClientes-ejb</module>
     <module>AdminClientes-api</module>
+    <module>AdminClientes-web</module>
   </modules>
 </project>

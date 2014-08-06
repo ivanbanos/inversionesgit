@@ -4,17 +4,14 @@
  */
 package com.InvBF.facade.Impl;
 
-import com.InvBF.facade.HostessFacade;
+import com.invbf.adminclientesapi.facade.HostessFacade;
 import javax.ejb.Stateless;
-
-
-
 
 /**
  *
  * @author ideacentre
  */
 @Stateless
-public class HostessFacadeImpl implements HostessFacade {
-
+public class HostessFacadeImpl implements HostessFacade{
+    
 }

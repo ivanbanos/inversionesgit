@@ -4,17 +4,14 @@
  */
 package com.InvBF.facade.Impl;
 
-import com.InvBF.facade.MarketingUserFacade;
+import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import javax.ejb.Stateless;
-
-
-
 
 /**
  *
  * @author ideacentre
  */
 @Stateless
-public class MarketingUserFacadeImpl implements MarketingUserFacade {
-
+public class MarketingUserFacadeImpl implements MarketingUserFacade{
+    
 }
