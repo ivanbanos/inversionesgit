@@ -84,6 +84,7 @@ public class Eventos implements Serializable {
     private List<Listasclientesevento> listasclienteseventoList;
 
     public Eventos() {
+        idCasino = new Casinos();
     }
 
     public Eventos(Integer idEvento) {

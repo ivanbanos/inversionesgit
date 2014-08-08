@@ -52,12 +52,21 @@ public class SessionBean implements Serializable {
 
     public String Conectar() {
         try {
-            LOGGER.info("Conectando");
+            LOGGER.info("Conectando...");
             usuario = sessionFacade.iniciarSession(usuario);
-            LOGGER.info("Conectado");
+            LOGGER.info("Conectado.");
             if (usuario.getIdPerfil().getNombre().equals("Administrador")) {
                 LOGGER.info("Administrador - cargando vista principal admin");
-                return "/pages/AtributosSistemaView.xhtml";
+                return "/pages/InicioAdministrador.xhtml";
+            } else if(usuario.getIdPerfil().getNombre().equals("Marketing")){
+                LOGGER.info("Marketing - cargando vista principal admin");
+                return "/pages/InicioMarketing.xhtml";
+            }else if(usuario.getIdPerfil().getNombre().equals("Hostess")){
+                LOGGER.info("Hostess - cargando vista principal admin");
+                return "/pages/InicioHostess.xhtml";
+            }else if(usuario.getIdPerfil().getNombre().equals("Gerente")){
+                LOGGER.info("Gerente - cargando vista principal admin");
+                return "/pages/InicioGerente.xhtml";
             }
         } catch (ClavesNoConcuerdanException ex) {
             LOGGER.error(ex.getMessage());

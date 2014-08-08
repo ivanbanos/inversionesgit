@@ -66,6 +66,9 @@ public class Clientes implements Serializable {
     private Casinos idCasinoPreferencial;
 
     public Clientes() {
+        idCategorias = new Categorias();
+        idCasinoPreferencial = new Casinos();
+               
     }
 
     public Clientes(Integer idCliente) {

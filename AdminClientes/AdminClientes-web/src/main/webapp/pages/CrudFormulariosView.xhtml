@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panel" header="#{label['lb_header.perfiles']}">
+                <p:dataTable id="detailsTable" var="element" value="#{crudFormulariosBean.lista}"  
+                             emptyMessage="#{label['lb_table.noelementos']}">
+
+                    <p:column headerText="Id" sortBy="#{element.idFormulario}" filterBy="#{element.idFormulario}" filterMatchMode="contains">
+                        <h:outputText value="#{element.idFormulario}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre" sortBy="#{element.tabla}" filterBy="#{element.tabla}" filterMatchMode="contains">
+                        <h:outputText value="#{element.tabla}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre" sortBy="#{element.accion}" filterBy="#{element.accion}" filterMatchMode="contains">
+                        <h:outputText value="#{element.accion}" />
+                    </p:column>
+
+                    <p:column headerText="Acciones">
+                        <p:commandButton id="editButton" update=":#{p:component('editForm')}" oncomplete="PF('editDialog').show()" icon="ui-icon-pencil" title="#{label['lb_btn.editar']}">  
+                            <f:setPropertyActionListener value="#{element}" target="#{crudFormulariosBean.elemento}" />  
+                        </p:commandButton>
+                        <p:commandButton id="deleteButton" oncomplete="PF('deleteDialog').show();" 
+                                         icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialog')}">
+                            <f:setPropertyActionListener value="#{element}" target="#{crudFormulariosBean.elemento}" /> 
+                        </p:commandButton> 
+                    </p:column>
+
+                    <f:facet name="footer">  
+                        <p:commandButton id="addButton" oncomplete="PF('addDialog').show();" value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" />  
+                    </f:facet>
+                </p:dataTable>
+            </p:panel>
+
+        </h:form>
+
+        <h:form>
+            <p:dialog id="addDialog" header="Agregar" widgetVar="addDialog" modal="true" closable="false" resizable="false">
+
+                <p:panelGrid columns="2">  
+
+                    <h:outputLabel value="#{label['codigo']}" /> 
+                    <h:outputLabel value="#{crudFormulariosBean.elemento.idFormulario}"/>
+
+                    <h:outputLabel for="tabla" value="#{label['nombre']}" /> 
+                    <p:inputText id="tabla" value="#{crudFormulariosBean.elemento.tabla}" required="true" />
+                    
+                    <h:outputLabel for="accion" value="#{label['nombre']}" /> 
+                    <p:inputText id="accion" value="#{crudFormulariosBean.elemento.accion}" required="true" />
+
+                    <f:facet name="footer">  
+                        <p:commandButton value="Confirmar" actionListener="#{crudPerfilesBean.guardar()}" 
+                                         oncomplete="PF('addDialog').hide()" icon="ui-icon-check" 
+                                         update=":#{p:component('detailsTable')} :#{p:component('addDialog')} :#{p:component('messages')}" style="margin:0" />   
+                        <p:commandButton value="Cerrar" oncomplete="PF('addDialog').hide()" update=":#{p:component('addDialog')}" icon="ui-icon-closethick"/>  
+                    </f:facet>  
+                </p:panelGrid> 
+            </p:dialog> 
+        </h:form>
+
+        <h:form>
+            <p:dialog id="editDialog" header="Editar" widgetVar="editDialog" modal="true" closable="false" resizable="false">  
+                <p:panelGrid id="editForm" columns="2">  
+                   
+                    <h:outputLabel value="#{label['codigo']}" /> 
+                    <h:outputLabel value="#{crudFormulariosBean.elemento.idFormulario}"/>
+
+                    <h:outputLabel for="tabla" value="#{label['nombre']}" /> 
+                    <p:inputText id="tabla" value="#{crudFormulariosBean.elemento.tabla}" required="true" />
+                    
+                    <h:outputLabel for="accion" value="#{label['nombre']}" /> 
+                    <p:inputText id="accion" value="#{crudFormulariosBean.elemento.accion}" required="true" />
+
+
+                    <f:facet name="footer">  
+                        <p:commandButton value="Confirmar" action="#{crudFormulariosBean.guardar()}" 
+                                         oncomplete="PF('editDialog').hide()" icon="ui-icon-check"
+                                         process=":#{p:component('editForm')}" update=":#{p:component('detailsTable')} :#{p:component('messages')}" style="margin:0"/>    
+                        <p:commandButton value="Cerrar" oncomplete="PF('editDialog').hide()" icon="ui-icon-closethick"/> 
+                    </f:facet>  
+                </p:panelGrid>  
+            </p:dialog>
+        </h:form>
+        <h:form>
+            <p:confirmDialog id="deleteDialog" message="Quiere borrar el estado de cliente #{crudFormulariosBean.elemento.nombre}?"  
+                             header="Borrar" severity="alert" widgetVar="deleteDialog" closable="false">  
+
+                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialog').hide()"  
+                                 action="#{crudFormulariosBean.delete()}" update=":#{p:component('detailsTable')} :#{p:component('messages')}"/>  
+                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialog').hide()" type="button" />   
+
+            </p:confirmDialog> 
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

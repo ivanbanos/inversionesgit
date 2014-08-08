@@ -60,6 +60,7 @@ public class Usuarios implements Serializable {
     private Perfiles idPerfil;
 
     public Usuarios() {
+        idPerfil = new Perfiles();
     }
 
     public Usuarios(Integer idUsuario) {

@@ -49,7 +49,7 @@ public class InitEntitysService {
      * desarrollo=todo lo que se especifique como escenarios de prueba)
      */
     @PostConstruct
-    private void init() {
+    public void init() {
         initEntitysHelper(); 
     }
 
@@ -61,7 +61,8 @@ public class InitEntitysService {
     private void initEntitysHelper() {
         if(usuariosFacadeLocal.count()==0){
             try {
-                LOGGER.info("Iniciando variables");
+                
+                LOGGER.info(EncryptUtil.encryptPassword("123456"));
                 Formularios formulario = new Formularios();
                 formulario.setTabla("Clientes");
                 formulario.setAccion("Create");
