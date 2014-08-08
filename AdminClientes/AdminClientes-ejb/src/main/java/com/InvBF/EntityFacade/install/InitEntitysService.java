@@ -15,11 +15,12 @@ import com.invbf.adminclientesapi.Usuarios;
 import com.invbf.adminclientesapi.Vistas;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-
 
 /**
  *
@@ -40,8 +41,6 @@ public class InitEntitysService {
     private FormulariosFacadeLocal formulariosFacadeLocal;
     @EJB
     private VistasFacadeLocal vistasFacadeLocal;
-    
-   
 
     /**
      * 1. dependiendo de un parametro de configuracion el sistema debe
@@ -50,7 +49,7 @@ public class InitEntitysService {
      */
     @PostConstruct
     public void init() {
-        initEntitysHelper(); 
+        initEntitysHelper();
     }
 
     /**
@@ -59,33 +58,196 @@ public class InitEntitysService {
      * estado del proyecto (desarrollo, produccion)
      */
     private void initEntitysHelper() {
-        if(usuariosFacadeLocal.count()==0){
-            try {
-                
-                LOGGER.info(EncryptUtil.encryptPassword("123456"));
-                Formularios formulario = new Formularios();
-                formulario.setTabla("Clientes");
-                formulario.setAccion("Create");
-                formulariosFacadeLocal.create(formulario);
-                Vistas vista = new Vistas();
-                vista.setNombreVista("AtributosSistemaView");
-                vistasFacadeLocal.create(vista);
-                Perfiles perfil = new Perfiles();
-                perfil.setNombre("Administrador");
-                perfil.setFormulariosList(new ArrayList<Formularios>());
-                perfil.getFormulariosList().add(formulario);
-                perfil.setVistasList(new ArrayList<Vistas>());
-                perfil.getVistasList().add(vista);
-                perfilesFacadeLocal.create(perfil);
-                Usuarios usuario = new Usuarios();
-                usuario.setNombreUsuario("admin");
-                usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
-                usuario.setIdPerfil(perfil);
-                usuariosFacadeLocal.create(usuario);
-                LOGGER.info("Usuario admin inicial creado");
-            } catch (NoSuchAlgorithmException ex) {
-                LOGGER.error(ex);
-            }
+        if (usuariosFacadeLocal.count() == 0) {
+            crearPerfilAdmin();
+            crearPerfilMarketing();
+        }
+
+
+
+    }
+
+    private void crearPerfilAdmin() {
+        try {
+            Perfiles perfil = new Perfiles();
+            perfil.setNombre("Administrador");
+            perfil.setFormulariosList(new ArrayList<Formularios>());
+            perfil.setVistasList(new ArrayList<Vistas>());
+
+            Formularios formulario;
+            formulario = new Formularios(null, "Usuarios", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Usuarios", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Usuarios", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Perfiles", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Perfiles", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Perfiles", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Formularios", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Formularios", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Formularios", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Vistas", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Vistas", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Vistas", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+
+            Vistas vista;
+            vista = new Vistas(null, "CrudUsuarioView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudPerfilesView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudVistasView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudFormulariosView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "InicioAdministrador");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+
+            perfilesFacadeLocal.create(perfil);
+
+            Usuarios usuario = new Usuarios();
+            usuario.setNombreUsuario("admin");
+            usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
+            usuario.setIdPerfil(perfil);
+            usuariosFacadeLocal.create(usuario);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void crearPerfilMarketing() {
+        try {
+            Perfiles perfil = new Perfiles();
+            perfil.setNombre("Marketing");
+            perfil.setFormulariosList(new ArrayList<Formularios>());
+            perfil.setVistasList(new ArrayList<Vistas>());
+
+            Formularios formulario;
+            formulario = new Formularios(null, "Atributos", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Atributos", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Atributos", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Casinos", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Casinos", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Casinos", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Eventos", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Eventos", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Eventos", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Categorias", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Categorias", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Categorias", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "TiposJuegos", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "TiposJuegos", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "TiposJuegos", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "EstadosCliente", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "EstadosCliente", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "EstadosCliente", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Clientes", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Clientes", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Clientes", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+
+            Vistas vista;
+            vista = new Vistas(null, "CrudAtributosView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudCasinosView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudCategoriasView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudClientesView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudEstadosClientesView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudEventosView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "CrudTiposJuegosView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "InicioMarketing");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+
+            perfilesFacadeLocal.create(perfil);
+
+            Usuarios usuario = new Usuarios();
+            usuario.setNombreUsuario("marketing");
+            usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
+            usuario.setIdPerfil(perfil);
+            usuariosFacadeLocal.create(usuario);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

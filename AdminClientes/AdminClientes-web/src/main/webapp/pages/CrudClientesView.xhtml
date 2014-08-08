@@ -17,8 +17,12 @@
                         <h:outputText value="#{element.idCliente}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains">
+                    <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains">
                         <h:outputText value="#{element.nombres}" />
+                    </p:column>
+
+                    <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains">
+                        <h:outputText value="#{element.apellidos}" />
                     </p:column>
 
                     <p:column headerText="Acciones">
@@ -47,13 +51,15 @@
                     <h:outputLabel value="#{label['codigo']}" /> 
                     <h:outputLabel value="#{crudClientesBean.elemento.idCliente}"/>
 
-                    <h:outputLabel for="nombre" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombre" value="#{crudClientesBean.elemento.nombres}" required="true" />
+                    <h:outputLabel for="nombres" value="#{label['nombres']}" /> 
+                    <p:inputText id="nombres" value="#{crudClientesBean.elemento.nombres}" required="true" />
 
-                    <h:outputLabel for="estado" value="#{label['estado']}" /> 
-                    <p:selectOneMenu id="estado" value="#{crudClientesBean.elemento.idCategorias.idCategorias}">
+                    <h:outputLabel for="apellidos" value="#{label['apellidos']}" /> 
+                    <p:inputText id="apellidos" value="#{crudClientesBean.elemento.apellidos}" required="true" />
+
+                    <h:outputLabel for="categorias" value="#{label['categorias']}" /> 
+                    <p:selectOneMenu id="categorias" value="#{crudClientesBean.elemento.idCategorias.idCategorias}">
                         <f:selectItem itemLabel="Select One" itemValue="" />
-
                         <f:selectItems value="#{crudClientesBean.listacategorias}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCategorias}"/> 
                     </p:selectOneMenu>
 
@@ -65,7 +71,7 @@
 
 
                     <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" actionListener="#{crudEventoBean.guardar()}" 
+                        <p:commandButton value="Confirmar" actionListener="#{crudClientesBean.guardar()}" 
                                          oncomplete="PF('addDialog').hide()" icon="ui-icon-check" 
                                          update=":#{p:component('detailsTable')} :#{p:component('addDialog')} :#{p:component('messages')}" style="margin:0" />   
                         <p:commandButton value="Cerrar" oncomplete="PF('addDialog').hide()" update=":#{p:component('addDialog')}" icon="ui-icon-closethick"/>  
@@ -107,7 +113,7 @@
             </p:dialog>
         </h:form>
         <h:form>
-            <p:confirmDialog id="deleteDialog" message="Quiere borrar la categoria #{crudClientesBean.elemento.nombre}?"  
+            <p:confirmDialog id="deleteDialog" message="Quiere borrar el cliente #{crudClientesBean.elemento.nombres} #{crudClientesBean.elemento.apellidos}?"  
                              header="Borrar" severity="alert" widgetVar="deleteDialog" closable="false">  
 
                 <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialog').hide()"  

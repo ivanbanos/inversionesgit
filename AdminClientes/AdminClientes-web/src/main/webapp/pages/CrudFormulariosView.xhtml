@@ -9,7 +9,7 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel id="panel" header="#{label['lb_header.perfiles']}">
+            <p:panel id="panel" header="#{label['lb_header.formularios']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudFormulariosBean.lista}"  
                              emptyMessage="#{label['lb_table.noelementos']}">
 
@@ -17,11 +17,11 @@
                         <h:outputText value="#{element.idFormulario}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.tabla}" filterBy="#{element.tabla}" filterMatchMode="contains">
+                    <p:column headerText="tabla" sortBy="#{element.tabla}" filterBy="#{element.tabla}" filterMatchMode="contains">
                         <h:outputText value="#{element.tabla}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.accion}" filterBy="#{element.accion}" filterMatchMode="contains">
+                    <p:column headerText="accion" sortBy="#{element.accion}" filterBy="#{element.accion}" filterMatchMode="contains">
                         <h:outputText value="#{element.accion}" />
                     </p:column>
 
@@ -51,14 +51,14 @@
                     <h:outputLabel value="#{label['codigo']}" /> 
                     <h:outputLabel value="#{crudFormulariosBean.elemento.idFormulario}"/>
 
-                    <h:outputLabel for="tabla" value="#{label['nombre']}" /> 
+                    <h:outputLabel for="tabla" value="#{label['tabla']}" /> 
                     <p:inputText id="tabla" value="#{crudFormulariosBean.elemento.tabla}" required="true" />
                     
-                    <h:outputLabel for="accion" value="#{label['nombre']}" /> 
+                    <h:outputLabel for="accion" value="#{label['accion']}" /> 
                     <p:inputText id="accion" value="#{crudFormulariosBean.elemento.accion}" required="true" />
 
                     <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" actionListener="#{crudPerfilesBean.guardar()}" 
+                        <p:commandButton value="Confirmar" actionListener="#{crudFormulariosBean.guardar()}" 
                                          oncomplete="PF('addDialog').hide()" icon="ui-icon-check" 
                                          update=":#{p:component('detailsTable')} :#{p:component('addDialog')} :#{p:component('messages')}" style="margin:0" />   
                         <p:commandButton value="Cerrar" oncomplete="PF('addDialog').hide()" update=":#{p:component('addDialog')}" icon="ui-icon-closethick"/>  
@@ -74,10 +74,10 @@
                     <h:outputLabel value="#{label['codigo']}" /> 
                     <h:outputLabel value="#{crudFormulariosBean.elemento.idFormulario}"/>
 
-                    <h:outputLabel for="tabla" value="#{label['nombre']}" /> 
+                    <h:outputLabel for="tabla" value="#{label['tabla']}" /> 
                     <p:inputText id="tabla" value="#{crudFormulariosBean.elemento.tabla}" required="true" />
                     
-                    <h:outputLabel for="accion" value="#{label['nombre']}" /> 
+                    <h:outputLabel for="accion" value="#{label['accion']}" /> 
                     <p:inputText id="accion" value="#{crudFormulariosBean.elemento.accion}" required="true" />
 
 
@@ -91,7 +91,7 @@
             </p:dialog>
         </h:form>
         <h:form>
-            <p:confirmDialog id="deleteDialog" message="Quiere borrar el estado de cliente #{crudFormulariosBean.elemento.nombre}?"  
+            <p:confirmDialog id="deleteDialog" message="Quiere borrar el formulario #{crudFormulariosBean.elemento.idFormulario}?"  
                              header="Borrar" severity="alert" widgetVar="deleteDialog" closable="false">  
 
                 <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialog').hide()"  

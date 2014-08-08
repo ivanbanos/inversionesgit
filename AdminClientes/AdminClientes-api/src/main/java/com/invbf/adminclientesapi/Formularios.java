@@ -113,17 +113,24 @@ public class Formularios implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Formularios)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Formularios other = (Formularios) object;
-        if ((this.idFormulario == null && other.idFormulario != null) || (this.idFormulario != null && !this.idFormulario.equals(other.idFormulario))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Formularios other = (Formularios) obj;
+        if ((this.tabla == null) ? (other.tabla != null) : !this.tabla.equals(other.tabla)) {
+            return false;
+        }
+        if ((this.accion == null) ? (other.accion != null) : !this.accion.equals(other.accion)) {
             return false;
         }
         return true;
     }
+
+  
 
     @Override
     public String toString() {

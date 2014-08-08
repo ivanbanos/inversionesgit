@@ -10,7 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="./../../resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="./../../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
-        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css/blitzer" name="jquery-ui-1.10.3.custom.css" />
         <f:loadBundle var="label" basename="labels" />
         <title>#{label['title.app']}</title>
     </h:head>
@@ -30,22 +30,35 @@
             <h:form>
                 <p:menubar> 
                     <p:submenu label="#{label['lb_menu.atributostelemarketing']}" >
-                        <p:menuitem value="#{label['lb_menu.elementosclientes']}"  url="/faces/pages/CrudEstadosClientesView.xhtml"  />
-                        <p:menuitem value="#{label['lb_menu.categoria']}" url="/faces/pages/CrudCategoriasView.xhtml" />
-                        <p:menuitem value="#{label['lb_menu.atributos']}" url="/faces/pages/CrudAtributosView.xhtml" />
-                        <p:menuitem value="#{label['lb_menu.tipojuegos']}" url="/faces/pages/CrudTiposJuegosView.xhtml" />
-                        <p:menuitem value="#{label['lb_menu.casinos']}" url="/faces/pages/CrudCasinosView.xhtml" />
-                        <p:menuitem value="#{label['lb_menu.eventos']}" url="/faces/pages/CrudEventosView.xhtml" />
+                        <p:menuitem value="#{label['lb_menu.elementosclientes']}" url="/faces/pages/CrudEstadosClientesView.xhtml" 
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudEstadosClientesView&quot;)}"/>
+                        <p:menuitem value="#{label['lb_menu.categoria']}" url="/faces/pages/CrudCategoriasView.xhtml"  
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudCategoriasView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.atributos']}" url="/faces/pages/CrudAtributosView.xhtml"  
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudAtributosView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.tipojuegos']}" url="/faces/pages/CrudTiposJuegosView.xhtml"  
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudTiposJuegosView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.casinos']}" url="/faces/pages/CrudCasinosView.xhtml"  
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudCasinosView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.eventos']}" url="/faces/pages/CrudEventosView.xhtml"  
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudEventosView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.clientes']}" url="/faces/pages/CrudClientesView.xhtml"  
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudClientesView&quot;)}" />
                     </p:submenu>
                     
                     <p:submenu label="#{label['lb_menu.atributossistema']}" >
-                        <p:menuitem value="#{label['lb_menu.usuarios']}"  url="/faces/pages/CrudUsuarioView.xhtml"  />
-                        <p:menuitem value="#{label['lb_menu.perfiles']}"  url="/faces/pages/CrudPerfilesView.xhtml"  />
+                        <p:menuitem value="#{label['lb_menu.usuarios']}"  url="/faces/pages/CrudUsuarioView.xhtml" rendered="#{sessionBean.perfilViewMatch(&quot;CrudUsuarioView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.perfiles']}"  url="/faces/pages/CrudPerfilesView.xhtml"   
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudPerfilesView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.formularios']}"  url="/faces/pages/CrudFormulariosView.xhtml"  
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudFormulariosView&quot;)}" />
+                        <p:menuitem value="#{label['lb_menu.vistas']}"  url="/faces/pages/CrudVistasView.xhtml"   
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudVistasView&quot;)}" />
                     </p:submenu>
 
                     <f:facet name="options">  
                         <p:outputLabel value="#{sessionBean.usuario.nombreUsuario}"/>
-                        <p:commandButton type="button" value="#{label['salir']}" icon="ui-icon-extlink" action="#{sessionBean.Desconectar()}"/>  
+                        <p:commandButton value="#{label['salir']}" icon="ui-icon-extlink" action="#{sessionBean.Desconectar()}"/>  
                     </f:facet>  
                 </p:menubar> 
             </h:form>

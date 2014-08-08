@@ -4,13 +4,16 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
+import com.invbf.adminclientesapi.Formularios;
 import com.invbf.adminclientesapi.Usuarios;
+import com.invbf.adminclientesapi.Vistas;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -88,5 +91,25 @@ public class SessionBean implements Serializable {
         LOGGER.info("Desconectando...");
         usuario = new Usuarios();
         return "/pages/InicioSession.xhtml";
+    }
+    
+    public boolean perfilViewMatch(String vista){
+        List<Vistas> vistasUsuario = usuario.getIdPerfil().getVistasList();
+        for(Vistas v : vistasUsuario){
+            if(v.getNombreVista().equals(vista)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean perfilFormMatch(Formularios formulario){
+        List<Formularios> formulariosUsuario = usuario.getIdPerfil().getFormulariosList();
+        for(Formularios f : formulariosUsuario){
+            if(f.equals(formulario)){
+                return true;
+            }
+        }
+        return false;
     }
 }

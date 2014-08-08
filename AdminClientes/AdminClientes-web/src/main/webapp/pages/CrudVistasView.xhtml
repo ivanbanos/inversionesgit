@@ -9,7 +9,7 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel id="panel" header="#{label['lb_header.perfiles']}">
+            <p:panel id="panel" header="#{label['lb_header.vistas']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudVistasBean.lista}"  
                              emptyMessage="#{label['lb_table.noelementos']}">
 
@@ -80,7 +80,7 @@
             </p:dialog>
         </h:form>
         <h:form>
-            <p:confirmDialog id="deleteDialog" message="Quiere borrar el estado de cliente #{crudVistasBean.elemento.nombreVista}?"  
+            <p:confirmDialog id="deleteDialog" message="Quiere borrar la vista #{crudVistasBean.elemento.nombreVista}?"  
                              header="Borrar" severity="alert" widgetVar="deleteDialog" closable="false">  
 
                 <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialog').hide()"  
