@@ -4,21 +4,19 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Casinos;
-import com.invbf.adminclientesapi.Categorias;
-import com.invbf.adminclientesapi.Eventos;
 import com.invbf.adminclientesapi.Formularios;
 import com.invbf.adminclientesapi.Perfiles;
 import com.invbf.adminclientesapi.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
-import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -36,6 +34,12 @@ public class CrudPerfilesBean {
     private List<Formularios> listaformularios;
     private List<Vistas> listavistas;
     private Perfiles elemento;
+    @ManagedProperty("#{sessionBean}")
+    private SessionBean sessionBean;
+    
+    public void setSessionBean(SessionBean sessionBean) {
+        this.sessionBean = sessionBean;
+    }
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
@@ -45,6 +49,14 @@ public class CrudPerfilesBean {
 
     @PostConstruct
     public void init() {
+        if(!sessionBean.perfilViewMatch("CrudPerfilesView")){
+            try {
+                sessionBean.Desconectar();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+            } catch (IOException ex) {
+                LOGGER.error(ex);
+            }
+        }
         elemento = new Perfiles();
         lista = adminFacade.findAllPerfiles();
     }

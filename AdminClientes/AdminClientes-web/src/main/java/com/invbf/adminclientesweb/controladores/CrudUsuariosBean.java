@@ -8,12 +8,14 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.Perfiles;
 import com.invbf.adminclientesapi.Usuarios;
 import com.invbf.adminclientesapi.facade.AdminFacade;
-import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,6 +33,12 @@ public class CrudUsuariosBean {
     private List<Usuarios> lista;
     private Usuarios elemento;
     private List<Perfiles> listaperfiles;
+    @ManagedProperty("#{sessionBean}")
+    private SessionBean sessionBean;
+    
+    public void setSessionBean(SessionBean sessionBean) {
+        this.sessionBean = sessionBean;
+    }
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
@@ -40,6 +48,14 @@ public class CrudUsuariosBean {
 
     @PostConstruct
     public void init() {
+        if(!sessionBean.perfilViewMatch("CrudUsuarioView")){
+            try {
+                sessionBean.Desconectar();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+            } catch (IOException ex) {
+                LOGGER.error(ex);
+            }
+        }
         elemento = new Usuarios();
         lista = adminFacade.findAllUsuarios();
         listaperfiles = adminFacade.findAllPerfiles();

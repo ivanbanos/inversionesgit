@@ -8,11 +8,14 @@ import com.invbf.adminclientesapi.Casinos;
 import com.invbf.adminclientesapi.Categorias;
 import com.invbf.adminclientesapi.Eventos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
 
@@ -32,6 +35,12 @@ public class CrudEventoBean {
     private Eventos elemento;
     private List<Casinos> listacasinos;
     private UploadedFile file;
+    @ManagedProperty("#{sessionBean}")
+    private SessionBean sessionBean;
+
+    public void setSessionBean(SessionBean sessionBean) {
+        this.sessionBean = sessionBean;
+    }
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
@@ -41,6 +50,14 @@ public class CrudEventoBean {
 
     @PostConstruct
     public void init() {
+        if(!sessionBean.perfilViewMatch("CrudEventosView")){
+            try {
+                sessionBean.Desconectar();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+            } catch (IOException ex) {
+                LOGGER.error(ex);
+            }
+        }
         elemento = new Eventos();
         lista = marketingUserFacade.findAllEventos();
         listacasinos = marketingUserFacade.findAllCasinos();
@@ -86,15 +103,14 @@ public class CrudEventoBean {
         this.marketingUserFacade = marketingUserFacade;
     }
 
-    
-    public void delete(){
+    public void delete() {
         marketingUserFacade.deleteEventos(elemento);
         lista = marketingUserFacade.findAllEventos();
         elemento = new Eventos();
     }
-    
-    public void guardar(){
-        if(file != null) {
+
+    public void guardar() {
+        if (file != null) {
             elemento.setImagen(file.getContents());
             elemento.setFormatoImagen(file.getContentType());
         }
@@ -102,5 +118,4 @@ public class CrudEventoBean {
         lista = marketingUserFacade.findAllEventos();
         elemento = new Eventos();
     }
-    
 }

@@ -103,7 +103,8 @@ public class SessionBean implements Serializable {
         return false;
     }
     
-    public boolean perfilFormMatch(Formularios formulario){
+    public boolean perfilFormMatch(String tabla, String accion){
+        Formularios formulario = new Formularios(null, tabla, accion);
         List<Formularios> formulariosUsuario = usuario.getIdPerfil().getFormulariosList();
         for(Formularios f : formulariosUsuario){
             if(f.equals(formulario)){

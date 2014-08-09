@@ -128,6 +128,9 @@ public class InitEntitysService {
             vista = new Vistas(null, "InicioAdministrador");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "AtributosSistema");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
 
             perfilesFacadeLocal.create(perfil);
 
@@ -236,6 +239,9 @@ public class InitEntitysService {
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             vista = new Vistas(null, "InicioMarketing");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "AtributosTelemarketing");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 

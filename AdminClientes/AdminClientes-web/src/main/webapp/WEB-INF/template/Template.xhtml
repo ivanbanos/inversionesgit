@@ -29,7 +29,7 @@
         <div id="AppHeader">
             <h:form>
                 <p:menubar> 
-                    <p:submenu label="#{label['lb_menu.atributostelemarketing']}" >
+                    <p:submenu label="#{label['lb_menu.atributostelemarketing']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosTelemarketing&quot;)}">
                         <p:menuitem value="#{label['lb_menu.elementosclientes']}" url="/faces/pages/CrudEstadosClientesView.xhtml" 
                                     rendered="#{sessionBean.perfilViewMatch(&quot;CrudEstadosClientesView&quot;)}"/>
                         <p:menuitem value="#{label['lb_menu.categoria']}" url="/faces/pages/CrudCategoriasView.xhtml"  
@@ -46,7 +46,7 @@
                                     rendered="#{sessionBean.perfilViewMatch(&quot;CrudClientesView&quot;)}" />
                     </p:submenu>
                     
-                    <p:submenu label="#{label['lb_menu.atributossistema']}" >
+                    <p:submenu label="#{label['lb_menu.atributossistema']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
                         <p:menuitem value="#{label['lb_menu.usuarios']}"  url="/faces/pages/CrudUsuarioView.xhtml" rendered="#{sessionBean.perfilViewMatch(&quot;CrudUsuarioView&quot;)}" />
                         <p:menuitem value="#{label['lb_menu.perfiles']}"  url="/faces/pages/CrudPerfilesView.xhtml"   
                                     rendered="#{sessionBean.perfilViewMatch(&quot;CrudPerfilesView&quot;)}" />

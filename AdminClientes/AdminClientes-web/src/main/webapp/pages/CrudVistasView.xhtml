@@ -22,17 +22,23 @@
                     </p:column>
 
                     <p:column headerText="Acciones">
-                        <p:commandButton id="editButton" update=":#{p:component('editForm')}" oncomplete="PF('editDialog').show()" icon="ui-icon-pencil" title="#{label['lb_btn.editar']}">  
+                        <p:commandButton id="editButton" update=":#{p:component('editForm')}" 
+                                         oncomplete="PF('editDialog').show()" icon="ui-icon-pencil" 
+                                         title="#{label['lb_btn.editar']}" 
+                                         rendered="#{sessionBean.perfilFormMatch(&quot;Vistas&quot;, &quot;actualizar&quot;)}">  
                             <f:setPropertyActionListener value="#{element}" target="#{crudVistasBean.elemento}" />  
                         </p:commandButton>
                         <p:commandButton id="deleteButton" oncomplete="PF('deleteDialog').show();" 
-                                         icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialog')}">
+                                         icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialog')}"
+                                         rendered="#{sessionBean.perfilFormMatch(&quot;Vistas&quot;, &quot;eliminar&quot;)}">
                             <f:setPropertyActionListener value="#{element}" target="#{crudVistasBean.elemento}" /> 
                         </p:commandButton> 
                     </p:column>
 
                     <f:facet name="footer">  
-                        <p:commandButton id="addButton" oncomplete="PF('addDialog').show();" value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" />  
+                        <p:commandButton id="addButton" oncomplete="PF('addDialog').show();" 
+                                         value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
+                                         rendered="#{sessionBean.perfilFormMatch(&quot;Vistas&quot;, &quot;crear&quot;)}"/>  
                     </f:facet>
                 </p:dataTable>
             </p:panel>
