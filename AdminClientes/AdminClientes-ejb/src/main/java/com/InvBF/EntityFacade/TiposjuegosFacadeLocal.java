@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import java.util.List;
 import javax.ejb.Local;
 

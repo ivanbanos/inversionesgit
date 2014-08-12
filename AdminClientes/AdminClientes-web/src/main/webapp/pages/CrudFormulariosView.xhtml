@@ -11,7 +11,14 @@
         <h:form>
             <p:panel id="panel" header="#{label['lb_header.formularios']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudFormulariosBean.lista}"  
-                             emptyMessage="#{label['lb_table.noelementos']}">
+                             emptyMessage="#{label['lb_table.noelementos']}" filteredValue="#{crudFormulariosBean.flista}">
+
+                    <f:facet name="header">
+                        <p:outputPanel>
+                            <h:outputText value="Search all fields:" />
+                            <p:inputText id="globalFilter" onkeyup="PF('detailsTable').filter()" style="width:150px" placeholder="Enter keyword" />
+                        </p:outputPanel>
+                    </f:facet>
 
                     <p:column headerText="Id" sortBy="#{element.idFormulario}" filterBy="#{element.idFormulario}" filterMatchMode="contains">
                         <h:outputText value="#{element.idFormulario}" />
@@ -25,7 +32,7 @@
                         <h:outputText value="#{element.accion}" />
                     </p:column>
 
-                    <p:column headerText="Acciones">
+                    <p:column headerText="Acciones" filterBy="#{element.accion}" filterMatchMode="contains" filterStyle="display:none">
                         <p:commandButton id="editButton" update=":#{p:component('editForm')}" 
                                          oncomplete="PF('editDialog').show()" icon="ui-icon-pencil" 
                                          title="#{label['lb_btn.editar']}" 

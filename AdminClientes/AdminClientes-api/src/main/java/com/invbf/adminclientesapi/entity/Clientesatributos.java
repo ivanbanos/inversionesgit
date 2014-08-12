@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invbf.adminclientesapi;
+package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;

@@ -4,15 +4,15 @@
  */
 package com.invbf.adminclientesapi.facade;
 
-import com.invbf.adminclientesapi.Atributos;
-import com.invbf.adminclientesapi.Casinos;
-import com.invbf.adminclientesapi.Categorias;
-import com.invbf.adminclientesapi.Clientes;
-import com.invbf.adminclientesapi.Estadoscliente;
-import com.invbf.adminclientesapi.Eventos;
-import com.invbf.adminclientesapi.Perfiles;
-import com.invbf.adminclientesapi.Tiposjuegos;
-import com.invbf.adminclientesapi.Usuarios;
+import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Casinos;
+import com.invbf.adminclientesapi.entity.Categorias;
+import com.invbf.adminclientesapi.entity.Clientes;
+import com.invbf.adminclientesapi.entity.Estadoscliente;
+import com.invbf.adminclientesapi.entity.Eventos;
+import com.invbf.adminclientesapi.entity.Perfiles;
+import com.invbf.adminclientesapi.entity.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.Usuarios;
 import java.util.List;
 
 /**
@@ -65,6 +65,6 @@ public interface MarketingUserFacade {
 
     public void guardarClientes(Clientes elemento);
 
-
+    public List<Tiposjuegos> getTiposJuegosNoClientes(Integer idCliente);
 
 }

@@ -6,7 +6,7 @@ package com.InvBF.facade.Impl;
 
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
 import com.InvBF.util.EncryptUtil;
-import com.invbf.adminclientesapi.Usuarios;
+import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
@@ -42,5 +42,10 @@ public class SystemFacadeImpl implements SystemFacade {
         } catch (NoSuchAlgorithmException ex) {
             throw new UsuarioNoConectadoException();
         }
+    }
+
+    @Override
+    public Usuarios actualizarUsuario(Usuarios usuario) {
+        return usuariosFacadeLocal.find(usuario.getIdUsuario());
     }
 }

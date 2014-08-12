@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.Categorias;
+import com.invbf.adminclientesapi.entity.Categorias;
 import java.util.List;
 import javax.ejb.Local;
 

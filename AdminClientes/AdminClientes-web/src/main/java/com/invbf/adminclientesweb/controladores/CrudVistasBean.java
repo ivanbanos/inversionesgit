@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Vistas;
+import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +37,15 @@ public class CrudVistasBean {
         this.sessionBean = sessionBean;
     }
 
+    private List<Vistas> flista;
+
+    public List<Vistas> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Vistas> flista) {
+        this.flista = flista;
+    }
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */

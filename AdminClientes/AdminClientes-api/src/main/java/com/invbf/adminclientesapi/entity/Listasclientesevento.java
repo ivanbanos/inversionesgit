@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invbf.adminclientesapi;
+package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -33,6 +33,8 @@ public class Listasclientesevento implements Serializable {
     protected ListasclienteseventoPK listasclienteseventoPK;
     @Column(name = "Observaciones")
     private String observaciones;
+    @Column(name = "count")
+    private Integer count;
     @JoinColumn(name = "idEstadoCliente", referencedColumnName = "idEstadoCliente")
     @ManyToOne(optional = false)
     private Estadoscliente idEstadoCliente;
@@ -92,6 +94,14 @@ public class Listasclientesevento implements Serializable {
 
     public void setEventos(Eventos eventos) {
         this.eventos = eventos;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override

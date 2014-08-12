@@ -4,15 +4,16 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Formularios;
-import com.invbf.adminclientesapi.Usuarios;
-import com.invbf.adminclientesapi.Vistas;
+import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -33,7 +34,7 @@ public class SessionBean implements Serializable {
     @EJB
     SystemFacade sessionFacade;
     private Usuarios usuario;//Almacena el objeto usuario de la session
-
+    private HashMap<String, Object> Attributes;
     /**
      * Creates a new instance of SessionFlowumiUtil
      */
@@ -43,6 +44,7 @@ public class SessionBean implements Serializable {
     @PostConstruct
     public void init() {
         usuario = new Usuarios();
+        Attributes = new HashMap<String, Object> ();
     }
 
     public Usuarios getUsuario() {
@@ -104,13 +106,24 @@ public class SessionBean implements Serializable {
     }
     
     public boolean perfilFormMatch(String tabla, String accion){
-        Formularios formulario = new Formularios(null, tabla, accion);
-        List<Formularios> formulariosUsuario = usuario.getIdPerfil().getFormulariosList();
-        for(Formularios f : formulariosUsuario){
-            if(f.equals(formulario)){
+        for(Formularios f : usuario.getIdPerfil().getFormulariosList()){
+            if(f.es(tabla+accion)){
                 return true;
             }
         }
         return false;
     }
+
+    public void actualizarUsuario(){
+        usuario = sessionFacade.actualizarUsuario(usuario);
+    }
+    
+    public HashMap<String, Object>  getAttributes() {
+        return Attributes;
+    }
+
+    public void setAttributes(HashMap<String, Object>  Attributes) {
+        this.Attributes = Attributes;
+    }
+    
 }

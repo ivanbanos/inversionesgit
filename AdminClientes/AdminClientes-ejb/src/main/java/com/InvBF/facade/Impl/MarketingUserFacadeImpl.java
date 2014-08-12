@@ -11,16 +11,15 @@ import com.InvBF.EntityFacade.ClientesFacadeLocal;
 import com.InvBF.EntityFacade.EstadosclienteFacadeLocal;
 import com.InvBF.EntityFacade.EventosFacadeLocal;
 import com.InvBF.EntityFacade.TiposjuegosFacadeLocal;
-import com.InvBF.EntityFacade.UsuariosFacadeLocal;
-import com.invbf.adminclientesapi.Atributos;
-import com.invbf.adminclientesapi.Casinos;
-import com.invbf.adminclientesapi.Categorias;
-import com.invbf.adminclientesapi.Clientes;
-import com.invbf.adminclientesapi.Estadoscliente;
-import com.invbf.adminclientesapi.Eventos;
-import com.invbf.adminclientesapi.Tiposjuegos;
-import com.invbf.adminclientesapi.Usuarios;
+import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Casinos;
+import com.invbf.adminclientesapi.entity.Categorias;
+import com.invbf.adminclientesapi.entity.Clientes;
+import com.invbf.adminclientesapi.entity.Estadoscliente;
+import com.invbf.adminclientesapi.entity.Eventos;
+import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -185,6 +184,19 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         } else {
             clientesFacadeLocal.edit(elemento);
         }
+    }
+
+    @Override
+    public List<Tiposjuegos> getTiposJuegosNoClientes(Integer idCliente) {
+        Clientes cliente = clientesFacadeLocal.find(idCliente);
+        List<Tiposjuegos> tiposjuego = tiposjuegosFacadeLocal.findAll();
+        Iterator<Tiposjuegos> iter = tiposjuego.iterator();
+        while (iter.hasNext()) {
+            if (iter.next().getClientesList().contains(cliente)) {
+                iter.remove();
+            }
+        }
+        return tiposjuego;
     }
 
    

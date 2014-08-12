@@ -5,8 +5,8 @@
 package com.invbf.adminclientesweb.controladores;
 
 
-import com.invbf.adminclientesapi.Perfiles;
-import com.invbf.adminclientesapi.Usuarios;
+import com.invbf.adminclientesapi.entity.Perfiles;
+import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.io.IOException;
 import java.util.List;
@@ -40,6 +40,15 @@ public class CrudUsuariosBean {
         this.sessionBean = sessionBean;
     }
 
+    private List<Usuarios> flista;
+
+    public List<Usuarios> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Usuarios> flista) {
+        this.flista = flista;
+    }
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */

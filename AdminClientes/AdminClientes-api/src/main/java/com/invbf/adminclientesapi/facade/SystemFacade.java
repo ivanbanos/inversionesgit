@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesapi.facade;
 
-import com.invbf.adminclientesapi.Usuarios;
+import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
@@ -16,6 +16,8 @@ import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 public interface SystemFacade {
 
     public Usuarios iniciarSession(Usuarios usuario)throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException ;
+
+    public Usuarios actualizarUsuario(Usuarios usuario);
 
     
 }

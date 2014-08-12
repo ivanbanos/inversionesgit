@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.Clientesatributos;
+import com.invbf.adminclientesapi.entity.Clientesatributos;
 import java.util.List;
 import javax.ejb.Local;
 

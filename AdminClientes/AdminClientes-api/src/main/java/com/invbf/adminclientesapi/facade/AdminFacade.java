@@ -4,10 +4,10 @@
  */
 package com.invbf.adminclientesapi.facade;
 
-import com.invbf.adminclientesapi.Formularios;
-import com.invbf.adminclientesapi.Perfiles;
-import com.invbf.adminclientesapi.Usuarios;
-import com.invbf.adminclientesapi.Vistas;
+import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Perfiles;
+import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Vistas;
 import java.util.List;
 
 /**
@@ -39,4 +39,7 @@ public interface AdminFacade {
     public void deleteVistas(Vistas elemento);
 
     public void guardarVistas(Vistas elemento);
+
+    public Perfiles findPerfil(Integer idPerfil);
+    
 }

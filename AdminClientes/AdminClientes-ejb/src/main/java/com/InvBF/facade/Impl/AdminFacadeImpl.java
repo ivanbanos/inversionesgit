@@ -8,11 +8,13 @@ import com.InvBF.EntityFacade.FormulariosFacadeLocal;
 import com.InvBF.EntityFacade.PerfilesFacadeLocal;
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
 import com.InvBF.EntityFacade.VistasFacadeLocal;
-import com.invbf.adminclientesapi.Formularios;
-import com.invbf.adminclientesapi.Perfiles;
-import com.invbf.adminclientesapi.Usuarios;
-import com.invbf.adminclientesapi.Vistas;
+import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Perfiles;
+import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -23,6 +25,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class AdminFacadeImpl implements AdminFacade {
+
     @EJB
     UsuariosFacadeLocal usuariosFacadeLocal;
     @EJB
@@ -66,6 +69,12 @@ public class AdminFacadeImpl implements AdminFacade {
         if (elemento.getIdPerfil() == null) {
             perfilesFacadeLocal.create(elemento);
         } else {
+            for(Formularios f : elemento.getFormulariosList()){
+                f = formulariosFacadeLocal.find(f.getIdFormulario());
+            }
+            for(Vistas l : elemento.getVistasList()){
+                l = vistasFacadeLocal.find(l.getIdVista());
+            }
             perfilesFacadeLocal.edit(elemento);
         }
     }
@@ -107,4 +116,11 @@ public class AdminFacadeImpl implements AdminFacade {
             vistasFacadeLocal.edit(elemento);
         }
     }
+
+    @Override
+    public Perfiles findPerfil(Integer idPerfil) {
+        return perfilesFacadeLocal.find(idPerfil);
+    }
+
+
 }

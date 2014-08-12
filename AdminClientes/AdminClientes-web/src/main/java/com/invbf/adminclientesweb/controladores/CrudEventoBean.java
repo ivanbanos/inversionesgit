@@ -4,9 +4,9 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Casinos;
-import com.invbf.adminclientesapi.Categorias;
-import com.invbf.adminclientesapi.Eventos;
+import com.invbf.adminclientesapi.entity.Casinos;
+import com.invbf.adminclientesapi.entity.Categorias;
+import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.IOException;
 import java.util.List;
@@ -42,6 +42,15 @@ public class CrudEventoBean {
         this.sessionBean = sessionBean;
     }
 
+    private List<Eventos> flista;
+
+    public List<Eventos> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Eventos> flista) {
+        this.flista = flista;
+    }
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml">
+
+    <ui:define name="content">
+
+
+        <h:form>
+            <p:panel id="editDialog" header="Editar" widgetVar="editDialog" >  
+                <p:panelGrid id="editForm">  
+                    <p:row>
+                        <p:column><h:outputLabel value="#{label['codigo']}" /> </p:column>
+                        <p:column><h:outputLabel value="#{perfilActBean.elemento.idPerfil}"/></p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column><h:outputLabel for="nombre" value="#{label['nombre']}" /> </p:column>
+                        <p:column><p:inputText id="nombre" value="#{perfilActBean.elemento.nombre}" required="true" /></p:column>
+                    </p:row>
+                    <p:row >
+                        <p:column colspan="2">
+                            Formularios<br /><p:pickList id="PojoPickList" value="#{perfilActBean.todosForm}" var="form" effect="bounce"
+                                                          itemValue="#{form}" itemLabel="#{form.tabla}"  showCheckbox="true"
+                                                          showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="formcom" >
+
+                                <f:facet name="sourceCaption">#{label['nopermitidos']}</f:facet>
+                                <f:facet name="targetCaption">#{label['permitidos']}</f:facet>
+
+                                <p:column>
+                                    <h:outputText value="#{form}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:column>
+                    </p:row>
+                    <p:row >
+                        <p:column colspan="2">
+                            Vistas<br /><p:pickList id="PojoPickList2" value="#{perfilActBean.todasVistas}" var="vista" effect="bounce"
+                                                          itemValue="#{vista}" itemLabel="#{vista.nombreVista}"  showCheckbox="true"
+                                                          showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="vistacom" >
+
+                                <f:facet name="sourceCaption">#{label['nopermitidas']}</f:facet>
+                                <f:facet name="targetCaption">#{label['permitidas']}</f:facet>
+
+                                <p:column>
+                                    <h:outputText value="#{vista.nombreVista}" />
+                                </p:column>
+                            </p:pickList>
+                        </p:column>
+                    </p:row>
+                    <f:facet name="footer">  
+                        <p:row>
+                            <p:column>
+                                <p:commandButton value="Confirmar" action="#{perfilActBean.guardar()}" 
+                                                 icon="ui-icon-check" style="margin:0"/>  
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Cerrar" oncomplete="PF('editDialog').hide()" icon="ui-icon-closethick"/> 
+                            </p:column>
+                        </p:row>
+                    </f:facet>  
+                </p:panelGrid>  
+            </p:panel>
+        </h:form>
+
+    </ui:define>            
+</ui:composition>

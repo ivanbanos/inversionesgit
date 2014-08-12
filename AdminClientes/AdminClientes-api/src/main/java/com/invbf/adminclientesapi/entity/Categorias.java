@@ -2,19 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invbf.adminclientesapi;
+package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -24,43 +25,43 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ideacentre
  */
 @Entity
-@Table(name = "tiposjuegos")
+@Table(name = "categorias")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tiposjuegos.findAll", query = "SELECT t FROM Tiposjuegos t"),
-    @NamedQuery(name = "Tiposjuegos.findByIdTipoJuego", query = "SELECT t FROM Tiposjuegos t WHERE t.idTipoJuego = :idTipoJuego"),
-    @NamedQuery(name = "Tiposjuegos.findByNombre", query = "SELECT t FROM Tiposjuegos t WHERE t.nombre = :nombre")})
-public class Tiposjuegos implements Serializable {
+    @NamedQuery(name = "Categorias.findAll", query = "SELECT c FROM Categorias c"),
+    @NamedQuery(name = "Categorias.findByIdCategorias", query = "SELECT c FROM Categorias c WHERE c.idCategorias = :idCategorias"),
+    @NamedQuery(name = "Categorias.findByNombre", query = "SELECT c FROM Categorias c WHERE c.nombre = :nombre")})
+public class Categorias implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idTipoJuego")
-    private Integer idTipoJuego;
+    @Column(name = "idCategorias")
+    private Integer idCategorias;
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @ManyToMany(mappedBy = "tiposjuegosList")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCategorias")
     private List<Clientes> clientesList;
 
-    public Tiposjuegos() {
+    public Categorias() {
     }
 
-    public Tiposjuegos(Integer idTipoJuego) {
-        this.idTipoJuego = idTipoJuego;
+    public Categorias(Integer idCategorias) {
+        this.idCategorias = idCategorias;
     }
 
-    public Tiposjuegos(Integer idTipoJuego, String nombre) {
-        this.idTipoJuego = idTipoJuego;
+    public Categorias(Integer idCategorias, String nombre) {
+        this.idCategorias = idCategorias;
         this.nombre = nombre;
     }
 
-    public Integer getIdTipoJuego() {
-        return idTipoJuego;
+    public Integer getIdCategorias() {
+        return idCategorias;
     }
 
-    public void setIdTipoJuego(Integer idTipoJuego) {
-        this.idTipoJuego = idTipoJuego;
+    public void setIdCategorias(Integer idCategorias) {
+        this.idCategorias = idCategorias;
     }
 
     public String getNombre() {
@@ -83,18 +84,18 @@ public class Tiposjuegos implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idTipoJuego != null ? idTipoJuego.hashCode() : 0);
+        hash += (idCategorias != null ? idCategorias.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tiposjuegos)) {
+        if (!(object instanceof Categorias)) {
             return false;
         }
-        Tiposjuegos other = (Tiposjuegos) object;
-        if ((this.idTipoJuego == null && other.idTipoJuego != null) || (this.idTipoJuego != null && !this.idTipoJuego.equals(other.idTipoJuego))) {
+        Categorias other = (Categorias) object;
+        if ((this.idCategorias == null && other.idCategorias != null) || (this.idCategorias != null && !this.idCategorias.equals(other.idCategorias))) {
             return false;
         }
         return true;
@@ -102,7 +103,7 @@ public class Tiposjuegos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.Tiposjuegos[ idTipoJuego=" + idTipoJuego + " ]";
+        return "com.invbf.adminclientesapi.Categorias[ idCategorias=" + idCategorias + " ]";
     }
     
 }

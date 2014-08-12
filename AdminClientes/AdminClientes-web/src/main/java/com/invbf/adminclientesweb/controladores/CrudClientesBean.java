@@ -4,12 +4,12 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Atributos;
-import com.invbf.adminclientesapi.Casinos;
-import com.invbf.adminclientesapi.Categorias;
-import com.invbf.adminclientesapi.Clientes;
-import com.invbf.adminclientesapi.Eventos;
-import com.invbf.adminclientesapi.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Casinos;
+import com.invbf.adminclientesapi.entity.Categorias;
+import com.invbf.adminclientesapi.entity.Clientes;
+import com.invbf.adminclientesapi.entity.Eventos;
+import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.IOException;
 import java.util.List;
@@ -47,6 +47,15 @@ public class CrudClientesBean {
         this.sessionBean = sessionBean;
     }
 
+    private List<Clientes> flista;
+
+    public List<Clientes> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Clientes> flista) {
+        this.flista = flista;
+    }
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */

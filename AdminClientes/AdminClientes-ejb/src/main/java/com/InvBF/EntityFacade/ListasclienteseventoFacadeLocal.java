@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.Listasclientesevento;
+import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import java.util.List;
 import javax.ejb.Local;
 

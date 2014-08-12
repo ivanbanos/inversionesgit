@@ -10,6 +10,7 @@ import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
@@ -27,13 +28,12 @@ import org.primefaces.model.DualListModel;
  */
 @ManagedBean
 @ViewScoped
-public class CrudPerfilesBean {
+public class PerfilActBean {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
     @EJB
     AdminFacade adminFacade;
-    private List<Perfiles> lista;
     private List<Formularios> listaformularios;
     private List<Vistas> listavistas;
     private Perfiles elemento;
@@ -58,12 +58,12 @@ public class CrudPerfilesBean {
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public CrudPerfilesBean() {
+    public PerfilActBean() {
     }
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("CrudPerfilesView")) {
+        if (!sessionBean.perfilViewMatch("PerfilAct")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
@@ -71,20 +71,30 @@ public class CrudPerfilesBean {
                 LOGGER.error(ex);
             }
         }
-        elemento = new Perfiles();
-        lista = adminFacade.findAllPerfiles();
-        listaformularios = new ArrayList<Formularios>();
-        listavistas = new ArrayList<Vistas>();
+        
+        if (sessionBean.getAttributes()==null||!sessionBean.getAttributes().containsKey("idPerfil")) {
+            try {
+                sessionBean.Desconectar();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
+            } catch (IOException ex) {
+                LOGGER.error(ex);
+            }
+        }
+        elemento = adminFacade.findPerfil((Integer)sessionBean.getAttributes().get("idPerfil"));
+        listaformularios = adminFacade.findAllFormularios();
+        listavistas = adminFacade.findAllVistas();
+        for (Formularios f : elemento.getFormulariosList()) {
+            if (listaformularios.contains(f)) {
+                listaformularios.remove(f);
+            }
+        }
+        for (Vistas v : elemento.getVistasList()) {
+            if (listavistas.contains(v)) {
+                listavistas.remove(v);
+            }
+        }
         todasVistas = new DualListModel<Vistas>(listavistas, elemento.getVistasList());
         todosForm = new DualListModel<Formularios>(listaformularios, elemento.getFormulariosList());
-    }
-
-    public List<Perfiles> getLista() {
-        return lista;
-    }
-
-    public void setLista(List<Perfiles> lista) {
-        this.lista = lista;
     }
 
     public Perfiles getElemento() {
@@ -119,22 +129,14 @@ public class CrudPerfilesBean {
         this.listavistas = listavistas;
     }
 
-    public void delete() {
-        adminFacade.deletePerfiles(elemento);
-        lista = adminFacade.findAllPerfiles();
-        elemento = new Perfiles();
-    }
 
     public void guardar() {
-        adminFacade.guardarPerfiles(elemento);
-        lista = adminFacade.findAllPerfiles();
-        elemento = new Perfiles();
-    }
-
-    public void goPerfil(int id) {
         try {
-            sessionBean.getAttributes().put("idPerfil", new Integer(id));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("PerfilAct.xhtml");
+            elemento.setFormulariosList(todosForm.getTarget());
+            elemento.setVistasList(todasVistas.getTarget());
+            adminFacade.guardarPerfiles(elemento);
+            sessionBean.actualizarUsuario();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
         } catch (IOException ex) {
                 LOGGER.error(ex);
         }

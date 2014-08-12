@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +35,16 @@ public class CrudTipoJuegoBean {
     
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
+    }
+    
+    private List<Tiposjuegos> flista;
+
+    public List<Tiposjuegos> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Tiposjuegos> flista) {
+        this.flista = flista;
     }
 
     /**

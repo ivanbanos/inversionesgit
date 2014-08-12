@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invbf.adminclientesapi;
+package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -102,7 +102,7 @@ public class Vistas implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.Vistas[ idVista=" + idVista + " ]";
+        return idVista + " " + nombreVista;
     }
     
 }

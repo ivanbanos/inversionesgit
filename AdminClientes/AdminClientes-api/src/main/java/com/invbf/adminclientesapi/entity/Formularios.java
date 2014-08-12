@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invbf.adminclientesapi;
+package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -130,11 +130,17 @@ public class Formularios implements Serializable {
         return true;
     }
 
-  
-
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.Formularios[ idFormulario=" + idFormulario + " ]";
+        return  idFormulario +" "+  tabla +" "+ accion ;
     }
+
+    public boolean es(String tablaaccion) {
+        return (tabla+accion).equals(tablaaccion);
+    }
+
+  
+
+    
     
 }

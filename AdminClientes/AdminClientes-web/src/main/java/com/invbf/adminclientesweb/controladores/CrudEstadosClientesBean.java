@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Estadoscliente;
+import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +37,15 @@ public class CrudEstadosClientesBean {
         this.sessionBean = sessionBean;
     }
 
+    private List<Estadoscliente> flista;
+
+    public List<Estadoscliente> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Estadoscliente> flista) {
+        this.flista = flista;
+    }
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */

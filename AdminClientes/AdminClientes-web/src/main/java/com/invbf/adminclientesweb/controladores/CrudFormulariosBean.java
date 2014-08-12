@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Formularios;
+import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +35,16 @@ public class CrudFormulariosBean {
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
+    }
+    
+    private List<Formularios> flista;
+
+    public List<Formularios> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Formularios> flista) {
+        this.flista = flista;
     }
     /**
      * Creates a new instance of AtributosSistemaViewBean

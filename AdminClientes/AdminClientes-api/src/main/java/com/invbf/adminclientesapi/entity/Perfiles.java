@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invbf.adminclientesapi;
+package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -58,6 +59,8 @@ public class Perfiles implements Serializable {
     private List<Usuarios> usuariosList;
 
     public Perfiles() {
+        formulariosList = new ArrayList<Formularios>();
+        vistasList = new ArrayList<Vistas>();
     }
 
     public Perfiles(Integer idPerfil) {

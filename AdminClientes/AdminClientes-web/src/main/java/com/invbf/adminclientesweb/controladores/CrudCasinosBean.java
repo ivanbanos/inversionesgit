@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.Casinos;
+import com.invbf.adminclientesapi.entity.Casinos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +37,16 @@ public class CrudCasinosBean {
         this.sessionBean = sessionBean;
     }
 
+    
+    private List<Casinos> flista;
+
+    public List<Casinos> getFlista() {
+        return flista;
+    }
+
+    public void setFlista(List<Casinos> flista) {
+        this.flista = flista;
+    }
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */

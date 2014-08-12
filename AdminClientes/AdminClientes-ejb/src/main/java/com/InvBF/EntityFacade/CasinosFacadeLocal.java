@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.Casinos;
+import com.invbf.adminclientesapi.entity.Casinos;
 import java.util.List;
 import javax.ejb.Local;
 

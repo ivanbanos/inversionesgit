@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.invbf.adminclientesapi;
+package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,6 +45,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Eventos.findByFormatoImagen", query = "SELECT e FROM Eventos e WHERE e.formatoImagen = :formatoImagen"),
     @NamedQuery(name = "Eventos.findByEstado", query = "SELECT e FROM Eventos e WHERE e.estado = :estado")})
 public class Eventos implements Serializable {
+    @Lob
+    @Column(name = "imagen")
+    private byte[] imagen;
+    @Basic(optional = false)
+    @Column(name = "tipo")
+    private int tipo;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,9 +60,6 @@ public class Eventos implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @Basic(optional = false)
-    @Column(name = "tipo")
-    private Integer tipo;
     @Column(name = "fechaInicio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
@@ -65,9 +68,6 @@ public class Eventos implements Serializable {
     private Date fechaFinalizacion;
     @Column(name = "descripcion")
     private String descripcion;
-    @Lob
-    @Column(name = "imagen")
-    private byte[] imagen;
     @Column(name = "formatoImagen")
     private String formatoImagen;
     @Column(name = "estado")
@@ -113,14 +113,6 @@ public class Eventos implements Serializable {
         this.nombre = nombre;
     }
 
-    public Integer getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
-    }
-
     public Date getFechaInicio() {
         return fechaInicio;
     }
@@ -143,14 +135,6 @@ public class Eventos implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public byte[] getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
     }
 
     public String getFormatoImagen() {
@@ -218,6 +202,22 @@ public class Eventos implements Serializable {
     @Override
     public String toString() {
         return "com.invbf.adminclientesapi.Eventos[ idEvento=" + idEvento + " ]";
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
     
 }

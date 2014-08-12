@@ -2,21 +2,21 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   <persistence-unit name="AdminClientesPU" transaction-type="JTA">
     <jta-data-source>jdbc/AdminClientesInversiones</jta-data-source>
-    <class>com.invbf.adminclientesapi.Vistas</class>
-    <class>com.invbf.adminclientesapi.Logs</class>
-    <class>com.invbf.adminclientesapi.Tiposjuegos</class>
-    <class>com.invbf.adminclientesapi.Perfiles</class>
-    <class>com.invbf.adminclientesapi.Listasclientesevento</class>
-    <class>com.invbf.adminclientesapi.Clientes</class>
-    <class>com.invbf.adminclientesapi.Eventos</class>
-    <class>com.invbf.adminclientesapi.Categorias</class>
-    <class>com.invbf.adminclientesapi.Clientesatributos</class>
-    <class>com.invbf.adminclientesapi.Configuraciones</class>
-    <class>com.invbf.adminclientesapi.Usuarios</class>
-    <class>com.invbf.adminclientesapi.Formularios</class>
-    <class>com.invbf.adminclientesapi.Casinos</class>
-    <class>com.invbf.adminclientesapi.Estadoscliente</class>
-    <class>com.invbf.adminclientesapi.Atributos</class>
+    <class>com.invbf.adminclientesapi.entity.Usuarios</class>
+    <class>com.invbf.adminclientesapi.entity.Vistas</class>
+    <class>com.invbf.adminclientesapi.entity.Atributos</class>
+    <class>com.invbf.adminclientesapi.entity.Clientes</class>
+    <class>com.invbf.adminclientesapi.entity.Clientesatributos</class>
+    <class>com.invbf.adminclientesapi.entity.Configuraciones</class>
+    <class>com.invbf.adminclientesapi.entity.Listasclientesevento</class>
+    <class>com.invbf.adminclientesapi.entity.Tiposjuegos</class>
+    <class>com.invbf.adminclientesapi.entity.Eventos</class>
+    <class>com.invbf.adminclientesapi.entity.Categorias</class>
+    <class>com.invbf.adminclientesapi.entity.Logs</class>
+    <class>com.invbf.adminclientesapi.entity.Perfiles</class>
+    <class>com.invbf.adminclientesapi.entity.Estadoscliente</class>
+    <class>com.invbf.adminclientesapi.entity.Casinos</class>
+    <class>com.invbf.adminclientesapi.entity.Formularios</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

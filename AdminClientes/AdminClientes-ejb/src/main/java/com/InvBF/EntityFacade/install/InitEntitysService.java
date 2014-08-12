@@ -9,10 +9,10 @@ import com.InvBF.EntityFacade.PerfilesFacadeLocal;
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
 import com.InvBF.EntityFacade.VistasFacadeLocal;
 import com.InvBF.util.EncryptUtil;
-import com.invbf.adminclientesapi.Formularios;
-import com.invbf.adminclientesapi.Perfiles;
-import com.invbf.adminclientesapi.Usuarios;
-import com.invbf.adminclientesapi.Vistas;
+import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Perfiles;
+import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Vistas;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -73,6 +73,7 @@ public class InitEntitysService {
             perfil.setNombre("Administrador");
             perfil.setFormulariosList(new ArrayList<Formularios>());
             perfil.setVistasList(new ArrayList<Vistas>());
+            perfilesFacadeLocal.create(perfil);
 
             Formularios formulario;
             formulario = new Formularios(null, "Usuarios", "crear");
@@ -131,8 +132,11 @@ public class InitEntitysService {
             vista = new Vistas(null, "AtributosSistema");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "PerfilAct");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
 
-            perfilesFacadeLocal.create(perfil);
+            perfilesFacadeLocal.edit(perfil);
 
             Usuarios usuario = new Usuarios();
             usuario.setNombreUsuario("admin");
