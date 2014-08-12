@@ -150,4 +150,12 @@ public class CrudClientesBean {
         elemento = new Clientes();
     }
     
+    public void goCliente(int id) {
+        try {
+            sessionBean.getAttributes().put("idCliente", new Integer(id));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ClientesAct.xhtml");
+        } catch (IOException ex) {
+                LOGGER.error(ex);
+        }
+    }
 }

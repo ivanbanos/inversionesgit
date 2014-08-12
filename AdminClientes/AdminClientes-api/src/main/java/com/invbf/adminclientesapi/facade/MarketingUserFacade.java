@@ -67,4 +67,6 @@ public interface MarketingUserFacade {
 
     public List<Tiposjuegos> getTiposJuegosNoClientes(Integer idCliente);
 
+    public Clientes findCliente(Integer integer);
+
 }

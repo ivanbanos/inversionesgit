@@ -199,5 +199,10 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         return tiposjuego;
     }
 
+    @Override
+    public Clientes findCliente(Integer integer) {
+        return clientesFacadeLocal.find(integer);
+    }
+
    
 }

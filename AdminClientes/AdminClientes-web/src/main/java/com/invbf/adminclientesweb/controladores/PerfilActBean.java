@@ -45,15 +45,6 @@ public class PerfilActBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Perfiles> flista;
-
-    public List<Perfiles> getFlista() {
-        return flista;
-    }
-
-    public void setFlista(List<Perfiles> flista) {
-        this.flista = flista;
-    }
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
@@ -136,6 +127,7 @@ public class PerfilActBean {
             elemento.setVistasList(todasVistas.getTarget());
             adminFacade.guardarPerfiles(elemento);
             sessionBean.actualizarUsuario();
+            sessionBean.getAttributes().remove("idPerfil");
             FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
         } catch (IOException ex) {
                 LOGGER.error(ex);

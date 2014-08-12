@@ -248,6 +248,9 @@ public class InitEntitysService {
             vista = new Vistas(null, "AtributosTelemarketing");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "ClientesAct");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
 
             perfilesFacadeLocal.create(perfil);
 

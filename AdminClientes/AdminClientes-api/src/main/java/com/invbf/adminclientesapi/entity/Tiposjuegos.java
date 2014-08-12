@@ -102,7 +102,7 @@ public class Tiposjuegos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.Tiposjuegos[ idTipoJuego=" + idTipoJuego + " ]";
+        return  idTipoJuego + " " + nombre;
     }
     
 }

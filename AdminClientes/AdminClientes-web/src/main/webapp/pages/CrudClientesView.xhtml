@@ -33,8 +33,7 @@
                     </p:column>
 
                     <p:column headerText="Acciones" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
-                        <p:commandButton id="editButton" update=":#{p:component('editForm')}" 
-                                         oncomplete="PF('editDialog').show()" icon="ui-icon-pencil" 
+                        <p:commandButton id="editButton" action="#{crudClientesBean.goCliente(element.idCliente)}" icon="ui-icon-pencil" 
                                          title="#{label['lb_btn.editar']}" 
                                          rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;actualizar&quot;)}">  
                             <f:setPropertyActionListener value="#{element}" target="#{crudClientesBean.elemento}" />  
