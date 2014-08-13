@@ -99,6 +99,7 @@ private List<Atributos> flista;
     }
     
     public void guardar(){
+        elemento.setTipoDato("Text");
         marketingUserFacade.guardarAtributos(elemento);
         lista = marketingUserFacade.findAllAtributos();
         elemento = new Atributos();

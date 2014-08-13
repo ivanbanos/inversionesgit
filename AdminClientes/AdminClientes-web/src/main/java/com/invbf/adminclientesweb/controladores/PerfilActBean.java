@@ -65,7 +65,6 @@ public class PerfilActBean {
         
         if (sessionBean.getAttributes()==null||!sessionBean.getAttributes().containsKey("idPerfil")) {
             try {
-                sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);

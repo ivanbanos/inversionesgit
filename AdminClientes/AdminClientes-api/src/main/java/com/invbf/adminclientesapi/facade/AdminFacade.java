@@ -41,5 +41,7 @@ public interface AdminFacade {
     public void guardarVistas(Vistas elemento);
 
     public Perfiles findPerfil(Integer idPerfil);
+
+    public List<Usuarios> findAllUsuariosHostess();
     
 }

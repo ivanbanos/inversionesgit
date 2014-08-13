@@ -18,21 +18,38 @@
                         <p:column><h:outputLabel value="#{label['codigo']}" /> </p:column>
                         <p:column><h:outputLabel value="#{clientesActBean.elemento.idCliente}"/></p:column>
                     </p:row>
-                    <h:outputLabel for="nombre" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombre" value="#{clientesActBean.elemento.nombres}" required="true" />
 
-                    <h:outputLabel for="estado" value="#{label['estado']}" /> 
-                    <p:selectOneMenu id="estado" value="#{clientesActBean.elemento.idCategorias.idCategorias}">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
+                    <p:row>
+                        <p:column><h:outputLabel for="nombres" value="#{label['nombres']}" /> </p:column>
+                        <p:column><p:inputText id="nombres" value="#{clientesActBean.elemento.nombres}" required="true" /></p:column>
+                    </p:row>
 
-                        <f:selectItems value="#{clientesActBean.listacategorias}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCategorias}"/> 
-                    </p:selectOneMenu>
+                    <p:row>
+                        <p:column><h:outputLabel for="apellidos" value="#{label['apellidos']}" /> </p:column>
+                        <p:column><p:inputText id="apellidos" value="#{clientesActBean.elemento.apellidos}" required="true" /></p:column>
+                    </p:row>
 
-                    <h:outputLabel for="casino" value="#{label['casino']}" /> 
-                    <p:selectOneMenu id="casino" value="#{clientesActBean.elemento.idCasinoPreferencial.idCasino}"  required="true">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItems value="#{clientesActBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
-                    </p:selectOneMenu>
+                    <p:row>
+                        <p:column><h:outputLabel for="estado" value="#{label['estado']}" /> </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="estado" value="#{clientesActBean.elemento.idCategorias.idCategorias}">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+
+                                <f:selectItems value="#{clientesActBean.listacategorias}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCategorias}"/> 
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><h:outputLabel for="casino" value="#{label['casino']}" /> </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="casino" value="#{clientesActBean.elemento.idCasinoPreferencial.idCasino}"  required="true">
+                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                <f:selectItems value="#{clientesActBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
                     <p:row >
                         <p:column colspan="2">
                             Tipos de Juego<br /><p:pickList id="PojoPickList" value="#{clientesActBean.tiposJuegosTodos}" var="form" effect="bounce"
@@ -48,10 +65,15 @@
                             </p:pickList>
                         </p:column>
                     </p:row>
+
+
                     <c:forEach var="item" items="#{clientesActBean.elemento.clientesatributosList}">
-                        <h:outputLabel for="#{item.atributos.nombre}" value="#{item.atributos.nombre}" /> 
-                        <p:inputText id="#{item.atributos.nombre}" value="#{item.valor}" />
+                        <p:row>
+                            <p:column><h:outputLabel for="#{item.atributos.nombre}" value="#{item.atributos.nombre}" /> </p:column>
+                            <p:column><p:inputText id="#{item.atributos.nombre}" value="#{item.valor}" /></p:column>
+                        </p:row>
                     </c:forEach>
+
                     <f:facet name="footer">  
                         <p:row>
                             <p:column>

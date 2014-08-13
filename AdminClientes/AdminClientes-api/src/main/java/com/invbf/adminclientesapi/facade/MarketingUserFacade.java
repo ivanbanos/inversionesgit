@@ -69,4 +69,6 @@ public interface MarketingUserFacade {
 
     public Clientes findCliente(Integer integer);
 
+    public Eventos findEvento(Integer integer);
+
 }

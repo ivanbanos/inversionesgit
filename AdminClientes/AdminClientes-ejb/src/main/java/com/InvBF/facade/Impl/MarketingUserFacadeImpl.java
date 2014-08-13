@@ -204,5 +204,10 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         return clientesFacadeLocal.find(integer);
     }
 
+    @Override
+    public Eventos findEvento(Integer integer) {
+        return eventosFacadeLocal.find(integer);
+    }
+
    
 }

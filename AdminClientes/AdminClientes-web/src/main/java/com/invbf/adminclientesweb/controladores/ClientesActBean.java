@@ -55,24 +55,24 @@ public class ClientesActBean {
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("PerfilAct")) {
+        if (!sessionBean.perfilViewMatch("ClientesAct")) {
             try {
+                System.out.println("No lo coje");
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
         }
-        
-        if (sessionBean.getAttributes()==null||!sessionBean.getAttributes().containsKey("idPerfil")) {
+
+        if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idCliente")) {
             try {
-                sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
         }
-        elemento = marketingUserFacade.findCliente((Integer)sessionBean.getAttributes().get("idCliente"));
+        elemento = marketingUserFacade.findCliente((Integer) sessionBean.getAttributes().get("idCliente"));
         tiposjuegos = marketingUserFacade.findAllTiposjuegos();
         atributos = marketingUserFacade.findAllAtributos();
         for (Tiposjuegos tj : elemento.getTiposjuegosList()) {
@@ -81,20 +81,15 @@ public class ClientesActBean {
             }
         }
         for (Atributos a : atributos) {
-            boolean itscontained = false;
-            for(Clientesatributos ca : elemento.getClientesatributosList()){
-                if(ca.getAtributos().equals(a)){
-                    itscontained = true;
-                    break;
-                }
-            }
-            if(!itscontained){
-                elemento.getClientesatributosList().add(new Clientesatributos(elemento.getIdCliente(), a.getIdAtributo()));
-                marketingUserFacade.guardarClientes(elemento);
+            Clientesatributos clientesatributos = new Clientesatributos(elemento.getIdCliente(), a.getIdAtributo());
+            if(!elemento.getClientesatributosList().contains(clientesatributos)){
+                clientesatributos.setAtributos(a);
+                clientesatributos.setClientes(elemento);
+                elemento.getClientesatributosList().add(clientesatributos);
             }
         }
         tiposJuegosTodos = new DualListModel<Tiposjuegos>(tiposjuegos, elemento.getTiposjuegosList());
-        
+
         listacasinos = marketingUserFacade.findAllCasinos();
         listacategorias = marketingUserFacade.findAllCategorias();
     }
@@ -136,9 +131,9 @@ public class ClientesActBean {
             elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
             marketingUserFacade.guardarClientes(elemento);
             sessionBean.getAttributes().remove("idCliente");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPeClientesView.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("CrudClientesView.xhtml");
         } catch (IOException ex) {
-                LOGGER.error(ex);
+            LOGGER.error(ex);
         }
     }
 
@@ -157,5 +152,4 @@ public class ClientesActBean {
     public void setListacategorias(List<Categorias> listacategorias) {
         this.listacategorias = listacategorias;
     }
-    
 }

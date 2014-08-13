@@ -102,17 +102,20 @@ public class Atributos implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Atributos)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Atributos other = (Atributos) object;
-        if ((this.idAtributo == null && other.idAtributo != null) || (this.idAtributo != null && !this.idAtributo.equals(other.idAtributo))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Atributos other = (Atributos) obj;
+        if ((this.nombre == null) ? (other.nombre != null) : !this.nombre.equals(other.nombre)) {
             return false;
         }
         return true;
     }
+
 
     @Override
     public String toString() {

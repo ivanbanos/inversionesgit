@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panelGrid id="editForm" columns="2">  
+
+                <h:outputLabel value="#{label['codigo']}" /> 
+                <h:outputLabel value="#{marketingEventoManejadorBean.elemento.idEvento}"/>
+
+                <h:outputLabel for="nombre" value="#{label['nombre']}" /> 
+                <h:outputLabel id="nombre" value="#{marketingEventoManejadorBean.elemento.nombre}" />
+
+                <p:outputLabel for="fecini" value="#{label['fechainicio']}" />
+                <h:outputLabel id="fecini" value="#{marketingEventoManejadorBean.elemento.fechaInicio}" >
+                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                </h:outputLabel>
+
+                <p:outputLabel for="fecfin" value="#{label['fechafinal']}" />
+                <h:outputLabel id="fecfin" value="#{marketingEventoManejadorBean.elemento.fechaFinalizacion}"  >
+                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                </h:outputLabel>
+
+                <p:outputLabel for="descripcion" value="#{label['descripcion']}" />
+                <h:outputLabel id="descripcion" value="#{marketingEventoManejadorBean.elemento.descripcion}"/>
+
+                <h:outputLabel for="estado" value="#{label['estado']}" /> 
+                <h:outputLabel id="estado" value="#{marketingEventoManejadorBean.elemento.estado}" />
+
+                <h:outputLabel for="tipo" value="#{label['tipo']}" /> 
+                <h:outputLabel id="tipo" value="#{marketingEventoManejadorBean.elemento.tipo}"/>
+
+                <h:outputLabel for="casino" value="#{label['casino']}" /> 
+                <h:outputLabel id="casino" value="#{marketingEventoManejadorBean.elemento.idCasino.nombre}" />
+
+                <h:outputLabel for="imagen" value="#{label['imagen']}" rendered="#{marketingEventoManejadorBean.elemento.imagen!=null}"/>
+                <p:graphicImage  id="imagen" value="#{marketingEventoManejadorBean.file}" rendered="#{marketingEventoManejadorBean.elemento.imagen!=null}" />
+                
+                
+
+                <f:facet name="footer">  
+                    <p:commandButton value="Confirmar" action="#{marketingEventoManejadorBean.guardar()}" 
+                                     oncomplete="PF('editDialog').hide()" icon="ui-icon-check"
+                                     update=":#{p:component('editForm')} :#{p:component('messages')}" style="margin:0"/>    
+                </f:facet>  
+            </p:panelGrid>  
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

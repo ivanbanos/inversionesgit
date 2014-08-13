@@ -122,5 +122,10 @@ public class AdminFacadeImpl implements AdminFacade {
         return perfilesFacadeLocal.find(idPerfil);
     }
 
+    @Override
+    public List<Usuarios> findAllUsuariosHostess() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 }

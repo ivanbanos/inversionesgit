@@ -219,6 +219,9 @@ public class InitEntitysService {
             formulario = new Formularios(null, "Clientes", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
+            formulario = new Formularios(null, "Eventos", "listaclientes");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
 
             Vistas vista;
             vista = new Vistas(null, "CrudAtributosView");
@@ -249,6 +252,9 @@ public class InitEntitysService {
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             vista = new Vistas(null, "ClientesAct");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "MarketingEventoManejadorView");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 
