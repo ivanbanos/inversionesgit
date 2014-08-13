@@ -71,4 +71,6 @@ public interface MarketingUserFacade {
 
     public Eventos findEvento(Integer integer);
 
+    public Estadoscliente findByNombreEstadoCliente(String iniciado);
+
 }

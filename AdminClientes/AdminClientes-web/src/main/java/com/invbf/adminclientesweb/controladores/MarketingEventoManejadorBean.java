@@ -5,6 +5,7 @@
 package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Clientes;
+import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
@@ -45,7 +46,6 @@ public class MarketingEventoManejadorBean {
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private StreamedContent file;
-    
     private List<Clientes> clienteses;
     private List<Clientes> clientesesEvento;
     private List<Usuarios> usuarioses;
@@ -72,18 +72,18 @@ public class MarketingEventoManejadorBean {
                 LOGGER.error(ex);
             }
         }
-        
-        if (sessionBean.getAttributes()==null||!sessionBean.getAttributes().containsKey("idEvento")) {
+
+        if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idEvento")) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioMarketing.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
         }
-        elemento = marketingUserFacade.findEvento((Integer)sessionBean.getAttributes().get("idEvento"));
+        elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
         file = new DefaultStreamedContent();
-        if(elemento.getImagen()!=null){
-            file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/"+elemento.getFormatoImagen());
+        if (elemento.getImagen() != null) {
+            file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/" + elemento.getFormatoImagen());
         }
         clienteses = marketingUserFacade.findAllClientes();
         usuarioses = adminFacade.findAllUsuariosHostess();
@@ -120,9 +120,45 @@ public class MarketingEventoManejadorBean {
     }
 
     public void guardar() {
-            marketingUserFacade.guardarEventos(elemento);
-            sessionBean.actualizarUsuario();
-            elemento = marketingUserFacade.findEvento(elemento.getIdEvento());
+        Estadoscliente estadoscliente = marketingUserFacade.findByNombreEstadoCliente("Inicial");
+        elemento.setUsuariosList(todosusuarioses.getTarget());
+        ArrayList<Listasclientesevento> al = new ArrayList<Listasclientesevento>(elemento.getListasclienteseventoList());
+        elemento.getListasclienteseventoList().clear();
+        for (Clientes c : todosclienteses.getTarget()) {
+
+            Listasclientesevento listasclientesevento = new Listasclientesevento(elemento.getIdEvento(), c.getIdCliente());
+            if (al.contains(listasclientesevento)) {
+                elemento.getListasclienteseventoList().add(al.get(al.indexOf(listasclientesevento)));
+            } else {
+                listasclientesevento.setIdEstadoCliente(estadoscliente);
+                listasclientesevento.setEventos(elemento);
+                listasclientesevento.setClientes(c);
+                elemento.getListasclienteseventoList().add(listasclientesevento);
+            }
+        }
+        marketingUserFacade.guardarEventos(elemento);
+        sessionBean.actualizarUsuario();
+        elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
+        file = new DefaultStreamedContent();
+        if (elemento.getImagen() != null) {
+            file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/" + elemento.getFormatoImagen());
+        }
+        clienteses = marketingUserFacade.findAllClientes();
+        usuarioses = adminFacade.findAllUsuariosHostess();
+        clientesesEvento = new ArrayList<Clientes>();
+        for (Listasclientesevento lce : elemento.getListasclienteseventoList()) {
+            clientesesEvento.add(lce.getClientes());
+            if (clienteses.contains(lce.getClientes())) {
+                clienteses.remove(lce.getClientes());
+            }
+        }
+        for (Usuarios u : elemento.getUsuariosList()) {
+            if (usuarioses.contains(u)) {
+                usuarioses.remove(u);
+            }
+        }
+        todosclienteses = new DualListModel<Clientes>(clienteses, clientesesEvento);
+        todosusuarioses = new DualListModel<Usuarios>(usuarioses, elemento.getUsuariosList());
     }
 
     public StreamedContent getFile() {
@@ -156,5 +192,4 @@ public class MarketingEventoManejadorBean {
     public void setTodosusuarioses(DualListModel<Usuarios> todosusuarioses) {
         this.todosusuarioses = todosusuarioses;
     }
-    
 }

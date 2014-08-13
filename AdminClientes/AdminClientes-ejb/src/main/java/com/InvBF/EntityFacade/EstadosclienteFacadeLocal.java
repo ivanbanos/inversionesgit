@@ -28,5 +28,7 @@ public interface EstadosclienteFacadeLocal {
     List<Estadoscliente> findRange(int[] range);
 
     int count();
+
+    public Estadoscliente findByNombreEstadoCliente(String iniciado);
     
 }

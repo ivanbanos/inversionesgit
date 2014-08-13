@@ -209,5 +209,10 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         return eventosFacadeLocal.find(integer);
     }
 
+    @Override
+    public Estadoscliente findByNombreEstadoCliente(String iniciado) {
+        return estadosclienteFacadeLocal.findByNombreEstadoCliente(iniciado);
+    }
+
    
 }

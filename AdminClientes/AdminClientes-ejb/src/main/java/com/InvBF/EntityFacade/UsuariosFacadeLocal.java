@@ -30,5 +30,7 @@ public interface UsuariosFacadeLocal {
     int count();
     
     public List<Usuarios> findByNombreUsuario(String nombreUsuario);
+
+    public List<Usuarios> findAllHostess();
     
 }

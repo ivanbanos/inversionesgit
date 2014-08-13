@@ -36,5 +36,12 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
             .getResultList();
     }
 
+    @Override
+    public List<Usuarios> findAllHostess() {
+        return em.createNamedQuery("Usuarios.findByTipoPerfil")
+            .setParameter("nombrePerfil", "Hostess")
+            .getResultList();
+    }
+
     
 }

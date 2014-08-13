@@ -5,6 +5,7 @@
 package com.InvBF.EntityFacade;
 
 import com.invbf.adminclientesapi.entity.Estadoscliente;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +26,14 @@ public class EstadosclienteFacade extends AbstractFacade<Estadoscliente> impleme
 
     public EstadosclienteFacade() {
         super(Estadoscliente.class);
+    }
+
+    @Override
+    public Estadoscliente findByNombreEstadoCliente(String iniciado) {
+        List<Estadoscliente> resultList = em.createNamedQuery("Estadoscliente.findByNombre")
+                .setParameter("nombre", iniciado)
+                .getResultList();
+        return resultList.get(0);
     }
     
 }

@@ -170,7 +170,7 @@ public class Clientes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.Clientes[ idCliente=" + idCliente + " ]";
+        return idCliente + " " +nombres + " "+apellidos ;
     }
     
 }

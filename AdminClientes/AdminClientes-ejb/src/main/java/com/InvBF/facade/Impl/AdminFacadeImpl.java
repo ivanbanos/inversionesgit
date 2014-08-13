@@ -124,7 +124,7 @@ public class AdminFacadeImpl implements AdminFacade {
 
     @Override
     public List<Usuarios> findAllUsuariosHostess() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return usuariosFacadeLocal.findAllHostess();
     }
 
 

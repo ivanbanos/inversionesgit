@@ -4,11 +4,16 @@
  */
 package com.InvBF.EntityFacade.install;
 
+import com.InvBF.EntityFacade.ConfiguracionesFacade;
+import com.InvBF.EntityFacade.ConfiguracionesFacadeLocal;
+import com.InvBF.EntityFacade.EstadosclienteFacadeLocal;
 import com.InvBF.EntityFacade.FormulariosFacadeLocal;
 import com.InvBF.EntityFacade.PerfilesFacadeLocal;
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
 import com.InvBF.EntityFacade.VistasFacadeLocal;
 import com.InvBF.util.EncryptUtil;
+import com.invbf.adminclientesapi.entity.Configuraciones;
+import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
@@ -41,6 +46,10 @@ public class InitEntitysService {
     private FormulariosFacadeLocal formulariosFacadeLocal;
     @EJB
     private VistasFacadeLocal vistasFacadeLocal;
+    @EJB
+    private ConfiguracionesFacadeLocal configuracionesFacadeLocal;
+    @EJB
+    private EstadosclienteFacadeLocal estadosclienteFacadeLocal;
 
     /**
      * 1. dependiendo de un parametro de configuracion el sistema debe
@@ -61,6 +70,8 @@ public class InitEntitysService {
         if (usuariosFacadeLocal.count() == 0) {
             crearPerfilAdmin();
             crearPerfilMarketing();
+            crearPerfilHostess();
+            congfiguracionesIniciales();
         }
 
 
@@ -268,5 +279,35 @@ public class InitEntitysService {
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    private void crearPerfilHostess() {
+        try {
+            Perfiles perfil = new Perfiles();
+            perfil.setNombre("Hostess");
+            perfil.setFormulariosList(new ArrayList<Formularios>());
+            perfil.setVistasList(new ArrayList<Vistas>());
+
+            perfilesFacadeLocal.create(perfil);
+
+            Usuarios usuario = new Usuarios();
+            usuario.setNombreUsuario("hostess");
+            usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
+            usuario.setIdPerfil(perfil);
+            usuariosFacadeLocal.create(usuario);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void congfiguracionesIniciales() {
+        Configuraciones configuracion = new Configuraciones();
+        configuracion.setNombre("CantidadClientes");
+        configuracion.setValor("4");
+        
+        
+        configuracionesFacadeLocal.create(configuracion);
+        Estadoscliente estadoscliente = new Estadoscliente();
+        estadoscliente.setNombre("Inicial");
+        estadosclienteFacadeLocal.create(estadoscliente);
     }
 }
