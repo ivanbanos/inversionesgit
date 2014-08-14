@@ -1175,3 +1175,9 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=10);
 	border-radius: 8px;
 }
+
+.ui-menu-child {
+     background: url('css/customredblackyellow/images/ui-bg_gloss-wave_75_f61f1f_500x100.png') repeat-x scroll 50% 50% #F61F1F;
+color: #260505;
+font-weight: bold;
+}
