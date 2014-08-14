@@ -57,7 +57,7 @@ public class HostessEventoManejadorBean {
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("MarketingEventoManejadorView")) {
+        if (!sessionBean.perfilViewMatch("HostessEventoManejadorView")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
@@ -68,7 +68,7 @@ public class HostessEventoManejadorBean {
 
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idEvento")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioMarketing.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioHostess.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }

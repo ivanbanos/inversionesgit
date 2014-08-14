@@ -4,10 +4,8 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Casinos;
-import com.invbf.adminclientesapi.entity.Categorias;
 import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesapi.facade.HostessFacade;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -21,7 +19,6 @@ import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
 import org.primefaces.model.DefaultDashboardModel;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -34,7 +31,7 @@ public class InicioHostessBean {
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
     @EJB
-    MarketingUserFacade marketingUserFacade;
+    HostessFacade hostessFacade;
     private List<Eventos> lista;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -69,7 +66,7 @@ public class InicioHostessBean {
                 LOGGER.error(ex);
             }
         }
-        lista = sessionBean.getUsuario().getEventosList();
+        lista = hostessFacade.findEventosHostess(sessionBean.getUsuario());
         model = new DefaultDashboardModel();
         DashboardColumn column1 = new DefaultDashboardColumn();
         if (sessionBean.perfilFormMatch("Eventos", "listahostess")) {
@@ -86,13 +83,14 @@ public class InicioHostessBean {
         this.lista = lista;
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
+    public HostessFacade getHostessFacade() {
+        return hostessFacade;
     }
 
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
+    public void setHostessFacade(HostessFacade hostessFacade) {
+        this.hostessFacade = hostessFacade;
     }
+
 
     public DashboardModel getModel() {
         return model;

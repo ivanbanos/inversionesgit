@@ -12,12 +12,15 @@ import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.apache.log4j.Logger;
 
@@ -35,6 +38,7 @@ public class SessionBean implements Serializable {
     SystemFacade sessionFacade;
     private Usuarios usuario;//Almacena el objeto usuario de la session
     private HashMap<String, Object> Attributes;
+
     /**
      * Creates a new instance of SessionFlowumiUtil
      */
@@ -44,7 +48,7 @@ public class SessionBean implements Serializable {
     @PostConstruct
     public void init() {
         usuario = new Usuarios();
-        Attributes = new HashMap<String, Object> ();
+        Attributes = new HashMap<String, Object>();
     }
 
     public Usuarios getUsuario() {
@@ -63,13 +67,13 @@ public class SessionBean implements Serializable {
             if (usuario.getIdPerfil().getNombre().equals("Administrador")) {
                 LOGGER.info("Administrador - cargando vista principal admin");
                 return "/pages/InicioAdministrador.xhtml";
-            } else if(usuario.getIdPerfil().getNombre().equals("Marketing")){
+            } else if (usuario.getIdPerfil().getNombre().equals("Marketing")) {
                 LOGGER.info("Marketing - cargando vista principal admin");
                 return "/pages/InicioMarketing.xhtml";
-            }else if(usuario.getIdPerfil().getNombre().equals("Hostess")){
+            } else if (usuario.getIdPerfil().getNombre().equals("Hostess")) {
                 LOGGER.info("Hostess - cargando vista principal admin");
                 return "/pages/InicioHostess.xhtml";
-            }else if(usuario.getIdPerfil().getNombre().equals("Gerente")){
+            } else if (usuario.getIdPerfil().getNombre().equals("Gerente")) {
                 LOGGER.info("Gerente - cargando vista principal admin");
                 return "/pages/InicioGerente.xhtml";
             }
@@ -94,36 +98,56 @@ public class SessionBean implements Serializable {
         usuario = new Usuarios();
         return "/pages/InicioSession.xhtml";
     }
-    
-    public boolean perfilViewMatch(String vista){
+
+    public boolean perfilViewMatch(String vista) {
         List<Vistas> vistasUsuario = usuario.getIdPerfil().getVistasList();
-        for(Vistas v : vistasUsuario){
-            if(v.getNombreVista().equals(vista)){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public boolean perfilFormMatch(String tabla, String accion){
-        for(Formularios f : usuario.getIdPerfil().getFormulariosList()){
-            if(f.es(tabla+accion)){
+        for (Vistas v : vistasUsuario) {
+            if (v.getNombreVista().equals(vista)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void actualizarUsuario(){
+    public boolean perfilFormMatch(String tabla, String accion) {
+        for (Formularios f : usuario.getIdPerfil().getFormulariosList()) {
+            if (f.es(tabla + accion)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void actualizarUsuario() {
         usuario = sessionFacade.actualizarUsuario(usuario);
     }
-    
-    public HashMap<String, Object>  getAttributes() {
+
+    public HashMap<String, Object> getAttributes() {
         return Attributes;
     }
 
-    public void setAttributes(HashMap<String, Object>  Attributes) {
+    public void setAttributes(HashMap<String, Object> Attributes) {
         this.Attributes = Attributes;
     }
-    
+
+    public void goInicio() {
+        try {
+            if (usuario.getIdPerfil().getNombre().equals("Administrador")) {
+
+                LOGGER.info("Administrador - cargando vista principal admin");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioAdministrador.xhtml");
+            } else if (usuario.getIdPerfil().getNombre().equals("Marketing")) {
+                LOGGER.info("Marketing - cargando vista principal admin");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioMarketing.xhtml");
+            } else if (usuario.getIdPerfil().getNombre().equals("Hostess")) {
+                LOGGER.info("Hostess - cargando vista principal admin");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioHostess.xhtml");
+            } else if (usuario.getIdPerfil().getNombre().equals("Gerente")) {
+                LOGGER.info("Gerente - cargando vista principal admin");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioGerente.xhtml");
+            }
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(SessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
