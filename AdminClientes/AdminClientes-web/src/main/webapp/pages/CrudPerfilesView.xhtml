@@ -20,11 +20,11 @@
                         </p:outputPanel>
                     </f:facet>
 
-                    <p:column headerText="Id" sortBy="#{element.idPerfil}" filterBy="#{element.idPerfil}" filterMatchMode="contains">
+                    <p:column headerText="Id" sortBy="#{element.idPerfil}" filterBy="#{element.idPerfil}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.idPerfil}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.nombre}" />
                     </p:column>
 

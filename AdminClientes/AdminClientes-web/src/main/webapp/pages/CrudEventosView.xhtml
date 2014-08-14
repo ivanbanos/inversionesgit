@@ -11,7 +11,7 @@
         <h:form>
             <p:panel id="panel" header="#{label['lb_header.eventos']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudEventoBean.lista}"  
-                             emptyMessage="#{label['lb_table.noelementos']}" filteredValue="#{crudEventoBean.flista}">
+                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTable" filteredValue="#{crudEventoBean.flista}">
 
                     <f:facet name="header">
                         <p:outputPanel>
@@ -20,11 +20,11 @@
                         </p:outputPanel>
                     </f:facet>
 
-                    <p:column headerText="Id" sortBy="#{element.idEvento}" filterBy="#{element.idEvento}" filterMatchMode="contains">
+                    <p:column headerText="Id" sortBy="#{element.idEvento}" filterBy="#{element.idEvento}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.idEvento}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
+                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.nombre}" />
                     </p:column>
 

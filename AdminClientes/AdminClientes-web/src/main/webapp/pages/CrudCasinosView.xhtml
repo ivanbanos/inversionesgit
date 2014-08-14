@@ -11,7 +11,7 @@
         <h:form>
             <p:panel id="panel" header="#{label['lb_header.casinos']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudCasinosBean.lista}"  
-                             emptyMessage="#{label['lb_table.noelementos']}" filteredValue="#{crudCasinosBean.flista}">
+                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTable" filteredValue="#{crudCasinosBean.flista}">
 
                     <f:facet name="header">
                         <p:outputPanel>
@@ -20,15 +20,15 @@
                         </p:outputPanel>
                     </f:facet>
 
-                    <p:column headerText="Id" sortBy="#{element.idCasino}" filterBy="#{element.idCasino}" filterMatchMode="contains">
+                    <p:column headerText="Id" sortBy="#{element.idCasino}" filterBy="#{element.idCasino}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.idCasino}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
+                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.nombre}" />
                     </p:column>
                     
-                    <p:column headerText="Direccion" sortBy="#{element.direccion}" filterBy="#{element.direccion}" filterMatchMode="contains">
+                    <p:column headerText="Direccion" sortBy="#{element.direccion}" filterBy="#{element.direccion}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.direccion}" />
                     </p:column>
 

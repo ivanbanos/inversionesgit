@@ -9,9 +9,9 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel id="panel" header="#{label['lb_header.categorias']}">
+            <p:panel id="panelcategoria" header="#{label['lb_header.categorias']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudCategoriasBean.lista}"  
-                             emptyMessage="#{label['lb_table.noelementos']}" filteredValue="#{crudCategoriasBean.flista}">
+                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTable" filteredValue="#{crudCategoriasBean.flista}">
 
                     <f:facet name="header">
                         <p:outputPanel>
@@ -20,11 +20,11 @@
                         </p:outputPanel>
                     </f:facet>
 
-                    <p:column headerText="Id" sortBy="#{element.idCategorias}" filterBy="#{element.idCategorias}" filterMatchMode="contains">
+                    <p:column headerText="Id" sortBy="#{element.idCategorias}" filterBy="#{element.idCategorias}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.idCategorias}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
+                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.nombre}" />
                     </p:column>
 

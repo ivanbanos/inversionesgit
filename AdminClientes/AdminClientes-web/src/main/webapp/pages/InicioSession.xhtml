@@ -9,23 +9,13 @@
         <h:head>     
 
 
-            <h:outputStylesheet library="css/blitzer" name="jquery-ui-1.10.3.custom.css" />
+            <h:outputStylesheet library="css/customredblackyellow" name="jquery-ui-1.10.4.custom.css" />
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <f:loadBundle var="label" basename="labels" />
             <title>#{label['title.app']}</title>
         </h:head>
 
         <h:body>
-            <h:form>
-                <p:idleMonitor onactive="sessionTimeOutDialog.show()" 
-                               timeout="#{session.maxInactiveInterval * 1000}" />
-
-                <p:dialog header="#{label['tiempo.inactividad']}" 
-                          widgetVar="sessionTimeOutDialog"
-                          modal="true" closable="false" width="400">
-                    <h:outputText value="#{label['leyenda.inactividad']}" />
-                </p:dialog>
-            </h:form>
 
 
             <div id="bg_header">
@@ -34,30 +24,36 @@
             </div>
             <div id="barra_nav"></div>
 
-            <p:panel header="" footer="">  
+            <p:panel header="Inversiones Buena Fortuna" footer="RCT Derechos Reservados">  
                 <div id="right"  >
                     <div class="demo">
                         <div id="login">
 
-                            <h:form>
-                                <p:panelGrid columns="2" >
-                                    <f:facet name="header">  
-                                        #{label['iniciar_sesion']} 
-                                    </f:facet>  
-                                    <p:outputLabel value="#{label['codigo']}" for="codigo"/><p:inputText id="codigo" value="#{sessionBean.usuario.nombreUsuario}" required="true"/>
-                                    <p:outputLabel value="#{label['contrasena']}" for="clave"/><p:password id="clave" value="#{sessionBean.usuario.contrasena}" required="true"/>
-                                    <f:facet name="footer">
-                                        <p:commandButton value="#{label['conectar']}" ajax="false" action="#{sessionBean.Conectar()}"/>
-                                    </f:facet>
-                                </p:panelGrid>
+                            <h:form id="frm_message">
+
+
+
+
+                                <h:panelGrid columns="2" >
+                                    <h:graphicImage value="#{resource['images/LogoMRCDorado-01.png']}" />
+                                    <p:panelGrid columns="2" >
+                                        <f:facet name="header">  
+                                            #{label['iniciar_sesion']} 
+                                        </f:facet>  
+                                        <p:outputLabel value="#{label['codigo']}" for="codigo"/><p:inputText id="codigo" value="#{sessionBean.usuario.nombreUsuario}" required="true"/>
+                                        <p:outputLabel value="#{label['contrasena']}" for="clave"/><p:password id="clave" value="#{sessionBean.usuario.contrasena}" required="true"/>
+                                        <f:facet name="footer">
+                                            <p:commandButton value="#{label['conectar']}" ajax="false" action="#{sessionBean.Conectar()}"/>
+                                        </f:facet>
+                                    </p:panelGrid>
+                                </h:panelGrid>
                             </h:form>
-                            <div id="mensajes">
-                                <p:messages showDetail="true"/> 
-                            </div>
                         </div>
                     </div>
                 </div>
-
+                <div id="mensajes">
+                    <p:messages showDetail="true"/> 
+                </div>
             </p:panel>  
 
         </h:body>

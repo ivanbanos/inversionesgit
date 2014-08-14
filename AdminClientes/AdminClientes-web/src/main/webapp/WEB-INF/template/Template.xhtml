@@ -8,8 +8,6 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="./../../resources/css/default.css" rel="stylesheet" type="text/css" />
-        <link href="./../../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
         <h:outputStylesheet library="css/customredblackyellow" name="jquery-ui-1.10.4.custom.css" />
         <f:loadBundle var="label" basename="labels" />
         <title>#{label['title.app']}</title>
@@ -29,6 +27,7 @@
         <div id="AppHeader">
             <h:form>
                 <p:menubar> 
+                    
                     <p:menuitem value="#{label['lb_menu.inicio']}" action="#{sessionBean.goInicio()}" />
                     <p:submenu label="#{label['lb_menu.atributostelemarketing']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosTelemarketing&quot;)}">
                         <p:menuitem value="#{label['lb_menu.eventosclientes']}" url="/faces/pages/CrudEstadosClientesView.xhtml" 
@@ -57,8 +56,9 @@
                                     rendered="#{sessionBean.perfilViewMatch(&quot;CrudVistasView&quot;)}" />
                     </p:submenu>
 
-                    <f:facet name="options">  
-                        <p:outputLabel value="#{sessionBean.usuario.nombreUsuario}"/>
+                    <f:facet name="options"> 
+                        <h:graphicImage value="#{resource['images/LogoMRCDorado-02.png']}" />&nbsp;
+                        <p:outputLabel value="#{sessionBean.usuario.nombreUsuario}"/>&nbsp;
                         <p:commandButton value="#{label['salir']}" icon="ui-icon-extlink" action="#{sessionBean.Desconectar()}"/>  
                     </f:facet>  
                 </p:menubar> 

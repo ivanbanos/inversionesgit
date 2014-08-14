@@ -11,7 +11,7 @@
         <h:form>
             <p:panel id="panel" header="#{label['lb_header.usuarios']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudUsuariosBean.lista}"  
-                             emptyMessage="#{label['lb_table.noelementos']}" filteredValue="#{crudUsuariosBean.flista}">
+                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTable" filteredValue="#{crudUsuariosBean.flista}">
 
                     <f:facet name="header">
                         <p:outputPanel>
@@ -20,15 +20,15 @@
                         </p:outputPanel>
                     </f:facet>
 
-                    <p:column headerText="Id" sortBy="#{element.idUsuario}" filterBy="#{element.idUsuario}" filterMatchMode="contains">
+                    <p:column headerText="Id" sortBy="#{element.idUsuario}" filterBy="#{element.idUsuario}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.idUsuario}" />
                     </p:column>
 
-                    <p:column headerText="Nombre" sortBy="#{element.nombreUsuario}" filterBy="#{element.nombreUsuario}" filterMatchMode="contains">
+                    <p:column headerText="Nombre" sortBy="#{element.nombreUsuario}" filterBy="#{element.nombreUsuario}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.nombreUsuario}" />
                     </p:column>
 
-                    <p:column headerText="Perfil" sortBy="#{element.idPerfil.nombre}" filterBy="#{element.idPerfil.nombre}" filterMatchMode="contains">
+                    <p:column headerText="Perfil" sortBy="#{element.idPerfil.nombre}" filterBy="#{element.idPerfil.nombre}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.idPerfil.nombre}" />
                     </p:column>
 

@@ -6,6 +6,10 @@
 
 /* Layout helpers
 ----------------------------------*/
+
+
+
+
 .ui-helper-hidden {
 	display: none;
 }
@@ -528,6 +532,9 @@ button.ui-button::-moz-focus-inner {
 	margin: 0;
 	display: block;
 	outline: none;
+        
+    background: url('css/customredblackyellow/images/ui-bg_gloss-wave_75_f61f1f_500x100.png') repeat-x scroll 50% 50% #F61F1F!important;
+        
 }
 .ui-menu .ui-menu {
 	margin-top: -3px;
@@ -537,8 +544,8 @@ button.ui-button::-moz-focus-inner {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+        background: #7d5b5b url("/themeroller/images/ui-bg_flat_75_7d5b5b_40x100.png") 50% 50% repeat-x;
 	/* support: IE10, see #8844 */
-	list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
 }
 .ui-menu .ui-menu-divider {
 	margin: 5px -2px 5px -2px;
@@ -797,8 +804,7 @@ body .ui-tooltip {
 	font-size: 1em;
 }
 .ui-widget-content {
-	border: 1px solid #150101;
-	background: #ffffff url("css/customredblackyellow/images/ui-bg_glass_75_ffffff_1x400.png") 50% 50% repeat-x;
+    background: #ffffff url("css/customredblackyellow/images/ui-bg_flat_75_7d5b5b_40x100.png") 50% 50% repeat-x;
 	color: #260505;
 }
 .ui-widget-content a {
@@ -1175,4 +1181,18 @@ body .ui-tooltip {
 	opacity: .3;
 	filter: Alpha(Opacity=30);
 	border-radius: 8px;
+}
+.ui-panelgrid-cell {
+    border-width: 0px!important;
+    padding: 4px 10px;
+}
+
+.ui-menu-child { 
+    background: #D0AAAA!important;
+color: #260505;
+font-weight: bold;
+}
+
+.ui-panelgrid {
+    border: none!important;
 }

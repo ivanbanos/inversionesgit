@@ -11,7 +11,7 @@
         <h:form>
             <p:panel id="panel" header="#{label['lb_header.formularios']}">
                 <p:dataTable id="detailsTable" var="element" value="#{crudFormulariosBean.lista}"  
-                             emptyMessage="#{label['lb_table.noelementos']}" filteredValue="#{crudFormulariosBean.flista}">
+                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTable" filteredValue="#{crudFormulariosBean.flista}">
 
                     <f:facet name="header">
                         <p:outputPanel>
@@ -20,15 +20,15 @@
                         </p:outputPanel>
                     </f:facet>
 
-                    <p:column headerText="Id" sortBy="#{element.idFormulario}" filterBy="#{element.idFormulario}" filterMatchMode="contains">
+                    <p:column headerText="Id" sortBy="#{element.idFormulario}" filterBy="#{element.idFormulario}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.idFormulario}" />
                     </p:column>
 
-                    <p:column headerText="tabla" sortBy="#{element.tabla}" filterBy="#{element.tabla}" filterMatchMode="contains">
+                    <p:column headerText="tabla" sortBy="#{element.tabla}" filterBy="#{element.tabla}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.tabla}" />
                     </p:column>
 
-                    <p:column headerText="accion" sortBy="#{element.accion}" filterBy="#{element.accion}" filterMatchMode="contains">
+                    <p:column headerText="accion" sortBy="#{element.accion}" filterBy="#{element.accion}" filterMatchMode="contains" filterStyle="display:none">
                         <h:outputText value="#{element.accion}" />
                     </p:column>
 
