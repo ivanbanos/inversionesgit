@@ -5,6 +5,7 @@
 package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -67,12 +68,14 @@ public class Usuarios implements Serializable {
 
     public Usuarios(Integer idUsuario) {
         this.idUsuario = idUsuario;
+        eventosList = new ArrayList<Eventos>();
     }
 
     public Usuarios(Integer idUsuario, String nombreUsuario, String contrasena) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
+        eventosList = new ArrayList<Eventos>();
     }
 
     public Integer getIdUsuario() {

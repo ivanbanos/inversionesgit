@@ -9,7 +9,37 @@
 
     <ui:define name="content">
         <h:form>
-             
+
+            <p:dashboard id="board" model="#{inicioHostessBean.model}">
+                <p:panel id="panelEventos" header="#{label['lb_header.eventos']}" >
+                    <p:dataTable id="detailsTable" var="element" value="#{inicioHostessBean.lista}"  
+                                 emptyMessage="#{label['lb_table.noelementos']}" filteredValue="#{inicioHostessBean.flista}">
+
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Search all fields:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('detailsTable').filter()" style="width:150px" placeholder="Enter keyword" />
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column headerText="Id" sortBy="#{element.idEvento}" filterBy="#{element.idEvento}" filterMatchMode="contains">
+                            <h:outputText value="#{element.idEvento}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
+                            <h:outputText value="#{element.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                            <p:commandButton id="editButton" icon="ui-icon-pencil" 
+                                             title="#{label['lb_btn.editar']}" action="#{inicioHostessBean.goEvento(element.idEvento)}">  
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </p:dashboard>
+
+
         </h:form>
 
 

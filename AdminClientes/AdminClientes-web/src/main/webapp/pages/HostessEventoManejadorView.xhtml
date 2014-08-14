@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panelGrid id="editForm" columns="2">  
+                <p:row >
+                    <p:column > <h:outputLabel value="#{label['codigo']}" /> </p:column>
+                    <p:column > <h:outputLabel value="#{hostessEventoManejadorBean.elemento.idEvento}"/></p:column>
+                </p:row>
+
+                <p:row >
+                    <p:column > <h:outputLabel for="nombre" value="#{label['nombre']}" /> </p:column>
+                    <p:column > <h:outputLabel id="nombre" value="#{hostessEventoManejadorBean.elemento.nombre}" /></p:column>
+                </p:row>
+
+                <p:row >
+                    <p:column > <p:outputLabel for="fecini" value="#{label['fechainicio']}" /></p:column>
+                    <p:column > <h:outputLabel id="fecini" value="#{hostessEventoManejadorBean.elemento.fechaInicio}" >
+                        <f:convertDateTime pattern="MM-dd-yyyy" />
+                    </h:outputLabel></p:column>
+                </p:row>
+
+                <p:row >
+                    <p:column > <p:outputLabel for="fecfin" value="#{label['fechafinal']}" /></p:column>
+                    <p:column > <h:outputLabel id="fecfin" value="#{hostessEventoManejadorBean.elemento.fechaFinalizacion}"  >
+                        <f:convertDateTime pattern="MM-dd-yyyy" />
+                    </h:outputLabel></p:column>
+                </p:row>
+
+                <p:row >
+                    <p:column > <p:outputLabel for="descripcion" value="#{label['descripcion']}" /></p:column>
+                    <p:column > <h:outputLabel id="descripcion" value="#{hostessEventoManejadorBean.elemento.descripcion}"/></p:column>
+                </p:row>
+
+                <p:row >
+                    <p:column > <h:outputLabel for="estado" value="#{label['estado']}" /> </p:column>
+                    <p:column > <h:outputLabel id="estado" value="#{hostessEventoManejadorBean.elemento.estado}" /></p:column>
+                </p:row>
+
+                <p:row >
+                    <p:column > <h:outputLabel for="tipo" value="#{label['tipo']}" /> </p:column>
+                    <p:column > <h:outputLabel id="tipo" value="#{hostessEventoManejadorBean.elemento.tipo}"/></p:column>
+                </p:row>
+
+                <p:row >
+                    <p:column > <h:outputLabel for="casino" value="#{label['casino']}" /> </p:column>
+                    <p:column > <h:outputLabel id="casino" value="#{hostessEventoManejadorBean.elemento.idCasino.nombre}" /></p:column>
+                </p:row>
+
+                <p:row rendered="#{hostessEventoManejadorBean.elemento.imagen!=null}">
+                    <p:column > <h:outputLabel for="imagen" value="#{label['imagen']}" rendered="#{hostessEventoManejadorBean.elemento.imagen!=null}"/></p:column>
+                    <p:column > <p:graphicImage  id="imagen" value="#{hostessEventoManejadorBean.file}" rendered="#{hostessEventoManejadorBean.elemento.imagen!=null}" /></p:column>
+                </p:row>
+
+
+                <f:facet name="footer">  
+                    <p:button value="Volver" outcome="/pages/InicioHostess.xhtml"
+                              style="margin:0" icon="ui-icon-arrowreturn-1-w"  />    
+                </f:facet>  
+            </p:panelGrid>  
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

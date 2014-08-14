@@ -29,15 +29,13 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @ViewScoped
-public class InicioMarketingBean {
+public class InicioHostessBean {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
     private List<Eventos> lista;
-    private Eventos elemento;
-    private List<Casinos> listacasinos;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private DashboardModel model;
@@ -58,12 +56,12 @@ public class InicioMarketingBean {
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public InicioMarketingBean() {
+    public InicioHostessBean() {
     }
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("CrudEventosView")) {
+        if (!sessionBean.perfilViewMatch("InicioHostessView")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
@@ -71,12 +69,10 @@ public class InicioMarketingBean {
                 LOGGER.error(ex);
             }
         }
-        elemento = new Eventos();
-        lista = marketingUserFacade.findAllEventos();
-        listacasinos = marketingUserFacade.findAllCasinos();
+        lista = sessionBean.getUsuario().getEventosList();
         model = new DefaultDashboardModel();
         DashboardColumn column1 = new DefaultDashboardColumn();
-        if (sessionBean.perfilFormMatch("Eventos", "listaclientes")) {
+        if (sessionBean.perfilFormMatch("Eventos", "listahostess")) {
             column1.addWidget("panelEventos");
         }
          model.addColumn(column1);
@@ -88,22 +84,6 @@ public class InicioMarketingBean {
 
     public void setLista(List<Eventos> lista) {
         this.lista = lista;
-    }
-
-    public Eventos getElemento() {
-        return elemento;
-    }
-
-    public void setElemento(Eventos elemento) {
-        this.elemento = elemento;
-    }
-
-    public List<Casinos> getListacasinos() {
-        return listacasinos;
-    }
-
-    public void setListacasinos(List<Casinos> listacasinos) {
-        this.listacasinos = listacasinos;
     }
 
     public MarketingUserFacade getMarketingUserFacade() {
@@ -125,7 +105,7 @@ public class InicioMarketingBean {
     public void goEvento(int id) {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("MarketingEventoManejadorView.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
         } catch (IOException ex) {
                 LOGGER.error(ex);
         }

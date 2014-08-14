@@ -8,14 +8,18 @@ import com.InvBF.EntityFacade.FormulariosFacadeLocal;
 import com.InvBF.EntityFacade.PerfilesFacadeLocal;
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
 import com.InvBF.EntityFacade.VistasFacadeLocal;
+import com.InvBF.util.EncryptUtil;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -48,8 +52,16 @@ public class AdminFacadeImpl implements AdminFacade {
     @Override
     public void guardarUsuarios(Usuarios elemento) {
         if (elemento.getIdUsuario() == null) {
+            try {
+                elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
+            } catch (NoSuchAlgorithmException ex) {
+            }
             usuariosFacadeLocal.create(elemento);
         } else {
+            try {
+                elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
+            } catch (NoSuchAlgorithmException ex) {
+            }
             usuariosFacadeLocal.edit(elemento);
         }
     }

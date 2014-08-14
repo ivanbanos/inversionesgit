@@ -213,6 +213,5 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     public Estadoscliente findByNombreEstadoCliente(String iniciado) {
         return estadosclienteFacadeLocal.findByNombreEstadoCliente(iniciado);
     }
-
    
 }

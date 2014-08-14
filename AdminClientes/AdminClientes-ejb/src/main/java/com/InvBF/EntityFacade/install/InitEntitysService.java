@@ -286,6 +286,16 @@ public class InitEntitysService {
             perfil.setNombre("Hostess");
             perfil.setFormulariosList(new ArrayList<Formularios>());
             perfil.setVistasList(new ArrayList<Vistas>());
+            
+            Formularios formulario;
+            formulario = new Formularios(null, "Eventos", "listahostess");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            
+            Vistas vista;
+            vista = new Vistas(null, "EventosHosstesView");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
 
             perfilesFacadeLocal.create(perfil);
 

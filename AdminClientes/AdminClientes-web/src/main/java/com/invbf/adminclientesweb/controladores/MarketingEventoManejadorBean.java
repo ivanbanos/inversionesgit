@@ -7,10 +7,8 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Usuarios;
-import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.ByteArrayInputStream;
@@ -122,6 +120,10 @@ public class MarketingEventoManejadorBean {
     public void guardar() {
         Estadoscliente estadoscliente = marketingUserFacade.findByNombreEstadoCliente("Inicial");
         elemento.setUsuariosList(todosusuarioses.getTarget());
+        for(Usuarios s : todosusuarioses.getTarget()){
+            s.getEventosList().add(elemento);
+            adminFacade.guardarUsuarios(s);
+        }
         ArrayList<Listasclientesevento> al = new ArrayList<Listasclientesevento>(elemento.getListasclienteseventoList());
         elemento.getListasclienteseventoList().clear();
         for (Clientes c : todosclienteses.getTarget()) {
