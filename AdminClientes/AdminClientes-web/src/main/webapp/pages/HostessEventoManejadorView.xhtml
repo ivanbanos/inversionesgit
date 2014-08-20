@@ -5,7 +5,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../WEB-INF/template/Template.xhtml">
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
         <h:form>
@@ -23,15 +24,15 @@
                 <p:row >
                     <p:column > <p:outputLabel for="fecini" value="#{label['fechainicio']}" /></p:column>
                     <p:column > <h:outputLabel id="fecini" value="#{hostessEventoManejadorBean.elemento.fechaInicio}" >
-                        <f:convertDateTime pattern="MM-dd-yyyy" />
-                    </h:outputLabel></p:column>
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputLabel></p:column>
                 </p:row>
 
                 <p:row >
                     <p:column > <p:outputLabel for="fecfin" value="#{label['fechafinal']}" /></p:column>
                     <p:column > <h:outputLabel id="fecfin" value="#{hostessEventoManejadorBean.elemento.fechaFinalizacion}"  >
-                        <f:convertDateTime pattern="MM-dd-yyyy" />
-                    </h:outputLabel></p:column>
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputLabel></p:column>
                 </p:row>
 
                 <p:row >
@@ -65,6 +66,9 @@
                               style="margin:0" icon="ui-icon-arrowreturn-1-w"  />    
                 </f:facet>  
             </p:panelGrid>  
+            <c:forEach items="${hostessEventoManejadorBean.clientes}" var="clientes">
+              ${clientes.clientes.nombres} ${clientes.clientes.apellidos}
+            </c:forEach>
         </h:form>
 
 

@@ -1,77 +1,116 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:j="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="css/customredblackyellow" name="jquery-ui-1.10.4.custom.css" />
+
+        
+            <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="cssLayout.css" />
         <f:loadBundle var="label" basename="labels" />
         <title>#{label['title.app']}</title>
     </h:head>
 
     <h:body>
-        <h:form>
-            <p:idleMonitor onactive="sessionTimeOutDialog.show()" 
-                           timeout="#{session.maxInactiveInterval * 1000}" />
+        <div id="bg_header">
+            <div id="bg_header_izq"></div>
+            <div id="bg_header_der"></div>
+        </div>
+        <div id="barra_nav">
+            <div id="divizq">
+                <h:panelGrid columns="1">
 
-            <p:dialog header="#{label['tiempo.inactividad']}" 
-                      widgetVar="sessionTimeOutDialog"
-                      modal="true" closable="false" width="400">
-                <h:outputText value="#{label['leyenda.inactividad']}" />
-            </p:dialog>
-        </h:form>
-        <div id="AppHeader">
-            <h:form>
-                <p:menubar> 
-                    
-                    <p:menuitem value="#{label['lb_menu.inicio']}" action="#{sessionBean.goInicio()}" />
-                    <p:submenu label="#{label['lb_menu.atributostelemarketing']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosTelemarketing&quot;)}">
-                        <p:menuitem value="#{label['lb_menu.eventosclientes']}" url="/faces/pages/CrudEstadosClientesView.xhtml" 
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudEstadosClientesView&quot;)}"/>
-                        <p:menuitem value="#{label['lb_menu.categoria']}" url="/faces/pages/CrudCategoriasView.xhtml"  
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudCategoriasView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.atributos']}" url="/faces/pages/CrudAtributosView.xhtml"  
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudAtributosView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.tipojuegos']}" url="/faces/pages/CrudTiposJuegosView.xhtml"  
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudTiposJuegosView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.casinos']}" url="/faces/pages/CrudCasinosView.xhtml"  
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudCasinosView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.eventos']}" url="/faces/pages/CrudEventosView.xhtml"  
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudEventosView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.clientes']}" url="/faces/pages/CrudClientesView.xhtml"  
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudClientesView&quot;)}" />
-                    </p:submenu>
-                    
-                    <p:submenu label="#{label['lb_menu.atributossistema']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
-                        <p:menuitem value="#{label['lb_menu.usuarios']}"  url="/faces/pages/CrudUsuarioView.xhtml" rendered="#{sessionBean.perfilViewMatch(&quot;CrudUsuarioView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.perfiles']}"  url="/faces/pages/CrudPerfilesView.xhtml"   
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudPerfilesView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.formularios']}"  url="/faces/pages/CrudFormulariosView.xhtml"  
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudFormulariosView&quot;)}" />
-                        <p:menuitem value="#{label['lb_menu.vistas']}"  url="/faces/pages/CrudVistasView.xhtml"   
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;CrudVistasView&quot;)}" />
-                    </p:submenu>
+                </h:panelGrid>
 
-                    <f:facet name="options"> 
+            </div>
+            <div id="divder">
+                <h:panelGrid columns="1">
+
+                    <h:form>
+                        <p:growl id="messages" showDetail="true" sticky="true" />
+                        <!--<p:messages id="messages" />-->
+                        <!-- <div id="ico-user" class="class_ico-user"/> -->
+
                         <h:graphicImage value="#{resource['images/LogoMRCDorado-02.png']}" />&nbsp;
+                        <h:graphicImage value="#{resource['images/LogoTLCBlanco-02.png']}" />&nbsp;
                         <p:outputLabel value="#{sessionBean.usuario.nombreUsuario}"/>&nbsp;
                         <p:commandButton value="#{label['salir']}" icon="ui-icon-extlink" action="#{sessionBean.Desconectar()}"/>  
-                    </f:facet>  
-                </p:menubar> 
-            </h:form>
+                    </h:form>
+                </h:panelGrid>
+
+
+            </div>
         </div>
-        <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+
+        <div>
+            <div id="left">
+
+                <h:form id="id_frm_menu">
+                    <p:panelMenu style="width: 98%" >
+
+                        <p:submenu label="Inicio" >
+                            <p:menuitem value="#{label['lb_menu.inicio']}" action="#{sessionBean.goInicio()}" />
+                        </p:submenu>
+                        <p:submenu label="#{label['lb_menu.atributostelemarketing']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosTelemarketing&quot;)}">
+                            <p:menuitem value="#{label['lb_menu.eventosclientes']}" url="/faces/pages/CrudEstadosClientesView.xhtml" 
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudEstadosClientesView&quot;)}"/>
+                            <p:menuitem value="#{label['lb_menu.categoria']}" url="/faces/pages/CrudCategoriasView.xhtml"  
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudCategoriasView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.atributos']}" url="/faces/pages/CrudAtributosView.xhtml"  
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudAtributosView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.tipojuegos']}" url="/faces/pages/CrudTiposJuegosView.xhtml"  
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudTiposJuegosView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.casinos']}" url="/faces/pages/CrudCasinosView.xhtml"  
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudCasinosView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.eventos']}" url="/faces/pages/CrudEventosView.xhtml"  
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudEventosView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.clientes']}" url="/faces/pages/CrudClientesView.xhtml"  
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudClientesView&quot;)}" />
+                        </p:submenu>
+
+                        <p:submenu label="#{label['lb_menu.atributossistema']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
+                            <p:menuitem value="#{label['lb_menu.usuarios']}"  url="/faces/pages/CrudUsuarioView.xhtml" rendered="#{sessionBean.perfilViewMatch(&quot;CrudUsuarioView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.perfiles']}"  url="/faces/pages/CrudPerfilesView.xhtml"   
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudPerfilesView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.formularios']}"  url="/faces/pages/CrudFormulariosView.xhtml"  
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudFormulariosView&quot;)}" />
+                            <p:menuitem value="#{label['lb_menu.vistas']}"  url="/faces/pages/CrudVistasView.xhtml"   
+                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudVistasView&quot;)}" />
+                        </p:submenu>
+
+                    </p:panelMenu>
+
+                </h:form>
+            </div>
+
+
+            <div id="content" class="left_content">
+                <p:panel footer="RCT Derechos Reservados" id="id_pnl_content" >
+
+                    <div id="mensajes">
+                        <h:form>
+                            <p:messages id="messages"/> 
+                        </h:form>
+                    </div>
+                    <div id="parent_content">
+                        <ui:insert name="content">Content</ui:insert>
+                    </div>
+                </p:panel>
+
+            </div>
+
         </div>
-        <div id="mensajes">
-            <h:form>
-                <p:messages id="messages"/> 
-            </h:form>
-        </div>
+        <!-- <div id="bottom">
+              <ui:insert name="bottom">Bottom</ui:insert>
+          </div>-->
+
     </h:body>
 
 </html>

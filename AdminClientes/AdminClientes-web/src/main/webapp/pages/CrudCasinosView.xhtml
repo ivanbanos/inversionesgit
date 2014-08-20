@@ -9,7 +9,8 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel id="panel" header="#{label['lb_header.casinos']}">
+            
+            <h1>#{label['lb_header.casinos']}</h1>
                 <p:dataTable id="detailsTable" var="element" value="#{crudCasinosBean.lista}"  
                              emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTable" filteredValue="#{crudCasinosBean.flista}">
 
@@ -52,7 +53,6 @@
                                          rendered="#{sessionBean.perfilFormMatch(&quot;Casinos&quot;, &quot;crear&quot;)}"/>  
                     </f:facet>
                 </p:dataTable>
-            </p:panel>
 
         </h:form>
 

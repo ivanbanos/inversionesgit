@@ -4,12 +4,11 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
-import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.exceptions.EventoSinClientesException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import com.invbf.adminclientesapi.facade.HostessFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,7 +22,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
 
 /**
@@ -40,10 +38,13 @@ public class HostessEventoManejadorBean {
     MarketingUserFacade marketingUserFacade;
     @EJB
     AdminFacade adminFacade;
+    @EJB
+    HostessFacade hostessFacade;
     private Eventos elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private StreamedContent file;
+    private List<Listasclientesevento> clientes;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -78,6 +79,16 @@ public class HostessEventoManejadorBean {
         if (elemento.getImagen() != null) {
             file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/" + elemento.getFormatoImagen());
         }
+        clientes = new ArrayList<Listasclientesevento>(0);
+        int cantidadClientes = hostessFacade.findCantidadClientes();
+        for (int i = 0; i<cantidadClientes; i++) {
+            try {
+                clientes.add(hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento")));
+            } catch (EventoSinClientesException ex) {
+                LOGGER.info(ex);
+                break;
+            }
+        }
     }
 
     public Eventos getElemento() {
@@ -111,4 +122,21 @@ public class HostessEventoManejadorBean {
     public void setAdminFacade(AdminFacade adminFacade) {
         this.adminFacade = adminFacade;
     }
+
+    public HostessFacade getHostessFacade() {
+        return hostessFacade;
+    }
+
+    public void setHostessFacade(HostessFacade hostessFacade) {
+        this.hostessFacade = hostessFacade;
+    }
+
+    public List<Listasclientesevento> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Listasclientesevento> clientes) {
+        this.clientes = clientes;
+    }
+
 }

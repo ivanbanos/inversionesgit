@@ -4,6 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
+import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Configuraciones;
 import java.util.List;
 import javax.ejb.Local;
@@ -28,5 +29,7 @@ public interface ConfiguracionesFacadeLocal {
     List<Configuraciones> findRange(int[] range);
 
     int count();
+
+    public Configuraciones findByNombre(String cantidadClientes);
     
 }

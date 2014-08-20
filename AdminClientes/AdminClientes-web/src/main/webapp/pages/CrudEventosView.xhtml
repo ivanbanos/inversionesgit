@@ -9,7 +9,7 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel id="panel" header="#{label['lb_header.eventos']}">
+            <h1>#{label['lb_header.eventos']}</h1>
                 <p:dataTable id="detailsTable" var="element" value="#{crudEventoBean.lista}"  
                              emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTable" filteredValue="#{crudEventoBean.flista}">
 
@@ -48,7 +48,6 @@
                                          rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}"/>  
                     </f:facet>
                 </p:dataTable>
-            </p:panel>
 
         </h:form>
 

@@ -9,7 +9,7 @@
         <h:head>     
 
 
-            <h:outputStylesheet library="css/customredblackyellow" name="jquery-ui-1.10.4.custom.css" />
+            <h:outputStylesheet library="css" name="bootstrap.min.css" />
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <f:loadBundle var="label" basename="labels" />
             <title>#{label['title.app']}</title>
@@ -18,44 +18,72 @@
         <h:body>
 
 
-            <div id="bg_header">
-                <div id="bg_header_izq"></div>
-                <div id="bg_header_der"></div>
-            </div>
-            <div id="barra_nav"></div>
+                <div id="bg_header">
+                    <div id="bg_header_izq"></div>
+                    <div id="bg_header_der"></div>
+                </div>
+                <div id="barra_nav"></div>
 
-            <p:panel header="Inversiones Buena Fortuna" footer="RCT Derechos Reservados">  
-                <div id="right"  >
-                    <div class="demo">
-                        <div id="login">
-
-                            <h:form id="frm_message">
-
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Inversiones Buena Fortuna</h3>
+                    </div>
+                    <div class="panel-body">
 
 
-
-                                <h:panelGrid columns="2" >
+                        <div class="container">
+                            
+                            
+                            
+                            <div class="row clearfix">
+                                <div class="col-md-4 column">
                                     <h:graphicImage value="#{resource['images/LogoMRCDorado-01.png']}" />
-                                    <p:panelGrid columns="2" >
-                                        <f:facet name="header">  
-                                            #{label['iniciar_sesion']} 
-                                        </f:facet>  
-                                        <p:outputLabel value="#{label['codigo']}" for="codigo"/><p:inputText id="codigo" value="#{sessionBean.usuario.nombreUsuario}" required="true"/>
-                                        <p:outputLabel value="#{label['contrasena']}" for="clave"/><p:password id="clave" value="#{sessionBean.usuario.contrasena}" required="true"/>
-                                        <f:facet name="footer">
-                                            <p:commandButton value="#{label['conectar']}" ajax="false" action="#{sessionBean.Conectar()}"/>
-                                        </f:facet>
-                                    </p:panelGrid>
-                                </h:panelGrid>
-                            </h:form>
+                                </div>
+                                <div class="col-md-4 column">
+                                    <h:form class="form-horizontal">
+                                        <fieldset>
+
+                                            <!-- Form Name -->
+                                            <legend>Inicio de Sesión</legend>
+
+                                            <!-- Text input-->
+                                            <div class="control-group">
+                                                <label class="control-label" for="codigo">#{label['codigo']}</label>
+                                                <div class="controls">
+                                                    <p:inputText id="codigo" value="#{sessionBean.usuario.nombreUsuario}" required="true"/>
+                                                </div>
+                                            </div>
+
+                                            <!-- Password input-->
+                                            <div class="control-group">
+                                                <label class="control-label" for="passwordinput">#{label['contrasena']}</label>
+                                                <div class="controls">
+                                                    <p:password id="clave" value="#{sessionBean.usuario.contrasena}" required="true"/>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button -->
+                                            <div class="control-group">
+                                                <label class="control-label" for="singlebutton"></label>
+                                                <div class="controls">
+                                                    <h:commandButton class="btn btn-primary" value="#{label['conectar']}" ajax="false" action="#{sessionBean.Conectar()}"/>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </h:form>
+                                </div>
+                                <div class="col-md-4 column">
+                                    <h:graphicImage value="#{resource['images/LogoTLCBlanco-01.png']}" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="mensajes">
+                            <p:messages showDetail="true"/> 
                         </div>
                     </div>
                 </div>
-                <div id="mensajes">
-                    <p:messages showDetail="true"/> 
-                </div>
-            </p:panel>  
-
         </h:body>
     </f:view>
 </html>

@@ -319,5 +319,8 @@ public class InitEntitysService {
         Estadoscliente estadoscliente = new Estadoscliente();
         estadoscliente.setNombre("Inicial");
         estadosclienteFacadeLocal.create(estadoscliente);
+        estadoscliente = new Estadoscliente();
+        estadoscliente.setNombre("En revision");
+        estadosclienteFacadeLocal.create(estadoscliente);
     }
 }

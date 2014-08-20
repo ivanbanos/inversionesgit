@@ -4,7 +4,9 @@
  */
 package com.InvBF.EntityFacade;
 
+import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Configuraciones;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +27,13 @@ public class ConfiguracionesFacade extends AbstractFacade<Configuraciones> imple
 
     public ConfiguracionesFacade() {
         super(Configuraciones.class);
+    }
+
+    @Override
+    public Configuraciones findByNombre(String cantidadClientes) {
+         return (Configuraciones)em.createNamedQuery("Configuraciones.findByNombre")
+            .setParameter("nombre", cantidadClientes)
+            .getResultList().get(0);
     }
     
 }
