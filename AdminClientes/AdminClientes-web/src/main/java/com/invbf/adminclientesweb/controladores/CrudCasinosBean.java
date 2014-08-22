@@ -55,14 +55,6 @@ public class CrudCasinosBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudCasinosView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Casinos();
         lista = marketingUserFacade.findAllCasinos();
     }

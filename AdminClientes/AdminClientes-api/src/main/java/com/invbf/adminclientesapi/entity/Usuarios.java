@@ -64,6 +64,7 @@ public class Usuarios implements Serializable {
 
     public Usuarios() {
         idPerfil = new Perfiles();
+        eventosList = new ArrayList<Eventos>();
     }
 
     public Usuarios(Integer idUsuario) {

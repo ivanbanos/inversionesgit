@@ -54,7 +54,7 @@ public class PerfilActBean {
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("PerfilAct")) {
+        if (!sessionBean.perfilViewMatch("Perfiles")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
@@ -65,7 +65,7 @@ public class PerfilActBean {
         
         if (sessionBean.getAttributes()==null||!sessionBean.getAttributes().containsKey("idPerfil")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosSistema.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -127,7 +127,7 @@ public class PerfilActBean {
             adminFacade.guardarPerfiles(elemento);
             sessionBean.actualizarUsuario();
             sessionBean.getAttributes().remove("idPerfil");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosSistema.xhtml");
         } catch (IOException ex) {
                 LOGGER.error(ex);
         }

@@ -11,7 +11,6 @@ import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -63,14 +62,6 @@ public class CrudPerfilesBean {
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("CrudPerfilesView")) {
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Perfiles();
         lista = adminFacade.findAllPerfiles();
         listaformularios = new ArrayList<Formularios>();
@@ -123,12 +114,14 @@ public class CrudPerfilesBean {
         adminFacade.deletePerfiles(elemento);
         lista = adminFacade.findAllPerfiles();
         elemento = new Perfiles();
+        sessionBean.notifyObserver("Perfiles");
     }
 
     public void guardar() {
         adminFacade.guardarPerfiles(elemento);
         lista = adminFacade.findAllPerfiles();
         elemento = new Perfiles();
+        sessionBean.notifyObserver("Perfiles");
     }
 
     public void goPerfil(int id) {

@@ -54,14 +54,6 @@ public class CrudVistasBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudVistasView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Vistas();
         lista = adminFacade.findAllVistas();
     }

@@ -11,10 +11,14 @@ import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.facade.SystemFacade;
+import com.invbf.adminclientesweb.interfaces.Observer;
+import com.invbf.adminclientesweb.interfaces.Subject;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
@@ -30,7 +34,7 @@ import org.apache.log4j.Logger;
  */
 @Named(value = "sessionBean")
 @SessionScoped
-public class SessionBean implements Serializable {
+public class SessionBean implements Serializable, Subject {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
@@ -38,6 +42,7 @@ public class SessionBean implements Serializable {
     SystemFacade sessionFacade;
     private Usuarios usuario;//Almacena el objeto usuario de la session
     private HashMap<String, Object> Attributes;
+    private List<Observer> observers;
 
     /**
      * Creates a new instance of SessionFlowumiUtil
@@ -49,6 +54,7 @@ public class SessionBean implements Serializable {
     public void init() {
         usuario = new Usuarios();
         Attributes = new HashMap<String, Object>();
+        observers = new ArrayList<Observer>();
     }
 
     public Usuarios getUsuario() {
@@ -64,19 +70,6 @@ public class SessionBean implements Serializable {
             LOGGER.info("Conectando...");
             usuario = sessionFacade.iniciarSession(usuario);
             LOGGER.info("Conectado.");
-            if (usuario.getIdPerfil().getNombre().equals("Administrador")) {
-                LOGGER.info("Administrador - cargando vista principal admin");
-                return "/pages/InicioAdministrador.xhtml";
-            } else if (usuario.getIdPerfil().getNombre().equals("Marketing")) {
-                LOGGER.info("Marketing - cargando vista principal admin");
-                return "/pages/InicioMarketing.xhtml";
-            } else if (usuario.getIdPerfil().getNombre().equals("Hostess")) {
-                LOGGER.info("Hostess - cargando vista principal admin");
-                return "/pages/InicioHostess.xhtml";
-            } else if (usuario.getIdPerfil().getNombre().equals("Gerente")) {
-                LOGGER.info("Gerente - cargando vista principal admin");
-                return "/pages/InicioGerente.xhtml";
-            }
         } catch (ClavesNoConcuerdanException ex) {
             LOGGER.error(ex.getMessage());
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
@@ -90,7 +83,7 @@ public class SessionBean implements Serializable {
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
             usuario = new Usuarios();
         }
-        return "";
+        return "/pages/index.xhtml";
     }
 
     public String Desconectar() {
@@ -148,6 +141,32 @@ public class SessionBean implements Serializable {
             }
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(SessionBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void notifyObserver(String tabla) {
+        Iterator<Observer> i = observers.iterator();
+        while (i.hasNext()) {
+            Observer o = i.next();
+            if (o == null) {
+                i.remove();
+            } else {
+                if(tabla.equals("Perfiles")&&o instanceof CrudUsuariosBean){
+                    o.update();
+                }
+            }
+            
         }
     }
 }

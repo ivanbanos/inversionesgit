@@ -55,14 +55,6 @@ public class CrudTipoJuegoBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudTiposJuegosView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Tiposjuegos();
         lista = marketingUserFacade.findAllTiposjuegos();
     }

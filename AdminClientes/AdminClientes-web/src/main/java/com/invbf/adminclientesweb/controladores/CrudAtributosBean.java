@@ -54,14 +54,6 @@ private List<Atributos> flista;
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudAtributosView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Atributos();
         lista = marketingUserFacade.findAllAtributos();
         

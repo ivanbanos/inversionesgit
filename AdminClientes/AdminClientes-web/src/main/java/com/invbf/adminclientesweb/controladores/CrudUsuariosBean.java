@@ -8,9 +8,11 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import com.invbf.adminclientesweb.interfaces.Observer;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -24,7 +26,7 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @ViewScoped
-public class CrudUsuariosBean {
+public class CrudUsuariosBean implements Observer{
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
@@ -57,17 +59,15 @@ public class CrudUsuariosBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudUsuarioView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Usuarios();
         lista = adminFacade.findAllUsuarios();
         listaperfiles = adminFacade.findAllPerfiles();
+        sessionBean.registerObserver(this);
+    }
+    
+    @PreDestroy
+    public void preDestroy() {
+        sessionBean.removeObserver(this);
     }
 
     public List<Usuarios> getLista() {
@@ -113,5 +113,11 @@ public class CrudUsuariosBean {
         lista = adminFacade.findAllUsuarios();
         elemento = new Usuarios();
     }
+
+    @Override
+    public void update() {
+        listaperfiles = adminFacade.findAllPerfiles();
+    }
+    
     
 }

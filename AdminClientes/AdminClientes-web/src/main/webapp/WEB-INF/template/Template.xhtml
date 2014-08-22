@@ -10,106 +10,106 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        
-            <h:outputStylesheet library="css" name="bootstrap.min.css" />
+
         <h:outputStylesheet library="css" name="default.css" />
-        <h:outputStylesheet library="css" name="cssLayout.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputStylesheet library="font-awesome/css" name="font-awesome.css" />
+        <h:outputStylesheet library="css/blitzer" name="jquery-ui-1.10.3.custom.css" />
+
         <f:loadBundle var="label" basename="labels" />
         <title>#{label['title.app']}</title>
     </h:head>
 
     <h:body>
-        <div id="bg_header">
-            <div id="bg_header_izq"></div>
-            <div id="bg_header_der"></div>
+
+        <nav class="navbar navbar-primary " role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+
+                    </button>
+
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><h:graphicImage value="#{resource['images/LogoMRCDorado-02.png']}" /></li>
+                        <li><h:graphicImage value="#{resource['images/LogoTLCBlanco-02.png']}" /></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <h:form class="navbar-form navbar-right">
+                            <div class="form-group">
+                                <p class="navbar-text">#{sessionBean.usuario.nombreUsuario}</p>
+                            </div>
+                            <h:commandLink id="btnsearch"
+                                           action="#{sessionBean.Desconectar()}"
+                                           styleClass="btn btn-primary">
+                                #{label['salir']}
+                            </h:commandLink> 
+                        </h:form> 
+
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+
+
+        <div class="col-md-2 left-sidebar">
+
+            <h:form >
+                <p:menu style="width: 98%" id="menuslide" >
+
+                    <p:submenu label="Menu" >
+                        <p:menuitem value="#{label['lb_menu.inicio']}" url="/faces/pages/index.xhtml" />
+                        <p:menuitem value="#{label['lb_menu.atributossistemas']}" url="/faces/pages/AdministradorAtributosSistema.xhtml" 
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}"/>
+                        <p:menuitem value="#{label['lb_menu.atributosmarketing']}" url="/faces/pages/AdministradorAtributosMarketing.xhtml" 
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}"/>
+                        <p:menuitem value="#{label['lb_menu.Eventos']}" url="/faces/pages/ManejadorEventosMarketing.xhtml" 
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;)}"/>
+                        <p:menuitem value="#{label['lb_menu.Eventos']}" url="/faces/pages/ManejadorEventosHostess.xhtml" 
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}"/>
+                        <p:menuitem value="#{label['lb_menu.Reportes']}" url="/faces/pages/Reportes.xhtml" 
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}"/>
+                        <p:menuitem value="#{label['lb_menu.ConfiguracionesGenerales']}" url="/faces/pages/ConfiguracionesGenerales.xhtml" 
+                                    rendered="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}"/>
+                        <p:menuitem value="#{label['lb_menu.CuentaUsuarios']}" url="/faces/pages/CuentaUsuarios.xhtml" />
+                    </p:submenu>
+
+                </p:menu>
+
+            </h:form>
         </div>
-        <div id="barra_nav">
-            <div id="divizq">
-                <h:panelGrid columns="1">
-
-                </h:panelGrid>
-
-            </div>
-            <div id="divder">
-                <h:panelGrid columns="1">
-
-                    <h:form>
-                        <p:growl id="messages" showDetail="true" sticky="true" />
-                        <!--<p:messages id="messages" />-->
-                        <!-- <div id="ico-user" class="class_ico-user"/> -->
-
-                        <h:graphicImage value="#{resource['images/LogoMRCDorado-02.png']}" />&nbsp;
-                        <h:graphicImage value="#{resource['images/LogoTLCBlanco-02.png']}" />&nbsp;
-                        <p:outputLabel value="#{sessionBean.usuario.nombreUsuario}"/>&nbsp;
-                        <p:commandButton value="#{label['salir']}" icon="ui-icon-extlink" action="#{sessionBean.Desconectar()}"/>  
-                    </h:form>
-                </h:panelGrid>
+        <div class="col-md-10 left-sidebar">
 
 
-            </div>
-        </div>
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
 
-        <div>
-            <div id="left">
-
-                <h:form id="id_frm_menu">
-                    <p:panelMenu style="width: 98%" >
-
-                        <p:submenu label="Inicio" >
-                            <p:menuitem value="#{label['lb_menu.inicio']}" action="#{sessionBean.goInicio()}" />
-                        </p:submenu>
-                        <p:submenu label="#{label['lb_menu.atributostelemarketing']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosTelemarketing&quot;)}">
-                            <p:menuitem value="#{label['lb_menu.eventosclientes']}" url="/faces/pages/CrudEstadosClientesView.xhtml" 
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudEstadosClientesView&quot;)}"/>
-                            <p:menuitem value="#{label['lb_menu.categoria']}" url="/faces/pages/CrudCategoriasView.xhtml"  
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudCategoriasView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.atributos']}" url="/faces/pages/CrudAtributosView.xhtml"  
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudAtributosView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.tipojuegos']}" url="/faces/pages/CrudTiposJuegosView.xhtml"  
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudTiposJuegosView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.casinos']}" url="/faces/pages/CrudCasinosView.xhtml"  
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudCasinosView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.eventos']}" url="/faces/pages/CrudEventosView.xhtml"  
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudEventosView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.clientes']}" url="/faces/pages/CrudClientesView.xhtml"  
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudClientesView&quot;)}" />
-                        </p:submenu>
-
-                        <p:submenu label="#{label['lb_menu.atributossistema']}" rendered="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
-                            <p:menuitem value="#{label['lb_menu.usuarios']}"  url="/faces/pages/CrudUsuarioView.xhtml" rendered="#{sessionBean.perfilViewMatch(&quot;CrudUsuarioView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.perfiles']}"  url="/faces/pages/CrudPerfilesView.xhtml"   
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudPerfilesView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.formularios']}"  url="/faces/pages/CrudFormulariosView.xhtml"  
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudFormulariosView&quot;)}" />
-                            <p:menuitem value="#{label['lb_menu.vistas']}"  url="/faces/pages/CrudVistasView.xhtml"   
-                                        rendered="#{sessionBean.perfilViewMatch(&quot;CrudVistasView&quot;)}" />
-                        </p:submenu>
-
-                    </p:panelMenu>
-
-                </h:form>
-            </div>
-
-
-            <div id="content" class="left_content">
-                <p:panel footer="RCT Derechos Reservados" id="id_pnl_content" >
-
-                    <div id="mensajes">
-                        <h:form>
-                            <p:messages id="messages"/> 
-                        </h:form>
+                        <div id="mensajes">
+                            <h:form>
+                                <p:messages id="messages"/> 
+                            </h:form>
+                        </div>
                     </div>
+                </div>
+
+                <div class="row clearfix">
                     <div id="parent_content">
                         <ui:insert name="content">Content</ui:insert>
                     </div>
-                </p:panel>
-
+                </div>
             </div>
-
         </div>
-        <!-- <div id="bottom">
-              <ui:insert name="bottom">Bottom</ui:insert>
-          </div>-->
+
 
     </h:body>
 

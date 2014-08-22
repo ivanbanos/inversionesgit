@@ -62,7 +62,7 @@ public class MarketingEventoManejadorBean {
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("MarketingEventoManejadorView")) {
+        if (!sessionBean.perfilViewMatch("ManejadorEventosMarketing")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
@@ -73,7 +73,7 @@ public class MarketingEventoManejadorBean {
 
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idEvento")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioMarketing.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ManejadorEventosMarketing.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -121,8 +121,7 @@ public class MarketingEventoManejadorBean {
         Estadoscliente estadoscliente = marketingUserFacade.findByNombreEstadoCliente("Inicial");
         elemento.setUsuariosList(todosusuarioses.getTarget());
         for(Usuarios s : todosusuarioses.getTarget()){
-            s.getEventosList().add(elemento);
-            adminFacade.guardarUsuarios(s);
+            adminFacade.agregarEventoUsuarios(s, elemento);
         }
         ArrayList<Listasclientesevento> al = new ArrayList<Listasclientesevento>(elemento.getListasclienteseventoList());
         elemento.getListasclienteseventoList().clear();

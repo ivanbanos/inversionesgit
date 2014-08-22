@@ -4,6 +4,7 @@
  */
 package com.invbf.adminclientesapi.facade;
 
+import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
@@ -43,5 +44,9 @@ public interface AdminFacade {
     public Perfiles findPerfil(Integer idPerfil);
 
     public List<Usuarios> findAllUsuariosHostess();
+
+    public Usuarios findUsuarios(Integer idUsuario);
+
+    public void agregarEventoUsuarios(Usuarios s, Eventos elemento);
     
 }

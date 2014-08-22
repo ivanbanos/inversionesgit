@@ -55,14 +55,6 @@ public class CrudCategoriasBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudCategoriasView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Categorias();
         lista = marketingUserFacade.findAllCategorias();
     }

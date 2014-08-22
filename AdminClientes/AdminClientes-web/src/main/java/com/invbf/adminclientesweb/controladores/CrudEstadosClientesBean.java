@@ -54,14 +54,6 @@ public class CrudEstadosClientesBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudEstadosClientesView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Estadoscliente();
         lista = marketingUserFacade.findAllEstadosClietes();
     }

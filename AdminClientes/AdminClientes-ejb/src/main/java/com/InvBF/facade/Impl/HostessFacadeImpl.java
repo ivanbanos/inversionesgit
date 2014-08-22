@@ -8,12 +8,11 @@ import com.InvBF.EntityFacade.ConfiguracionesFacadeLocal;
 import com.InvBF.EntityFacade.EstadosclienteFacadeLocal;
 import com.InvBF.EntityFacade.EventosFacadeLocal;
 import com.InvBF.EntityFacade.ListasclienteseventoFacadeLocal;
-import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Usuarios;
-import com.invbf.adminclientesapi.exceptions.EventoSinClientesException;
+import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,49 +47,64 @@ public class HostessFacadeImpl implements HostessFacade {
     }
 
     @Override
-    public Listasclientesevento findClienteEventosHostess(Integer integer) throws EventoSinClientesException {
+    public List<Listasclientesevento> findClienteEventosHostess(Integer integer) throws EventoSinClientesPorRevisarException {
         Eventos evento = eventosFacadeLocal.find(integer);
-        List<Listasclientesevento> clientes = (List<Listasclientesevento>) ((ArrayList<Listasclientesevento>) evento.getListasclienteseventoList()).clone();
+        List<Listasclientesevento> clientes = evento.getListasclienteseventoList();
+        List<Listasclientesevento> clientesAEnviar = new ArrayList<>();
         Iterator<Listasclientesevento> iterator = clientes.iterator();
 
+        int cantidadClientes = findCantidadClientes();
         Estadoscliente inicial = estadosclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
-        Estadoscliente enRevision = estadosclienteFacadeLocal.findByNombreEstadoCliente("En revision");
-        while (iterator.hasNext()) {
-            Listasclientesevento lce = iterator.next();
-            if (lce.getCount() == null) {
-                lce.setCount(0);
-            }
-            if (!lce.getIdEstadoCliente().equals(inicial)) {
-                iterator.remove();
-            }
-        }
-        if (clientes.isEmpty()) {
-            throw new EventoSinClientesException();
-        } else {
-            int i = 0;
-            while (true) {
-                for (Listasclientesevento lce : clientes) {
-                    if (lce.getCount().intValue() == i) {
-                        lce.setCount(lce.getCount() + 1);
-                        lce.setIdEstadoCliente(enRevision);
-                        listasclienteseventoFacadeLocal.edit(lce);
-                        return lce;
-                    }
-                }
-                i++;
-                if (i == 20) {
-                    Listasclientesevento lce = clientes.get(0);
-                    lce.setCount(lce.getCount() + 1);
-                    lce.setIdEstadoCliente(enRevision);
+        for (int i = 0; i < cantidadClientes; i++) {
+
+
+            while (iterator.hasNext()) {
+                Listasclientesevento lce = iterator.next();
+                if (lce.getIdEstadoCliente().equals(inicial)) {
                     listasclienteseventoFacadeLocal.edit(lce);
-                    return lce;
+                    clientesAEnviar.add(lce);
                 }
             }
         }
+        if (clientesAEnviar.isEmpty()) {
+            throw new EventoSinClientesPorRevisarException();
+        } else {
+            return clientesAEnviar;
+        }
+
     }
 
     @Override
     public int findCantidadClientes() {
         return Integer.parseInt(configuracionesFacadeLocal.findByNombre("CantidadClientes").getValor());
+    }
+
+    @Override
+    public void guardarLCE(Listasclientesevento listasclientesevento) {
+        listasclienteseventoFacadeLocal.edit(listasclientesevento);
+    }
+
+    @Override
+    public Listasclientesevento nuevoLCE(Integer index, List<Listasclientesevento> clientes) throws EventoSinClientesPorRevisarException {
+        Eventos evento = eventosFacadeLocal.find(index);
+        List<Listasclientesevento> clientesAEnviar = evento.getListasclienteseventoList();
+        Iterator<Listasclientesevento> iterator = clientes.iterator();
+
+        int cantidadClientes = findCantidadClientes();
+        Estadoscliente inicial = estadosclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
+        for (int i = 0; i < cantidadClientes; i++) {
+
+
+            while (iterator.hasNext()) {
+                Listasclientesevento lce = iterator.next();
+                if (lce.getIdEstadoCliente().equals(inicial)) {
+                    if (!clientes.contains(lce)) {
+                        return lce;
+                    }
+                }
+            }
+        }
+        throw new EventoSinClientesPorRevisarException();
+
     }
 }

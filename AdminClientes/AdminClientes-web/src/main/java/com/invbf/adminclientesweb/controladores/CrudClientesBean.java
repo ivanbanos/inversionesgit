@@ -64,14 +64,6 @@ public class CrudClientesBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudClientesView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Clientes();
         lista = marketingUserFacade.findAllClientes();
         listacasinos = marketingUserFacade.findAllCasinos();

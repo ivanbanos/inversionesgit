@@ -62,13 +62,36 @@
 
 
                 <f:facet name="footer">  
-                    <p:button value="Volver" outcome="/pages/InicioHostess.xhtml"
+                    <p:button value="Volver" outcome="/pages/ManejadorEventosHostess.xhtml"
                               style="margin:0" icon="ui-icon-arrowreturn-1-w"  />    
                 </f:facet>  
-            </p:panelGrid>  
-            <c:forEach items="${hostessEventoManejadorBean.clientes}" var="clientes">
-              ${clientes.clientes.nombres} ${clientes.clientes.apellidos}
-            </c:forEach>
+            </p:panelGrid> 
+            <p:panel id="clientes">
+                <c:forEach items="#{hostessEventoManejadorBean.clientes}" var="clientes">
+                    <p:panelGrid columns="2">
+
+                        <h:outputLabel value="#{label['nombre']}" />
+                        <h:outputLabel value="#{clientes.clientes.nombres} #{clientes.clientes.apellidos}" />
+
+                        <h:outputLabel value="#{label['Observaciones']}" /> 
+                        <p:inputText value="#{clientes.observaciones}" required="true" />
+
+                        <h:outputLabel  value="#{label['estados']}" /> 
+                        <p:selectOneMenu  value="#{clientes.idEstadoCliente.idEstadoCliente}">
+                            <f:selectItem itemLabel="Select One" itemValue="" />
+                            <f:selectItems value="#{hostessEventoManejadorBean.listaestadosclientes}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idEstadoCliente}"/> 
+                        </p:selectOneMenu>
+
+                        <f:facet name="footer">  
+                            <p:commandButton value="Guardar" actionListener="#{hostessEventoManejadorBean.guardar(clientes.clientes.idCliente)}" 
+                                             icon="ui-icon-check" update=":#{p:component('clientes')} :#{p:component('messages')}" />   
+                            <p:commandButton value="Nuevo" actionListener="#{hostessEventoManejadorBean.nuevo(clientes.clientes.idCliente)}" 
+                                             icon="ui-icon-check" update=":#{p:component('clientes')} :#{p:component('messages')}"/>  
+                        </f:facet>  
+
+                    </p:panelGrid>
+                </c:forEach>
+            </p:panel>
         </h:form>
 
 

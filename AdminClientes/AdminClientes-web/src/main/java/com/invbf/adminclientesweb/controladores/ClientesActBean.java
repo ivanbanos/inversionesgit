@@ -55,7 +55,7 @@ public class ClientesActBean {
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("ClientesAct")) {
+        if (!sessionBean.perfilViewMatch("Clientes")) {
             try {
                 System.out.println("No lo coje");
                 sessionBean.Desconectar();
@@ -67,7 +67,7 @@ public class ClientesActBean {
 
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idCliente")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("CrudPerfilesView.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosMarketing.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -131,7 +131,7 @@ public class ClientesActBean {
             elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
             marketingUserFacade.guardarClientes(elemento);
             sessionBean.getAttributes().remove("idCliente");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("CrudClientesView.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosMarketing.xhtml");
         } catch (IOException ex) {
             LOGGER.error(ex);
         }

@@ -9,6 +9,7 @@ import com.InvBF.EntityFacade.PerfilesFacadeLocal;
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
 import com.InvBF.EntityFacade.VistasFacadeLocal;
 import com.InvBF.util.EncryptUtil;
+import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
@@ -137,6 +138,20 @@ public class AdminFacadeImpl implements AdminFacade {
     @Override
     public List<Usuarios> findAllUsuariosHostess() {
         return usuariosFacadeLocal.findAllHostess();
+    }
+
+    @Override
+    public Usuarios findUsuarios(Integer idUsuario) {
+        return usuariosFacadeLocal.find(idUsuario);
+    }
+
+    @Override
+    public void agregarEventoUsuarios(Usuarios s, Eventos elemento) {
+        Usuarios usuario = usuariosFacadeLocal.find(s.getIdUsuario());
+        if(usuario.getEventosList()==null){
+            usuario.setEventosList(new ArrayList<Eventos>(0));
+        }
+        usuario.getEventosList().add(elemento);
     }
 
 

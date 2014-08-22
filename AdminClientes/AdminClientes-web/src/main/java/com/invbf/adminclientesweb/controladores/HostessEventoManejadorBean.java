@@ -4,9 +4,10 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
+import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
-import com.invbf.adminclientesapi.exceptions.EventoSinClientesException;
+import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
@@ -14,7 +15,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -45,6 +48,7 @@ public class HostessEventoManejadorBean {
     private SessionBean sessionBean;
     private StreamedContent file;
     private List<Listasclientesevento> clientes;
+    private List<Estadoscliente> listaestadosclientes;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -58,7 +62,7 @@ public class HostessEventoManejadorBean {
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("HostessEventoManejadorView")) {
+        if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
@@ -69,7 +73,7 @@ public class HostessEventoManejadorBean {
 
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idEvento")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioHostess.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ManejadorEventosHostess.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -80,15 +84,12 @@ public class HostessEventoManejadorBean {
             file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/" + elemento.getFormatoImagen());
         }
         clientes = new ArrayList<Listasclientesevento>(0);
-        int cantidadClientes = hostessFacade.findCantidadClientes();
-        for (int i = 0; i<cantidadClientes; i++) {
-            try {
-                clientes.add(hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento")));
-            } catch (EventoSinClientesException ex) {
-                LOGGER.info(ex);
-                break;
-            }
+        try {
+            clientes = hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento"));
+        } catch (EventoSinClientesPorRevisarException ex) {
+            LOGGER.info(ex);
         }
+        listaestadosclientes = marketingUserFacade.findAllEstadosClietes();
     }
 
     public Eventos getElemento() {
@@ -139,4 +140,34 @@ public class HostessEventoManejadorBean {
         this.clientes = clientes;
     }
 
+    public List<Estadoscliente> getListaestadosclientes() {
+        return listaestadosclientes;
+    }
+
+    public void setListaestadosclientes(List<Estadoscliente> listaestadosclientes) {
+        this.listaestadosclientes = listaestadosclientes;
+    }
+
+    public void guardar(Integer idCliente) {
+        int index = clientes.indexOf(new Listasclientesevento(elemento.getIdEvento(), idCliente));
+        Listasclientesevento listasclientesevento = clientes.remove(index);
+        hostessFacade.guardarLCE(listasclientesevento);
+        try {
+            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes);
+            clientes.add(index, nuevo);
+        } catch (EventoSinClientesPorRevisarException ex) {
+            LOGGER.info(ex);
+        }
+    }
+
+    public void nuevo(Integer idCliente) {
+        int index = clientes.indexOf(new Listasclientesevento(elemento.getIdEvento(), idCliente));
+        clientes.remove(index);
+        try {
+            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes);
+            clientes.add(index, nuevo);
+        } catch (EventoSinClientesPorRevisarException ex) {
+            LOGGER.info(ex);
+        }
+    }
 }

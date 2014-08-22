@@ -71,6 +71,7 @@ public class InitEntitysService {
             crearPerfilAdmin();
             crearPerfilMarketing();
             crearPerfilHostess();
+            crearPerfilGerente();
             congfiguracionesIniciales();
         }
 
@@ -125,25 +126,19 @@ public class InitEntitysService {
             perfil.getFormulariosList().add(formulario);
 
             Vistas vista;
-            vista = new Vistas(null, "CrudUsuarioView");
+            vista = new Vistas(null, "Usuarios");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudPerfilesView");
+            vista = new Vistas(null, "Perfiles");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudVistasView");
+            vista = new Vistas(null, "Vistas");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudFormulariosView");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "InicioAdministrador");
+            vista = new Vistas(null, "Formularios");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             vista = new Vistas(null, "AtributosSistema");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "PerfilAct");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 
@@ -238,34 +233,34 @@ public class InitEntitysService {
             vista = new Vistas(null, "CrudAtributosView");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudCasinosView");
+            vista = new Vistas(null, "Casinos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudCategoriasView");
+            vista = new Vistas(null, "Categorias");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudClientesView");
+            vista = new Vistas(null, "Clientes");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudEstadosClientesView");
+            vista = new Vistas(null, "EstadosClientes");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudEventosView");
+            vista = new Vistas(null, "Eventos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "CrudTiposJuegosView");
+            vista = new Vistas(null, "TipoJuego");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "InicioMarketing");
+            vista = new Vistas(null, "Atributos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "AtributosTelemarketing");
+            vista = new Vistas(null, "AtributosMarketing");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "ClientesAct");
+            vista = new Vistas(null, "ManejadorEventosMarketing");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "MarketingEventoManejadorView");
+            vista = new Vistas(null, "ConfiguracionesGenerales");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 
@@ -280,20 +275,16 @@ public class InitEntitysService {
             Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     private void crearPerfilHostess() {
         try {
             Perfiles perfil = new Perfiles();
             perfil.setNombre("Hostess");
             perfil.setFormulariosList(new ArrayList<Formularios>());
             perfil.setVistasList(new ArrayList<Vistas>());
-            
-            Formularios formulario;
-            formulario = new Formularios(null, "Eventos", "listahostess");
-            formulariosFacadeLocal.create(formulario);
-            perfil.getFormulariosList().add(formulario);
-            
+
             Vistas vista;
-            vista = new Vistas(null, "EventosHosstesView");
+            vista = new Vistas(null, "ManejadorEventosHostess");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 
@@ -313,8 +304,8 @@ public class InitEntitysService {
         Configuraciones configuracion = new Configuraciones();
         configuracion.setNombre("CantidadClientes");
         configuracion.setValor("4");
-        
-        
+
+
         configuracionesFacadeLocal.create(configuracion);
         Estadoscliente estadoscliente = new Estadoscliente();
         estadoscliente.setNombre("Inicial");
@@ -322,5 +313,29 @@ public class InitEntitysService {
         estadoscliente = new Estadoscliente();
         estadoscliente.setNombre("En revision");
         estadosclienteFacadeLocal.create(estadoscliente);
+    }
+
+    private void crearPerfilGerente() {
+        try {
+            Perfiles perfil = new Perfiles();
+            perfil.setNombre("Gerente");
+            perfil.setFormulariosList(new ArrayList<Formularios>());
+            perfil.setVistasList(new ArrayList<Vistas>());
+
+            Vistas vista;
+            vista = new Vistas(null, "Reportes");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+
+            perfilesFacadeLocal.create(perfil);
+
+            Usuarios usuario = new Usuarios();
+            usuario.setNombreUsuario("gerente");
+            usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
+            usuario.setIdPerfil(perfil);
+            usuariosFacadeLocal.create(usuario);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

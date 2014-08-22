@@ -59,14 +59,6 @@ public class CrudEventoBean {
 
     @PostConstruct
     public void init() {
-        if(!sessionBean.perfilViewMatch("CrudEventosView")){
-            try {
-                sessionBean.Desconectar();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-            } catch (IOException ex) {
-                LOGGER.error(ex);
-            }
-        }
         elemento = new Eventos();
         lista = marketingUserFacade.findAllEventos();
         listacasinos = marketingUserFacade.findAllCasinos();
