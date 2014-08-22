@@ -9,20 +9,39 @@
 
     <ui:define name="content">
         <h:form>
-              <div class="container">
-                            
-                            
-                            
-                            <div class="row clearfix">
-                                
-                                <div class="col-sm-offset-3">
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-6 col-md-offset-3">
+                        <h:form id="formCambio" class="form-horizontal" >
+                            <fieldset>
+
+                                <legend>Cambiar Contrase&ntilde;a</legend>
+                                <div class="form-group">
+                                    <label for="contrasena">Contrase&ntilde;a</label>
+                                    <div class="controls"><p:password id="contra" value="#{cuentaUsuarioBean.contrasena}" required="true" /></div>
                                 </div>
-                                <div class="col-md-6 column">
-                                    <h:graphicImage value="#{resource['images/pagina_en_construccion.jpg']}" />
+                                <div class="form-group">
+                                    <label for="nuevacontrasena">Nueva Contrase&ntilde;a</label>
+                                    <div class="controls"><p:password id="pwd1Usuarios" value="#{cuentaUsuarioBean.nueva}" match="pwd2Usuarios" required="true" /></div>
                                 </div>
-                                
-                            </div>
-                        </div>
+                                <div class="form-group">
+                                    <label for="repetircontrasena">Repetir Contrase&ntilde;a</label>
+                                    <div class="controls"><p:password id="pwd2Usuarios" value="#{cuentaUsuarioBean.nueva}" required="true" /></div>
+                                </div>
+                                <p:commandButton value="Confirmar" actionListener="#{cuentaUsuarioBean.cambioContrasena()}" 
+                                                 icon="ui-icon-check" 
+                                                 update=":#{p:component('formCambio')} :#{p:component('messages')}" style="margin:0" />  
+
+                            </fieldset>
+                        </h:form>
+                    </div>
+
+                </div>
+            </div>
         </h:form>
 
 
