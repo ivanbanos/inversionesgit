@@ -17,10 +17,7 @@ import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -152,6 +149,16 @@ public class AdminFacadeImpl implements AdminFacade {
             usuario.setEventosList(new ArrayList<Eventos>(0));
         }
         usuario.getEventosList().add(elemento);
+    }
+
+    @Override
+    public Vistas findVistasByNombre(String nombre) {
+        return vistasFacadeLocal.findByNombre(nombre);
+    }
+
+    @Override
+    public Formularios findFormularioByAccionAndTabla(String accion, String tabla) {
+      return formulariosFacadeLocal.findByAccionAndTabla(accion, tabla);
     }
 
 

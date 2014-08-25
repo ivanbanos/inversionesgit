@@ -28,5 +28,7 @@ public interface FormulariosFacadeLocal {
     List<Formularios> findRange(int[] range);
 
     int count();
+
+    public Formularios findByAccionAndTabla(String accion, String tabla);
     
 }

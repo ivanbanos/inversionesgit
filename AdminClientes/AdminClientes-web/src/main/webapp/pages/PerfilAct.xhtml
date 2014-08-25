@@ -9,62 +9,175 @@
 
     <ui:define name="content">
 
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <h:form>
+                        <fieldset>
 
-        <h:form>
-            <p:panel id="editDialog" header="Editar" widgetVar="editDialog" >  
-                <p:panelGrid id="editForm">  
-                    <p:row>
-                        <p:column><h:outputLabel value="#{label['codigo']}" /> </p:column>
-                        <p:column><h:outputLabel value="#{perfilActBean.elemento.idPerfil}"/></p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column><h:outputLabel for="nombre" value="#{label['nombre']}" /> </p:column>
-                        <p:column><p:inputText id="nombre" value="#{perfilActBean.elemento.nombre}" required="true" /></p:column>
-                    </p:row>
-                    <p:row >
-                        <p:column colspan="2">
-                            Formularios<br /><p:pickList id="PojoPickList" value="#{perfilActBean.todosForm}" var="form" effect="bounce"
-                                                          itemValue="#{form}" itemLabel="#{form.tabla}"  showCheckbox="true"
-                                                          showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="formcom" >
+                            <legend>Actualizar Perfil</legend>
+                            <div class="form-group">
+                                <label >#{label['codigo']}</label><h:outputLabel value="#{perfilActBean.elemento.idPerfil}"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre">#{label['nombre']}</label><p:inputText id="nombre" value="#{perfilActBean.elemento.nombre}" required="true" />
+                            </div>
 
-                                <f:facet name="sourceCaption">#{label['nopermitidos']}</f:facet>
-                                <f:facet name="targetCaption">#{label['permitidos']}</f:facet>
+                            <p:panelGrid id="editForm" > 
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column colspan="5">Permisos</p:column>
+                                    </p:row>
 
-                                <p:column>
-                                    <h:outputText value="#{form}" />
-                                </p:column>
-                            </p:pickList>
-                        </p:column>
-                    </p:row>
-                    <p:row >
-                        <p:column colspan="2">
-                            Vistas<br /><p:pickList id="PojoPickList2" value="#{perfilActBean.todasVistas}" var="vista" effect="bounce"
-                                                          itemValue="#{vista}" itemLabel="#{vista.nombreVista}"  showCheckbox="true"
-                                                          showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="vistacom" >
+                                </f:facet>
+                                <p:row >
 
-                                <f:facet name="sourceCaption">#{label['nopermitidas']}</f:facet>
-                                <f:facet name="targetCaption">#{label['permitidas']}</f:facet>
+                                    <p:column></p:column>
+                                    <p:column><label >#{label['ver']}</label></p:column>
+                                    <p:column><label >#{label['agregar']}</label></p:column>
+                                    <p:column><label >#{label['actualizar']}</label></p:column>
+                                    <p:column><label >#{label['borrar']}</label></p:column>
 
-                                <p:column>
-                                    <h:outputText value="#{vista.nombreVista}" />
-                                </p:column>
-                            </p:pickList>
-                        </p:column>
-                    </p:row>
-                    <f:facet name="footer">  
-                        <p:row>
-                            <p:column>
-                                <p:commandButton value="Confirmar" action="#{perfilActBean.guardar()}" 
-                                                 icon="ui-icon-check" style="margin:0"/>  
-                            </p:column>
-                            <p:column>
-                                <p:commandButton value="Cerrar" oncomplete="PF('editDialog').hide()" icon="ui-icon-closethick"/> 
-                            </p:column>
-                        </p:row>
-                    </f:facet>  
-                </p:panelGrid>  
-            </p:panel>
-        </h:form>
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['usuarios']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaUsuario}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarUsuario}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarUsuario}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarUsuario}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['perfiles']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaPerfiles}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarPerfiles}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarPerfiles}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarPerfiles}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['vistas']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaVistas}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarVistas}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarVistas}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarVistas}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['formularios']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaForm}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarForm}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarForm}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarForm}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['casinos']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCasinos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCasinos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCasinos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCasinos}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['eventos']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEventos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEventos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarEventos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarEventos}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['clientes']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaClientes}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarClientes}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarClientes}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarClientes}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['atributos']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAtributos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAtributos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAtributos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAtributos}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['tipojuegos']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipo}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipo}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipo}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipo}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['categorias']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCat}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCat}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCat}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCat}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['estados-clientes']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEstados}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEstados}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarEstados}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarEstados}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['eventos-marketing']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvMarketing}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['eventos-hostess']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvHostess}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['reportes']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaReportes}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['configuraciones']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaConfiguraciones}"/></p:column>
+
+                                </p:row>
+
+                            </p:panelGrid>  
+
+                            <h:commandLink action="#{perfilActBean.guardar()}" 
+                                           class="btn btn-primary">
+                                <i class="icon-search"></i> #{label['guardar']}
+                            </h:commandLink> 
+
+                            <h:link outcome="/pages/AdministradorAtributosSistema.xhtml" class="btn btn-primary">
+                                <i class="icon-search"></i> Volver</h:link>
+                        </fieldset>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
 
     </ui:define>            
 </ui:composition>

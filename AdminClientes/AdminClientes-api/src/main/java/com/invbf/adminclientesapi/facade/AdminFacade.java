@@ -48,5 +48,9 @@ public interface AdminFacade {
     public Usuarios findUsuarios(Integer idUsuario);
 
     public void agregarEventoUsuarios(Usuarios s, Eventos elemento);
+
+    public Vistas findVistasByNombre(String usuarios);
+
+    public Formularios findFormularioByAccionAndTabla(String crear, String usuarios);
     
 }

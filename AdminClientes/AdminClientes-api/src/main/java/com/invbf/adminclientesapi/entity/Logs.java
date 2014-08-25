@@ -43,6 +43,9 @@ public class Logs implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
+    @Basic(optional = false)
+    @Column(name = "mensaje")
+    private String mensaje;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false)
     private Usuarios idUsuario;
@@ -57,9 +60,10 @@ public class Logs implements Serializable {
         this.idLog = idLog;
     }
 
-    public Logs(Integer idLog, Date fecha) {
+    public Logs(Integer idLog, Date fecha, String mensaje) {
         this.idLog = idLog;
         this.fecha = fecha;
+        this.mensaje = mensaje;
     }
 
     public Integer getIdLog() {
@@ -92,6 +96,14 @@ public class Logs implements Serializable {
 
     public void setIdFormulario(Formularios idFormulario) {
         this.idFormulario = idFormulario;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     @Override

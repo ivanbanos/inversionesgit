@@ -276,8 +276,8 @@
 
         <!--Dialogos-->
 
-        <h:form>
-            <p:dialog id="addDialogUsuarios" header="Agregar" widgetVar="addDialogUsuarios" modal="true" closable="false" resizable="false">
+        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+            <p:dialog id="addDialogUsuarios" header="Agregar" widgetVar="addDialogUsuarios" modal="true" closable="false" resizable="false" >
 
                 <p:panelGrid columns="2">  
 
@@ -309,7 +309,7 @@
             </p:dialog> 
         </h:form>
 
-        <h:form>
+        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
             <p:dialog id="editDialogUsuarios" header="Editar" widgetVar="editDialogUsuarios" modal="true" closable="false" resizable="false">  
                 <p:panelGrid id="editFormUsuarios" columns="2"> 
 
@@ -340,7 +340,7 @@
                 </p:panelGrid>  
             </p:dialog>
         </h:form>
-        <h:form>
+        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
             <p:confirmDialog id="deleteDialogUsuarios" message="Quiere borrar el Usuario #{crudUsuariosBean.elemento.nombreUsuario}?"  
                              header="Borrar" severity="alert" widgetVar="deleteDialogUsuarios" closable="false">  
 

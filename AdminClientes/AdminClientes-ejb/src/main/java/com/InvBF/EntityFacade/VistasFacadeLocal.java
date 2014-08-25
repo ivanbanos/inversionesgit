@@ -28,5 +28,7 @@ public interface VistasFacadeLocal {
     List<Vistas> findRange(int[] range);
 
     int count();
+
+    public Vistas findByNombre(String nombre);
     
 }

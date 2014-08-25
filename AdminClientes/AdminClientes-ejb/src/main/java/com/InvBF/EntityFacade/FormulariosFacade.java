@@ -26,5 +26,13 @@ public class FormulariosFacade extends AbstractFacade<Formularios> implements Fo
     public FormulariosFacade() {
         super(Formularios.class);
     }
+
+    @Override
+    public Formularios findByAccionAndTabla(String accion, String tabla) {
+        return (Formularios)em.createNamedQuery("Formularios.findByAccionAndTabla")
+            .setParameter("accion", accion)
+            .setParameter("tabla", tabla)
+            .getResultList().get(0);
+    }
     
 }

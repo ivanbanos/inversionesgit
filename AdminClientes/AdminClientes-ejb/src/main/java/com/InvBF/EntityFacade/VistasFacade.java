@@ -26,5 +26,12 @@ public class VistasFacade extends AbstractFacade<Vistas> implements VistasFacade
     public VistasFacade() {
         super(Vistas.class);
     }
+
+    @Override
+    public Vistas findByNombre(String nombre) {
+        return (Vistas)em.createNamedQuery("Vistas.findByNombreVista")
+            .setParameter("nombreVista", nombre)
+            .getResultList().get(0);
+    }
     
 }
