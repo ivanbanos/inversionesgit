@@ -5,7 +5,6 @@
 package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Casinos;
-import com.invbf.adminclientesapi.entity.Categorias;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.IOException;
@@ -59,6 +58,15 @@ public class CrudEventoBean {
 
     @PostConstruct
     public void init() {
+        
+        if (!sessionBean.perfilViewMatch("Eventos")) {
+            try {
+                sessionBean.Desconectar();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+            } catch (IOException ex) {
+                LOGGER.error(ex);
+            }
+        }
         elemento = new Eventos();
         lista = marketingUserFacade.findAllEventos();
         listacasinos = marketingUserFacade.findAllCasinos();
@@ -118,5 +126,21 @@ public class CrudEventoBean {
         marketingUserFacade.guardarEventos(elemento);
         lista = marketingUserFacade.findAllEventos();
         elemento = new Eventos();
+    }
+    public void goEventoMarketing(int id) {
+        try {
+            sessionBean.getAttributes().put("idEvento", new Integer(id));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("MarketingEventoManejadorView.xhtml");
+        } catch (IOException ex) {
+                LOGGER.error(ex);
+        }
+    }
+    public void goEventoHostess(int id) {
+        try {
+            sessionBean.getAttributes().put("idEvento", new Integer(id));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
+        } catch (IOException ex) {
+                LOGGER.error(ex);
+        }
     }
 }

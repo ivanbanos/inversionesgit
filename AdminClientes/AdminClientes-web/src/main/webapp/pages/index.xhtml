@@ -5,24 +5,44 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../WEB-INF/template/Template.xhtml">
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
         <h:form>
-              <div class="container">
-                            
-                            
-                            
-                            <div class="row clearfix">
-                                <div class="col-md-6 column">
-                                    <h:graphicImage value="#{resource['images/LogoMRCDorado-01.png']}" />
-                                </div>
-                                
-                                <div class="col-md-6 column">
-                                    <h:graphicImage value="#{resource['images/LogoTLCBlanco-01.png']}" />
-                                </div>
-                            </div>
-                        </div>
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 panel-body">
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
+                            <h:link outcome="/pages/AdministradorAtributosSistema.xhtml" class="btn btn-primary btn-lg">
+                                <i class="fa fa-users fa-5x"></i> <br/>#{label['atributossistemas']}</h:link>
+                        </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}">
+                            <h:link outcome="/pages/AdministradorAtributosMarketing.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-cube fa-5x"></i> 
+                                <br/>#{label['atributosmarketing']}</h:link>
+                        </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
+                            <h:link outcome="/pages/ConfiguracionesGenerales.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-cog fa-5x"></i> 
+                                <br/>#{label['configuraciones']}</h:link>
+                        </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Clientes&quot;)}">
+                            <h:link outcome="/pages/clientes.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-user fa-5x"></i> 
+                                <br/>#{label['clientes']}</h:link>
+                        </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Eventos&quot;)}">
+                            <h:link outcome="/pages/eventos.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-calendar fa-5x"></i> 
+                                <br/>#{label['eventos']}</h:link>
+                        </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
+                            <h:link outcome="/pages/Reportes.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-bar-chart-o fa-5x"></i> 
+                                <br/>#{label['reportes']}</h:link>
+                        </c:if>
+                        <h:link outcome="/pages/CuentaUsuarios.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-pencil fa-5x"></i> 
+                            <br/>#{label['cuentausuarios']}</h:link>
+                    </div>
+                </div>
+            </div>
         </h:form>
 
 

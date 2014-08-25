@@ -13,4 +13,18 @@
     font-weight: bold;
 }
 
+.navbar-background{
+    background-color: #000000;    
+}
 
+.navbar-text{
+    color: white;
+}
+
+label{padding-left:20px;}
+
+.btn{margin:10px;}
+
+body { padding-top:20px; }
+
+.panel-body .btn:not(.btn-block) { width:250px; }

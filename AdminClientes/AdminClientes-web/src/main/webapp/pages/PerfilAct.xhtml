@@ -17,10 +17,10 @@
 
                             <legend>Actualizar Perfil</legend>
                             <div class="form-group">
-                                <label >#{label['codigo']}</label><h:outputLabel value="#{perfilActBean.elemento.idPerfil}"/>
+                                <label >#{label['codigo']}:</label><h:outputLabel value="#{perfilActBean.elemento.idPerfil}"/>
                             </div>
                             <div class="form-group">
-                                <label for="nombre">#{label['nombre']}</label><p:inputText id="nombre" value="#{perfilActBean.elemento.nombre}" required="true" />
+                                <label for="nombre">#{label['nombre']}:</label><p:inputText id="nombre" value="#{perfilActBean.elemento.nombre}" required="true" />
                             </div>
 
                             <p:panelGrid id="editForm" > 
@@ -77,15 +77,6 @@
                                 </p:row>
                                 <p:row >
 
-                                    <p:column><label >#{label['casinos']}</label></p:column>
-                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCasinos}"/></p:column>
-                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCasinos}"/></p:column>
-                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCasinos}"/></p:column>
-                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCasinos}"/></p:column>
-
-                                </p:row>
-                                <p:row >
-
                                     <p:column><label >#{label['eventos']}</label></p:column>
                                     <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEventos}"/></p:column>
                                     <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEventos}"/></p:column>
@@ -100,6 +91,15 @@
                                     <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarClientes}"/></p:column>
                                     <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarClientes}"/></p:column>
                                     <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarClientes}"/></p:column>
+
+                                </p:row>
+                                <p:row >
+
+                                    <p:column><label >#{label['casinos']}</label></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCasinos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCasinos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCasinos}"/></p:column>
+                                    <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCasinos}"/></p:column>
 
                                 </p:row>
                                 <p:row >

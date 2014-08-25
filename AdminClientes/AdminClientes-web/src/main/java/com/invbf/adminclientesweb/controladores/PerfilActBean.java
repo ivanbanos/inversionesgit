@@ -368,6 +368,28 @@ public class PerfilActBean {
                 elemento.getVistasList().remove(v2);
             }
         }
+        
+         v = adminFacade.findVistasByNombre("Eventos");
+        if (vistaEventos == false) {
+            if (elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().remove(v);
+            }
+        } else {
+            if (!elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().add(v);
+            }
+        }
+        v = adminFacade.findVistasByNombre("Clientes");
+        if (vistaClientes == false) {
+            if (elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().remove(v);
+            }
+        } else {
+            if (!elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().add(v);
+            }
+        }
+        
         v = adminFacade.findVistasByNombre("Casinos");
         v2 = adminFacade.findVistasByNombre("AtributosMarketing");
         count = 0;
@@ -385,36 +407,7 @@ public class PerfilActBean {
                 elemento.getVistasList().add(v);
             }
         }
-        v = adminFacade.findVistasByNombre("Eventos");
-        if (vistaEventos == false) {
-            count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
-        }
-        v = adminFacade.findVistasByNombre("Clientes");
-        if (vistaClientes == false) {
-            count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
-        }
+       
         v = adminFacade.findVistasByNombre("Atributos");
         if (vistaAtributos == false) {
             count++;
@@ -477,7 +470,7 @@ public class PerfilActBean {
         }
 
 
-        if (count == 7) {
+        if (count == 5) {
             if (elemento.getVistasList().contains(v2)) {
                 elemento.getVistasList().remove(v2);
             }

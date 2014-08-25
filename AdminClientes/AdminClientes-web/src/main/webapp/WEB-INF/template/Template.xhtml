@@ -22,7 +22,7 @@
 
     <h:body>
 
-        <nav class="navbar navbar-primary " role="navigation">
+        <nav class="navbar navbar-primary navbar-background" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -59,57 +59,63 @@
             </div><!-- /.container-fluid -->
         </nav>
 
+        <div class="container-fluid">
+            <div class="row">
+
+                
+                
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <h:form >
+                        <p:menu style="width: 98%" id="menuslide" >
+
+                            <p:submenu label="Menu" >
+                                <p:menuitem value="#{label['lb_menu.inicio']}" url="/faces/pages/index.xhtml" />
+                                <p:menuitem value="#{label['lb_menu.atributossistemas']}" url="/faces/pages/AdministradorAtributosSistema.xhtml" 
+                                            rendered="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}"/>
+                                <p:menuitem value="#{label['lb_menu.atributosmarketing']}" url="/faces/pages/AdministradorAtributosMarketing.xhtml" 
+                                            rendered="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}"/>
+                                <p:menuitem value="#{label['lb_menu.Clientes']}" url="/faces/pages/clientes.xhtml" 
+                                            rendered="#{sessionBean.perfilViewMatch(&quot;Clientes&quot;)}"/>
+                                <p:menuitem value="#{label['lb_menu.Eventos']}" url="/faces/pages/eventos.xhtml" 
+                                            rendered="#{sessionBean.perfilViewMatch(&quot;Eventos&quot;)}"/>
+                                <p:menuitem value="#{label['lb_menu.Reportes']}" url="/faces/pages/Reportes.xhtml" 
+                                            rendered="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}"/>
+                                <p:menuitem value="#{label['lb_menu.ConfiguracionesGenerales']}" url="/faces/pages/ConfiguracionesGenerales.xhtml" 
+                                            rendered="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}"/>
+                                <p:menuitem value="#{label['lb_menu.CuentaUsuarios']}" url="/faces/pages/CuentaUsuarios.xhtml" />
+                            </p:submenu>
+
+                        </p:menu>
+
+                    </h:form>
+                </div>
+
+                <div class="col-sm-9 col-md-10 main">
 
 
-        <div class="col-md-2 left-sidebar">
+                    <div class="container">
+                        <div class="row clearfix">
+                            <div class="col-md-12 column">
 
-            <h:form >
-                <p:menu style="width: 98%" id="menuslide" >
+                                <div id="mensajes">
+                                    <h:form>
+                                        <p:messages id="messages"/> 
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
 
-                    <p:submenu label="Menu" >
-                        <p:menuitem value="#{label['lb_menu.inicio']}" url="/faces/pages/index.xhtml" />
-                        <p:menuitem value="#{label['lb_menu.atributossistemas']}" url="/faces/pages/AdministradorAtributosSistema.xhtml" 
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}"/>
-                        <p:menuitem value="#{label['lb_menu.atributosmarketing']}" url="/faces/pages/AdministradorAtributosMarketing.xhtml" 
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}"/>
-                        <p:menuitem value="#{label['lb_menu.Eventos']}" url="/faces/pages/ManejadorEventosMarketing.xhtml" 
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;)}"/>
-                        <p:menuitem value="#{label['lb_menu.Eventos']}" url="/faces/pages/ManejadorEventosHostess.xhtml" 
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}"/>
-                        <p:menuitem value="#{label['lb_menu.Reportes']}" url="/faces/pages/Reportes.xhtml" 
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}"/>
-                        <p:menuitem value="#{label['lb_menu.ConfiguracionesGenerales']}" url="/faces/pages/ConfiguracionesGenerales.xhtml" 
-                                    rendered="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}"/>
-                        <p:menuitem value="#{label['lb_menu.CuentaUsuarios']}" url="/faces/pages/CuentaUsuarios.xhtml" />
-                    </p:submenu>
-
-                </p:menu>
-
-            </h:form>
-        </div>
-        <div class="col-md-10 left-sidebar">
-
-
-            <div class="container">
-                <div class="row clearfix">
-                    <div class="col-md-12 column">
-
-                        <div id="mensajes">
-                            <h:form>
-                                <p:messages id="messages"/> 
-                            </h:form>
+                        <div class="row clearfix">
+                            <div id="parent_content">
+                                <ui:insert name="content">Content</ui:insert>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row clearfix">
-                    <div id="parent_content">
-                        <ui:insert name="content">Content</ui:insert>
-                    </div>
-                </div>
             </div>
-        </div>
 
+        </div>
 
     </h:body>
 
