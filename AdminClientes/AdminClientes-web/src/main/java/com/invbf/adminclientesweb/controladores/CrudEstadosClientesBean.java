@@ -6,6 +6,7 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -86,12 +87,21 @@ public class CrudEstadosClientesBean {
     public void delete(){
         marketingUserFacade.deleteEstadoCliente(elemento);
         lista = marketingUserFacade.findAllEstadosClietes();
+        sessionBean.registrarlog("eliminar", "EstadosCliente", elemento.toString());
+        FacesUtil.addInfoMessage("Estado eliminado", elemento.getNombre());
         elemento = new Estadoscliente();
     }
     
     public void guardar(){
-        marketingUserFacade.guardarEstadoCliente(elemento);
+        boolean opcion = marketingUserFacade.guardarEstadoCliente(elemento);
         lista = marketingUserFacade.findAllEstadosClietes();
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "EstadosCliente", elemento.toString());
+        FacesUtil.addInfoMessage("Estado actualizado", elemento.getNombre());
+        } else {
+            sessionBean.registrarlog("crear", "EstadosCliente", elemento.toString());
+        FacesUtil.addInfoMessage("Estado creado", elemento.getNombre());
+        }
         elemento = new Estadoscliente();
     }
     

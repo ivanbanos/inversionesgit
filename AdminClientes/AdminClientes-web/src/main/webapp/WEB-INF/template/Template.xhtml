@@ -62,8 +62,8 @@
         <div class="container-fluid">
             <div class="row">
 
-                
-                
+
+
                 <div class="col-sm-3 col-md-2 sidebar">
                     <h:form >
                         <p:menu style="width: 98%" id="menuslide" >
@@ -99,7 +99,7 @@
 
                                 <div id="mensajes">
                                     <h:form>
-                                        <p:messages id="messages"/> 
+                                        <p:growl id="messages" showDetail="true" sticky="true" />  
                                     </h:form>
                                 </div>
                             </div>
@@ -116,7 +116,21 @@
             </div>
 
         </div>
+        <hr/>
 
+        <div class="container">    
+
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="span8">
+                    </div>
+                    <div class="span4">
+                        <p class="muted pull-right">© 2014 Iversiones Buena Fortuna S.A.S. Derechos reservados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </h:body>
 
 </html>

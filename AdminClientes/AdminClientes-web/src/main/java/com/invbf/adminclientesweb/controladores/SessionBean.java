@@ -70,6 +70,7 @@ public class SessionBean implements Serializable, Subject {
             LOGGER.info("Conectando...");
             usuario = sessionFacade.iniciarSession(usuario);
             LOGGER.info("Conectado.");
+            return "/pages/index.xhtml";
         } catch (ClavesNoConcuerdanException ex) {
             LOGGER.error(ex.getMessage());
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
@@ -83,7 +84,7 @@ public class SessionBean implements Serializable, Subject {
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
             usuario = new Usuarios();
         }
-        return "/pages/index.xhtml";
+        return "";
     }
 
     public String Desconectar() {
@@ -168,5 +169,8 @@ public class SessionBean implements Serializable, Subject {
             }
             
         }
+    }
+    public void registrarlog(String accion, String tabla, String mensaje){
+        sessionFacade.registrarlog(accion, tabla, mensaje, usuario);
     }
 }

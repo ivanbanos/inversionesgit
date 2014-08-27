@@ -6,6 +6,7 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -87,12 +88,22 @@ public class CrudTipoJuegoBean {
     public void delete(){
         marketingUserFacade.deleteTiposjuegos(elemento);
         lista = marketingUserFacade.findAllTiposjuegos();
+        sessionBean.registrarlog("eliminar", "TiposJuegos", elemento.toString());
+            FacesUtil.addInfoMessage("Tipo de juegos eliminado", elemento.getNombre());
         elemento = new Tiposjuegos();
     }
     
     public void guardar(){
-        marketingUserFacade.guardarTiposjuegos(elemento);
+        boolean opcion = marketingUserFacade.guardarTiposjuegos(elemento);
         lista = marketingUserFacade.findAllTiposjuegos();
+        
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "TiposJuegos", elemento.toString());
+            FacesUtil.addInfoMessage("Tipo de juegos actualizado", elemento.getNombre());
+        } else {
+            sessionBean.registrarlog("crear", "TiposJuegos", elemento.toString());
+            FacesUtil.addInfoMessage("Tipo de juegos creado", elemento.getNombre());
+        }
         elemento = new Tiposjuegos();
     }
     

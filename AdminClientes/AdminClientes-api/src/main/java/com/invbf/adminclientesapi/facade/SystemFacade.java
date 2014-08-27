@@ -28,5 +28,5 @@ public interface SystemFacade {
 
     public void setAllConfiguraciones(List<Configuraciones> configuraciones);
 
-    
+    public void registrarlog(String accion, String tabla, String mensaje, Usuarios usuairo);
 }

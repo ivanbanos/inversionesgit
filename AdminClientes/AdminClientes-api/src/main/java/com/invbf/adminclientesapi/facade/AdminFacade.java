@@ -9,6 +9,8 @@ import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.exceptions.NombreUsuarioExistenteException;
+import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import java.util.List;
 
 /**
@@ -21,25 +23,25 @@ public interface AdminFacade {
     
     public void deleteUsuarios(Usuarios elemento);
 
-    public void guardarUsuarios(Usuarios elemento);
+    public boolean guardarUsuarios(Usuarios elemento)throws NombreUsuarioExistenteException;
 
     public void deletePerfiles(Perfiles elemento);
 
     public List<Perfiles> findAllPerfiles();
 
-    public void guardarPerfiles(Perfiles elemento);
+    public boolean guardarPerfiles(Perfiles elemento)throws PerfilExistenteException;
 
     public List<Formularios> findAllFormularios();
 
     public void deleteFormularios(Formularios elemento);
 
-    public void guardarFormularios(Formularios elemento);
+    public boolean guardarFormularios(Formularios elemento);
 
     public List<Vistas> findAllVistas();
 
     public void deleteVistas(Vistas elemento);
 
-    public void guardarVistas(Vistas elemento);
+    public boolean guardarVistas(Vistas elemento);
 
     public Perfiles findPerfil(Integer idPerfil);
 

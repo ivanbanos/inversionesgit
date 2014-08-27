@@ -7,8 +7,11 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -137,7 +140,11 @@ public class PerfilActBean {
             adminFacade.guardarPerfiles(elemento);
             sessionBean.actualizarUsuario();
             sessionBean.getAttributes().remove("idPerfil");
+            sessionBean.registrarlog("actualizar", "Perfiles", elemento.getNombre());
+            FacesUtil.addInfoMessage("Perfil actualizado", elemento.getNombre());
             FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosSistema.xhtml");
+        } catch (PerfilExistenteException ex) {
+            LOGGER.error(ex);
         } catch (IOException ex) {
             LOGGER.error(ex);
         }

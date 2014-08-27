@@ -30,18 +30,21 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> implements Usuarios
     }
 
     @Override
-    public List<Usuarios> findByNombreUsuario(String nombreUsuario) {
-        return em.createNamedQuery("Usuarios.findByNombreUsuario")
-            .setParameter("nombreUsuario", nombreUsuario)
-            .getResultList();
+    public Usuarios findByNombreUsuario(String nombreUsuario) {
+        List<Usuarios> usuarios = (List<Usuarios>) em.createNamedQuery("Usuarios.findByNombreUsuario")
+                .setParameter("nombreUsuario", nombreUsuario)
+                .getResultList();
+        if (usuarios.isEmpty()) {
+            return null;
+        } else {
+            return usuarios.get(0);
+        }
     }
 
     @Override
     public List<Usuarios> findAllHostess() {
         return em.createNamedQuery("Usuarios.findByTipoPerfil")
-            .setParameter("nombrePerfil", "Hostess")
-            .getResultList();
+                .setParameter("nombrePerfil", "Hostess")
+                .getResultList();
     }
-
-    
 }

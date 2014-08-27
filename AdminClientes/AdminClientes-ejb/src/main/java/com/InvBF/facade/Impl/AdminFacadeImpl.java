@@ -14,6 +14,8 @@ import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.exceptions.NombreUsuarioExistenteException;
+import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -48,19 +50,24 @@ public class AdminFacadeImpl implements AdminFacade {
     }
 
     @Override
-    public void guardarUsuarios(Usuarios elemento) {
+    public boolean guardarUsuarios(Usuarios elemento) throws NombreUsuarioExistenteException{
         if (elemento.getIdUsuario() == null) {
             try {
                 elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
             } catch (NoSuchAlgorithmException ex) {
             }
+            if(usuariosFacadeLocal.findByNombreUsuario(elemento.getNombreUsuario())!=null){
+                throw new NombreUsuarioExistenteException();
+            }
             usuariosFacadeLocal.create(elemento);
+            return false;
         } else {
             try {
                 elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
             } catch (NoSuchAlgorithmException ex) {
             }
             usuariosFacadeLocal.edit(elemento);
+            return true;
         }
     }
 
@@ -75,9 +82,14 @@ public class AdminFacadeImpl implements AdminFacade {
     }
 
     @Override
-    public void guardarPerfiles(Perfiles elemento) {
+    public boolean guardarPerfiles(Perfiles elemento) throws PerfilExistenteException{
         if (elemento.getIdPerfil() == null) {
+            if(perfilesFacadeLocal.findByNombre(elemento.getNombre())!=null){
+                throw new PerfilExistenteException();
+            }
             perfilesFacadeLocal.create(elemento);
+            
+            return false;
         } else {
             for(Formularios f : elemento.getFormulariosList()){
                 f = formulariosFacadeLocal.find(f.getIdFormulario());
@@ -86,6 +98,7 @@ public class AdminFacadeImpl implements AdminFacade {
                 l = vistasFacadeLocal.find(l.getIdVista());
             }
             perfilesFacadeLocal.edit(elemento);
+            return true;
         }
     }
 
@@ -100,11 +113,13 @@ public class AdminFacadeImpl implements AdminFacade {
     }
 
     @Override
-    public void guardarFormularios(Formularios elemento) {
+    public boolean guardarFormularios(Formularios elemento) {
         if (elemento.getIdFormulario() == null) {
             formulariosFacadeLocal.create(elemento);
+            return false;
         } else {
             formulariosFacadeLocal.edit(elemento);
+            return true;
         }
     }
 
@@ -119,11 +134,13 @@ public class AdminFacadeImpl implements AdminFacade {
     }
 
     @Override
-    public void guardarVistas(Vistas elemento) {
+    public boolean guardarVistas(Vistas elemento) {
         if (elemento.getIdVista() == null) {
             vistasFacadeLocal.create(elemento);
+            return false;
         } else {
             vistasFacadeLocal.edit(elemento);
+            return true;
         }
     }
 

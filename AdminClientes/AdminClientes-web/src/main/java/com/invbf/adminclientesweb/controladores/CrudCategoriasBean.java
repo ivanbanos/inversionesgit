@@ -6,14 +6,13 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Categorias;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
-import java.io.IOException;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -86,12 +85,22 @@ public class CrudCategoriasBean {
     public void delete() {
         marketingUserFacade.deleteCategorias(elemento);
         lista = marketingUserFacade.findAllCategorias();
+        sessionBean.registrarlog("eliminar", "Categorias", elemento.toString());
+        
+            FacesUtil.addInfoMessage("Categoria eliminada", elemento.getNombre());
         elemento = new Categorias();
     }
 
     public void guardar() {
-        marketingUserFacade.guardarCategorias(elemento);
+        boolean opcion = marketingUserFacade.guardarCategorias(elemento);
         lista = marketingUserFacade.findAllCategorias();
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "Categorias", elemento.toString());
+            FacesUtil.addInfoMessage("Categoria actualizada", elemento.getNombre());
+        } else {
+            sessionBean.registrarlog("crear", "Categorias", elemento.toString());
+            FacesUtil.addInfoMessage("Categoria creada", elemento.getNombre());
+        }
         elemento = new Categorias();
     }
 }

@@ -8,23 +8,65 @@
 
 #menuslide { 
     border: 1px solid #e3a1a1;
-    background: #EB6864 url(images/ui-bg_gloss-wave_75_EB6864_500x100.png) 50% 50% repeat-x;
+    background: #BE2C2C!important;
     color: #ffffff;
     font-weight: bold;
 }
 
+.ui-widget-header{
+    border: 1px solid #e3a1a1;
+    background: #BE2C2C!important;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "News Cycle","Arial Narrow Bold",sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #FFF!important;
+}
+
 .navbar-background{
-    background-color: #000000;    
+    background-color: #444343;    
 }
 
 .navbar-text{
-    color: white;
+    color: #DEDEDE;
 }
 
 label{padding-left:20px;}
 
 .btn{margin:10px;}
 
-body { padding-top:20px; }
+.panel-bodyindex .btn:not(.btn-block) { width:250px; }
 
-.panel-body .btn:not(.btn-block) { width:250px; }
+.panel-primary {
+    border-color: #DEDEDE!important;
+}
+
+.panel-primary .panel-heading {
+    color: #DEDEDE!important;
+    background-color: #444343!important;
+    border-color: #DEDEDE!important;
+}
+
+.panel-primary .panel-footer{
+    color: #DEDEDE!important;
+    background-color: #444343!important;
+    border-color: #DEDEDE!important;
+    
+}
+
+.btn-primary {
+    color: #FFF;
+    background-color: #BE2C2C!important;
+    border-color: #BE2C2C!important;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    color: #FFF;
+    background-color: #D74444!important;
+    border-color: #E4332E;
+}
+

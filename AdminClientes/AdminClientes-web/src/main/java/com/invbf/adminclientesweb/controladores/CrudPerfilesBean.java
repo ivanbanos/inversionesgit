@@ -7,7 +7,9 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,15 +115,29 @@ public class CrudPerfilesBean {
     public void delete() {
         adminFacade.deletePerfiles(elemento);
         lista = adminFacade.findAllPerfiles();
+        sessionBean.registrarlog("eliminar", "Perfiles", elemento.toString());
+        FacesUtil.addInfoMessage("Perfil eliminado", elemento.getNombre());
         elemento = new Perfiles();
         sessionBean.notifyObserver("Perfiles");
+
     }
 
     public void guardar() {
-        adminFacade.guardarPerfiles(elemento);
-        lista = adminFacade.findAllPerfiles();
-        elemento = new Perfiles();
-        sessionBean.notifyObserver("Perfiles");
+        try {
+            boolean opcion = adminFacade.guardarPerfiles(elemento);
+            lista = adminFacade.findAllPerfiles();
+            sessionBean.notifyObserver("Perfiles");
+            if (opcion) {
+                sessionBean.registrarlog("actualizar", "Perfiles", elemento.toString());
+                FacesUtil.addInfoMessage("Perfil actualizado", elemento.getNombre());
+            } else {
+                sessionBean.registrarlog("crear", "Perfiles", elemento.toString());
+                FacesUtil.addInfoMessage("Perfil creado", elemento.getNombre());
+            }
+            elemento = new Perfiles();
+        } catch (PerfilExistenteException ex) {
+            FacesUtil.addErrorMessage("Perfil no creado", "Nombre de perfil existente");
+        }
     }
 
     public void goPerfil(int id) {
@@ -129,7 +145,7 @@ public class CrudPerfilesBean {
             sessionBean.getAttributes().put("idPerfil", new Integer(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("PerfilAct.xhtml");
         } catch (IOException ex) {
-                LOGGER.error(ex);
+            LOGGER.error(ex);
         }
     }
 
@@ -148,6 +164,4 @@ public class CrudPerfilesBean {
     public void setTodasVistas(DualListModel<Vistas> todasVistas) {
         this.todasVistas = todasVistas;
     }
-    
-    
 }

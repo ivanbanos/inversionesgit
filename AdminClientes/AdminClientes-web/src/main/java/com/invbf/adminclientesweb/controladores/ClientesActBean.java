@@ -11,6 +11,7 @@ import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Clientesatributos;
 import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -131,7 +132,9 @@ public class ClientesActBean {
             elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
             marketingUserFacade.guardarClientes(elemento);
             sessionBean.getAttributes().remove("idCliente");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosMarketing.xhtml");
+            FacesUtil.addInfoMessage("Cliente actualizado", elemento.toString());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
+            sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
         } catch (IOException ex) {
             LOGGER.error(ex);
         }

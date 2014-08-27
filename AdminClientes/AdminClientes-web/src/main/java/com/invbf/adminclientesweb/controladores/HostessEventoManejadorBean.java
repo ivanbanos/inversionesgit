@@ -11,6 +11,7 @@ import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarExceptio
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class HostessEventoManejadorBean {
 
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idEvento")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ManejadorEventosHostess.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("eventos.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -152,11 +153,13 @@ public class HostessEventoManejadorBean {
         int index = clientes.indexOf(new Listasclientesevento(elemento.getIdEvento(), idCliente));
         Listasclientesevento listasclientesevento = clientes.remove(index);
         hostessFacade.guardarLCE(listasclientesevento);
+        
         try {
             Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes);
             clientes.add(index, nuevo);
         } catch (EventoSinClientesPorRevisarException ex) {
             LOGGER.info(ex);
+            FacesUtil.addInfoMessage("No hay mas clientes por revisar","");
         }
     }
 
@@ -168,6 +171,7 @@ public class HostessEventoManejadorBean {
             clientes.add(index, nuevo);
         } catch (EventoSinClientesPorRevisarException ex) {
             LOGGER.info(ex);
+            FacesUtil.addInfoMessage("No hay mas clientes por revisar","");
         }
     }
 }

@@ -28,5 +28,7 @@ public interface PerfilesFacadeLocal {
     List<Perfiles> findRange(int[] range);
 
     int count();
+
+    public Object findByNombre(String nombre);
     
 }

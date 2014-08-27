@@ -29,29 +29,29 @@ public interface MarketingUserFacade {
 
     public void deleteEstadoCliente(Estadoscliente estadoCliente);
 
-    public void guardarEstadoCliente(Estadoscliente estadoscliente);
+    public boolean guardarEstadoCliente(Estadoscliente estadoscliente);
 
     public List<Categorias> findAllCategorias();
 
     public void deleteCategorias(Categorias elemento);
 
-    public void guardarCategorias(Categorias elemento);
+    public boolean guardarCategorias(Categorias elemento);
 
     public List<Atributos> findAllAtributos();
 
     public void deleteAtributos(Atributos elemento);
 
-    public void guardarAtributos(Atributos elemento);
+    public boolean guardarAtributos(Atributos elemento);
 
     public void deleteTiposjuegos(Tiposjuegos elemento);
 
     public List<Tiposjuegos> findAllTiposjuegos();
 
-    public void guardarTiposjuegos(Tiposjuegos elemento);
+    public boolean guardarTiposjuegos(Tiposjuegos elemento);
 
     public void deleteCasinos(Casinos elemento);
 
-    public void guardarCasinos(Casinos elemento);
+    public boolean guardarCasinos(Casinos elemento);
 
     public List<Casinos> findAllCasinos();
 
@@ -59,11 +59,11 @@ public interface MarketingUserFacade {
 
     public void deleteEventos(Eventos elemento);
 
-    public void guardarEventos(Eventos elemento);
+    public boolean guardarEventos(Eventos elemento);
 
     public void deleteClientes(Clientes elemento);
 
-    public void guardarClientes(Clientes elemento);
+    public boolean guardarClientes(Clientes elemento);
 
     public List<Tiposjuegos> getTiposJuegosNoClientes(Integer idCliente);
 

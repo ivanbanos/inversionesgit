@@ -11,6 +11,7 @@ import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class MarketingEventoManejadorBean {
 
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idEvento")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("ManejadorEventosMarketing.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("eventos.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -160,6 +161,8 @@ public class MarketingEventoManejadorBean {
         }
         todosclienteses = new DualListModel<Clientes>(clienteses, clientesesEvento);
         todosusuarioses = new DualListModel<Usuarios>(usuarioses, elemento.getUsuariosList());
+        
+            FacesUtil.addInfoMessage("Evento guardado con exito",elemento.getNombre());
     }
 
     public StreamedContent getFile() {

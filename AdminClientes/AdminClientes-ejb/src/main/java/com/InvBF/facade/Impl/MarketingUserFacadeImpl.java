@@ -67,11 +67,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public void guardarEstadoCliente(Estadoscliente elemento) {
+    public boolean guardarEstadoCliente(Estadoscliente elemento) {
         if (elemento.getIdEstadoCliente() == null) {
             estadosclienteFacadeLocal.create(elemento);
+            return false;
         } else {
             estadosclienteFacadeLocal.edit(elemento);
+            return true;
         }
     }
 
@@ -86,11 +88,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public void guardarCategorias(Categorias elemento) {
+    public boolean guardarCategorias(Categorias elemento) {
         if (elemento.getIdCategorias() == null) {
             categoriasFacadeLocal.create(elemento);
+            return false;
         } else {
             categoriasFacadeLocal.edit(elemento);
+            return true;
         }
         
     }
@@ -106,11 +110,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public void guardarAtributos(Atributos elemento) {
+    public boolean guardarAtributos(Atributos elemento) {
         if (elemento.getIdAtributo() == null) {
             atributosFacadeLocal.create(elemento);
+            return false;
         } else {
             atributosFacadeLocal.edit(elemento);
+            return true;
         }
     }
 
@@ -125,11 +131,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public void guardarTiposjuegos(Tiposjuegos elemento) {
+    public boolean guardarTiposjuegos(Tiposjuegos elemento) {
         if (elemento.getIdTipoJuego() == null) {
             tiposjuegosFacadeLocal.create(elemento);
+            return true;
         } else {
             tiposjuegosFacadeLocal.edit(elemento);
+            return true;
         }
         
     }
@@ -140,11 +148,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public void guardarCasinos(Casinos elemento) {
+    public boolean guardarCasinos(Casinos elemento) {
         if (elemento.getIdCasino() == null) {
             casinosFacadeLocal.create(elemento);
+            return false;
         } else {
             casinosFacadeLocal.edit(elemento);
+            return true;
         }
     }
 
@@ -164,11 +174,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public void guardarEventos(Eventos elemento) {
+    public boolean guardarEventos(Eventos elemento) {
         if (elemento.getIdEvento() == null) {
             eventosFacadeLocal.create(elemento);
+            return false;
         } else {
             eventosFacadeLocal.edit(elemento);
+            return true;
         }
     }
 
@@ -178,11 +190,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public void guardarClientes(Clientes elemento) {
+    public boolean guardarClientes(Clientes elemento) {
         if (elemento.getIdCliente() == null) {
             clientesFacadeLocal.create(elemento);
+            return false;
         } else {
             clientesFacadeLocal.edit(elemento);
+            return true;
         }
     }
 

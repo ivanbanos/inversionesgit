@@ -8,9 +8,9 @@ import com.invbf.adminclientesapi.entity.Atributos;
 import com.invbf.adminclientesapi.entity.Casinos;
 import com.invbf.adminclientesapi.entity.Categorias;
 import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,7 +20,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
-import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -46,7 +45,6 @@ public class CrudClientesBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-
     private List<Clientes> flista;
 
     public List<Clientes> getFlista() {
@@ -56,6 +54,7 @@ public class CrudClientesBean {
     public void setFlista(List<Clientes> flista) {
         this.flista = flista;
     }
+
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
@@ -64,7 +63,7 @@ public class CrudClientesBean {
 
     @PostConstruct
     public void init() {
-        
+
         if (!sessionBean.perfilViewMatch("Clientes")) {
             try {
                 sessionBean.Desconectar();
@@ -133,30 +132,37 @@ public class CrudClientesBean {
         this.listatiposjuegos = listatiposjuegos;
     }
 
-
     public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
         this.marketingUserFacade = marketingUserFacade;
     }
 
-    
-    public void delete(){
+    public void delete() {
         marketingUserFacade.deleteClientes(elemento);
         lista = marketingUserFacade.findAllClientes();
+        sessionBean.registrarlog("eliminar", "Clientes", elemento.toString());
+        FacesUtil.addInfoMessage("Cliente eliminado", elemento.toString());
         elemento = new Clientes();
     }
-    
-    public void guardar(){
-        marketingUserFacade.guardarClientes(elemento);
+
+    public void guardar() {
+        boolean opcion = marketingUserFacade.guardarClientes(elemento);
         lista = marketingUserFacade.findAllClientes();
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
+            FacesUtil.addInfoMessage("Cliente actualizado", elemento.toString());
+        } else {
+            sessionBean.registrarlog("crear", "Clientes", elemento.toString());
+            FacesUtil.addInfoMessage("Cliente creado", elemento.toString());
+        }
         elemento = new Clientes();
     }
-    
+
     public void goCliente(int id) {
         try {
             sessionBean.getAttributes().put("idCliente", new Integer(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("ClientesAct.xhtml");
         } catch (IOException ex) {
-                LOGGER.error(ex);
+            LOGGER.error(ex);
         }
     }
 }

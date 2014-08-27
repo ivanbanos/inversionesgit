@@ -6,14 +6,13 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Atributos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
-import java.io.IOException;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -87,13 +86,22 @@ private List<Atributos> flista;
     public void delete(){
         marketingUserFacade.deleteAtributos(elemento);
         lista = marketingUserFacade.findAllAtributos();
+        sessionBean.registrarlog("eliminar", "Atributos", elemento.toString());
+            FacesUtil.addInfoMessage("Atributo eliminado", elemento.getNombre());
         elemento = new Atributos();
     }
     
     public void guardar(){
         elemento.setTipoDato("Text");
-        marketingUserFacade.guardarAtributos(elemento);
+        boolean opcion = marketingUserFacade.guardarAtributos(elemento);
         lista = marketingUserFacade.findAllAtributos();
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "Atributos", elemento.toString());
+            FacesUtil.addInfoMessage("Atributo actualizado", elemento.getNombre());
+        } else {
+            sessionBean.registrarlog("crear", "Atributos", elemento.toString());
+            FacesUtil.addInfoMessage("Atributo creado", elemento.getNombre());
+        }
         elemento = new Atributos();
     }
     

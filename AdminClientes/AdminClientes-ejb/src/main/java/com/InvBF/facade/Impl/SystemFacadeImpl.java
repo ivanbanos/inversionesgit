@@ -5,9 +5,13 @@
 package com.InvBF.facade.Impl;
 
 import com.InvBF.EntityFacade.ConfiguracionesFacadeLocal;
+import com.InvBF.EntityFacade.FormulariosFacadeLocal;
+import com.InvBF.EntityFacade.LogsFacadeLocal;
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
 import com.InvBF.util.EncryptUtil;
 import com.invbf.adminclientesapi.entity.Configuraciones;
+import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Logs;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
@@ -15,9 +19,8 @@ import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -32,13 +35,17 @@ public class SystemFacadeImpl implements SystemFacade {
     UsuariosFacadeLocal usuariosFacadeLocal;
     @EJB
     ConfiguracionesFacadeLocal configuracionesFacadeLocal;
+    @EJB
+    LogsFacadeLocal logsFacadeLocal;
+    @EJB
+    FormulariosFacadeLocal formulariosFacadeLocal;
 
     @Override
     public Usuarios iniciarSession(Usuarios usuario) throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException {
         try {
-            List<Usuarios> usuarios = usuariosFacadeLocal.findByNombreUsuario(usuario.getNombreUsuario());
-            if (!usuarios.isEmpty()) {
-                Usuarios usuarioConectado = usuarios.get(0);
+            Usuarios usuarios = usuariosFacadeLocal.findByNombreUsuario(usuario.getNombreUsuario());
+            if (usuarios != null) {
+                Usuarios usuarioConectado = usuarios;
                 if (!EncryptUtil.comparePassword(usuario.getContrasena(), usuarioConectado.getContrasena())) {
                     throw new ClavesNoConcuerdanException();
                 }
@@ -81,5 +88,17 @@ public class SystemFacadeImpl implements SystemFacade {
         for (Configuraciones c : configuraciones) {
             configuracionesFacadeLocal.edit(c);
         }
+    }
+
+    @Override
+    public void registrarlog(String accion, String tabla, String mensaje, Usuarios usuairo) {
+        Formularios f = formulariosFacadeLocal.findByAccionAndTabla(accion, tabla);
+        Logs log = new Logs();
+        if (f != null) {
+            log.setIdFormulario(f);
+        }
+        log.setIdUsuario(usuairo);
+        log.setMensaje(mensaje);
+        logsFacadeLocal.create(log);
     }
 }

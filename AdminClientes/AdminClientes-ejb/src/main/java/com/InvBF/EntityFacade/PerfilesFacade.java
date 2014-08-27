@@ -5,6 +5,7 @@
 package com.InvBF.EntityFacade;
 
 import com.invbf.adminclientesapi.entity.Perfiles;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +26,18 @@ public class PerfilesFacade extends AbstractFacade<Perfiles> implements Perfiles
 
     public PerfilesFacade() {
         super(Perfiles.class);
+    }
+
+    @Override
+    public Perfiles findByNombre(String nombre) {
+        List<Perfiles> perfiles = (List<Perfiles>)em.createNamedQuery("Perfiles.findByNombre")
+            .setParameter("nombre", nombre)
+            .getResultList().get(0);
+        if(perfiles==null||perfiles.isEmpty()){
+            return null;
+        }else{
+            return perfiles.get(0);
+        }
     }
     
 }

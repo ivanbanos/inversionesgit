@@ -7,6 +7,7 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Casinos;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -115,6 +116,8 @@ public class CrudEventoBean {
     public void delete() {
         marketingUserFacade.deleteEventos(elemento);
         lista = marketingUserFacade.findAllEventos();
+        sessionBean.registrarlog("eliminar", "Eventos", elemento.toString());
+        FacesUtil.addInfoMessage("Evento eliminado", elemento.getNombre());
         elemento = new Eventos();
     }
 
@@ -123,8 +126,15 @@ public class CrudEventoBean {
             elemento.setImagen(file.getContents());
             elemento.setFormatoImagen(file.getContentType());
         }
-        marketingUserFacade.guardarEventos(elemento);
+        boolean opcion = marketingUserFacade.guardarEventos(elemento);
         lista = marketingUserFacade.findAllEventos();
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "Eventos", elemento.toString());
+        FacesUtil.addInfoMessage("Evento actualizado", elemento.getNombre());
+        } else {
+            sessionBean.registrarlog("crear", "Eventos", elemento.toString());
+        FacesUtil.addInfoMessage("Evento creado", elemento.getNombre());
+        }
         elemento = new Eventos();
     }
     public void goEventoMarketing(int id) {

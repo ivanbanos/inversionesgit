@@ -7,10 +7,13 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Perfiles;
 import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.exceptions.NombreUsuarioExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesweb.interfaces.Observer;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -105,13 +108,28 @@ public class CrudUsuariosBean implements Observer{
     public void delete(){
         adminFacade.deleteUsuarios(elemento);
         lista = adminFacade.findAllUsuarios();
+        sessionBean.registrarlog("eliminar", "Usuarios", elemento.toString());
+        
+            FacesUtil.addInfoMessage("Usuario eliminado", elemento.getNombreUsuario());
         elemento = new Usuarios();
+        
     }
     
     public void guardar(){
-        adminFacade.guardarUsuarios(elemento);
-        lista = adminFacade.findAllUsuarios();
-        elemento = new Usuarios();
+        try {
+            boolean opcion = adminFacade.guardarUsuarios(elemento);
+            lista = adminFacade.findAllUsuarios();
+            if (opcion) {
+                sessionBean.registrarlog("actualizar", "Usuarios", elemento.toString());
+            FacesUtil.addInfoMessage("Usuario actualizado", elemento.getNombreUsuario());
+            } else {
+                sessionBean.registrarlog("crear", "Usuarios", elemento.toString());
+            FacesUtil.addInfoMessage("Usuario creado", elemento.getNombreUsuario());
+            }
+            elemento = new Usuarios();
+        } catch (NombreUsuarioExistenteException ex) {
+            FacesUtil.addErrorMessage("Usuario no creado", "Nombre de usuario existente");
+        }
     }
 
     @Override

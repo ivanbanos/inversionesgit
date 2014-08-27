@@ -71,6 +71,80 @@
                                 </h:form>
                             </div>
                         </div>
+                        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                            <p:dialog id="addDialogUsuarios" header="Agregar" widgetVar="addDialogUsuarios" modal="true" closable="false" resizable="false" >
+
+                                <p:panelGrid columns="2">  
+
+                                    <h:outputLabel value="#{label['codigo']}" /> 
+                                    <h:outputLabel value="#{crudUsuariosBean.elemento.idUsuario}"/>
+
+                                    <h:outputLabel for="nombreUsuarios" value="#{label['nombre']}" /> 
+                                    <p:inputText id="nombreUsuarios" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" />
+
+                                    <h:outputLabel for="pwd1Usuarios" value="Contrasena: *" />
+                                    <p:password id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" match="pwd2Usuarios" required="true" />
+
+                                    <h:outputLabel for="pwd2Usuarios" value="Repetir: *" />
+                                    <p:password id="pwd2Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" />
+
+                                    <h:outputLabel for="casinoUsuarios" value="#{label['perfil']}" /> 
+                                    <p:selectOneMenu id="casinoUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
+                                    </p:selectOneMenu>
+
+                                    <f:facet name="footer">  
+                                        <p:commandButton value="Confirmar" actionListener="#{crudUsuariosBean.guardar()}" 
+                                                         oncomplete="PF('addDialogUsuarios').hide()" icon="ui-icon-check" 
+                                                         update=":#{p:component('detailsTableUsuarios')} :#{p:component('addDialogUsuarios')} :#{p:component('messages')}" style="margin:0" />   
+                                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogUsuarios').hide()" update=":#{p:component('addDialogUsuarios')}" icon="ui-icon-closethick"/>  
+                                    </f:facet>  
+                                </p:panelGrid> 
+                            </p:dialog> 
+                        </h:form>
+
+                        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                            <p:dialog id="editDialogUsuarios" header="Editar" widgetVar="editDialogUsuarios" modal="true" closable="false" resizable="false">  
+                                <p:panelGrid id="editFormUsuarios" columns="2"> 
+
+                                    <h:outputLabel value="#{label['codigo']}" /> 
+                                    <h:outputLabel value="#{crudUsuariosBean.elemento.idUsuario}"/>
+
+                                    <h:outputLabel for="nombreUsuarios" value="#{label['nombre']}" /> 
+                                    <p:inputText id="nombreUsuarios" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" />
+
+                                    <h:outputLabel for="pwd1Usuarios" value="Contrasena: *" />
+                                    <p:password id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" match="pwd2" required="true" />
+
+                                    <h:outputLabel for="pwd2Usuarios" value="Repetir: *" />
+                                    <p:password id="pwd2Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" />
+
+                                    <h:outputLabel for="casinoUsuarios" value="#{label['perfiles']}" /> 
+                                    <p:selectOneMenu id="casinoUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
+                                    </p:selectOneMenu>
+
+                                    <f:facet name="footer">  
+                                        <p:commandButton value="Confirmar" action="#{crudUsuariosBean.guardar()}" 
+                                                         oncomplete="PF('editDialogUsuarios').hide()" icon="ui-icon-check"
+                                                         process=":#{p:component('editFormUsuarios')}" update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}" style="margin:0"/>    
+                                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogUsuarios').hide()" icon="ui-icon-closethick"/> 
+                                    </f:facet>  
+                                </p:panelGrid>  
+                            </p:dialog>
+                        </h:form>
+                        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                            <p:confirmDialog id="deleteDialogUsuarios" message="Quiere borrar el Usuario #{crudUsuariosBean.elemento.nombreUsuario}?"  
+                                             header="Borrar" severity="alert" widgetVar="deleteDialogUsuarios" closable="false">  
+
+                                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogUsuarios').hide()"  
+                                                 action="#{crudUsuariosBean.delete()}" update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}"/>  
+                                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogUsuarios').hide()" type="button" />   
+
+                            </p:confirmDialog> 
+                        </h:form>
                     </c:if>
 
                     <!--Fin Usuarios-->
@@ -133,366 +207,44 @@
                                 </h:form>
                             </div>
                         </div>
+                        <h:form>
+                            <p:dialog id="addDialogPerfiles" header="Agregar" widgetVar="addDialogPerfiles" modal="true" closable="false" resizable="false">
+
+                                <p:panelGrid columns="2">  
+
+                                    <h:outputLabel value="#{label['codigo']}" /> 
+                                    <h:outputLabel value="#{crudPerfilesBean.elemento.idPerfil}"/>
+
+                                    <h:outputLabel for="nombrePerfiles" value="#{label['nombre']}" /> 
+                                    <p:inputText id="nombrePerfiles" value="#{crudPerfilesBean.elemento.nombre}" required="true" />
+
+                                    <f:facet name="footer">  
+                                        <p:commandButton value="Confirmar" actionListener="#{crudPerfilesBean.guardar()}" 
+                                                         oncomplete="PF('addDialogPerfiles').hide()" icon="ui-icon-check" 
+                                                         update=":#{p:component('detailsTablePerfiles')} :#{p:component('addDialogPerfiles')} :#{p:component('messages')}" style="margin:0" />   
+                                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogPerfiles').hide()" update=":#{p:component('addDialogPerfiles')}" icon="ui-icon-closethick"/>  
+                                    </f:facet>  
+                                </p:panelGrid> 
+                            </p:dialog> 
+                        </h:form>
+
+                        <h:form>
+                            <p:confirmDialog id="deleteDialogPerfiles" message="Quiere borrar el perfil #{crudPerfilesBean.elemento.nombre}?"  
+                                             header="Borrar" severity="alert" widgetVar="deleteDialogPerfiles" closable="false">  
+
+                                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogPerfiles').hide()"  
+                                                 action="#{crudPerfilesBean.delete()}" update=":#{p:component('detailsTablePerfiles')} :#{p:component('messages')}"/>  
+                                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogPerfiles').hide()" type="button" />   
+
+                            </p:confirmDialog> 
+                        </h:form>
                     </c:if>
 
                     <!--Fin Perfiles-->
                 </div>
             </div>
 
-            <div class="row clearfix">
-                <div class="col-md-6 column">
 
-                    <!--Vistas-->
-                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Vistas&quot;)}">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Vistas</h3>
-                            </div>
-                            <div class="panel-body">
-                                <h:form class="form-horizontal">
-                                    <p:dataTable id="detailsTableVistas" var="element" value="#{crudVistasBean.lista}"  
-                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableVistas" filteredValue="#{crudVistasBean.flista}"
-                                                 rows="5"
-                                                 paginator="true"
-                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
-
-                                        <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterVistas" onkeyup="PF('detailsTableVistas').filter()" style="width:150px" placeholder="Enter keyword" />
-                                            </p:outputPanel>
-                                        </f:facet>
-
-                                        <p:column headerText="Id" sortBy="#{element.idVista}" filterBy="#{element.idVista}" filterMatchMode="contains" filterStyle="display:none">
-                                            <h:outputText value="#{element.idVista}" />
-                                        </p:column>
-
-                                        <p:column headerText="Nombre" sortBy="#{element.nombreVista}" filterBy="#{element.nombreVista}" filterMatchMode="contains" filterStyle="display:none">
-                                            <h:outputText value="#{element.nombreVista}" />
-                                        </p:column>
-
-                                        <p:column headerText="Acciones" filterBy="#{element.nombreVista}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButton" update=":#{p:component('editFormVistas')}" 
-                                                             oncomplete="PF('editDialogVistas').show()" icon="ui-icon-pencil" 
-                                                             title="#{label['lb_btn.editar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Vistas&quot;, &quot;actualizar&quot;)}">  
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudVistasBean.elemento}" />  
-                                            </p:commandButton>
-                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogVistas').show();" 
-                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogVistas')}"
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Vistas&quot;, &quot;eliminar&quot;)}">
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudVistasBean.elemento}" /> 
-                                            </p:commandButton> 
-                                        </p:column>
-
-                                        <f:facet name="footer">  
-                                            <p:commandButton id="addButton" oncomplete="PF('addDialogVistas').show();" 
-                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Vistas&quot;, &quot;crear&quot;)}"/>  
-                                        </f:facet>
-                                    </p:dataTable>
-
-                                </h:form>
-                            </div>
-                        </div>
-                    </c:if>
-
-                    <!--Fin Vistas-->
-
-                </div>
-
-                <div class="col-md-6 column">
-
-                    <!--Formularios-->
-                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Formularios&quot;)}">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Formularios</h3>
-                            </div>
-                            <div class="panel-body">
-                                <h:form class="form-horizontal">
-                                    <p:dataTable id="detailsTableFormularios" var="element" value="#{crudFormulariosBean.lista}"  
-                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableFormularios" filteredValue="#{crudFormulariosBean.flista}"
-                                                 rows="5"
-                                                 paginator="true"
-                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
-
-                                        <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterFormularios" onkeyup="PF('detailsTableFormularios').filter()" style="width:150px" placeholder="Enter keyword" />
-                                            </p:outputPanel>
-                                        </f:facet>
-
-                                        <p:column headerText="Id" sortBy="#{element.idFormulario}" filterBy="#{element.idFormulario}" filterMatchMode="contains" filterStyle="display:none">
-                                            <h:outputText value="#{element.idFormulario}" />
-                                        </p:column>
-
-                                        <p:column headerText="tabla" sortBy="#{element.tabla}" filterBy="#{element.tabla}" filterMatchMode="contains" filterStyle="display:none">
-                                            <h:outputText value="#{element.tabla}" />
-                                        </p:column>
-
-                                        <p:column headerText="accion" sortBy="#{element.accion}" filterBy="#{element.accion}" filterMatchMode="contains" filterStyle="display:none">
-                                            <h:outputText value="#{element.accion}" />
-                                        </p:column>
-
-                                        <p:column headerText="Acciones" filterBy="#{element.accion}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButton" update=":#{p:component('editFormFormularios')}" 
-                                                             oncomplete="PF('editDialogFormularios').show()" icon="ui-icon-pencil" 
-                                                             title="#{label['lb_btn.editar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Formularios&quot;, &quot;actualizar&quot;)}">  
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudFormulariosBean.elemento}" />  
-                                            </p:commandButton>
-                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogFormularios').show();" 
-                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogFormularios')}"
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Formularios&quot;, &quot;eliminar&quot;)}">
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudFormulariosBean.elemento}" /> 
-                                            </p:commandButton> 
-                                        </p:column>
-
-                                        <f:facet name="footer">  
-                                            <p:commandButton id="addButton" oncomplete="PF('addDialogFormularios').show();" 
-                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Formularios&quot;, &quot;crear&quot;)}"/>  
-                                        </f:facet>
-                                    </p:dataTable>
-
-                                </h:form>
-                            </div>
-                        </div>
-                    </c:if>
-
-                    <!--Fin Formularios-->
-
-                </div>
-            </div>
         </div>
-
-
-
-
-
-        <!--Dialogos-->
-
-        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
-            <p:dialog id="addDialogUsuarios" header="Agregar" widgetVar="addDialogUsuarios" modal="true" closable="false" resizable="false" >
-
-                <p:panelGrid columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudUsuariosBean.elemento.idUsuario}"/>
-
-                    <h:outputLabel for="nombreUsuarios" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombreUsuarios" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" />
-
-                    <h:outputLabel for="pwd1Usuarios" value="Contrasena: *" />
-                    <p:password id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" match="pwd2Usuarios" required="true" />
-
-                    <h:outputLabel for="pwd2Usuarios" value="Repetir: *" />
-                    <p:password id="pwd2Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" />
-
-                    <h:outputLabel for="casinoUsuarios" value="#{label['perfil']}" /> 
-                    <p:selectOneMenu id="casinoUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
-                    </p:selectOneMenu>
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" actionListener="#{crudUsuariosBean.guardar()}" 
-                                         oncomplete="PF('addDialogUsuarios').hide()" icon="ui-icon-check" 
-                                         update=":#{p:component('detailsTableUsuarios')} :#{p:component('addDialogUsuarios')} :#{p:component('messages')}" style="margin:0" />   
-                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogUsuarios').hide()" update=":#{p:component('addDialogUsuarios')}" icon="ui-icon-closethick"/>  
-                    </f:facet>  
-                </p:panelGrid> 
-            </p:dialog> 
-        </h:form>
-
-        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
-            <p:dialog id="editDialogUsuarios" header="Editar" widgetVar="editDialogUsuarios" modal="true" closable="false" resizable="false">  
-                <p:panelGrid id="editFormUsuarios" columns="2"> 
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudUsuariosBean.elemento.idUsuario}"/>
-
-                    <h:outputLabel for="nombreUsuarios" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombreUsuarios" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" />
-
-                    <h:outputLabel for="pwd1Usuarios" value="Contrasena: *" />
-                    <p:password id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" match="pwd2" required="true" />
-
-                    <h:outputLabel for="pwd2Usuarios" value="Repetir: *" />
-                    <p:password id="pwd2Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" />
-
-                    <h:outputLabel for="casinoUsuarios" value="#{label['perfiles']}" /> 
-                    <p:selectOneMenu id="casinoUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
-                    </p:selectOneMenu>
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" action="#{crudUsuariosBean.guardar()}" 
-                                         oncomplete="PF('editDialogUsuarios').hide()" icon="ui-icon-check"
-                                         process=":#{p:component('editFormUsuarios')}" update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}" style="margin:0"/>    
-                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogUsuarios').hide()" icon="ui-icon-closethick"/> 
-                    </f:facet>  
-                </p:panelGrid>  
-            </p:dialog>
-        </h:form>
-        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
-            <p:confirmDialog id="deleteDialogUsuarios" message="Quiere borrar el Usuario #{crudUsuariosBean.elemento.nombreUsuario}?"  
-                             header="Borrar" severity="alert" widgetVar="deleteDialogUsuarios" closable="false">  
-
-                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogUsuarios').hide()"  
-                                 action="#{crudUsuariosBean.delete()}" update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}"/>  
-                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogUsuarios').hide()" type="button" />   
-
-            </p:confirmDialog> 
-        </h:form>
-
-        <h:form>
-            <p:dialog id="addDialogPerfiles" header="Agregar" widgetVar="addDialogPerfiles" modal="true" closable="false" resizable="false">
-
-                <p:panelGrid columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudPerfilesBean.elemento.idPerfil}"/>
-
-                    <h:outputLabel for="nombrePerfiles" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombrePerfiles" value="#{crudPerfilesBean.elemento.nombre}" required="true" />
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" actionListener="#{crudPerfilesBean.guardar()}" 
-                                         oncomplete="PF('addDialogPerfiles').hide()" icon="ui-icon-check" 
-                                         update=":#{p:component('detailsTablePerfiles')} :#{p:component('addDialogPerfiles')} :#{p:component('messages')}" style="margin:0" />   
-                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogPerfiles').hide()" update=":#{p:component('addDialogPerfiles')}" icon="ui-icon-closethick"/>  
-                    </f:facet>  
-                </p:panelGrid> 
-            </p:dialog> 
-        </h:form>
-
-        <h:form>
-            <p:confirmDialog id="deleteDialogPerfiles" message="Quiere borrar el perfil #{crudPerfilesBean.elemento.nombre}?"  
-                             header="Borrar" severity="alert" widgetVar="deleteDialogPerfiles" closable="false">  
-
-                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogPerfiles').hide()"  
-                                 action="#{crudPerfilesBean.delete()}" update=":#{p:component('detailsTablePerfiles')} :#{p:component('messages')}"/>  
-                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogPerfiles').hide()" type="button" />   
-
-            </p:confirmDialog> 
-        </h:form>
-
-        <h:form>
-            <p:dialog id="addDialogVistas" header="Agregar" widgetVar="addDialogVistas" modal="true" closable="false" resizable="false">
-
-                <p:panelGrid columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudVistasBean.elemento.idVista}"/>
-
-                    <h:outputLabel for="nombreVistas" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombreVistas" value="#{crudVistasBean.elemento.nombreVista}" required="true" />
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" actionListener="#{crudVistasBean.guardar()}" 
-                                         oncomplete="PF('addDialogVistas').hide()" icon="ui-icon-check" 
-                                         update=":#{p:component('detailsTableVistas')} :#{p:component('addDialogVistas')} :#{p:component('messages')}" style="margin:0" />   
-                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogVistas').hide()" update=":#{p:component('addDialogVistas')}" icon="ui-icon-closethick"/>  
-                    </f:facet>  
-                </p:panelGrid> 
-            </p:dialog> 
-        </h:form>
-
-        <h:form>
-            <p:dialog id="editDialogVistas" header="Editar" widgetVar="editDialogVistas" modal="true" closable="false" resizable="false">  
-                <p:panelGrid id="editFormVistas" columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudVistasBean.elemento.idVista}"/>
-
-                    <h:outputLabel for="nombreVistas" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombreVistas" value="#{crudVistasBean.elemento.nombreVista}" required="true" />
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" action="#{crudVistasBean.guardar()}" 
-                                         oncomplete="PF('editDialogVistas').hide()" icon="ui-icon-check"
-                                         process=":#{p:component('editFormVistas')}" update=":#{p:component('detailsTableVistas')} :#{p:component('messages')}" style="margin:0"/>    
-                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogVistas').hide()" icon="ui-icon-closethick"/> 
-                    </f:facet>  
-                </p:panelGrid>  
-            </p:dialog>
-        </h:form>
-
-        <h:form>
-            <p:confirmDialog id="deleteDialogVistas" message="Quiere borrar la vista #{crudVistasBean.elemento.nombreVista}?"  
-                             header="Borrar" severity="alert" widgetVar="deleteDialogVistas" closable="false">  
-
-                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogVistas').hide()"  
-                                 action="#{crudVistasBean.delete()}" update=":#{p:component('detailsTableVistas')} :#{p:component('messages')}"/>  
-                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogVistas').hide()" type="button" />   
-
-            </p:confirmDialog> 
-        </h:form>
-
-        <h:form>
-            <p:dialog id="addDialogFormularios" header="Agregar" widgetVar="addDialogFormularios" modal="true" closable="false" resizable="false">
-
-                <p:panelGrid columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudFormulariosBean.elemento.idFormulario}"/>
-
-                    <h:outputLabel for="tablaFormularios" value="#{label['tabla']}" /> 
-                    <p:inputText id="tablaFormularios" value="#{crudFormulariosBean.elemento.tabla}" required="true" />
-
-                    <h:outputLabel for="accionFormularios" value="#{label['accion']}" /> 
-                    <p:inputText id="accionFormularios" value="#{crudFormulariosBean.elemento.accion}" required="true" />
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" actionListener="#{crudFormulariosBean.guardar()}" 
-                                         oncomplete="PF('addDialogFormularios').hide()" icon="ui-icon-check" 
-                                         update=":#{p:component('detailsTableFormularios')} :#{p:component('addDialogFormularios')} :#{p:component('messages')}" style="margin:0" />   
-                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogFormularios').hide()" update=":#{p:component('addDialogFormularios')}" icon="ui-icon-closethick"/>  
-                    </f:facet>  
-                </p:panelGrid> 
-            </p:dialog> 
-        </h:form>
-
-        <h:form>
-            <p:dialog id="editDialogFormularios" header="Editar" widgetVar="editDialogFormularios" modal="true" closable="false" resizable="false">  
-                <p:panelGrid id="editFormFormularios" columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudFormulariosBean.elemento.idFormulario}"/>
-
-                    <h:outputLabel for="tablaFormularios" value="#{label['tabla']}" /> 
-                    <p:inputText id="tablaFormularios" value="#{crudFormulariosBean.elemento.tabla}" required="true" />
-
-                    <h:outputLabel for="accionFormularios" value="#{label['accion']}" /> 
-                    <p:inputText id="accionFormularios" value="#{crudFormulariosBean.elemento.accion}" required="true" />
-
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" action="#{crudFormulariosBean.guardar()}" 
-                                         oncomplete="PF('editDialogFormularios').hide()" icon="ui-icon-check"
-                                         process=":#{p:component('editFormFormularios')}" update=":#{p:component('detailsTableFormularios')} :#{p:component('messages')}" style="margin:0"/>    
-                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogFormularios').hide()" icon="ui-icon-closethick"/> 
-                    </f:facet>  
-                </p:panelGrid>  
-            </p:dialog>
-        </h:form>
-        <h:form>
-            <p:confirmDialog id="deleteDialogFormularios" message="Quiere borrar el formulario #{crudFormulariosBean.elemento.idFormulario}?"  
-                             header="Borrar" severity="alert" widgetVar="deleteDialogFormularios" closable="false">  
-
-                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogFormularios').hide()"  
-                                 action="#{crudFormulariosBean.delete()}" update=":#{p:component('detailsTableFormularios')} :#{p:component('messages')}"/>  
-                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogFormularios').hide()" type="button" />   
-
-            </p:confirmDialog> 
-        </h:form>
-
-        <!--Fin Dialogos-->
     </ui:define>            
 </ui:composition>

@@ -6,6 +6,7 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Vistas;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -32,11 +33,10 @@ public class CrudVistasBean {
     private Vistas elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    
+
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-
     private List<Vistas> flista;
 
     public List<Vistas> getFlista() {
@@ -46,6 +46,7 @@ public class CrudVistasBean {
     public void setFlista(List<Vistas> flista) {
         this.flista = flista;
     }
+
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
@@ -74,27 +75,35 @@ public class CrudVistasBean {
         this.elemento = elemento;
     }
 
-
     public AdminFacade getAdminFacade() {
         return adminFacade;
     }
-
 
     public void setAdminFacade(AdminFacade adminFacade) {
         this.adminFacade = adminFacade;
     }
 
-    
-    public void delete(){
+    public void delete() {
         adminFacade.deleteVistas(elemento);
         lista = adminFacade.findAllVistas();
+
+        sessionBean.registrarlog("eliminar", "Vistas", elemento.toString());
+        FacesUtil.addInfoMessage("Vista borrada", elemento.getNombreVista());
         elemento = new Vistas();
+
     }
-    
-    public void guardar(){
-        adminFacade.guardarVistas(elemento);
+
+    public void guardar() {
+        boolean opcion = adminFacade.guardarVistas(elemento);
         lista = adminFacade.findAllVistas();
+
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "Vistas", elemento.toString());
+            FacesUtil.addInfoMessage("Vista actualizada", elemento.getNombreVista());
+        } else {
+            sessionBean.registrarlog("crear", "Vistas", elemento.toString());
+            FacesUtil.addInfoMessage("Vista creada", elemento.getNombreVista());
+        }
         elemento = new Vistas();
     }
-    
 }

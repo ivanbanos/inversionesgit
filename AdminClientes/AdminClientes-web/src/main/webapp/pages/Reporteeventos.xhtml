@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-12">
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Eventos</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h:form class="form-horizontal">
+                                        <p:dataTable id="detailsTableEventos" var="element" value="#{crudEventoBean.lista}"  
+                                                     emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{crudEventoBean.flista}"
+                                                     rows="5"
+                                                     paginator="true"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     rowsPerPageTemplate="5,10,15">
+
+                                            <f:facet name="header">
+                                                <p:outputPanel>
+                                                    <h:outputText value="Search all fields:" />
+                                                    <p:inputText id="globalFilterEventos" onkeyup="PF('detailsTableEventos').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                </p:outputPanel>
+                                            </f:facet>
+
+                                            <p:column headerText="Id" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                                <h:outputText value="#{element.nombre}" />
+                                            </p:column>
+
+                                            <p:column headerText="Fecha de Inicio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" filterStyle="display:none">
+                                                <h:outputText value="#{element.fechaInicio}" >
+                                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                                    </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Fecha finalizacion" sortBy="#{element.fechaFinalizacion}" filterBy="#{element.fechaFinalizacion}" filterMatchMode="contains" filterStyle="display:none">
+                                                <h:outputText value="#{element.fechaFinalizacion}" >
+                                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                                    </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Tipo" sortBy="#{element.tipo}" filterBy="#{element.tipo}" filterMatchMode="contains" filterStyle="display:none">
+                                                <h:outputText value="#{element.tipo}" />
+                                            </p:column>
+
+                                            <p:column headerText="Casino" sortBy="#{element.idCasino.nombre}" filterBy="#{element.idCasino.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                                <h:outputText value="#{element.idCasino.nombre}" />
+                                            </p:column>
+
+
+                                        </p:dataTable>
+
+                                    </h:form>
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

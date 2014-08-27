@@ -6,6 +6,7 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.facade.AdminFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -88,12 +89,21 @@ public class CrudFormulariosBean {
     public void delete(){
         adminFacade.deleteFormularios(elemento);
         lista = adminFacade.findAllFormularios();
+        sessionBean.registrarlog("eliminar", "Formularios", elemento.toString());
+            FacesUtil.addInfoMessage("Formulario eliminado", elemento.getAccion()+" "+elemento.getTabla());
         elemento = new Formularios();
     }
     
     public void guardar(){
-        adminFacade.guardarFormularios(elemento);
+        boolean opcion = adminFacade.guardarFormularios(elemento);
         lista = adminFacade.findAllFormularios();
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "Formularios", elemento.toString());
+            FacesUtil.addInfoMessage("Formulario actualizado", elemento.getAccion()+" "+elemento.getTabla());
+        } else {
+            sessionBean.registrarlog("crear", "Formularios", elemento.toString());
+            FacesUtil.addInfoMessage("Formulario creado", elemento.getAccion()+" "+elemento.getTabla());
+        }
         elemento = new Formularios();
     }
     

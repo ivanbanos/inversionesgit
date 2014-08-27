@@ -6,14 +6,13 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Casinos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
-import java.io.IOException;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -87,12 +86,21 @@ public class CrudCasinosBean {
     public void delete(){
         marketingUserFacade.deleteCasinos(elemento);
         lista = marketingUserFacade.findAllCasinos();
+        sessionBean.registrarlog("eliminar", "Casinos", elemento.toString());
+            FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
         elemento = new Casinos();
     }
     
     public void guardar(){
-        marketingUserFacade.guardarCasinos(elemento);
+        boolean opcion = marketingUserFacade.guardarCasinos(elemento);
         lista = marketingUserFacade.findAllCasinos();
+        if (opcion) {
+            sessionBean.registrarlog("actualizar", "Casinos", elemento.toString());
+            FacesUtil.addInfoMessage("Casino actualizado", elemento.getNombre());
+        } else {
+            sessionBean.registrarlog("crear", "Casinos", elemento.toString());
+            FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
+        }
         elemento = new Casinos();
     }
     
