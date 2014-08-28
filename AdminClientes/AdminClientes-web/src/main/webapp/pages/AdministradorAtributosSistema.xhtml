@@ -23,10 +23,10 @@
                                 <h:form class="form-horizontal">
                                     <p:dataTable id="detailsTableUsuarios" var="element" value="#{crudUsuariosBean.lista}"  
                                                  emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableUsuarios" filteredValue="#{crudUsuariosBean.flista}"
-                                                 rows="5"
+                                                 rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
+                                                 >
 
                                         <f:facet name="header">
                                             <p:outputPanel>
@@ -75,9 +75,6 @@
                             <p:dialog id="addDialogUsuarios" header="Agregar" widgetVar="addDialogUsuarios" modal="true" closable="false" resizable="false" >
 
                                 <p:panelGrid columns="2">  
-
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudUsuariosBean.elemento.idUsuario}"/>
 
                                     <h:outputLabel for="nombreUsuarios" value="#{label['nombre']}" /> 
                                     <p:inputText id="nombreUsuarios" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" />
@@ -212,8 +209,6 @@
 
                                 <p:panelGrid columns="2">  
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudPerfilesBean.elemento.idPerfil}"/>
 
                                     <h:outputLabel for="nombrePerfiles" value="#{label['nombre']}" /> 
                                     <p:inputText id="nombrePerfiles" value="#{crudPerfilesBean.elemento.nombre}" required="true" />

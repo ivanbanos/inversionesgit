@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ConfiguracionesFacade extends AbstractFacade<Configuraciones> implements ConfiguracionesFacadeLocal {
+
     @PersistenceContext(unitName = "AdminClientesPU")
     private EntityManager em;
 
@@ -31,9 +32,14 @@ public class ConfiguracionesFacade extends AbstractFacade<Configuraciones> imple
 
     @Override
     public Configuraciones findByNombre(String cantidadClientes) {
-         return (Configuraciones)em.createNamedQuery("Configuraciones.findByNombre")
-            .setParameter("nombre", cantidadClientes)
-            .getResultList().get(0);
+        List<Configuraciones> configuraciones = em.createNamedQuery("Configuraciones.findByNombre")
+                .setParameter("nombre", cantidadClientes)
+                .getResultList();
+        if (configuraciones == null || configuraciones.isEmpty()) {
+            return null;
+        } else {
+            return configuraciones.get(0);
+        }
     }
-    
 }
+

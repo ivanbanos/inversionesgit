@@ -27,10 +27,10 @@
                                     <h:form class="form-horizontal">
                                         <p:dataTable id="detailsTableClientes" var="element" value="#{crudClientesBean.lista}"  
                                                      emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" filteredValue="#{crudClientesBean.flista}"
-                                                     rows="5"
+                                                     rows="#{sessionBean.paginacion}"
                                                      paginator="true"
                                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                     rowsPerPageTemplate="5,10,15">
+                                                     >
 
                                             <f:facet name="header">
                                                 <p:outputPanel>

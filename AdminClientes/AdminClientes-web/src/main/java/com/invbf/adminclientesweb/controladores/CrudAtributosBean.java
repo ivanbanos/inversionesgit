@@ -86,7 +86,7 @@ private List<Atributos> flista;
     public void delete(){
         marketingUserFacade.deleteAtributos(elemento);
         lista = marketingUserFacade.findAllAtributos();
-        sessionBean.registrarlog("eliminar", "Atributos", elemento.toString());
+        sessionBean.registrarlog("eliminar", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo eliminado", elemento.getNombre());
         elemento = new Atributos();
     }
@@ -96,10 +96,10 @@ private List<Atributos> flista;
         boolean opcion = marketingUserFacade.guardarAtributos(elemento);
         lista = marketingUserFacade.findAllAtributos();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Atributos", elemento.toString());
+            sessionBean.registrarlog("actualizar", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "Atributos", elemento.toString());
+            sessionBean.registrarlog("crear", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo creado", elemento.getNombre());
         }
         elemento = new Atributos();

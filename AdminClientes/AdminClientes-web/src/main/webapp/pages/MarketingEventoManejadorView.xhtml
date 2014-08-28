@@ -5,63 +5,89 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                template="./../WEB-INF/template/Template.xhtml">
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
         <h:form>
-            <p:panelGrid id="editForm" columns="2">  
-                <p:row >
-                    <p:column > <h:outputLabel value="#{label['codigo']}" /> </p:column>
-                    <p:column > <h:outputLabel value="#{marketingEventoManejadorBean.elemento.idEvento}"/></p:column>
-                </p:row>
+            <div class="panel panel-primary">
 
-                <p:row >
-                    <p:column > <h:outputLabel for="nombre" value="#{label['nombre']}" /> </p:column>
-                    <p:column > <h:outputLabel id="nombre" value="#{marketingEventoManejadorBean.elemento.nombre}" /></p:column>
-                </p:row>
+                <div class="panel-heading">Evento</div>
+                <div class="panel-body">
 
-                <p:row >
-                    <p:column > <p:outputLabel for="fecini" value="#{label['fechainicio']}" /></p:column>
-                    <p:column > <h:outputLabel id="fecini" value="#{marketingEventoManejadorBean.elemento.fechaInicio}" >
-                        <f:convertDateTime pattern="MM-dd-yyyy" />
-                    </h:outputLabel></p:column>
-                </p:row>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['codigo']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel value="#{marketingEventoManejadorBean.elemento.idEvento}"/>
+                        </div>
+                    </div>
 
-                <p:row >
-                    <p:column > <p:outputLabel for="fecfin" value="#{label['fechafinal']}" /></p:column>
-                    <p:column > <h:outputLabel id="fecfin" value="#{marketingEventoManejadorBean.elemento.fechaFinalizacion}"  >
-                        <f:convertDateTime pattern="MM-dd-yyyy" />
-                    </h:outputLabel></p:column>
-                </p:row>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="nombre" value="#{marketingEventoManejadorBean.elemento.nombre}" />
+                        </div>
+                    </div>
 
-                <p:row >
-                    <p:column > <p:outputLabel for="descripcion" value="#{label['descripcion']}" /></p:column>
-                    <p:column > <h:outputLabel id="descripcion" value="#{marketingEventoManejadorBean.elemento.descripcion}"/></p:column>
-                </p:row>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="fecini" value="#{marketingEventoManejadorBean.elemento.fechaInicio}" >
+                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                            </h:outputLabel>
+                        </div>
+                    </div>
 
-                <p:row >
-                    <p:column > <h:outputLabel for="estado" value="#{label['estado']}" /> </p:column>
-                    <p:column > <h:outputLabel id="estado" value="#{marketingEventoManejadorBean.elemento.estado}" /></p:column>
-                </p:row>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="fecfin" value="#{marketingEventoManejadorBean.elemento.fechaFinalizacion}"  >
+                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                            </h:outputLabel>
+                        </div>
+                    </div>
 
-                <p:row >
-                    <p:column > <h:outputLabel for="tipo" value="#{label['tipo']}" /> </p:column>
-                    <p:column > <h:outputLabel id="tipo" value="#{marketingEventoManejadorBean.elemento.tipo}"/></p:column>
-                </p:row>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['descripcion']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="descripcion" value="#{marketingEventoManejadorBean.elemento.descripcion}" />
+                        </div>
+                    </div>
 
-                <p:row >
-                    <p:column > <h:outputLabel for="casino" value="#{label['casino']}" /> </p:column>
-                    <p:column > <h:outputLabel id="casino" value="#{marketingEventoManejadorBean.elemento.idCasino.nombre}" /></p:column>
-                </p:row>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['estado']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="estado" value="#{marketingEventoManejadorBean.elemento.estado}" />
+                        </div>
+                    </div>
 
-                <p:row rendered="#{marketingEventoManejadorBean.elemento.imagen!=null}">
-                    <p:column > <h:outputLabel for="imagen" value="#{label['imagen']}" rendered="#{marketingEventoManejadorBean.elemento.imagen!=null}"/></p:column>
-                    <p:column > <p:graphicImage  id="imagen" value="#{marketingEventoManejadorBean.file}" rendered="#{marketingEventoManejadorBean.elemento.imagen!=null}" /></p:column>
-                </p:row>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['tipo']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="tipo" value="#{marketingEventoManejadorBean.elemento.tipo}" />
+                        </div>
+                    </div>
 
-                <p:row >
-                    <p:column >
-                        Clientes<br /><p:pickList id="PojoPickList" value="#{marketingEventoManejadorBean.todosclienteses}" var="form" effect="bounce"
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['casino']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="casino" value="#{marketingEventoManejadorBean.elemento.idCasino.nombre}" />
+                        </div>
+                    </div>
+
+                    <c:if test="#{marketingEventoManejadorBean.elemento.imagen!=null}">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" >#{label['imagen']}</label>
+                            <div class="col-md-9">
+                                <p:graphicImage  id="imagen" value="#{marketingEventoManejadorBean.file}" />
+                            </div>
+                        </div>
+                    </c:if>
+                    
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['clientes']}</label>
+                        <div class="col-md-9">
+                            <p:pickList id="PojoPickList" value="#{marketingEventoManejadorBean.todosclienteses}" var="form" effect="bounce"
                                                   itemValue="#{form}" itemLabel="#{form.nombres}"  showCheckbox="true"
                                                   showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="clientecom" >
 
@@ -72,9 +98,13 @@
                                 <h:outputText value="#{form}" />
                             </p:column>
                         </p:pickList>
-                    </p:column>
-                    <p:column >
-                        Usuarios<br /><p:pickList id="PojoPickList2" value="#{marketingEventoManejadorBean.todosusuarioses}" var="form2" effect="bounce"
+                        </div>
+                    </div>
+                    
+                     <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['usuarios']}</label>
+                        <div class="col-md-9">
+                            <p:pickList id="PojoPickList2" value="#{marketingEventoManejadorBean.todosusuarioses}" var="form2" effect="bounce"
                                                   itemValue="#{form2}" itemLabel="#{form2.nombreUsuario}"  showCheckbox="true"
                                                   showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="usercom" >
 
@@ -84,21 +114,24 @@
                             <p:column>
                                 <h:outputText value="#{form2.nombreUsuario}" />
                             </p:column>
-                        </p:pickList>
-                    </p:column>
-                </p:row>
+                            </p:pickList>
+                        </div>
+                    </div>
 
-                <f:facet name="footer">  
-                    <p:commandButton value="Confirmar" action="#{marketingEventoManejadorBean.guardar()}" 
-                                      icon="ui-icon-check"
-                                     update=":#{p:component('editForm')} :#{p:component('messages')}" style="margin:0"/>    
-                </f:facet>  
+                </div>
+                <div class="panel-footer text-right"> 
+                    <h:commandLink id="btnconfirm"
+                                   action="#{marketingEventoManejadorBean.guardar()}"
+                                   styleClass="btn btn-primary">
+                        #{label['Confirmar']}
+                    </h:commandLink> 
+                    <h:link id="btnclose" outcome="/pages/eventos.xhtml" class="btn btn-primary"
+                            >
+                        #{label['Volver']}
+                    </h:link>
 
-                <f:facet name="footer">  
-                    <p:button value="Volver" outcome="/pages/eventos.xhtml"
-                              style="margin:0" icon="ui-icon-arrowreturn-1-w"  />    
-                </f:facet>  
-            </p:panelGrid>  
+                </div>
+            </div>
         </h:form>
 
 

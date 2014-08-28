@@ -115,7 +115,7 @@ public class CrudPerfilesBean {
     public void delete() {
         adminFacade.deletePerfiles(elemento);
         lista = adminFacade.findAllPerfiles();
-        sessionBean.registrarlog("eliminar", "Perfiles", elemento.toString());
+        sessionBean.registrarlog("eliminar", "Perfiles", elemento.getNombre());
         FacesUtil.addInfoMessage("Perfil eliminado", elemento.getNombre());
         elemento = new Perfiles();
         sessionBean.notifyObserver("Perfiles");
@@ -128,10 +128,10 @@ public class CrudPerfilesBean {
             lista = adminFacade.findAllPerfiles();
             sessionBean.notifyObserver("Perfiles");
             if (opcion) {
-                sessionBean.registrarlog("actualizar", "Perfiles", elemento.toString());
+                sessionBean.registrarlog("actualizar", "Perfiles", elemento.getNombre());
                 FacesUtil.addInfoMessage("Perfil actualizado", elemento.getNombre());
             } else {
-                sessionBean.registrarlog("crear", "Perfiles", elemento.toString());
+                sessionBean.registrarlog("crear", "Perfiles", elemento.getNombre());
                 FacesUtil.addInfoMessage("Perfil creado", elemento.getNombre());
             }
             elemento = new Perfiles();

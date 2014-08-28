@@ -37,6 +37,7 @@ public class CrudEventoBean {
     private UploadedFile file;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
+    private boolean editar;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -71,6 +72,7 @@ public class CrudEventoBean {
         elemento = new Eventos();
         lista = marketingUserFacade.findAllEventos();
         listacasinos = marketingUserFacade.findAllCasinos();
+        editar = false;
     }
 
     public List<Eventos> getLista() {
@@ -116,7 +118,7 @@ public class CrudEventoBean {
     public void delete() {
         marketingUserFacade.deleteEventos(elemento);
         lista = marketingUserFacade.findAllEventos();
-        sessionBean.registrarlog("eliminar", "Eventos", elemento.toString());
+        sessionBean.registrarlog("eliminar", "Eventos", elemento.getNombre());
         FacesUtil.addInfoMessage("Evento eliminado", elemento.getNombre());
         elemento = new Eventos();
     }
@@ -129,10 +131,10 @@ public class CrudEventoBean {
         boolean opcion = marketingUserFacade.guardarEventos(elemento);
         lista = marketingUserFacade.findAllEventos();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Eventos", elemento.toString());
+            sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
         FacesUtil.addInfoMessage("Evento actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "Eventos", elemento.toString());
+            sessionBean.registrarlog("crear", "Eventos", elemento.getNombre());
         FacesUtil.addInfoMessage("Evento creado", elemento.getNombre());
         }
         elemento = new Eventos();
@@ -152,5 +154,13 @@ public class CrudEventoBean {
         } catch (IOException ex) {
                 LOGGER.error(ex);
         }
+    }
+    
+    public boolean isEditar() {
+        return editar;
+    }
+
+    public void setEditar(boolean editar) {
+        this.editar = editar;
     }
 }

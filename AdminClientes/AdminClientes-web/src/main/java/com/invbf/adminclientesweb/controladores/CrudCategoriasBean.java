@@ -85,7 +85,7 @@ public class CrudCategoriasBean {
     public void delete() {
         marketingUserFacade.deleteCategorias(elemento);
         lista = marketingUserFacade.findAllCategorias();
-        sessionBean.registrarlog("eliminar", "Categorias", elemento.toString());
+        sessionBean.registrarlog("eliminar", "Categorias", elemento.getNombre());
         
             FacesUtil.addInfoMessage("Categoria eliminada", elemento.getNombre());
         elemento = new Categorias();
@@ -95,10 +95,10 @@ public class CrudCategoriasBean {
         boolean opcion = marketingUserFacade.guardarCategorias(elemento);
         lista = marketingUserFacade.findAllCategorias();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Categorias", elemento.toString());
+            sessionBean.registrarlog("actualizar", "Categorias", elemento.getNombre());
             FacesUtil.addInfoMessage("Categoria actualizada", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "Categorias", elemento.toString());
+            sessionBean.registrarlog("crear", "Categorias", elemento.getNombre());
             FacesUtil.addInfoMessage("Categoria creada", elemento.getNombre());
         }
         elemento = new Categorias();

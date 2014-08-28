@@ -4,6 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
+import com.invbf.adminclientesapi.entity.Configuraciones;
 import com.invbf.adminclientesapi.entity.Formularios;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.entity.Vistas;
@@ -43,6 +44,7 @@ public class SessionBean implements Serializable, Subject {
     private Usuarios usuario;//Almacena el objeto usuario de la session
     private HashMap<String, Object> Attributes;
     private List<Observer> observers;
+    private int paginacion;
 
     /**
      * Creates a new instance of SessionFlowumiUtil
@@ -55,6 +57,12 @@ public class SessionBean implements Serializable, Subject {
         usuario = new Usuarios();
         Attributes = new HashMap<String, Object>();
         observers = new ArrayList<Observer>();
+        Configuraciones configuracion = sessionFacade.getConfiguracionByName("paginacion");
+        if (configuracion == null) {
+            paginacion = 10;
+        } else {
+            paginacion = Integer.parseInt(configuracion.getValor());
+        }
     }
 
     public Usuarios getUsuario() {
@@ -163,14 +171,24 @@ public class SessionBean implements Serializable, Subject {
             if (o == null) {
                 i.remove();
             } else {
-                if(tabla.equals("Perfiles")&&o instanceof CrudUsuariosBean){
+                if (tabla.equals("Perfiles") && o instanceof CrudUsuariosBean) {
                     o.update();
                 }
             }
-            
+
         }
     }
-    public void registrarlog(String accion, String tabla, String mensaje){
+
+    public void registrarlog(String accion, String tabla, String mensaje) {
         sessionFacade.registrarlog(accion, tabla, mensaje, usuario);
     }
+
+    public int getPaginacion() {
+        return paginacion;
+    }
+
+    public void setPaginacion(int paginacion) {
+        this.paginacion = paginacion;
+    }
+    
 }

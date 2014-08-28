@@ -19,42 +19,48 @@
                     <div class="col-md-12 column">
 
                         <!--Clientes-->
-                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Clientes&quot;)}">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Clientes</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <h:form class="form-horizontal">
-                                        <p:dataTable id="detailsTableClientes" var="element" value="#{crudClientesBean.lista}"  
-                                                     emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" filteredValue="#{crudClientesBean.flista}"
-                                                     rows="5"
-                                                     paginator="true"
-                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                     rowsPerPageTemplate="5,10,15">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Clientes</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableClientes" var="element" value="#{crudClientesBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" filteredValue="#{crudClientesBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
 
-                                            <f:facet name="header">
-                                                <p:outputPanel>
-                                                    <h:outputText value="Search all fields:" />
-                                                    <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" style="width:150px" placeholder="Enter keyword" />
-                                                </p:outputPanel>
-                                            </f:facet>
+                                        <f:facet name="header">
+                                            <p:outputPanel>
+                                                <h:outputText value="Search all fields:" />&nbsp;
+                                                <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                &nbsp;
+                                                <h:outputText value="Editar:" />&nbsp;
+                                                <p:selectBooleanButton id="value2" value="#{crudClientesBean.editar}" onLabel="Si" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px">
+                                                    <p:ajax update=":#{p:component('detailsTableClientes')}" />
+                                                </p:selectBooleanButton>
+                                            </p:outputPanel>
+                                        </f:facet>
 
-                                            <p:column headerText="Id" sortBy="#{element.idCliente}" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
-                                                <h:outputText value="#{element.idCliente}" />
-                                            </p:column>
+                                        <p:column headerText="Id" sortBy="#{element.idCliente}" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
+                                            <h:outputText value="#{element.idCliente}" />
+                                        </p:column>
 
-                                            <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
-                                                <h:outputText value="#{element.nombres}" />
-                                            </p:column>
+                                        <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
+                                            <h:outputText value="#{element.nombres}" />
+                                        </p:column>
 
-                                            <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" filterStyle="display:none">
-                                                <h:outputText value="#{element.apellidos}" />
-                                            </p:column>
+                                        <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" filterStyle="display:none">
+                                            <h:outputText value="#{element.apellidos}" />
+                                        </p:column>
+
+                                        <c:if test="#{crudClientesBean.editar}">
 
                                             <p:column headerText="Acciones" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
                                                 <p:commandButton id="editButtonClientes" action="#{crudClientesBean.goCliente(element.idCliente)}" icon="ui-icon-pencil" 
-                                                                 title="#{label['lb_btn.editar']}" 
+                                                                 title="#{label['lb_btn.editar']}"
                                                                  rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;actualizar&quot;)}">  
                                                     <f:setPropertyActionListener value="#{element}" target="#{crudClientesBean.elemento}" />  
                                                 </p:commandButton>
@@ -70,62 +76,15 @@
                                                                  value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
                                                                  rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;crear&quot;)}"/>  
                                             </f:facet>
-                                        </p:dataTable>
+                                        </c:if>
+                                    </p:dataTable>
 
-                                    </h:form>
-                                </div>
+                                </h:form>
                             </div>
-
-                            <h:form>
-                                <p:dialog id="addDialogClientes" header="Agregar" widgetVar="addDialogClientes" modal="true" closable="false" resizable="false">
-
-                                    <p:panelGrid columns="2">  
-
-                                        <h:outputLabel value="#{label['codigo']}" /> 
-                                        <h:outputLabel value="#{crudClientesBean.elemento.idCliente}"/>
-
-                                        <h:outputLabel for="nombresClientes" value="#{label['nombres']}" /> 
-                                        <p:inputText id="nombresClientes" value="#{crudClientesBean.elemento.nombres}" required="true" />
-
-                                        <h:outputLabel for="apellidosClientes" value="#{label['apellidos']}" /> 
-                                        <p:inputText id="apellidosClientes" value="#{crudClientesBean.elemento.apellidos}" required="true" />
-
-                                        <h:outputLabel for="categoriasClientes" value="#{label['categorias']}" /> 
-                                        <p:selectOneMenu id="categoriasClientes" value="#{crudClientesBean.elemento.idCategorias.idCategorias}">
-                                            <f:selectItem itemLabel="Select One" itemValue="" />
-                                            <f:selectItems value="#{crudClientesBean.listacategorias}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCategorias}"/> 
-                                        </p:selectOneMenu>
-
-                                        <h:outputLabel for="casinoClientes" value="#{label['casino']}" /> 
-                                        <p:selectOneMenu id="casinoClientes" value="#{crudClientesBean.elemento.idCasinoPreferencial.idCasino}"  required="true">
-                                            <f:selectItem itemLabel="Select One" itemValue="" />
-                                            <f:selectItems value="#{crudClientesBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
-                                        </p:selectOneMenu>
+                        </div>
 
 
-                                        <f:facet name="footer">  
-                                            <p:commandButton value="Confirmar" actionListener="#{crudClientesBean.guardar()}" 
-                                                             oncomplete="PF('addDialogClientes').hide()" icon="ui-icon-check" 
-                                                             update=":#{p:component('detailsTableClientes')} :#{p:component('addDialogClientes')} :#{p:component('messages')}" style="margin:0" />   
-                                            <p:commandButton value="Cerrar" oncomplete="PF('addDialogClientes').hide()" update=":#{p:component('addDialogClientes')}" icon="ui-icon-closethick"/>  
-                                        </f:facet>  
-                                    </p:panelGrid> 
-                                </p:dialog> 
-                            </h:form>
 
-
-                            <h:form>
-                                <p:confirmDialog id="deleteDialogClientes" message="Quiere borrar el cliente #{crudClientesBean.elemento.nombres} #{crudClientesBean.elemento.apellidos}?"  
-                                                 header="Borrar" severity="alert" widgetVar="deleteDialogClientes" closable="false">  
-
-                                    <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogClientes').hide()"  
-                                                     action="#{crudClientesBean.delete()}" update=":#{p:component('detailsTableClientes')} :#{p:component('messages')}"/>  
-                                    <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogClientes').hide()" type="button" />   
-
-                                </p:confirmDialog> 
-                            </h:form>
-
-                        </c:if>
 
                         <!--Fin Clientes-->
 
@@ -135,7 +94,52 @@
                 </div>
             </div>
         </h:form>
+        <h:form>
+            <p:dialog id="addDialogClientes" header="Agregar" widgetVar="addDialogClientes" modal="true" closable="false" resizable="false">
 
+                <p:panelGrid columns="2">  
+
+                    <h:outputLabel for="nombresClientes" value="#{label['nombres']}" /> 
+                    <p:inputText id="nombresClientes" value="#{crudClientesBean.elemento.nombres}" required="true" />
+
+                    <h:outputLabel for="apellidosClientes" value="#{label['apellidos']}" /> 
+                    <p:inputText id="apellidosClientes" value="#{crudClientesBean.elemento.apellidos}" required="true" />
+
+                    <h:outputLabel for="categoriasClientes" value="#{label['categorias']}" /> 
+                    <p:selectOneMenu id="categoriasClientes" value="#{crudClientesBean.elemento.idCategorias.idCategorias}">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{crudClientesBean.listacategorias}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCategorias}"/> 
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="casinoClientes" value="#{label['casino']}" /> 
+                    <p:selectOneMenu id="casinoClientes" value="#{crudClientesBean.elemento.idCasinoPreferencial.idCasino}"  required="true">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{crudClientesBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
+                    </p:selectOneMenu>
+
+
+                    <f:facet name="footer">  
+                        <p:commandButton value="Confirmar" actionListener="#{crudClientesBean.guardar()}" 
+                                         oncomplete="PF('addDialogClientes').hide()" icon="ui-icon-check" 
+                                         update=":#{p:component('detailsTableClientes')} :#{p:component('addDialogClientes')} :#{p:component('messages')}" 
+                                         style="margin:0" />   
+                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogClientes').hide()" update=":#{p:component('addDialogClientes')}" icon="ui-icon-closethick"/>  
+                    </f:facet>  
+                </p:panelGrid> 
+            </p:dialog> 
+        </h:form>
+
+
+        <h:form>
+            <p:confirmDialog id="deleteDialogClientes" message="Quiere borrar el cliente #{crudClientesBean.elemento.nombres} #{crudClientesBean.elemento.apellidos}?"  
+                             header="Borrar" severity="alert" widgetVar="deleteDialogClientes" closable="false">  
+
+                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogClientes').hide()"  
+                                 action="#{crudClientesBean.delete()}" update=":#{p:component('detailsTableClientes')} :#{p:component('messages')}"/>  
+                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogClientes').hide()" type="button" />   
+
+            </p:confirmDialog> 
+        </h:form>
 
     </ui:define>            
 </ui:composition>

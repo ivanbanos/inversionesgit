@@ -101,4 +101,9 @@ public class SystemFacadeImpl implements SystemFacade {
         log.setMensaje(mensaje);
         logsFacadeLocal.create(log);
     }
+
+    @Override
+    public Configuraciones getConfiguracionByName(String nombre) {
+        return configuracionesFacadeLocal.findByNombre(nombre);
+    }
 }

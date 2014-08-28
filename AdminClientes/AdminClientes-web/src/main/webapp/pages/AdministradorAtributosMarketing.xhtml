@@ -23,10 +23,10 @@
                                 <h:form class="form-horizontal">
                                     <p:dataTable id="detailsTableCasinos" var="element" value="#{crudCasinosBean.lista}"  
                                                  emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableCasinos" filteredValue="#{crudCasinosBean.flista}"
-                                                 rows="5"
+                                                 rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
+                                                 >
 
                                         <f:facet name="header">
                                             <p:outputPanel>
@@ -73,9 +73,6 @@
                             <p:dialog id="addDialogCasinos" header="Agregar" widgetVar="addDialogCasinos" modal="true" closable="false" resizable="false">
 
                                 <p:panelGrid columns="2">  
-
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudCasinosBean.elemento.idCasino}"/>
 
                                     <h:outputLabel for="nombreCasinos" value="#{label['nombre']}" /> 
                                     <p:inputText id="nombreCasinos" value="#{crudCasinosBean.elemento.nombre}" required="true" />
@@ -197,9 +194,6 @@
 
                                 <p:panelGrid columns="2">  
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudEstadosClientesBean.elemento.idEstadoCliente}"/>
-
                                     <h:outputLabel for="nombreEstadosClientes" value="#{label['nombre']}" /> 
                                     <p:inputText id="nombreEstadosClientes" value="#{crudEstadosClientesBean.elemento.nombre}" required="true" />
 
@@ -310,9 +304,6 @@
                             <p:dialog id="addDialogCategorias" header="Agregar" widgetVar="addDialogCategorias" modal="true" closable="false" resizable="false">
 
                                 <p:panelGrid columns="2">  
-
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudCategoriasBean.elemento.idCategorias}"/>
 
                                     <h:outputLabel for="nombreCategorias" value="#{label['nombre']}" /> 
                                     <p:inputText id="nombreCategorias" value="#{crudCategoriasBean.elemento.nombre}" required="true" />
@@ -429,9 +420,6 @@
 
                                 <p:panelGrid columns="2">  
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudTipoJuegoBean.elemento.idTipoJuego}"/>
-
                                     <h:outputLabel for="nombreTipoJuego" value="#{label['nombre']}" /> 
                                     <p:inputText id="nombreTipoJuego" value="#{crudTipoJuegoBean.elemento.nombre}" required="true" />
 
@@ -547,10 +535,6 @@
                             <p:dialog id="addDialogAtributos" header="Agregar" widgetVar="addDialogAtributos" modal="true" closable="false" resizable="false">
 
                                 <p:panelGrid columns="2">  
-
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudAtributosBean.elemento.idAtributo}"/>
-
                                     <h:outputLabel for="nombreAtributos" value="#{label['nombre']}" /> 
                                     <p:inputText id="nombreAtributos" value="#{crudAtributosBean.elemento.nombre}" required="true" />
 

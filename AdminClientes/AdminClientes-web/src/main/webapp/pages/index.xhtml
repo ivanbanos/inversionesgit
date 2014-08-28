@@ -34,6 +34,10 @@
                             <h:link outcome="/pages/eventos.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-calendar fa-5x"></i> 
                                 <br/>#{label['eventos']}</h:link>
                         </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">
+                            <h:link outcome="/pages/eventosHostess.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-calendar fa-5x"></i> 
+                                <br/>#{label['eventos']}</h:link>
+                        </c:if>
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
                             <h:link outcome="/pages/Reportes.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-bar-chart-o fa-5x"></i> 
                                 <br/>#{label['reportes']}</h:link>

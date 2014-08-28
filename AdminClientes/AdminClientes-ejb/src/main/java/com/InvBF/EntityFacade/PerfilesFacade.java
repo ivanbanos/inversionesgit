@@ -32,7 +32,7 @@ public class PerfilesFacade extends AbstractFacade<Perfiles> implements Perfiles
     public Perfiles findByNombre(String nombre) {
         List<Perfiles> perfiles = (List<Perfiles>)em.createNamedQuery("Perfiles.findByNombre")
             .setParameter("nombre", nombre)
-            .getResultList().get(0);
+            .getResultList();
         if(perfiles==null||perfiles.isEmpty()){
             return null;
         }else{

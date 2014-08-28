@@ -41,6 +41,7 @@ public class CrudClientesBean {
     private List<Tiposjuegos> listatiposjuegos;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
+    private boolean editar;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -78,6 +79,7 @@ public class CrudClientesBean {
         listaatributos = marketingUserFacade.findAllAtributos();
         listacategorias = marketingUserFacade.findAllCategorias();
         listatiposjuegos = marketingUserFacade.findAllTiposjuegos();
+        editar = false;
     }
 
     public List<Clientes> getLista() {
@@ -165,4 +167,13 @@ public class CrudClientesBean {
             LOGGER.error(ex);
         }
     }
+
+    public boolean isEditar() {
+        return editar;
+    }
+
+    public void setEditar(boolean editar) {
+        this.editar = editar;
+    }
+    
 }

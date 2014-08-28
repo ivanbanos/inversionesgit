@@ -40,8 +40,12 @@ public class HostessFacadeImpl implements HostessFacade {
     public List<Eventos> findEventosHostess(Usuarios usuario) {
         List<Eventos> eventosHostess;
         eventosHostess = eventosFacadeLocal.findAll();
-        for (Eventos e : eventosHostess) {
-            e.getUsuariosList().contains(usuario);
+        Iterator<Eventos> iterator = eventosHostess.iterator();
+        while (iterator.hasNext()) {
+            Eventos e = iterator.next();
+            if(!e.getUsuariosList().contains(usuario)){
+                iterator.remove();
+            }
         }
         return eventosHostess;
     }

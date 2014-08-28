@@ -86,7 +86,7 @@ public class CrudCasinosBean {
     public void delete(){
         marketingUserFacade.deleteCasinos(elemento);
         lista = marketingUserFacade.findAllCasinos();
-        sessionBean.registrarlog("eliminar", "Casinos", elemento.toString());
+        sessionBean.registrarlog("eliminar", "Casinos", elemento.getNombre());
             FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
         elemento = new Casinos();
     }
@@ -95,10 +95,10 @@ public class CrudCasinosBean {
         boolean opcion = marketingUserFacade.guardarCasinos(elemento);
         lista = marketingUserFacade.findAllCasinos();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Casinos", elemento.toString());
+            sessionBean.registrarlog("actualizar", "Casinos", elemento.getNombre());
             FacesUtil.addInfoMessage("Casino actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "Casinos", elemento.toString());
+            sessionBean.registrarlog("crear", "Casinos", elemento.getNombre());
             FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
         }
         elemento = new Casinos();

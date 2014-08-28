@@ -141,6 +141,30 @@ public class InitEntitysService {
             vista = new Vistas(null, "AtributosSistema");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "ConfiguracionesGenerales");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "Casinos");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "Categorias");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "EstadosClientes");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "TipoJuego");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "Atributos");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "AtributosMarketing");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vistas(null, "ManejadorEventosMarketing");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
 
             perfilesFacadeLocal.edit(perfil);
 
@@ -230,39 +254,13 @@ public class InitEntitysService {
             perfil.getFormulariosList().add(formulario);
 
             Vistas vista;
-            vista = new Vistas(null, "CrudAtributosView");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Casinos");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Categorias");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
             vista = new Vistas(null, "Clientes");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "EstadosClientes");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             vista = new Vistas(null, "Eventos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "TipoJuego");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Atributos");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "AtributosMarketing");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "ManejadorEventosMarketing");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "ConfiguracionesGenerales");
-            vistasFacadeLocal.create(vista);
-            perfil.getVistasList().add(vista);
+            
 
             perfilesFacadeLocal.create(perfil);
 
@@ -304,6 +302,16 @@ public class InitEntitysService {
         Configuraciones configuracion = new Configuraciones();
         configuracion.setNombre("CantidadClientes");
         configuracion.setValor("4");
+        configuracionesFacadeLocal.create(configuracion);
+        configuracion = new Configuraciones();
+        configuracion.setNombre("correo");
+        configuracionesFacadeLocal.create(configuracion);
+        configuracion = new Configuraciones();
+        configuracion.setNombre("contrasena");
+        configuracionesFacadeLocal.create(configuracion);
+        configuracion = new Configuraciones();
+        configuracion.setNombre("paginacion");
+        configuracion.setValor("10");
 
 
         configuracionesFacadeLocal.create(configuracion);

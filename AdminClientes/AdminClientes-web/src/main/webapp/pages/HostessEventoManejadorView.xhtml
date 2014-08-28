@@ -10,88 +10,149 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panelGrid id="editForm" columns="2">  
-                <p:row >
-                    <p:column > <h:outputLabel value="#{label['codigo']}" /> </p:column>
-                    <p:column > <h:outputLabel value="#{hostessEventoManejadorBean.elemento.idEvento}"/></p:column>
-                </p:row>
-
-                <p:row >
-                    <p:column > <h:outputLabel for="nombre" value="#{label['nombre']}" /> </p:column>
-                    <p:column > <h:outputLabel id="nombre" value="#{hostessEventoManejadorBean.elemento.nombre}" /></p:column>
-                </p:row>
-
-                <p:row >
-                    <p:column > <p:outputLabel for="fecini" value="#{label['fechainicio']}" /></p:column>
-                    <p:column > <h:outputLabel id="fecini" value="#{hostessEventoManejadorBean.elemento.fechaInicio}" >
-                            <f:convertDateTime pattern="MM-dd-yyyy" />
-                        </h:outputLabel></p:column>
-                </p:row>
-
-                <p:row >
-                    <p:column > <p:outputLabel for="fecfin" value="#{label['fechafinal']}" /></p:column>
-                    <p:column > <h:outputLabel id="fecfin" value="#{hostessEventoManejadorBean.elemento.fechaFinalizacion}"  >
-                            <f:convertDateTime pattern="MM-dd-yyyy" />
-                        </h:outputLabel></p:column>
-                </p:row>
-
-                <p:row >
-                    <p:column > <p:outputLabel for="descripcion" value="#{label['descripcion']}" /></p:column>
-                    <p:column > <h:outputLabel id="descripcion" value="#{hostessEventoManejadorBean.elemento.descripcion}"/></p:column>
-                </p:row>
-
-                <p:row >
-                    <p:column > <h:outputLabel for="estado" value="#{label['estado']}" /> </p:column>
-                    <p:column > <h:outputLabel id="estado" value="#{hostessEventoManejadorBean.elemento.estado}" /></p:column>
-                </p:row>
-
-                <p:row >
-                    <p:column > <h:outputLabel for="tipo" value="#{label['tipo']}" /> </p:column>
-                    <p:column > <h:outputLabel id="tipo" value="#{hostessEventoManejadorBean.elemento.tipo}"/></p:column>
-                </p:row>
-
-                <p:row >
-                    <p:column > <h:outputLabel for="casino" value="#{label['casino']}" /> </p:column>
-                    <p:column > <h:outputLabel id="casino" value="#{hostessEventoManejadorBean.elemento.idCasino.nombre}" /></p:column>
-                </p:row>
-
-                <p:row rendered="#{hostessEventoManejadorBean.elemento.imagen!=null}">
-                    <p:column > <h:outputLabel for="imagen" value="#{label['imagen']}" rendered="#{hostessEventoManejadorBean.elemento.imagen!=null}"/></p:column>
-                    <p:column > <p:graphicImage  id="imagen" value="#{hostessEventoManejadorBean.file}" rendered="#{hostessEventoManejadorBean.elemento.imagen!=null}" /></p:column>
-                </p:row>
 
 
-                <f:facet name="footer">  
-                    <p:button value="Volver" outcome="/pages/eventos.xhtml"
-                              style="margin:0" icon="ui-icon-arrowreturn-1-w"  />    
-                </f:facet>  
-            </p:panelGrid> 
-            <p:panel id="clientes">
-                <c:forEach items="#{hostessEventoManejadorBean.clientes}" var="clientes">
-                    <p:panelGrid columns="2">
+            <div class="panel panel-primary">
 
-                        <h:outputLabel value="#{label['nombre']}" />
-                        <h:outputLabel value="#{clientes.clientes.nombres} #{clientes.clientes.apellidos}" />
+                <div class="panel-heading">Evento</div>
+                <div class="panel-body">
 
-                        <h:outputLabel value="#{label['Observaciones']}" /> 
-                        <p:inputText value="#{clientes.observaciones}" required="true" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['codigo']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel value="#{hostessEventoManejadorBean.elemento.idEvento}"/>
+                        </div>
+                    </div>
 
-                        <h:outputLabel  value="#{label['estados']}" /> 
-                        <p:selectOneMenu  value="#{clientes.idEstadoCliente.idEstadoCliente}">
-                            <f:selectItem itemLabel="Select One" itemValue="" />
-                            <f:selectItems value="#{hostessEventoManejadorBean.listaestadosclientes}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idEstadoCliente}"/> 
-                        </p:selectOneMenu>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="nombre" value="#{hostessEventoManejadorBean.elemento.nombre}" />
+                        </div>
+                    </div>
 
-                        <f:facet name="footer">  
-                            <p:commandButton value="Guardar" actionListener="#{hostessEventoManejadorBean.guardar(clientes.clientes.idCliente)}" 
-                                             icon="ui-icon-check" update=":#{p:component('clientes')} :#{p:component('messages')}" />   
-                            <p:commandButton value="Nuevo" actionListener="#{hostessEventoManejadorBean.nuevo(clientes.clientes.idCliente)}" 
-                                             icon="ui-icon-check" update=":#{p:component('clientes')} :#{p:component('messages')}"/>  
-                        </f:facet>  
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="fecini" value="#{hostessEventoManejadorBean.elemento.fechaInicio}" >
+                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                            </h:outputLabel>
+                        </div>
+                    </div>
 
-                    </p:panelGrid>
-                </c:forEach>
-            </p:panel>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="fecfin" value="#{hostessEventoManejadorBean.elemento.fechaFinalizacion}"  >
+                                <f:convertDateTime pattern="MM-dd-yyyy" />
+                            </h:outputLabel>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['descripcion']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="descripcion" value="#{hostessEventoManejadorBean.elemento.descripcion}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['estado']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="estado" value="#{hostessEventoManejadorBean.elemento.estado}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['tipo']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="tipo" value="#{hostessEventoManejadorBean.elemento.tipo}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['casino']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="casino" value="#{hostessEventoManejadorBean.elemento.idCasino.nombre}" />
+                        </div>
+                    </div>
+
+                    <c:if test="#{hostessEventoManejadorBean.elemento.imagen!=null}">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" >#{label['imagen']}</label>
+                            <div class="col-md-9">
+                                <p:graphicImage  id="imagen" value="#{marketingEventoManejadorBean.file}" />
+                            </div>
+                        </div>
+                    </c:if>
+
+
+
+                </div>
+                <div class="panel-footer text-right"> 
+                    <h:link id="btnclose" outcome="/pages/eventosHostess.xhtml" class="btn btn-primary"
+                            >
+                        #{label['Volver']}
+                    </h:link>
+
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                
+                <div class="panel-heading">Clientes</div>
+
+                <div class="panel-body">
+                    <c:forEach items="#{hostessEventoManejadorBean.clientes}" var="clientes">
+                        <div class="panel panel-primary">
+
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                    <div class="col-md-9">
+                                        <h:outputLabel value="#{clientes.clientes.nombres} #{clientes.clientes.apellidos}"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['Observaciones']}</label>
+                                    <div class="col-md-9">
+                                        <p:selectOneMenu  value="#{clientes.observaciones}">
+                                            <f:selectItem itemLabel="Select One" itemValue="" />
+                                            <f:selectItem itemLabel="Ira" itemValue="Ira" />
+                                            <f:selectItem itemLabel="No ira" itemValue="No ira" />
+                                            <f:selectItem itemLabel="Tal vez" itemValue="Tal vez" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['estados']}</label>
+                                    <div class="col-md-9">
+                                        <p:selectOneMenu  value="#{clientes.idEstadoCliente.idEstadoCliente}">
+                                            <f:selectItem itemLabel="Select One" itemValue="" />
+                                            <f:selectItems value="#{hostessEventoManejadorBean.listaestadosclientes}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idEstadoCliente}"/> 
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer text-right"> 
+                                <h:commandLink action="#{hostessEventoManejadorBean.guardar(clientes.clientes.idCliente)}" 
+                                               class="btn btn-primary">
+                                    <i class="icon-search"></i> #{label['guardar']}
+                                </h:commandLink> 
+                                <h:commandLink action="#{hostessEventoManejadorBean.nuevo(clientes.clientes.idCliente)}" 
+                                               class="btn btn-primary">
+                                    <i class="icon-search"></i> #{label['nuevo']}
+                                </h:commandLink> 
+
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
         </h:form>
 
 
