@@ -36,11 +36,7 @@
                                             <p:outputPanel>
                                                 <h:outputText value="Search all fields:" />&nbsp;
                                                 <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" style="width:150px" placeholder="Enter keyword" />
-                                                &nbsp;
-                                                <h:outputText value="Editar:" />&nbsp;
-                                                <p:selectBooleanButton id="value2" value="#{crudClientesBean.editar}" onLabel="Si" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px">
-                                                    <p:ajax update=":#{p:component('detailsTableClientes')}" />
-                                                </p:selectBooleanButton>
+
                                             </p:outputPanel>
                                         </f:facet>
 
@@ -56,27 +52,27 @@
                                             <h:outputText value="#{element.apellidos}" />
                                         </p:column>
 
-                                        <c:if test="#{crudClientesBean.editar}">
 
-                                            <p:column headerText="Acciones" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
-                                                <p:commandButton id="editButtonClientes" action="#{crudClientesBean.goCliente(element.idCliente)}" icon="ui-icon-pencil" 
-                                                                 title="#{label['lb_btn.editar']}"
-                                                                 rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;actualizar&quot;)}">  
-                                                    <f:setPropertyActionListener value="#{element}" target="#{crudClientesBean.elemento}" />  
-                                                </p:commandButton>
-                                                <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogClientes').show();" 
-                                                                 icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogClientes')}"
-                                                                 rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;eliminar&quot;)}">
-                                                    <f:setPropertyActionListener value="#{element}" target="#{crudClientesBean.elemento}" /> 
-                                                </p:commandButton> 
-                                            </p:column>
 
-                                            <f:facet name="footer"> 
-                                                <p:commandButton id="addButton" oncomplete="PF('addDialogClientes').show();" 
-                                                                 value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
-                                                                 rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;crear&quot;)}"/>  
-                                            </f:facet>
-                                        </c:if>
+                                        <p:column headerText="Acciones" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:commandButton id="editButtonClientes" action="#{crudClientesBean.goCliente(element.idCliente)}" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editar']}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;actualizar&quot;)}">  
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudClientesBean.elemento}" />  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogClientes').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogClientes')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudClientesBean.elemento}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer"> 
+                                            <p:commandButton id="addButton" oncomplete="PF('addDialogClientes').show();" 
+                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;crear&quot;)}"/>  
+                                        </f:facet>
+
                                     </p:dataTable>
 
                                 </h:form>

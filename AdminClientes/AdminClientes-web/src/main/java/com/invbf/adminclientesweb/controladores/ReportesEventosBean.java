@@ -29,7 +29,7 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @ViewScoped
-public class CrudEventoBean {
+public class ReportesEventosBean {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
@@ -61,13 +61,13 @@ public class CrudEventoBean {
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public CrudEventoBean() {
+    public ReportesEventosBean() {
     }
 
     @PostConstruct
     public void init() {
 
-        if (!sessionBean.perfilViewMatch("Eventos")) {
+        if (!sessionBean.perfilViewMatch("Reportes")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");

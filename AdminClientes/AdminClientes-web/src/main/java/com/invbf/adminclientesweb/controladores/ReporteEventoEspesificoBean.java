@@ -35,7 +35,7 @@ import org.primefaces.model.StreamedContent;
  */
 @ManagedBean
 @ViewScoped
-public class MarketingEventoManejadorBean {
+public class ReporteEventoEspesificoBean {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
@@ -71,12 +71,12 @@ public class MarketingEventoManejadorBean {
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public MarketingEventoManejadorBean() {
+    public ReporteEventoEspesificoBean() {
     }
 
     @PostConstruct
     public void init() {
-        if (!sessionBean.perfilViewMatch("ManejadorEventosMarketing")) {
+        if (!sessionBean.perfilViewMatch("Reportes")) {
             try {
                 sessionBean.Desconectar();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");

@@ -37,10 +37,7 @@
                                                 <h:outputText value="Search all fields:" />
                                                 &nbsp;
                                                 <p:inputText id="globalFilterEventos" onkeyup="PF('detailsTableEventos').filter()" style="width:150px" placeholder="Enter keyword" />
-                                                &nbsp;<h:outputText value="Editar:" />
-                                                &nbsp;<p:selectBooleanButton id="value2" value="#{crudEventoBean.editar}" onLabel="Si" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:60px">
-                                                    <p:ajax update=":#{p:component('detailsTableEventos')}" />
-                                                </p:selectBooleanButton>
+
                                             </p:outputPanel>
 
                                         </f:facet>
@@ -53,33 +50,33 @@
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
-                                            <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                                <p:commandButton id="editButtonEventos" update=":#{p:component('editFormEventos')}" 
-                                                                 oncomplete="PF('editDialogEventos').show()" icon="ui-icon-pencil" 
-                                                                 title="#{label['lb_btn.editar']}" 
-                                                                 rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;actualizar&quot;)}">  
-                                                    <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" />  
-                                                </p:commandButton>
-                                                <p:commandButton id="deleteButtonEventos" oncomplete="PF('deleteDialogEventos').show();" 
-                                                                 icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogEventos')}"
-                                                                 rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;eliminar&quot;)}">
-                                                    <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" /> 
-                                                </p:commandButton> 
-                                                <p:commandButton id="marketing" icon="ui-icon-pencil" 
-                                                                 title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
-                                                                 rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;)}">  
-                                                </p:commandButton>
-                                                <p:commandButton id="hostess" icon="ui-icon-pencil" 
-                                                                 title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoHostess(element.idEvento)}"
-                                                                 rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">  
-                                                </p:commandButton>
-                                            </p:column>
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:commandButton id="editButtonEventos" update=":#{p:component('editFormEventos')}" 
+                                                             oncomplete="PF('editDialogEventos').show()" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;actualizar&quot;)}">  
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" />  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButtonEventos" oncomplete="PF('deleteDialogEventos').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogEventos')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" /> 
+                                            </p:commandButton> 
+                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
+                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;)}">  
+                                            </p:commandButton>
+                                            <p:commandButton id="hostess" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoHostess(element.idEvento)}"
+                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">  
+                                            </p:commandButton>
+                                        </p:column>
 
-                                            <f:facet name="footer">  
-                                                <p:commandButton id="addButton" oncomplete="PF('addDialogEventos').show();" 
-                                                                 value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
-                                                                 rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}"/>  
-                                            </f:facet>
+                                        <f:facet name="footer">  
+                                            <p:commandButton id="addButton" oncomplete="PF('addDialogEventos').show();" 
+                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}"/>  
+                                        </f:facet>
                                     </p:dataTable>
 
                                 </h:form>
@@ -111,10 +108,10 @@
                     <p:inputText id="nombreEventos" value="#{crudEventoBean.elemento.nombre}" required="true" />
 
                     <p:outputLabel for="feciniEventos" value="#{label['fechainicio']}" />
-                    <p:calendar id="feciniEventos" value="#{crudEventoBean.elemento.fechaInicio}" showOn="button" />
+                    <p:calendar id="feciniEventos" value="#{crudEventoBean.elemento.fechaInicio}" pattern="MM/dd/yyyy HH:mm:ss" />
 
                     <p:outputLabel for="fecfinEventos" value="#{label['fechafinal']}" />
-                    <p:calendar id="fecfinEventos" value="#{crudEventoBean.elemento.fechaFinalizacion}" showOn="button" />
+                    <p:calendar id="fecfinEventos" value="#{crudEventoBean.elemento.fechaFinalizacion}" pattern="MM/dd/yyyy HH:mm:ss" />
 
                     <p:outputLabel for="descripcionEventos" value="#{label['descripcion']}" />
                     <p:inputTextarea id="descripcionEventos" value="#{crudEventoBean.elemento.descripcion}"/>
@@ -143,7 +140,7 @@
                     <h:outputLabel for="imagenEventos" value="#{label['imagen']}" />
                     <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
                                   sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
-                    
+
                     <f:facet name="footer">  
                         <p:commandButton value="Confirmar" actionListener="#{crudEventoBean.guardar()}" 
                                          oncomplete="PF('addDialogEventos').hide()" icon="ui-icon-check" 
@@ -165,10 +162,10 @@
                     <p:inputText id="nombreEventos" value="#{crudEventoBean.elemento.nombre}" required="true" />
 
                     <p:outputLabel for="feciniEventos" value="#{label['fechainicio']}" />
-                    <p:calendar id="feciniEventos" value="#{crudEventoBean.elemento.fechaInicio}" showOn="button" />
+                    <p:calendar id="feciniEventos" value="#{crudEventoBean.elemento.fechaInicio}" pattern="MM/dd/yyyy HH:mm:ss" />
 
                     <p:outputLabel for="fecfinEventos" value="#{label['fechafinal']}" />
-                    <p:calendar id="fecfinEventos" value="#{crudEventoBean.elemento.fechaFinalizacion}" showOn="button" />
+                    <p:calendar id="fecfinEventos" value="#{crudEventoBean.elemento.fechaFinalizacion}" pattern="MM/dd/yyyy HH:mm:ss" />
 
                     <p:outputLabel for="descripcionEventos" value="#{label['descripcion']}" />
                     <p:inputTextarea id="descripcionEventos" value="#{crudEventoBean.elemento.descripcion}"/>
@@ -193,7 +190,7 @@
                         <f:selectItem itemLabel="Select One" itemValue="" />
                         <f:selectItems value="#{crudEventoBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                     </p:selectOneMenu>
-                    
+
                     <h:outputLabel for="imagenEventos" value="#{label['imagen']}" />
                     <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
                                   sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
