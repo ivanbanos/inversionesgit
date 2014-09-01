@@ -18,11 +18,22 @@ import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.facade.SystemFacade;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -105,5 +116,27 @@ public class SystemFacadeImpl implements SystemFacade {
     @Override
     public Configuraciones getConfiguracionByName(String nombre) {
         return configuracionesFacadeLocal.findByNombre(nombre);
+    }
+
+    @Override
+    public ByteArrayOutputStream getOutputStreamImage(byte[] imagen, String mime) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BufferedImage bi = ImageIO.read(new ByteArrayInputStream(imagen));
+        if (mime.endsWith("png")) {
+            ImageIO.write(bi, "png", out);
+        }
+        return out;
+    }
+
+    @Override
+    public String getPathImage(byte[] imagen, String mime, String nombre) throws IOException {
+        FileInputStream fileInputStream = null;
+
+        File file = new File("nombre.png");
+        try (FileOutputStream fileOuputStream = new FileOutputStream("nombre.png")) {
+            fileOuputStream.write(imagen);
+        }
+
+        return file.getAbsolutePath();
     }
 }

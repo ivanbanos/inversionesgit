@@ -52,7 +52,6 @@
                                         <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
-                                        <c:if test="#{crudEventoBean.editar}">
 
                                             <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                                                 <p:commandButton id="editButtonEventos" update=":#{p:component('editFormEventos')}" 
@@ -81,7 +80,6 @@
                                                                  value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
                                                                  rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}"/>  
                                             </f:facet>
-                                        </c:if>
                                     </p:dataTable>
 
                                 </h:form>
@@ -143,8 +141,9 @@
                     </p:selectOneMenu>
 
                     <h:outputLabel for="imagenEventos" value="#{label['imagen']}" />
-                    <p:fileUpload id="imagenEventos" value="#{crudEventoBean.file}" mode="simple" />
-
+                    <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                                  sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    
                     <f:facet name="footer">  
                         <p:commandButton value="Confirmar" actionListener="#{crudEventoBean.guardar()}" 
                                          oncomplete="PF('addDialogEventos').hide()" icon="ui-icon-check" 
@@ -194,9 +193,10 @@
                         <f:selectItem itemLabel="Select One" itemValue="" />
                         <f:selectItems value="#{crudEventoBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                     </p:selectOneMenu>
-
+                    
                     <h:outputLabel for="imagenEventos" value="#{label['imagen']}" />
-                    <p:fileUpload id="imagenEventos" value="#{crudEventoBean.file}" mode="simple" />
+                    <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                                  sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
 
                     <f:facet name="footer">  
                         <p:commandButton value="Confirmar" action="#{crudEventoBean.guardar()}" 

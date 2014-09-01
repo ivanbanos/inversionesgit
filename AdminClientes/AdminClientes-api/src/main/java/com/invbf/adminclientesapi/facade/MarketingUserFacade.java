@@ -59,7 +59,7 @@ public interface MarketingUserFacade {
 
     public void deleteEventos(Eventos elemento);
 
-    public boolean guardarEventos(Eventos elemento);
+    public Eventos guardarEventos(Eventos elemento);
 
     public void deleteClientes(Clientes elemento);
 

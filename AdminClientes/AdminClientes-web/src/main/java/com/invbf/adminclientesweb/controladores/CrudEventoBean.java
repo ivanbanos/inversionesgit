@@ -7,7 +7,9 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Casinos;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,6 +19,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -31,6 +34,8 @@ public class CrudEventoBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
+    @EJB
+    SystemFacade systemFacade;
     private List<Eventos> lista;
     private Eventos elemento;
     private List<Casinos> listacasinos;
@@ -42,7 +47,6 @@ public class CrudEventoBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-
     private List<Eventos> flista;
 
     public List<Eventos> getFlista() {
@@ -52,6 +56,7 @@ public class CrudEventoBean {
     public void setFlista(List<Eventos> flista) {
         this.flista = flista;
     }
+
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
@@ -60,7 +65,7 @@ public class CrudEventoBean {
 
     @PostConstruct
     public void init() {
-        
+
         if (!sessionBean.perfilViewMatch("Eventos")) {
             try {
                 sessionBean.Desconectar();
@@ -123,39 +128,44 @@ public class CrudEventoBean {
         elemento = new Eventos();
     }
 
+    public void handleFileUpload(FileUploadEvent event) {
+        file = event.getFile();
+        FacesUtil.addInfoMessage(event.getFile().getFileName());
+    }
+
     public void guardar() {
-        if (file != null) {
-            elemento.setImagen(file.getContents());
-            elemento.setFormatoImagen(file.getContentType());
-        }
-        boolean opcion = marketingUserFacade.guardarEventos(elemento);
+        elemento = marketingUserFacade.guardarEventos(elemento);
         lista = marketingUserFacade.findAllEventos();
-        if (opcion) {
-            sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
+        sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
         FacesUtil.addInfoMessage("Evento actualizado", elemento.getNombre());
-        } else {
-            sessionBean.registrarlog("crear", "Eventos", elemento.getNombre());
-        FacesUtil.addInfoMessage("Evento creado", elemento.getNombre());
-        }
+        if (file != null) {
+                elemento.setImagen(file.getContents());
+                elemento.setMime(file.getContentType());
+                elemento.setFormato(file.getFileName().substring(file.getFileName().lastIndexOf("."), file.getFileName().length()));
+            
+        } 
+        marketingUserFacade.guardarEventos(elemento);
         elemento = new Eventos();
     }
+
     public void goEventoMarketing(int id) {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("MarketingEventoManejadorView.xhtml");
         } catch (IOException ex) {
-                LOGGER.error(ex);
+            LOGGER.error(ex);
         }
     }
+
     public void goEventoHostess(int id) {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
         } catch (IOException ex) {
-                LOGGER.error(ex);
+            LOGGER.error(ex);
         }
     }
-    
+
     public boolean isEditar() {
         return editar;
     }

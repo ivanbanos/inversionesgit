@@ -174,13 +174,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public boolean guardarEventos(Eventos elemento) {
+    public Eventos guardarEventos(Eventos elemento) {
         if (elemento.getIdEvento() == null) {
             eventosFacadeLocal.create(elemento);
-            return false;
+            return elemento;
         } else {
             eventosFacadeLocal.edit(elemento);
-            return true;
+            return elemento;
         }
     }
 

@@ -10,6 +10,9 @@ import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,4 +34,8 @@ public interface SystemFacade {
     public void registrarlog(String accion, String tabla, String mensaje, Usuarios usuairo);
 
     public Configuraciones getConfiguracionByName(String nombre);
+
+    public ByteArrayOutputStream getOutputStreamImage(byte[] imagen, String mime)throws IOException ;
+    
+    public String getPathImage(byte[] imagen, String mime, String nombre)throws IOException ;
 }

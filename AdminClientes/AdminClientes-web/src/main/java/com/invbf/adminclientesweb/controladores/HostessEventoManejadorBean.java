@@ -81,9 +81,6 @@ public class HostessEventoManejadorBean {
         }
         elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
         file = new DefaultStreamedContent();
-        if (elemento.getImagen() != null) {
-            file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/" + elemento.getFormatoImagen());
-        }
         clientes = new ArrayList<Listasclientesevento>(0);
         try {
             clientes = hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento"));

@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Eventos.findByFechaInicio", query = "SELECT e FROM Eventos e WHERE e.fechaInicio = :fechaInicio"),
     @NamedQuery(name = "Eventos.findByFechaFinalizacion", query = "SELECT e FROM Eventos e WHERE e.fechaFinalizacion = :fechaFinalizacion"),
     @NamedQuery(name = "Eventos.findByDescripcion", query = "SELECT e FROM Eventos e WHERE e.descripcion = :descripcion"),
-    @NamedQuery(name = "Eventos.findByFormatoImagen", query = "SELECT e FROM Eventos e WHERE e.formatoImagen = :formatoImagen"),
+    @NamedQuery(name = "Eventos.findByFormato", query = "SELECT e FROM Eventos e WHERE e.formato = :formato"),
     @NamedQuery(name = "Eventos.findByEstado", query = "SELECT e FROM Eventos e WHERE e.estado = :estado")})
 public class Eventos implements Serializable {
     @Lob
@@ -68,8 +68,10 @@ public class Eventos implements Serializable {
     private Date fechaFinalizacion;
     @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "formatoImagen")
-    private String formatoImagen;
+    @Column(name = "formato")
+    private String formato;
+    @Column(name = "mime")
+    private String mime;
     @Column(name = "estado")
     private String estado;
     @JoinTable(name = "eventosusuarios", joinColumns = {
@@ -137,14 +139,6 @@ public class Eventos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public String getFormatoImagen() {
-        return formatoImagen;
-    }
-
-    public void setFormatoImagen(String formatoImagen) {
-        this.formatoImagen = formatoImagen;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -179,6 +173,31 @@ public class Eventos implements Serializable {
         this.listasclienteseventoList = listasclienteseventoList;
     }
 
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+
+    public String getMime() {
+        return mime;
+    }
+
+    public void setMime(String mime) {
+        this.mime = mime;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -210,14 +229,6 @@ public class Eventos implements Serializable {
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
-    }
-
-    public byte[] getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
     }
     
 }

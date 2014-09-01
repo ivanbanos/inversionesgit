@@ -75,45 +75,36 @@
                         </div>
                     </div>
 
-                    <c:if test="#{marketingEventoManejadorBean.elemento.imagen!=null}">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" >#{label['imagen']}</label>
-                            <div class="col-md-9">
-                                <p:graphicImage  id="imagen" value="#{marketingEventoManejadorBean.file}" />
-                            </div>
-                        </div>
-                    </c:if>
-                    
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['clientes']}</label>
                         <div class="col-md-9">
                             <p:pickList id="PojoPickList" value="#{marketingEventoManejadorBean.todosclienteses}" var="form" effect="bounce"
-                                                  itemValue="#{form}" itemLabel="#{form.nombres}"  showCheckbox="true"
-                                                  showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="clientecom" >
+                                        itemValue="#{form}" itemLabel="#{form.nombres}"  showCheckbox="true"
+                                        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="clientecom" >
 
-                            <f:facet name="sourceCaption">#{label['nopermitidos']}</f:facet>
-                            <f:facet name="targetCaption">#{label['permitidos']}</f:facet>
+                                <f:facet name="sourceCaption">#{label['nopermitidos']}</f:facet>
+                                <f:facet name="targetCaption">#{label['permitidos']}</f:facet>
 
-                            <p:column>
-                                <h:outputText value="#{form}" />
-                            </p:column>
-                        </p:pickList>
+                                <p:column>
+                                    <h:outputText value="#{form}" />
+                                </p:column>
+                            </p:pickList>
                         </div>
                     </div>
-                    
-                     <div class="form-group">
+
+                    <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['usuarios']}</label>
                         <div class="col-md-9">
                             <p:pickList id="PojoPickList2" value="#{marketingEventoManejadorBean.todosusuarioses}" var="form2" effect="bounce"
-                                                  itemValue="#{form2}" itemLabel="#{form2.nombreUsuario}"  showCheckbox="true"
-                                                  showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="usercom" >
+                                        itemValue="#{form2}" itemLabel="#{form2.nombreUsuario}"  showCheckbox="true"
+                                        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="usercom" >
 
-                            <f:facet name="sourceCaption">#{label['nopermitidos']}</f:facet>
-                            <f:facet name="targetCaption">#{label['permitidos']}</f:facet>
+                                <f:facet name="sourceCaption">#{label['nopermitidos']}</f:facet>
+                                <f:facet name="targetCaption">#{label['permitidos']}</f:facet>
 
-                            <p:column>
-                                <h:outputText value="#{form2.nombreUsuario}" />
-                            </p:column>
+                                <p:column>
+                                    <h:outputText value="#{form2.nombreUsuario}" />
+                                </p:column>
                             </p:pickList>
                         </div>
                     </div>

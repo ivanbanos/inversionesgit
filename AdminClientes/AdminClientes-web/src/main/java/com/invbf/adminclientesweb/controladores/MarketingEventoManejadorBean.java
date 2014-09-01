@@ -11,6 +11,7 @@ import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
@@ -40,11 +42,12 @@ public class MarketingEventoManejadorBean {
     @EJB
     MarketingUserFacade marketingUserFacade;
     @EJB
+    SystemFacade systemFacade;
+    @EJB
     AdminFacade adminFacade;
     private Eventos elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private StreamedContent file;
     private List<Clientes> clienteses;
     private List<Clientes> clientesesEvento;
     private List<Usuarios> usuarioses;
@@ -80,10 +83,7 @@ public class MarketingEventoManejadorBean {
             }
         }
         elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
-        file = new DefaultStreamedContent();
-        if (elemento.getImagen() != null) {
-            file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/" + elemento.getFormatoImagen());
-        }
+        
         clienteses = marketingUserFacade.findAllClientes();
         usuarioses = adminFacade.findAllUsuariosHostess();
         clientesesEvento = new ArrayList<Clientes>();
@@ -141,10 +141,7 @@ public class MarketingEventoManejadorBean {
         marketingUserFacade.guardarEventos(elemento);
         sessionBean.actualizarUsuario();
         elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
-        file = new DefaultStreamedContent();
-        if (elemento.getImagen() != null) {
-            file = new DefaultStreamedContent(new ByteArrayInputStream(elemento.getImagen()), "image/" + elemento.getFormatoImagen());
-        }
+        
         clienteses = marketingUserFacade.findAllClientes();
         usuarioses = adminFacade.findAllUsuariosHostess();
         clientesesEvento = new ArrayList<Clientes>();
@@ -161,17 +158,10 @@ public class MarketingEventoManejadorBean {
         }
         todosclienteses = new DualListModel<Clientes>(clienteses, clientesesEvento);
         todosusuarioses = new DualListModel<Usuarios>(usuarioses, elemento.getUsuariosList());
-        
-            FacesUtil.addInfoMessage("Evento guardado con exito",elemento.getNombre());
+
+        FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
     }
 
-    public StreamedContent getFile() {
-        return file;
-    }
-
-    public void setFile(StreamedContent file) {
-        this.file = file;
-    }
 
     public AdminFacade getAdminFacade() {
         return adminFacade;
@@ -196,4 +186,5 @@ public class MarketingEventoManejadorBean {
     public void setTodosusuarioses(DualListModel<Usuarios> todosusuarioses) {
         this.todosusuarioses = todosusuarioses;
     }
+
 }
