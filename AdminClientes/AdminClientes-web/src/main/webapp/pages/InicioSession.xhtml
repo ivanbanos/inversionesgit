@@ -17,68 +17,79 @@
 
         <h:body>
 
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Inversiones Buena Fortuna</h3>
-                </div>
-                <div class="panel-body">
+            <nav class="navbar navbar-primary navbar-static-top navbar-background" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <p class="navbar-text">Sistema de Gesti&oacute;n de Clientes y Marketing</p>
+                    </div>
 
 
-                    <div class="container">
-
-
-
-                        <div class="row clearfix">
-                            <div class="col-md-4 column">
-                                <h:graphicImage value="#{resource['images/LogoMRCDorado-01.png']}" />
-                            </div>
-                            <div class="col-md-4 column">
+                </div><!-- /.container-fluid -->
+            </nav>
 
 
 
-                                <h:form class="form-horizontal" >
-                                    <div class="panel panel-primary">
+            <div class="container">
 
-                                        <div class="panel-heading">Login</div>
-                                        <div class="panel-body">
-                                            <fieldset>
-                                                <div class="control-group">
-                                                    <!-- Username -->
-                                                    <label class="control-label"  for="username">#{label['nombreusuario']}</label>
-                                                    <div class="controls">
-                                                        <p:inputText id="codigo" value="#{sessionBean.usuario.nombreUsuario}" required="true"/>
-                                                    </div>
+
+
+                <div class="row clearfix">
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 column">
+
+
+
+                        <h:form class="form-horizontal" >
+                            <div class="panel panel-primary">
+
+                                <div class="panel-heading">Login</div>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="control-group">
+                                            <!-- Username -->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" >#{label['nombreusuario']}</label>
+                                                <div class="col-md-9">
+                                                    <h:inputText id="codigo" value="#{sessionBean.usuario.nombreUsuario}" required="true" class="form-control"/>
                                                 </div>
-                                                
-                                                <div class="control-group">
-                                                    <!-- Password-->
-                                                    <label class="control-label" for="password">#{label['contrasena']}</label>
-                                                    <div class="controls">
-                                                        <p:password id="clave" value="#{sessionBean.usuario.contrasena}" required="true"/>
-                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <!-- Password-->
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" >#{label['contrasena']}</label>
+                                                <div class="col-md-9">
+                                                    <h:inputSecret id="clave" value="#{sessionBean.usuario.contrasena}" required="true" class="form-control"/>
                                                 </div>
-                                                
-                                            </fieldset>
+                                            </div>
                                         </div>
-                                        <div class="panel-footer text-right"> 
-                                            <h:commandButton styleClass="btn btn-primary" value="#{label['conectar']}" action="#{sessionBean.Conectar()}"/>
-                                        </div>
-                                    </div>
-                                </h:form>
+
+                                    </fieldset>
+                                </div>
+                                <div class="panel-footer text-right"> 
+                                    <h:commandButton styleClass="btn btn-primary" value="#{label['conectar']}" action="#{sessionBean.Conectar()}"/>
+                                </div>
+                            </div>
+                        </h:form>
 
 
-                            </div>
-                            <div class="col-md-4 column">
-                                <h:graphicImage value="#{resource['images/LogoTLCBlanco-01.png']}" />
-                            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 column">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <h:graphicImage value="#{resource['images/LogoMRCDorado-01.png']}" />
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <h:graphicImage value="#{resource['images/LogoTLCBlanco-01.png']}" />
+
                         </div>
                     </div>
-
-                    <div id="mensajes">
-
-                        <p:growl id="messages" showDetail="true" sticky="true" />  
-                    </div>
                 </div>
+            </div>
+
+            <div id="mensajes">
+
+                <p:growl id="messages" showDetail="true" sticky="true" />  
             </div>
         </h:body>
     </f:view>

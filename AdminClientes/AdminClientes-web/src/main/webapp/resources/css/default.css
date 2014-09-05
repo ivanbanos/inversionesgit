@@ -28,7 +28,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .navbar-background{
-    background-color: #444343;    
+    background-color: #444343;
+    background-repeat: no-repeat;
+     background-size: 50% 100%;
 }
 
 .navbar-text{
@@ -55,7 +57,7 @@ label{padding-left:20px;}
     color: #DEDEDE!important;
     background-color: #444343!important;
     border-color: #DEDEDE!important;
-    
+
 }
 
 .btn-primary {

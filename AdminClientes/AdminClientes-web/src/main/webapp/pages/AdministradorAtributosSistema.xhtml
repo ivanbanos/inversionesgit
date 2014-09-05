@@ -11,7 +11,7 @@
     <ui:define name="content">
         <div class="container">
             <div class="row clearfix">
-                <div class="col-md-6 column">
+                <div class="col-md-12 column">
 
                     <!--Usuarios-->
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
@@ -30,8 +30,8 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterUsuarios" onkeyup="PF('detailsTableUsuarios').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilterUsuarios" onkeyup="detailsTableUsuarios.filter()"  />
                                             </p:outputPanel>
                                         </f:facet>
 
@@ -150,7 +150,7 @@
 
                 </div>
 
-                <div class="col-md-6 column">
+                <div class="col-md-12 column">
                     <!--Perfiles-->
 
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Perfiles&quot;)}">
@@ -169,8 +169,8 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterPerfiles" onkeyup="PF('detailsTablePerfiles').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilterPerfiles" onkeyup="detailsTablePerfiles.filter()" />
                                             </p:outputPanel>
                                         </f:facet>
 

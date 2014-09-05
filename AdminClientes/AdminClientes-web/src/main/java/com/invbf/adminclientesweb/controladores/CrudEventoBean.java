@@ -31,8 +31,8 @@ import org.primefaces.model.UploadedFile;
 @ViewScoped
 public class CrudEventoBean {
 
-    private static final Logger LOGGER =
-            Logger.getLogger(SessionBean.class);
+    private static final Logger LOGGER
+            = Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
     @EJB
@@ -130,8 +130,10 @@ public class CrudEventoBean {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
-        file = event.getFile();
-        FacesUtil.addInfoMessage(event.getFile().getFileName());
+        if (event != null) {
+            file = event.getFile();
+            FacesUtil.addInfoMessage(event.getFile().getFileName());
+        }
     }
 
     public void guardar() {
@@ -180,7 +182,7 @@ public class CrudEventoBean {
             LOGGER.error(ex);
         }
     }
-    
+
     public void goEventoReporte(int id) {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));

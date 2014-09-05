@@ -34,9 +34,9 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
+                                                <h:outputText value="Buscar:" />
                                                 &nbsp;
-                                                <p:inputText id="globalFilterEventos" onkeyup="PF('detailsTableEventos').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <p:inputText id="globalFilterEventos" onkeyup="detailsTableEventos.filter()"  />
 
                                             </p:outputPanel>
 
@@ -195,7 +195,7 @@
                     <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
                                   sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
 
-                    <f:facet name="footer">  
+                    <f:facet name="footer">
                         <p:commandButton value="Confirmar" action="#{crudEventoBean.guardar()}" 
                                          oncomplete="PF('editDialogEventos').hide()" icon="ui-icon-check"
                                          process=":#{p:component('editFormEventos')}" update=":#{p:component('detailsTableEventos')} :#{p:component('messages')}" style="margin:0"/>    

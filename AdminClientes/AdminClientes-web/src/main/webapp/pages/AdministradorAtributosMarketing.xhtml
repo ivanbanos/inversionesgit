@@ -11,7 +11,7 @@
     <ui:define name="content">
         <div class="container">
             <div class="row clearfix">
-                <div class="col-md-4 column">
+                <div class="col-md-12 column">
 
                     <!--Casinos-->
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Casinos&quot;)}">
@@ -30,8 +30,8 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterCasinos" onkeyup="PF('detailsTableCasinos').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilterCasinos" onkeyup="detailsTableCasinos.filter()"  />
                                             </p:outputPanel>
                                         </f:facet>
 
@@ -131,7 +131,7 @@
 
                 </div>
 
-                <div class="col-md-4 column">
+                <div class="col-md-12 column">
 
                     <!--EstadosClientes-->
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;EstadosClientes&quot;)}">
@@ -150,8 +150,8 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterEstadosClientes" onkeyup="PF('detailsTableEstadosClientes').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilterEstadosClientes" onkeyup="detailsTableEstadosClientes.filter()"   />
                                             </p:outputPanel>
                                         </f:facet>
 
@@ -243,7 +243,7 @@
 
 
                 </div>
-                <div class="col-md-4 column">
+                <div class="col-md-12 column">
 
                     <!--Categorias-->
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Categorias&quot;)}">
@@ -262,8 +262,8 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterCategorias" onkeyup="PF('detailsTableCategorias').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilterCategorias" onkeyup="detailsTableCategorias.filter()"  />
                                             </p:outputPanel>
                                         </f:facet>
 
@@ -355,9 +355,7 @@
 
                 </div>
 
-            </div>
-            <div class="row clearfix">
-                <div class="col-md-4 column">
+                <div class="col-md-12 column">
 
 
                     <!--TipoJuego-->
@@ -377,8 +375,8 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterTipoJuego" onkeyup="PF('detailsTableTipoJuego').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilterTipoJuego" onkeyup="detailsTableTipoJuego.filter()"  />
                                             </p:outputPanel>
                                         </f:facet>
 
@@ -469,7 +467,7 @@
                     <!--Fin TipoJuego-->
 
                 </div>
-                <div class="col-md-4 column">
+                <div class="col-md-12 column">
 
 
                     <!--Atributos-->
@@ -489,8 +487,8 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterAtributos" onkeyup="PF('detailsTableAtributos').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilterAtributos" onkeyup="detailsTableAtributos.filter()"   />
                                             </p:outputPanel>
                                         </f:facet>
 

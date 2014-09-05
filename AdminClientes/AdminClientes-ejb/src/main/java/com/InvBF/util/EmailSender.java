@@ -189,9 +189,3 @@ public class EmailSender {
     
     
 }
-enum Protocol {
-
-    SMTP,
-    SMTPS,
-    TLS
-}

@@ -34,8 +34,8 @@
 
                                             <f:facet name="header">
                                                 <p:outputPanel>
-                                                    <h:outputText value="Search all fields:" />
-                                                    <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                    <h:outputText value="Buscar:" />
+                                                    <p:inputText id="globalFilterClientes" onkeyup="detailsTableClientes.filter()"   />
                                                 </p:outputPanel>
                                             </f:facet>
 
@@ -56,17 +56,17 @@
                                             </p:column>
 
                                             <p:column headerText="Tipos de Juegos" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
-                                                
+
                                                 <ul class="list-group">
-                                                    <c:forEach var="item" items="#{element.tiposjuegosList}">
-                                                        <li class="list-group-item">#{item.nombre}</li>
+                                                    <c:forEach var="tipo" items="#{element.tiposjuegosList}">
+                                                        <li class="list-group-item">#{tipo.nombre}</li>
                                                     </c:forEach>
                                                 </ul>
                                             </p:column>
 
-                                            <c:forEach var="item" items="#{element.clientesatributosList}">
-                                                <p:column headerText="#{item.atributos.nombre}" sortBy="#{item.valor}" filterBy="#{item.valor}" filterMatchMode="contains" filterStyle="display:none">
-                                                    <h:outputText value="#{item.valor}" />
+                                            <c:forEach var="attr" items="#{element.clientesatributosList}">
+                                                <p:column headerText="#{attr.atributos.nombre}" sortBy="#{attr.valor}" filterBy="#{attr.valor}" filterMatchMode="contains" filterStyle="display:none">
+                                                    <h:outputText value="#{attr.valor}" />
                                                 </p:column>
                                             </c:forEach>
 

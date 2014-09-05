@@ -34,21 +34,21 @@
 
                                         <f:facet name="header">
                                             <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />&nbsp;
-                                                <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" style="width:150px" placeholder="Enter keyword" />
+                                                <h:outputText value="Buscar:" />&nbsp;
+                                                <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" />
 
                                             </p:outputPanel>
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idCliente}" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idCliente}" filterBy="#{element.idCliente}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idCliente}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombres}" />
                                         </p:column>
 
-                                        <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.apellidos}" />
                                         </p:column>
 
