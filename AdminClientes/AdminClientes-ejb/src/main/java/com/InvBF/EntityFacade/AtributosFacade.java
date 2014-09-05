@@ -5,6 +5,7 @@
 package com.InvBF.EntityFacade;
 
 import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Formularios;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +26,13 @@ public class AtributosFacade extends AbstractFacade<Atributos> implements Atribu
 
     public AtributosFacade() {
         super(Atributos.class);
+    }
+
+    @Override
+    public Atributos findByName(String nombre) {
+        return (Atributos)em.createNamedQuery("Atributos.findByNombre")
+            .setParameter("nombre", nombre)
+            .getResultList().get(0);
     }
     
 }

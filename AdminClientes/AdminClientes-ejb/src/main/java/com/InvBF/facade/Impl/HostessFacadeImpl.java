@@ -43,7 +43,7 @@ public class HostessFacadeImpl implements HostessFacade {
         Iterator<Eventos> iterator = eventosHostess.iterator();
         while (iterator.hasNext()) {
             Eventos e = iterator.next();
-            if(!e.getUsuariosList().contains(usuario)){
+            if(!e.getUsuariosList().contains(usuario)||!e.getEstado().equals("Activo")){
                 iterator.remove();
             }
         }

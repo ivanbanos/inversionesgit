@@ -309,6 +309,21 @@ public class InitEntitysService {
         configuracion = new Configuraciones();
         configuracion.setNombre("contrasena");
         configuracionesFacadeLocal.create(configuracion);
+        
+        configuracion = new Configuraciones();
+        configuracion.setNombre("host");
+        configuracionesFacadeLocal.create(configuracion);
+        configuracion = new Configuraciones();
+        configuracion.setNombre("username");
+        configuracionesFacadeLocal.create(configuracion);
+        configuracion = new Configuraciones();
+        configuracion.setNombre("protocol");
+        configuracionesFacadeLocal.create(configuracion);
+        configuracion = new Configuraciones();
+        configuracion.setNombre("port");
+        configuracionesFacadeLocal.create(configuracion);
+        
+        
         configuracion = new Configuraciones();
         configuracion.setNombre("paginacion");
         configuracion.setValor("10");

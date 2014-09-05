@@ -9,6 +9,7 @@ import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.exceptions.MensajeNoEnviadoException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
@@ -17,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -194,5 +196,16 @@ public class MarketingEventoManejadorBean {
 
     public void setTodosusuarioses(DualListModel<Usuarios> todosusuarioses) {
         this.todosusuarioses = todosusuarioses;
+    }
+    
+    public void enviarCorreo(){
+        try {
+            systemFacade.enviarCorreo(elemento);
+            FacesUtil.addInfoMessage(null, "Evento enviado via email, Exitoso!");
+        } catch (MensajeNoEnviadoException ex) {
+            FacesUtil.addInfoMessage("Problemas en el envio del email", "inconvenientes al momento de enviar email");
+        } catch (IOException ex) {
+            FacesUtil.addInfoMessage("Problemas en el envio del email", "inconvenientes cargando la imagen");
+        }
     }
 }

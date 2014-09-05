@@ -4,16 +4,26 @@
  */
 package com.InvBF.facade.Impl;
 
+import com.InvBF.EntityFacade.AtributosFacadeLocal;
+import com.InvBF.EntityFacade.ClientesatributosFacadeLocal;
 import com.InvBF.EntityFacade.ConfiguracionesFacadeLocal;
 import com.InvBF.EntityFacade.FormulariosFacadeLocal;
+import com.InvBF.EntityFacade.ListasclienteseventoFacadeLocal;
 import com.InvBF.EntityFacade.LogsFacadeLocal;
 import com.InvBF.EntityFacade.UsuariosFacadeLocal;
+import com.InvBF.util.EmailSender;
 import com.InvBF.util.EncryptUtil;
+import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Clientesatributos;
+import com.invbf.adminclientesapi.entity.ClientesatributosPK;
 import com.invbf.adminclientesapi.entity.Configuraciones;
+import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Logs;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
+import com.invbf.adminclientesapi.exceptions.MensajeNoEnviadoException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
@@ -34,6 +44,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
 
 /**
  *
@@ -50,6 +61,12 @@ public class SystemFacadeImpl implements SystemFacade {
     LogsFacadeLocal logsFacadeLocal;
     @EJB
     FormulariosFacadeLocal formulariosFacadeLocal;
+    @EJB
+    AtributosFacadeLocal atributosFacadeLocal;
+    @EJB
+    ListasclienteseventoFacadeLocal listasclienteseventoFacadeLocal;
+    @EJB
+    ClientesatributosFacadeLocal clientesatributosFacadeLocal;
 
     @Override
     public Usuarios iniciarSession(Usuarios usuario) throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException {
@@ -138,5 +155,27 @@ public class SystemFacadeImpl implements SystemFacade {
         }
 
         return file.getAbsolutePath();
+    }
+
+    @Override
+    public void enviarCorreo(Eventos elemento) throws MensajeNoEnviadoException, IOException {
+        Atributos correo = atributosFacadeLocal.findByName("Correo");
+        EmailSender es = new EmailSender();
+        es.setAuth(true);
+        es.setDebug(true);
+        es.setFrom(configuracionesFacadeLocal.findByNombre("correo").getValor());
+        es.setHost(configuracionesFacadeLocal.findByNombre("host").getValor());
+        es.setPort(Integer.parseInt(configuracionesFacadeLocal.findByNombre("port").getValor()));
+        es.setProtocol(configuracionesFacadeLocal.findByNombre("protocol").getValor());
+        es.setUsername(configuracionesFacadeLocal.findByNombre("username").getValor());
+        es.setPassword(configuracionesFacadeLocal.findByNombre("contrasena").getValor());
+        for (Listasclientesevento lce : elemento.getListasclienteseventoList()) {
+            try {
+                String correoString = clientesatributosFacadeLocal.find(new ClientesatributosPK(lce.getClientes().getIdCliente(), correo.getIdAtributo())).getValor();
+                es.sendEmail(correoString, "Evento Inverisones Buena Fortuna", elemento.getImagen(), elemento.getFormato(), elemento.getMime(), elemento.getIdEvento() + elemento.getNombre());
+            } catch (MessagingException ex) {
+                throw new MensajeNoEnviadoException();
+            }
+        }
     }
 }
