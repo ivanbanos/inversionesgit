@@ -18,6 +18,8 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Casinos</h3>
+                                
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -29,17 +31,14 @@
                                                  >
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                <p:inputText id="globalFilterCasinos" onkeyup="detailsTableCasinos.filter()"  />
-                                            </p:outputPanel>
+                                            
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idCasino}" filterBy="#{element.idCasino}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idCasino}" filterBy="#{element.idCasino}" filterMatchMode="contains">
                                             <h:outputText value="#{element.idCasino}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
@@ -138,6 +137,8 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Estados de Clientes</h3>
+                                
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -149,17 +150,14 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                <p:inputText id="globalFilterEstadosClientes" onkeyup="detailsTableEstadosClientes.filter()"   />
-                                            </p:outputPanel>
+                                            
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idEstadoCliente}" filterBy="#{element.idEstadoCliente}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idEstadoCliente}" filterBy="#{element.idEstadoCliente}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idEstadoCliente}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
@@ -250,6 +248,8 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Categorias</h3>
+                                
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -261,17 +261,14 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                <p:inputText id="globalFilterCategorias" onkeyup="detailsTableCategorias.filter()"  />
-                                            </p:outputPanel>
+                                            
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idCategorias}" filterBy="#{element.idCategorias}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idCategorias}" filterBy="#{element.idCategorias}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idCategorias}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
@@ -363,6 +360,8 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Tipos de Juegos</h3>
+                                
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -374,17 +373,14 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                <p:inputText id="globalFilterTipoJuego" onkeyup="detailsTableTipoJuego.filter()"  />
-                                            </p:outputPanel>
+                                            
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idTipoJuego}" filterBy="#{element.idTipoJuego}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idTipoJuego}" filterBy="#{element.idTipoJuego}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idTipoJuego}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
@@ -475,6 +471,8 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Atributos</h3>
+                                
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -486,21 +484,18 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                <p:inputText id="globalFilterAtributos" onkeyup="detailsTableAtributos.filter()"   />
-                                            </p:outputPanel>
+                                            
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idAtributo}" filterBy="#{element.idAtributo}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idAtributo}" filterBy="#{element.idAtributo}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idAtributo}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
-                                        <p:column headerText="Tipo de dato" sortBy="#{element.tipoDato}" filterBy="#{element.tipoDato}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Tipo de dato" sortBy="#{element.tipoDato}" filterBy="#{element.tipoDato}" filterMatchMode="contains">
                                             <h:outputText value="#{element.tipoDato}" />
                                         </p:column>
 

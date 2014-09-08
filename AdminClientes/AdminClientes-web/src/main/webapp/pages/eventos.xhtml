@@ -62,11 +62,11 @@
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;eliminar&quot;)}">
                                                 <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" /> 
                                             </p:commandButton> 
-                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                            <p:commandButton id="marketing" icon="ui-icon-gear" 
                                                              title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
                                                              rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;)}">  
                                             </p:commandButton>
-                                            <p:commandButton id="hostess" icon="ui-icon-pencil" 
+                                            <p:commandButton id="hostess" icon="ui-icon-gear" 
                                                              title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoHostess(element.idEvento)}"
                                                              rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">  
                                             </p:commandButton>

@@ -201,11 +201,11 @@ public class MarketingEventoManejadorBean {
     public void enviarCorreo(){
         try {
             systemFacade.enviarCorreo(elemento);
-            FacesUtil.addInfoMessage(null, "Evento enviado via email, Exitoso!");
+            FacesUtil.addInfoMessage("Exito!", "Evento enviado via email, Exitoso!");
         } catch (MensajeNoEnviadoException ex) {
-            FacesUtil.addInfoMessage("Problemas en el envio del email", "inconvenientes al momento de enviar email");
+            FacesUtil.addErrorMessage("Problemas en el envio del email", "inconvenientes al momento de enviar email");
         } catch (IOException ex) {
-            FacesUtil.addInfoMessage("Problemas en el envio del email", "inconvenientes cargando la imagen");
+            FacesUtil.addErrorMessage("Problemas en el envio del email", ex.toString());
         }
     }
 }

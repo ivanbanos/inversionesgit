@@ -32,7 +32,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-
 /**
  *
  * @author ideacentre
@@ -51,7 +50,7 @@ public class EmailSender {
     public EmailSender() {
     }
 
-    public void sendEmail(String to, String subject, byte[] image, String format, String mime, String nombre) throws MessagingException, IOException {
+    public void sendEmail(String to, String subject, String mesaje, byte[] image, String format, String mime, String nombre) throws MessagingException, IOException {
 
 
 
@@ -87,44 +86,50 @@ public class EmailSender {
         StringBuilder sb = new StringBuilder();
         sb.append(System.getProperty("APP_CONF")).append(System.getProperty("file.separator")).append("images").append(System.getProperty("file.separator")).append("inversiones").append(System.getProperty("file.separator")).append(nombre).append(format);
 
-       // createImage(sb.toString(), image, format);
-        // Create a default MimeMessage object.
-        MimeMessage message = new MimeMessage(session);
-
-       message.setFrom(new InternetAddress(from));
-            InternetAddress[] address = {new InternetAddress(to)};
-            message.setRecipients(Message.RecipientType.TO, address);
-            message.setSubject(subject);
-            message.setSentDate(new Date());
-            message.setText("Mensaje");
-//            Multipart multipart = new MimeMultipart("alternative");
-//            
-//            MimeBodyPart textPart = new MimeBodyPart();
-//            String textContent = "Hi, Nice to meet you!";
-//            textPart.setText(textContent);
-//
-//            MimeBodyPart htmlPart = new MimeBodyPart();
-//            String htmlContent = "<html><h1>Hi</h1><p>Nice to meet you!</p></html>";
-//            htmlPart.setContent(htmlContent, "text/html");
-//
-//            multipart.addBodyPart(textPart);
-//            multipart.addBodyPart(htmlPart);
-//            message.setContent(multipart);
-            Transport.send(message);
-
-
-    }
-
-    private void createImage(String path, byte[] content, String format) throws FileNotFoundException, IOException {
         OutputStream stream = null;
         File imagen;
-        imagen = new File(path);
+        imagen = new File(sb.toString());
         if (imagen.exists()) {
             imagen.delete();
         }
-        stream = new FileOutputStream(path.toString());
-        stream.write(content);
+        stream = new FileOutputStream(sb.toString());
+        stream.write(image);
         stream.close();
+        // Create a default MimeMessage object.
+        MimeMessage message = new MimeMessage(session);
+
+        message.setFrom(new InternetAddress(from));
+        InternetAddress[] address = {new InternetAddress(to)};
+        message.setRecipients(Message.RecipientType.TO, address);
+        message.setSubject(subject);
+        message.setSentDate(new Date());
+
+        MimeMultipart multipart = new MimeMultipart("related");
+        BodyPart messageBodyPart = new MimeBodyPart();
+        String htmlText = "<p>" + mesaje + "</p><img src=\"cid:image\">";
+        messageBodyPart.setContent(htmlText, "text/html");
+        // add it
+        multipart.addBodyPart(messageBodyPart);
+
+        // second part (the image)
+        messageBodyPart = new MimeBodyPart();
+        DataSource fds = new FileDataSource(
+                imagen);
+
+        messageBodyPart.setDataHandler(new DataHandler(fds));
+        messageBodyPart.setHeader("Content-ID", "<image>");
+
+        // add image to the multipart
+        multipart.addBodyPart(messageBodyPart);
+
+        // put everything together
+        message.setContent(multipart);
+
+        Transport.send(message);
+
+        if (imagen.exists()) {
+            imagen.delete();
+        }
     }
 
     public int getPort() {
@@ -186,6 +191,4 @@ public class EmailSender {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
 }

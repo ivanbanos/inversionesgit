@@ -18,6 +18,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Usuarios</h3>
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -29,21 +30,18 @@
                                                  >
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                <p:inputText id="globalFilterUsuarios" onkeyup="detailsTableUsuarios.filter()"  />
-                                            </p:outputPanel>
+                                           
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idUsuario}" filterBy="#{element.idUsuario}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idUsuario}" filterBy="#{element.idUsuario}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idUsuario}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombreUsuario}" filterBy="#{element.nombreUsuario}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombreUsuario}" filterBy="#{element.nombreUsuario}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombreUsuario}" />
                                         </p:column>
 
-                                        <p:column headerText="Perfil" sortBy="#{element.idPerfil.nombre}" filterBy="#{element.idPerfil.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Perfil" sortBy="#{element.idPerfil.nombre}" filterBy="#{element.idPerfil.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idPerfil.nombre}" />
                                         </p:column>
 
@@ -157,6 +155,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Perfiles</h3>
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -168,17 +167,14 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                <p:inputText id="globalFilterPerfiles" onkeyup="detailsTablePerfiles.filter()" />
-                                            </p:outputPanel>
+                                            
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idPerfil}" filterBy="#{element.idPerfil}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Id" sortBy="#{element.idPerfil}" filterBy="#{element.idPerfil}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idPerfil}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 

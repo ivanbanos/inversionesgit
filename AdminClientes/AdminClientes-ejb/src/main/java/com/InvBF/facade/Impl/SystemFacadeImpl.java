@@ -172,7 +172,7 @@ public class SystemFacadeImpl implements SystemFacade {
         for (Listasclientesevento lce : elemento.getListasclienteseventoList()) {
             try {
                 String correoString = clientesatributosFacadeLocal.find(new ClientesatributosPK(lce.getClientes().getIdCliente(), correo.getIdAtributo())).getValor();
-                es.sendEmail(correoString, "Evento Inverisones Buena Fortuna", elemento.getImagen(), elemento.getFormato(), elemento.getMime(), elemento.getIdEvento() + elemento.getNombre());
+                es.sendEmail(correoString, elemento.getNombre(),elemento.getDescripcion(), elemento.getImagen(), elemento.getFormato(), elemento.getMime(), elemento.getIdEvento() + elemento.getNombre());
             } catch (MessagingException ex) {
                 throw new MensajeNoEnviadoException();
             }

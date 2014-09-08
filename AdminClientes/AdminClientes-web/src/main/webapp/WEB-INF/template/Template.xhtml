@@ -15,6 +15,8 @@
         <h:outputStylesheet library="css" name="bootstrap.min.css" />
         <h:outputStylesheet library="font-awesome/css" name="font-awesome.css" />
         <h:outputStylesheet library="css/blitzer" name="jquery-ui-1.10.3.custom.css" />
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputScript library="js" name="toggeablePanelScript.js"/>
 
         <f:loadBundle var="label" basename="labels" />
         <title>#{label['title.app']}</title>
@@ -31,27 +33,44 @@
                         <span class="fa fa-bars"></span>
                     </button>
                     <h2 class="navbar-text">Sistema de Gesti&oacute;n de Clientes y Marketing</h2>
-                    
+
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
-                            <li >
-                                <h:link outcome="/pages/AdministradorAtributosSistema.xhtml" class="navbar-text" value="#{label['atributossistemas']}"/>
+                        <li >
+                            <h:link outcome="/pages/index.xhtml" class="navbar-text" value="#{label['inicio']}"/>
+                        </li>
+
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;) 
+                                      || sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)
+                                      || sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
+                            <li class="dropdown ">
+                                <a href="#" class="dropdown-toggle navbar-text" data-toggle="dropdown">Configuraci&oacute;n<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
+                                        <li >
+                                            <h:link outcome="/pages/AdministradorAtributosSistema.xhtml" class="navbar-text" value="#{label['atributossistemas']}"/>
+                                        </li>
+                                    </c:if>
+                                    <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}">
+                                        <li>
+                                            <h:link outcome="/pages/AdministradorAtributosMarketing.xhtml" class="navbar-text" value="#{label['atributosmarketing']}"/>
+                                        </li>
+                                    </c:if>
+                                    <c:if test="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
+                                        <li>
+                                            <h:link outcome="/pages/ConfiguracionesGenerales.xhtml" class="navbar-text" value="#{label['configuraciones']}"/>
+                                        </li>
+                                    </c:if>
+                                </ul>
                             </li>
                         </c:if>
-                        <c:if test="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
-                            <li>
-                                <h:link outcome="/pages/ConfiguracionesGenerales.xhtml" class="navbar-text" value="#{label['configuraciones']}"/>
-                            </li>
-                        </c:if>
-                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}">
-                            <li>
-                                <h:link outcome="/pages/AdministradorAtributosMarketing.xhtml" class="navbar-text" value="#{label['atributosmarketing']}"/>
-                            </li>
-                        </c:if>
+
+
+
+
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;Clientes&quot;)}">
                             <li>
                                 <h:link outcome="/pages/clientes.xhtml" class="navbar-text" value="#{label['clientes']}"/>

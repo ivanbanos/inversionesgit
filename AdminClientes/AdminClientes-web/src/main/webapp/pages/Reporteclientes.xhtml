@@ -33,42 +33,46 @@
                                                      >
 
                                             <f:facet name="header">
-                                                <p:outputPanel>
-                                                    <h:outputText value="Buscar:" />
-                                                    <p:inputText id="globalFilterClientes" onkeyup="detailsTableClientes.filter()"   />
-                                                </p:outputPanel>
+                                                
                                             </f:facet>
 
-                                            <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:column style="width:5%">
+                                                <p:rowToggler />
+                                            </p:column>
+
+                                            <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.nombres}" />
                                             </p:column>
 
-                                            <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.apellidos}" />
                                             </p:column>
 
-                                            <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.idCategorias.nombre}" />
                                             </p:column>
 
-                                            <p:column headerText="Categoria" sortBy="#{element.idCasinoPreferencial.nombre}" filterBy="#{element.idCasinoPreferencial.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:column headerText="Categoria" sortBy="#{element.idCasinoPreferencial.nombre}" filterBy="#{element.idCasinoPreferencial.nombre}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.idCasinoPreferencial.nombre}" />
                                             </p:column>
 
                                             <p:column headerText="Tipos de Juegos" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
 
-                                                <ul class="list-group">
-                                                    <c:forEach var="tipo" items="#{element.tiposjuegosList}">
-                                                        <li class="list-group-item">#{tipo.nombre}</li>
-                                                    </c:forEach>
-                                                </ul>
+                                                <p:dataList value="#{element.tiposjuegosList}" var="tipo">
+
+                                                    #{tipo.nombre}
+                                                </p:dataList>
                                             </p:column>
 
-                                            <c:forEach var="attr" items="#{element.clientesatributosList}">
-                                                <p:column headerText="#{attr.atributos.nombre}" sortBy="#{attr.valor}" filterBy="#{attr.valor}" filterMatchMode="contains" filterStyle="display:none">
-                                                    <h:outputText value="#{attr.valor}" />
-                                                </p:column>
-                                            </c:forEach>
+                                            <p:rowExpansion>
+
+                                                <p:dataList value="#{element.clientesatributosList}" var="attr" type="definition">
+                                                    <h:outputText value="#{attr.atributos.nombre}:" />
+                                                    <f:facet name="description">
+                                                        <h:outputText value="#{attr.valor}" /> 
+                                                    </f:facet>
+                                                </p:dataList>
+                                            </p:rowExpansion>
 
                                         </p:dataTable>
 
