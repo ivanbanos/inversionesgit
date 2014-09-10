@@ -63,7 +63,7 @@
             </div>
 
             <div class="panel panel-primary">
-                
+
                 <div class="panel-heading">Clientes</div>
 
                 <div class="panel-body">
@@ -102,6 +102,23 @@
                                         </p:selectOneMenu>
                                     </div>
                                 </div>
+
+                                <c:forEach var="item" items="#{clientes.clientes.clientesatributosList}">
+                                    <c:if test="#{item.atributos.nombre eq 'Telefono' or item.atributos.nombre eq 'Celular'}">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" >#{item.atributos.nombre}</label>
+                                            <div class="col-md-9">
+                                                <c:if test="#{item.valor eq null or item.valor eq ''}">
+                                                    <h:outputLabel value="no registrado"/>
+                                                </c:if>
+                                                <c:otherwise>
+                                                    <h:outputLabel value="#{item.valor}"/>
+                                                </c:otherwise>
+
+                                            </div>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
 
                             </div>
                             <div class="panel-footer text-right"> 

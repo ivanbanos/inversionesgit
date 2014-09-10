@@ -13,13 +13,10 @@ import com.invbf.adminclientesapi.facade.HostessFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import com.invbf.adminclientesweb.util.ListasclienteseventoPojo;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -181,7 +178,12 @@ public class HostessEventoManejadorBean {
     }
 
     public void nuevo(Integer idCliente) {
-        int index = clientes.indexOf(new Listasclientesevento(elemento.getIdEvento(), idCliente));
+       int index=-1;
+        for(int i = 0; i < clientes.size(); i++){
+            if(clientes.get(i).getEventos().getIdEvento()==elemento.getIdEvento()&&clientes.get(i).getClientes().getIdCliente()==idCliente){
+                index = i;
+            }
+        }
         ListasclienteseventoPojo l = clientes.remove(index);
         Estadoscliente ec = hostessFacade.findEstadoClientesByName(l.getIdEstadoCliente());
         Listasclientesevento lce = l.getListasclientesevento(ec);

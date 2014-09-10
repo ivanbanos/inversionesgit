@@ -58,7 +58,7 @@
 
                                             <p:column headerText="Tipos de Juegos" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
 
-                                                <p:dataList value="#{element.tiposjuegosList}" var="tipo">
+                                                <p:dataList value="#{element.tiposjuegosList}" var="tipo" emptyMessage="No tiene juegos favoritos">
 
                                                     #{tipo.nombre}
                                                 </p:dataList>
@@ -66,7 +66,7 @@
 
                                             <p:rowExpansion>
 
-                                                <p:dataList value="#{element.clientesatributosList}" var="attr" type="definition">
+                                                <p:dataList value="#{element.clientesatributosList}" var="attr" type="definition" >
                                                     <h:outputText value="#{attr.atributos.nombre}:" />
                                                     <f:facet name="description">
                                                         <h:outputText value="#{attr.valor}" /> 

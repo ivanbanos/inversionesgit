@@ -4,6 +4,8 @@
  */
 package com.InvBF.EntityFacade;
 
+import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Clientesatributos;
 import java.util.List;
 import javax.ejb.Local;
@@ -28,5 +30,9 @@ public interface ClientesatributosFacadeLocal {
     List<Clientesatributos> findRange(int[] range);
 
     int count();
+
+    public List<Clientesatributos> findByCliente(Clientes elemento);
+
+    public List<Clientesatributos> findByAtributo(Atributos elemento);
     
 }

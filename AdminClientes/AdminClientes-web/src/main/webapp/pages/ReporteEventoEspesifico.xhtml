@@ -15,102 +15,86 @@
                 <div class="panel-heading">Evento</div>
                 <div class="panel-body">
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['codigo']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel value="#{reporteEventoEspesificoBean.elemento.idEvento}"/>
-                        </div>
+                    <label class="col-md-3 control-label" >#{label['codigo']}:</label>
+                    <div class="col-md-3">
+                        <h:outputLabel value="#{reporteEventoEspesificoBean.elemento.idEvento}"/>
+                    </div>
+                    
+                    <label class="col-md-3 control-label" >#{label['estado']}:</label>
+                    <div class="col-md-3">
+                        <h:outputLabel id="estado" value="#{reporteEventoEspesificoBean.elemento.estado}" />
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="nombre" value="#{reporteEventoEspesificoBean.elemento.nombre}" />
-                        </div>
+                    <label class="col-md-3 control-label" >#{label['nombre']}:</label>
+                    <div class="col-md-3">
+                        <h:outputLabel id="nombre" value="#{reporteEventoEspesificoBean.elemento.nombre}" />
+                    </div>
+                    
+                    <label class="col-md-3 control-label" >#{label['tipo']}:</label>
+                    <div class="col-md-3">
+                        <h:outputLabel id="tipo" value="#{reporteEventoEspesificoBean.elemento.tipo}" />
+                    </div>
+                    
+                    <label class="col-md-3 control-label" >#{label['fechainicio']}:</label>
+                    <div class="col-md-3">
+                        <h:outputLabel id="fecini" value="#{reporteEventoEspesificoBean.elemento.fechaInicio}" >
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputLabel>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="fecini" value="#{reporteEventoEspesificoBean.elemento.fechaInicio}" >
-                                <f:convertDateTime pattern="MM-dd-yyyy" />
-                            </h:outputLabel>
-                        </div>
+                    <label class="col-md-3 control-label" >#{label['fechafinal']}:</label>
+                    <div class="col-md-3">
+                        <h:outputLabel id="fecfin" value="#{reporteEventoEspesificoBean.elemento.fechaFinalizacion}"  >
+                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                        </h:outputLabel>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="fecfin" value="#{reporteEventoEspesificoBean.elemento.fechaFinalizacion}"  >
-                                <f:convertDateTime pattern="MM-dd-yyyy" />
-                            </h:outputLabel>
-                        </div>
+                    <label class="col-md-3 control-label" >#{label['descripcion']}:</label>
+                    <div class="col-md-9">
+                        <h:outputLabel id="descripcion" value="#{reporteEventoEspesificoBean.elemento.descripcion}" />
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['descripcion']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="descripcion" value="#{reporteEventoEspesificoBean.elemento.descripcion}" />
-                        </div>
+
+
+                    <label class="col-md-3 control-label" >#{label['casino']}:</label>
+                    <div class="col-md-9">
+                        <h:outputLabel id="casino" value="#{reporteEventoEspesificoBean.elemento.idCasino.nombre}" />
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['estado']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="estado" value="#{reporteEventoEspesificoBean.elemento.estado}" />
-                        </div>
-                    </div>
+                    <label class="col-md-12 control-label" >#{label['clientes']}</label>
+                    <div class="col-md-12">
+                        <p:dataTable id="detailsTableClientes" var="element" value="#{reporteEventoEspesificoBean.elemento.listasclienteseventoList}"  
+                                     emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" filteredValue="#{reporteEventoEspesificoBean.flista}"
+                                     rows="#{sessionBean.paginacion}"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     >
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['tipo']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="tipo" value="#{reporteEventoEspesificoBean.elemento.tipo}" />
-                        </div>
-                    </div>
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Search all fields:" />&nbsp;
+                                    <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" style="width:150px" placeholder="Enter keyword" />
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['casino']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="casino" value="#{reporteEventoEspesificoBean.elemento.idCasino.nombre}" />
-                        </div>
-                    </div>
+                                </p:outputPanel>
+                            </f:facet>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['clientes']}</label>
-                        <div class="col-md-9">
-                            <p:dataTable id="detailsTableClientes" var="element" value="#{reporteEventoEspesificoBean.elemento.listasclienteseventoList}"  
-                                         emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" filteredValue="#{reporteEventoEspesificoBean.flista}"
-                                         rows="#{sessionBean.paginacion}"
-                                         paginator="true"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         >
+                            <p:column headerText="Nombres" sortBy="#{element.clientes.nombres}" filterBy="#{element.clientes.nombres}" filterMatchMode="contains" filterStyle="display:none">
+                                <h:outputText value="#{element.clientes.nombres}" />
+                            </p:column>
 
-                                <f:facet name="header">
-                                    <p:outputPanel>
-                                        <h:outputText value="Search all fields:" />&nbsp;
-                                        <p:inputText id="globalFilterClientes" onkeyup="PF('detailsTableClientes').filter()" style="width:150px" placeholder="Enter keyword" />
+                            <p:column headerText="Apellidos" sortBy="#{element.clientes.apellidos}" filterBy="#{element.clientes.apellidos}" filterMatchMode="contains" filterStyle="display:none">
+                                <h:outputText value="#{element.clientes.apellidos}" />
+                            </p:column>
 
-                                    </p:outputPanel>
-                                </f:facet>
+                            <p:column headerText="observaciones" sortBy="#{element.observaciones}" filterBy="#{element.observaciones}" filterMatchMode="contains" filterStyle="display:none">
+                                <h:outputText value="#{element.observaciones}" />
+                            </p:column>
 
-                                <p:column headerText="Nombres" sortBy="#{element.clientes.nombres}" filterBy="#{element.clientes.nombres}" filterMatchMode="contains" filterStyle="display:none">
-                                    <h:outputText value="#{element.clientes.nombres}" />
-                                </p:column>
+                            <p:column headerText="estado" sortBy="#{element.idEstadoCliente.nombre}" filterBy="#{element.idEstadoCliente.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                <h:outputText value="#{element.idEstadoCliente.nombre}" />
+                            </p:column>
 
-                                <p:column headerText="Apellidos" sortBy="#{element.clientes.apellidos}" filterBy="#{element.clientes.apellidos}" filterMatchMode="contains" filterStyle="display:none">
-                                    <h:outputText value="#{element.clientes.apellidos}" />
-                                </p:column>
-
-                                <p:column headerText="observaciones" sortBy="#{element.observaciones}" filterBy="#{element.observaciones}" filterMatchMode="contains" filterStyle="display:none">
-                                    <h:outputText value="#{element.observaciones}" />
-                                </p:column>
-
-                                <p:column headerText="estado" sortBy="#{element.idEstadoCliente.nombre}" filterBy="#{element.idEstadoCliente.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                    <h:outputText value="#{element.idEstadoCliente.nombre}" />
-                                </p:column>
-
-                            </p:dataTable>
-                        </div>
+                        </p:dataTable>
                     </div>
 
                 </div>

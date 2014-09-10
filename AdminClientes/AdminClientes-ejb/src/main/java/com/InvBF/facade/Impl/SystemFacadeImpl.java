@@ -23,24 +23,21 @@ import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Logs;
 import com.invbf.adminclientesapi.entity.Usuarios;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
-import com.invbf.adminclientesapi.exceptions.MensajeNoEnviadoException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.facade.SystemFacade;
+import com.invbf.adminclientesapi.util.InfoCorreoCliente;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
@@ -158,7 +155,8 @@ public class SystemFacadeImpl implements SystemFacade {
     }
 
     @Override
-    public void enviarCorreo(Eventos elemento) throws MensajeNoEnviadoException, IOException {
+    public List<InfoCorreoCliente> enviarCorreo(Eventos elemento) {
+        List<InfoCorreoCliente> clientesInfoEnvio = new ArrayList<>();
         Atributos correo = atributosFacadeLocal.findByName("Correo");
         EmailSender es = new EmailSender();
         es.setAuth(true);
@@ -170,15 +168,24 @@ public class SystemFacadeImpl implements SystemFacade {
         es.setUsername(configuracionesFacadeLocal.findByNombre("username").getValor());
         es.setPassword(configuracionesFacadeLocal.findByNombre("contrasena").getValor());
         for (Listasclientesevento lce : elemento.getListasclienteseventoList()) {
+            Clientesatributos ca = clientesatributosFacadeLocal.find(new ClientesatributosPK(lce.getClientes().getIdCliente(), correo.getIdAtributo()));
             try {
-                Clientesatributos ca = clientesatributosFacadeLocal.find(new ClientesatributosPK(lce.getClientes().getIdCliente(), correo.getIdAtributo()));
                 if (ca != null) {
                     String correoString = ca.getValor();
-                    es.sendEmail(correoString, elemento.getNombre(), elemento.getDescripcion(), elemento.getImagen(), elemento.getFormato(), elemento.getMime(), elemento.getIdEvento() + elemento.getNombre());
+                    if (correoString.equals("")) {
+                        clientesInfoEnvio.add(new InfoCorreoCliente(lce.getClientes(), "No se encontró correo"));
+                    }
+                    es.sendEmail(correoString, elemento.getNombre(), elemento.getDescripcion(), elemento.getIdEvento() + elemento.getImagen());
+
+                } else {
+                    clientesInfoEnvio.add(new InfoCorreoCliente(lce.getClientes(), "No se encontró correo"));
                 }
             } catch (MessagingException ex) {
-                throw new MensajeNoEnviadoException();
+                clientesInfoEnvio.add(new InfoCorreoCliente(lce.getClientes(), "Correo invalido"));
+            } catch (IOException ex) {
+                clientesInfoEnvio.add(new InfoCorreoCliente(lce.getClientes(), "Problemas con el servidor"));
             }
         }
+        return null;
     }
 }

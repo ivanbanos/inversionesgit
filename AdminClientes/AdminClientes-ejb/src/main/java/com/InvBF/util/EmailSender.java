@@ -4,22 +4,15 @@
  */
 package com.InvBF.util;
 
-import com.InvBF.EntityFacade.ConfiguracionesFacadeLocal;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.ejb.EJB;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -50,9 +43,7 @@ public class EmailSender {
     public EmailSender() {
     }
 
-    public void sendEmail(String to, String subject, String mesaje, byte[] image, String format, String mime, String nombre) throws MessagingException, IOException {
-
-
+    public void sendEmail(String to, String subject, String mesaje, String nombre) throws MessagingException, IOException {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", host);
@@ -81,20 +72,11 @@ public class EmailSender {
 
         Session session = Session.getInstance(props, authenticator);
         session.setDebug(debug);
-
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(System.getProperty("APP_CONF")).append(System.getProperty("file.separator")).append("images").append(System.getProperty("file.separator")).append("inversiones").append(System.getProperty("file.separator")).append(nombre).append(format);
-
-        OutputStream stream = null;
         File imagen;
+        StringBuilder sb = new StringBuilder();
+        sb.append(System.getProperty("APP_CONF")).append(System.getProperty("file.separator")).append("images").append(System.getProperty("file.separator")).append("inversiones").append(System.getProperty("file.separator")).append(nombre);
         imagen = new File(sb.toString());
-        if (imagen.exists()) {
-            imagen.delete();
-        }
-        stream = new FileOutputStream(sb.toString());
-        stream.write(image);
-        stream.close();
+        
         // Create a default MimeMessage object.
         MimeMessage message = new MimeMessage(session);
 
@@ -106,19 +88,22 @@ public class EmailSender {
 
         MimeMultipart multipart = new MimeMultipart("related");
         BodyPart messageBodyPart = new MimeBodyPart();
-        String htmlText = "<p>" + mesaje + "</p><img src=\"cid:image\">";
+        String htmlText = "<p>" + mesaje + "</p>";
+        if (imagen.exists()) {
+            htmlText += "<img src=\"cid:image\">";
+        }
         messageBodyPart.setContent(htmlText, "text/html");
         // add it
         multipart.addBodyPart(messageBodyPart);
+        if (imagen.exists()) {
+            // second part (the image)
+            messageBodyPart = new MimeBodyPart();
+            DataSource fds = new FileDataSource(
+                    imagen);
 
-        // second part (the image)
-        messageBodyPart = new MimeBodyPart();
-        DataSource fds = new FileDataSource(
-                imagen);
-
-        messageBodyPart.setDataHandler(new DataHandler(fds));
-        messageBodyPart.setHeader("Content-ID", "<image>");
-
+            messageBodyPart.setDataHandler(new DataHandler(fds));
+            messageBodyPart.setHeader("Content-ID", "<image>");
+        }
         // add image to the multipart
         multipart.addBodyPart(messageBodyPart);
 
@@ -126,8 +111,7 @@ public class EmailSender {
         message.setContent(multipart);
 
         Transport.send(message);
-
-        if (imagen.exists()) {
+        if ( imagen.exists()) {
             imagen.delete();
         }
     }

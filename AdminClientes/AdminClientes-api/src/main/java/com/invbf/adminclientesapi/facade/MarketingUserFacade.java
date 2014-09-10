@@ -73,4 +73,6 @@ public interface MarketingUserFacade {
 
     public Estadoscliente findByNombreEstadoCliente(String iniciado);
 
+    public void guardarImagen(byte[] contents, Integer idEvento, String fileName);
+
 }

@@ -78,7 +78,7 @@
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}"/>  
                                         </f:facet>
                                     </p:dataTable>
-
+                                    <h:outputText value="#{crudEventoBean.contents}" />
                                 </h:form>
                             </div>
                         </div>
@@ -138,8 +138,8 @@
                     </p:selectOneMenu>
 
                     <h:outputLabel for="imagenEventos" value="#{label['imagen']}" />
-                    <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                  sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                        <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
                     <f:facet name="footer">  
                         <p:commandButton value="Confirmar" actionListener="#{crudEventoBean.guardar()}" 
@@ -191,9 +191,10 @@
                         <f:selectItems value="#{crudEventoBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                     </p:selectOneMenu>
 
-                    <h:outputLabel for="imagenEventos" value="#{label['imagen']}" />
-                    <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                  sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                    <h:outputLabel value="#{label['imagen']}" />
+                        <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        
 
                     <f:facet name="footer">
                         <p:commandButton value="Confirmar" action="#{crudEventoBean.guardar()}" 

@@ -9,27 +9,22 @@ import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Usuarios;
-import com.invbf.adminclientesapi.exceptions.MensajeNoEnviadoException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
+import com.invbf.adminclientesapi.util.InfoCorreoCliente;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import org.apache.log4j.Logger;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
-import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -39,8 +34,8 @@ import org.primefaces.model.StreamedContent;
 @ViewScoped
 public class MarketingEventoManejadorBean {
 
-    private static final Logger LOGGER =
-            Logger.getLogger(SessionBean.class);
+    private static final Logger LOGGER
+            = Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
     @EJB
@@ -55,11 +50,12 @@ public class MarketingEventoManejadorBean {
     private List<Usuarios> usuarioses;
     private DualListModel<Clientes> todosclienteses;
     private DualListModel<Usuarios> todosusuarioses;
+    private List<InfoCorreoCliente> enviodecorreo;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    
+
     private List<Listasclientesevento> flista;
 
     public List<Listasclientesevento> getFlista() {
@@ -198,15 +194,18 @@ public class MarketingEventoManejadorBean {
     public void setTodosusuarioses(DualListModel<Usuarios> todosusuarioses) {
         this.todosusuarioses = todosusuarioses;
     }
-    
+
     public void enviarCorreo(){
-        try {
-            systemFacade.enviarCorreo(elemento);
+            enviodecorreo = systemFacade.enviarCorreo(elemento);
             FacesUtil.addInfoMessage("Exito!", "Evento enviado via email, Exitoso!");
-        } catch (MensajeNoEnviadoException ex) {
-            FacesUtil.addErrorMessage("Problemas en el envio del email", "inconvenientes al momento de enviar email");
-        } catch (IOException ex) {
-            FacesUtil.addErrorMessage("Problemas en el envio del email", ex.toString());
-        }
     }
+
+    public List<InfoCorreoCliente> getEnviodecorreo() {
+        return enviodecorreo;
+    }
+
+    public void setEnviodecorreo(List<InfoCorreoCliente> enviodecorreo) {
+        this.enviodecorreo = enviodecorreo;
+    }
+    
 }

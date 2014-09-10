@@ -9,7 +9,6 @@ import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
@@ -146,11 +145,9 @@ public class CrudEventoBean {
             lista = marketingUserFacade.findAllEventos();
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
             FacesUtil.addInfoMessage("Evento actualizado", elemento.getNombre());
-            if (file != null) {
-                elemento.setImagen(file.getContents());
-                elemento.setMime(file.getContentType());
-                elemento.setFormato(file.getFileName().substring(file.getFileName().lastIndexOf("."), file.getFileName().length()));
-
+            if (file != null && file.getContents() != null) {
+                marketingUserFacade.guardarImagen(file.getContents(), elemento.getIdEvento(), file.getFileName());
+                elemento.setImagen(elemento.getIdEvento() + file.getFileName());
             }
             marketingUserFacade.guardarEventos(elemento);
             elemento = new Eventos();
@@ -198,4 +195,13 @@ public class CrudEventoBean {
     public void setEditar(boolean editar) {
         this.editar = editar;
     }
+
+    public String getContents() {
+        if (file != null) {
+            return new String(file.getContents());
+        } else {
+            return "";
+        }
+    }
+
 }

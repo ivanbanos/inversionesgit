@@ -131,6 +131,22 @@
 
                 </div>
             </div>
+            <c:if test="#{marketingEventoManejadorBean.enviodecorreo != null}">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th >Cliente</th>
+                            <th >Informaci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="#{marketingEventoManejadorBean.enviodecorreo}" var="item">
+                            <td>#{item.cliente.nombres} #{item.cliente.apellidos}</td>
+                            <td>#{item.info}</td>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
         </h:form>
 
 

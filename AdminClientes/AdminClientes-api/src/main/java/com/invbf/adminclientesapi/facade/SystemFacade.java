@@ -4,6 +4,7 @@
  */
 package com.invbf.adminclientesapi.facade;
 
+import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Configuraciones;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Usuarios;
@@ -12,9 +13,11 @@ import com.invbf.adminclientesapi.exceptions.MensajeNoEnviadoException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
+import com.invbf.adminclientesapi.util.InfoCorreoCliente;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,5 +44,5 @@ public interface SystemFacade {
     
     public String getPathImage(byte[] imagen, String mime, String nombre)throws IOException ;
 
-    public void enviarCorreo(Eventos elemento)throws MensajeNoEnviadoException, IOException ;
+    public List<InfoCorreoCliente> enviarCorreo(Eventos elemento) ;
 }

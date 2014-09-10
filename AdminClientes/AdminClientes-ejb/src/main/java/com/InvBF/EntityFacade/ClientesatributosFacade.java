@@ -4,7 +4,10 @@
  */
 package com.InvBF.EntityFacade;
 
+import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Clientes;
 import com.invbf.adminclientesapi.entity.Clientesatributos;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +28,30 @@ public class ClientesatributosFacade extends AbstractFacade<Clientesatributos> i
 
     public ClientesatributosFacade() {
         super(Clientesatributos.class);
+    }
+
+    @Override
+    public List<Clientesatributos> findByCliente(Clientes elemento) {
+        List<Clientesatributos> clientesatributos = (List<Clientesatributos>)em.createNamedQuery("Clientesatributos.findByIdCliente")
+            .setParameter("idCliente", elemento.getIdCliente())
+            .getResultList();
+        if(clientesatributos==null||clientesatributos.isEmpty()){
+            return null;
+        }else{
+            return clientesatributos;
+        }
+    }
+
+    @Override
+    public List<Clientesatributos> findByAtributo(Atributos elemento) {
+        List<Clientesatributos> clientesatributos = (List<Clientesatributos>)em.createNamedQuery("Clientesatributos.findByIdAtributo")
+            .setParameter("idAtributo", elemento.getIdAtributo())
+            .getResultList();
+        if(clientesatributos==null||clientesatributos.isEmpty()){
+            return null;
+        }else{
+            return clientesatributos;
+        }
     }
     
 }

@@ -18,7 +18,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Casinos</h3>
-                                
+
                                 <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
@@ -31,7 +31,7 @@
                                                  >
 
                                         <f:facet name="header">
-                                            
+
                                         </f:facet>
 
                                         <p:column headerText="Id" sortBy="#{element.idCasino}" filterBy="#{element.idCasino}" filterMatchMode="contains">
@@ -70,27 +70,46 @@
 
                         <h:form>
                             <p:dialog id="addDialogCasinos" header="Agregar" widgetVar="addDialogCasinos" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
 
-                                <p:panelGrid columns="2">  
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudCasinosBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreCasinos" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreCasinos" value="#{crudCasinosBean.elemento.nombre}" required="true" />
+                                            <div class="control-group">
+                                                <!-- Password-->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['direccion']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="clave" value="#{crudCasinosBean.elemento.direccion}" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="direccionCasinos" value="#{label['direccion']}" /> 
-                                    <p:inputText id="direccionCasinos" value="#{crudCasinosBean.elemento.direccion}" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" actionListener="#{crudCasinosBean.guardar()}" 
                                                          oncomplete="PF('addDialogCasinos').hide()" icon="ui-icon-check" 
                                                          update=":#{p:component('detailsTableCasinos')} :#{p:component('addDialogCasinos')} :#{p:component('messages')}" style="margin:0" />   
                                         <p:commandButton value="Cerrar" oncomplete="PF('addDialogCasinos').hide()" update=":#{p:component('addDialogCasinos')}" icon="ui-icon-closethick"/>  
-                                    </f:facet>  
-                                </p:panelGrid> 
+                                    </div>
+                                </div>
                             </p:dialog> 
                         </h:form>
 
                         <h:form>
                             <p:dialog id="editDialogCasinos" header="Editar" widgetVar="editDialogCasinos" modal="true" closable="false" resizable="false">  
+                                
+                                
                                 <p:panelGrid id="editFormCasinos" columns="2">  
 
                                     <h:outputLabel value="#{label['codigo']}" /> 
@@ -137,7 +156,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Estados de Clientes</h3>
-                                
+
                                 <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
@@ -150,7 +169,7 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            
+
                                         </f:facet>
 
                                         <p:column headerText="Id" sortBy="#{element.idEstadoCliente}" filterBy="#{element.idEstadoCliente}" filterMatchMode="contains" >
@@ -248,7 +267,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Categorias</h3>
-                                
+
                                 <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
@@ -261,7 +280,7 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            
+
                                         </f:facet>
 
                                         <p:column headerText="Id" sortBy="#{element.idCategorias}" filterBy="#{element.idCategorias}" filterMatchMode="contains" >
@@ -360,7 +379,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Tipos de Juegos</h3>
-                                
+
                                 <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
@@ -373,7 +392,7 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            
+
                                         </f:facet>
 
                                         <p:column headerText="Id" sortBy="#{element.idTipoJuego}" filterBy="#{element.idTipoJuego}" filterMatchMode="contains" >
@@ -471,7 +490,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Atributos</h3>
-                                
+
                                 <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
@@ -484,7 +503,7 @@
                                                  rowsPerPageTemplate="5,10,15">
 
                                         <f:facet name="header">
-                                            
+
                                         </f:facet>
 
                                         <p:column headerText="Id" sortBy="#{element.idAtributo}" filterBy="#{element.idAtributo}" filterMatchMode="contains" >

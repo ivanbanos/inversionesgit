@@ -8,6 +8,7 @@ import com.InvBF.EntityFacade.AtributosFacadeLocal;
 import com.InvBF.EntityFacade.CasinosFacadeLocal;
 import com.InvBF.EntityFacade.CategoriasFacadeLocal;
 import com.InvBF.EntityFacade.ClientesFacadeLocal;
+import com.InvBF.EntityFacade.ClientesatributosFacadeLocal;
 import com.InvBF.EntityFacade.EstadosclienteFacadeLocal;
 import com.InvBF.EntityFacade.EventosFacadeLocal;
 import com.InvBF.EntityFacade.TiposjuegosFacadeLocal;
@@ -15,12 +16,21 @@ import com.invbf.adminclientesapi.entity.Atributos;
 import com.invbf.adminclientesapi.entity.Casinos;
 import com.invbf.adminclientesapi.entity.Categorias;
 import com.invbf.adminclientesapi.entity.Clientes;
+import com.invbf.adminclientesapi.entity.Clientesatributos;
 import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Tiposjuegos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -33,6 +43,8 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
 
     @EJB
     ClientesFacadeLocal clientesFacadeLocal;
+    @EJB
+    ClientesatributosFacadeLocal clientesatributosFacadeLocal;
     @EJB
     EstadosclienteFacadeLocal estadosclienteFacadeLocal;
     @EJB
@@ -96,7 +108,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             categoriasFacadeLocal.edit(elemento);
             return true;
         }
-        
+
     }
 
     @Override
@@ -106,6 +118,15 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
 
     @Override
     public void deleteAtributos(Atributos elemento) {
+        List<Clientesatributos> listaca = clientesatributosFacadeLocal.findByAtributo(elemento);
+        List<Clientes> clientes = clientesFacadeLocal.findAll();
+        for (Clientes c : clientes) {
+            c.getClientesatributosList().remove(new Clientesatributos(c.getIdCliente(), elemento.getIdAtributo()));
+        }
+        for (Clientesatributos ca : listaca) {
+
+            clientesatributosFacadeLocal.remove(ca);
+        }
         atributosFacadeLocal.remove(elemento);
     }
 
@@ -113,6 +134,17 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     public boolean guardarAtributos(Atributos elemento) {
         if (elemento.getIdAtributo() == null) {
             atributosFacadeLocal.create(elemento);
+            List<Clientes> clientes = clientesFacadeLocal.findAll();
+            List<Clientesatributos> clientesatributos = new ArrayList<>();
+            for (Clientes c : clientes) {
+                Clientesatributos ca = new Clientesatributos(c.getIdCliente(), elemento.getIdAtributo());
+                ca.setAtributos(elemento);
+                ca.setClientes(c);
+                clientesatributosFacadeLocal.create(ca);
+                clientesatributos.add(ca);
+            }
+            elemento.setClientesatributosList(clientesatributos);
+            atributosFacadeLocal.edit(elemento);
             return false;
         } else {
             atributosFacadeLocal.edit(elemento);
@@ -139,7 +171,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             tiposjuegosFacadeLocal.edit(elemento);
             return true;
         }
-        
+
     }
 
     @Override
@@ -174,18 +206,11 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public Eventos guardarEventos(Eventos elemento) {
-        if (elemento.getIdEvento() == null) {
-            eventosFacadeLocal.create(elemento);
-            return elemento;
-        } else {
-            eventosFacadeLocal.edit(elemento);
-            return elemento;
-        }
-    }
-
-    @Override
     public void deleteClientes(Clientes elemento) {
+        List<Clientesatributos> listaca = clientesatributosFacadeLocal.findByCliente(elemento);
+        for (Clientesatributos ca : listaca) {
+            clientesatributosFacadeLocal.remove(ca);
+        }
         clientesFacadeLocal.remove(elemento);
     }
 
@@ -193,6 +218,17 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     public boolean guardarClientes(Clientes elemento) {
         if (elemento.getIdCliente() == null) {
             clientesFacadeLocal.create(elemento);
+            List<Atributos> atributos = atributosFacadeLocal.findAll();
+            List<Clientesatributos> clientesatributos = new ArrayList<>();
+            for (Atributos a : atributos) {
+                Clientesatributos ca = new Clientesatributos(elemento.getIdCliente(), a.getIdAtributo());
+                ca.setAtributos(a);
+                ca.setClientes(elemento);
+                clientesatributosFacadeLocal.create(ca);
+                clientesatributos.add(ca);
+            }
+            elemento.setClientesatributosList(clientesatributos);
+            clientesFacadeLocal.edit(elemento);
             return false;
         } else {
             clientesFacadeLocal.edit(elemento);
@@ -227,5 +263,44 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     public Estadoscliente findByNombreEstadoCliente(String iniciado) {
         return estadosclienteFacadeLocal.findByNombreEstadoCliente(iniciado);
     }
-   
+
+    @Override
+    public Eventos guardarEventos(Eventos elemento) {
+        if (elemento.getIdEvento() == null) {
+
+            eventosFacadeLocal.create(elemento);
+            return elemento;
+        } else {
+            eventosFacadeLocal.edit(elemento);
+            return elemento;
+        }
+    }
+
+    @Override
+    public void guardarImagen(byte[] contents, Integer idEvento, String fileName) {
+        try {
+
+            File imagen = null;
+            StringBuilder sb = new StringBuilder();
+            sb.append(System.getProperty("APP_CONF"))
+                    .append(System.getProperty("file.separator"))
+                    .append("images").append(System.getProperty("file.separator"))
+                    .append("inversiones").append(System.getProperty("file.separator")).append(idEvento).append(fileName);
+            imagen = new File(sb.toString());
+            if (imagen.exists()) {
+                imagen.delete();
+            }
+            OutputStream stream = null;
+            stream = new FileOutputStream(sb.toString());
+            if (contents != null) {
+                stream.write(contents);
+            }
+            stream.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MarketingUserFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MarketingUserFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
