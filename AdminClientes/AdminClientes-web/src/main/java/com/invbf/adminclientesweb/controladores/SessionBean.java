@@ -191,4 +191,18 @@ public class SessionBean implements Serializable, Subject {
         this.paginacion = paginacion;
     }
     
+    public void checkUsuarioConectado(){
+    if(usuario==null
+                ||usuario.getIdUsuario()==null
+                ||usuario.getIdUsuario()<=0){
+            try {
+                System.out.println("No lo coje");
+                Desconectar();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+            } catch (IOException ex) {
+                LOGGER.error(ex);
+            }
+        }
+    }
+    
 }

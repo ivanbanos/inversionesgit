@@ -64,7 +64,7 @@ public class ReportesClientesBean {
 
     @PostConstruct
     public void init() {
-
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("Reportes")) {
             try {
                 sessionBean.Desconectar();
@@ -175,5 +175,4 @@ public class ReportesClientesBean {
     public void setEditar(boolean editar) {
         this.editar = editar;
     }
-    
 }

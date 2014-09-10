@@ -62,6 +62,7 @@ public class CrudUsuariosBean implements Observer{
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         elemento = new Usuarios();
         lista = adminFacade.findAllUsuarios();
         listaperfiles = adminFacade.findAllPerfiles();

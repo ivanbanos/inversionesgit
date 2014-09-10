@@ -53,6 +53,7 @@ public class EventosHostessBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
             try {
                 sessionBean.Desconectar();

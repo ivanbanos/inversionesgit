@@ -64,7 +64,7 @@ public class CrudClientesBean {
 
     @PostConstruct
     public void init() {
-
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("Clientes")) {
             try {
                 sessionBean.Desconectar();
@@ -175,5 +175,4 @@ public class CrudClientesBean {
     public void setEditar(boolean editar) {
         this.editar = editar;
     }
-    
 }

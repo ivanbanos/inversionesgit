@@ -171,8 +171,11 @@ public class SystemFacadeImpl implements SystemFacade {
         es.setPassword(configuracionesFacadeLocal.findByNombre("contrasena").getValor());
         for (Listasclientesevento lce : elemento.getListasclienteseventoList()) {
             try {
-                String correoString = clientesatributosFacadeLocal.find(new ClientesatributosPK(lce.getClientes().getIdCliente(), correo.getIdAtributo())).getValor();
-                es.sendEmail(correoString, elemento.getNombre(),elemento.getDescripcion(), elemento.getImagen(), elemento.getFormato(), elemento.getMime(), elemento.getIdEvento() + elemento.getNombre());
+                Clientesatributos ca = clientesatributosFacadeLocal.find(new ClientesatributosPK(lce.getClientes().getIdCliente(), correo.getIdAtributo()));
+                if (ca != null) {
+                    String correoString = ca.getValor();
+                    es.sendEmail(correoString, elemento.getNombre(), elemento.getDescripcion(), elemento.getImagen(), elemento.getFormato(), elemento.getMime(), elemento.getIdEvento() + elemento.getNombre());
+                }
             } catch (MessagingException ex) {
                 throw new MensajeNoEnviadoException();
             }

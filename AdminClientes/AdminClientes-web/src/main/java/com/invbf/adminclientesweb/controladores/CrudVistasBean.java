@@ -55,6 +55,7 @@ public class CrudVistasBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         elemento = new Vistas();
         lista = adminFacade.findAllVistas();
     }

@@ -7,12 +7,14 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Atributos;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -53,6 +55,7 @@ private List<Atributos> flista;
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         elemento = new Atributos();
         lista = marketingUserFacade.findAllAtributos();
         

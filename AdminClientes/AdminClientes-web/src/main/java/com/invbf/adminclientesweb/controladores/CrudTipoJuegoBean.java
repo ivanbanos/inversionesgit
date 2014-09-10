@@ -56,6 +56,7 @@ public class CrudTipoJuegoBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         elemento = new Tiposjuegos();
         lista = marketingUserFacade.findAllTiposjuegos();
     }

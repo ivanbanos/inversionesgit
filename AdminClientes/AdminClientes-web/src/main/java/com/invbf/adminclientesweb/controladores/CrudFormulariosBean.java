@@ -55,6 +55,7 @@ public class CrudFormulariosBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         elemento = new Formularios();
         lista = adminFacade.findAllFormularios();
     }

@@ -61,12 +61,13 @@ public class HostessFacadeImpl implements HostessFacade {
         Estadoscliente inicial = estadosclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
         for (int i = 0; i < cantidadClientes; i++) {
 
-
+            uncliente:
             while (iterator.hasNext()) {
                 Listasclientesevento lce = iterator.next();
                 if (lce.getIdEstadoCliente().equals(inicial)) {
                     listasclienteseventoFacadeLocal.edit(lce);
                     clientesAEnviar.add(lce);
+                    break uncliente;
                 }
             }
         }
@@ -89,26 +90,28 @@ public class HostessFacadeImpl implements HostessFacade {
     }
 
     @Override
-    public Listasclientesevento nuevoLCE(Integer index, List<Listasclientesevento> clientes) throws EventoSinClientesPorRevisarException {
+    public Listasclientesevento nuevoLCE(Integer index, List<Listasclientesevento> clientes, Listasclientesevento l) throws EventoSinClientesPorRevisarException {
         Eventos evento = eventosFacadeLocal.find(index);
-        List<Listasclientesevento> clientesAEnviar = evento.getListasclienteseventoList();
-        Iterator<Listasclientesevento> iterator = clientes.iterator();
+        List<Listasclientesevento> clientesEv = evento.getListasclienteseventoList();
+        Iterator<Listasclientesevento> iterator = clientesEv.iterator();
 
-        int cantidadClientes = findCantidadClientes();
         Estadoscliente inicial = estadosclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
-        for (int i = 0; i < cantidadClientes; i++) {
-
-
+        
             while (iterator.hasNext()) {
                 Listasclientesevento lce = iterator.next();
                 if (lce.getIdEstadoCliente().equals(inicial)) {
-                    if (!clientes.contains(lce)) {
+                    if (!clientes.contains(lce)&&!lce.equals(l)) {
                         return lce;
                     }
                 }
             }
-        }
+        
         throw new EventoSinClientesPorRevisarException();
 
+    }
+
+    @Override
+    public Estadoscliente findEstadoClientesByName(String idEstadoCliente) {
+        return estadosclienteFacadeLocal.findByNombreEstadoCliente(idEstadoCliente);
     }
 }

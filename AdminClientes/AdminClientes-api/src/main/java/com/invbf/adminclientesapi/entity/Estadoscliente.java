@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estadoscliente.findByIdEstadoCliente", query = "SELECT e FROM Estadoscliente e WHERE e.idEstadoCliente = :idEstadoCliente"),
     @NamedQuery(name = "Estadoscliente.findByNombre", query = "SELECT e FROM Estadoscliente e WHERE e.nombre = :nombre")})
 public class Estadoscliente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,7 +104,6 @@ public class Estadoscliente implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.Estadoscliente[ idEstadoCliente=" + idEstadoCliente + " ]";
+        return idEstadoCliente + " " + nombre;
     }
-    
 }

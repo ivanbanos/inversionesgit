@@ -7,11 +7,14 @@ package com.invbf.adminclientesweb.controladores;
 import com.invbf.adminclientesapi.entity.Configuraciones;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
+import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -23,6 +26,13 @@ import org.apache.log4j.Logger;
 public class ConfiguracionesGeneralesBean {
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
+    
+    @ManagedProperty("#{sessionBean}")
+    private SessionBean sessionBean;
+    
+    public void setSessionBean(SessionBean sessionBean) {
+        this.sessionBean = sessionBean;
+    }
     @EJB
     SystemFacade systemFacade;
     private List<Configuraciones> configuraciones;
@@ -32,6 +42,7 @@ public class ConfiguracionesGeneralesBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         configuraciones = systemFacade.getAllConfiguraciones();
     }
 

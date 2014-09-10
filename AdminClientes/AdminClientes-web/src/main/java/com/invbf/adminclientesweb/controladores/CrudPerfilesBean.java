@@ -64,6 +64,7 @@ public class CrudPerfilesBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         elemento = new Perfiles();
         lista = adminFacade.findAllPerfiles();
         listaformularios = new ArrayList<Formularios>();

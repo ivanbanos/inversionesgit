@@ -55,6 +55,7 @@ public class CrudEstadosClientesBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         elemento = new Estadoscliente();
         lista = marketingUserFacade.findAllEstadosClietes();
     }

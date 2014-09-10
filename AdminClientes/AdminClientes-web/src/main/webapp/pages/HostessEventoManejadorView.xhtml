@@ -18,13 +18,6 @@
                 <div class="panel-body">
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['codigo']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel value="#{hostessEventoManejadorBean.elemento.idEvento}"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['nombre']}</label>
                         <div class="col-md-9">
                             <h:outputLabel id="nombre" value="#{hostessEventoManejadorBean.elemento.nombre}" />
@@ -49,26 +42,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['descripcion']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="descripcion" value="#{hostessEventoManejadorBean.elemento.descripcion}" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['estado']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="estado" value="#{hostessEventoManejadorBean.elemento.estado}" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['tipo']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="tipo" value="#{hostessEventoManejadorBean.elemento.tipo}" />
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['casino']}</label>
@@ -121,9 +94,11 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" >#{label['estados']}</label>
                                     <div class="col-md-9">
-                                        <p:selectOneMenu  value="#{clientes.idEstadoCliente.idEstadoCliente}">
-                                            <f:selectItem itemLabel="Select One" itemValue="" />
-                                            <f:selectItems value="#{hostessEventoManejadorBean.listaestadosclientes}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idEstadoCliente}"/> 
+                                        <p:selectOneMenu  value="#{clientes.idEstadoCliente}">
+                                            <f:selectItems value="#{hostessEventoManejadorBean.listaestadosclientes}" 
+                                                           var="var" 
+                                                           itemLabel="#{var.nombre}" 
+                                                           itemValue="#{var.nombre}"/> 
                                         </p:selectOneMenu>
                                     </div>
                                 </div>

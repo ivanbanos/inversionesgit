@@ -56,6 +56,7 @@ public class ClientesActBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("Clientes")) {
             try {
                 System.out.println("No lo coje");

@@ -5,6 +5,7 @@
 package com.invbf.adminclientesapi.facade;
 
 import com.invbf.adminclientesapi.entity.Clientes;
+import com.invbf.adminclientesapi.entity.Estadoscliente;
 import com.invbf.adminclientesapi.entity.Eventos;
 import com.invbf.adminclientesapi.entity.Listasclientesevento;
 import com.invbf.adminclientesapi.entity.Usuarios;
@@ -25,5 +26,7 @@ public interface HostessFacade {
 
     public void guardarLCE(Listasclientesevento listasclientesevento);
 
-    public Listasclientesevento nuevoLCE(Integer index, List<Listasclientesevento> clientes)throws EventoSinClientesPorRevisarException;
+    public Listasclientesevento nuevoLCE(Integer index, List<Listasclientesevento> clientes, Listasclientesevento l)throws EventoSinClientesPorRevisarException;
+
+    public Estadoscliente findEstadoClientesByName(String idEstadoCliente);
 }

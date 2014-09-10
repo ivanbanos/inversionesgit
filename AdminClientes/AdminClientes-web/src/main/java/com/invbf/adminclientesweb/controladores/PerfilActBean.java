@@ -96,6 +96,7 @@ public class PerfilActBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("Perfiles")) {
             try {
                 sessionBean.Desconectar();

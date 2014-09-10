@@ -43,7 +43,7 @@ public class CuentaUsuarioBean {
 
     @PostConstruct
     public void init() {
-        
+        sessionBean.checkUsuarioConectado();
     }
 
     public SystemFacade getSystemFacade() {

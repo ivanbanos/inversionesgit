@@ -76,6 +76,7 @@ public class ReporteEventoEspesificoBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("Reportes")) {
             try {
                 sessionBean.Desconectar();

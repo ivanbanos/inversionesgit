@@ -12,6 +12,7 @@ import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
+import com.invbf.adminclientesweb.util.ListasclienteseventoPojo;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class HostessEventoManejadorBean {
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private StreamedContent file;
-    private List<Listasclientesevento> clientes;
+    private List<ListasclienteseventoPojo> clientes;
     private List<Estadoscliente> listaestadosclientes;
 
     public void setSessionBean(SessionBean sessionBean) {
@@ -63,6 +64,7 @@ public class HostessEventoManejadorBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
             try {
                 sessionBean.Desconectar();
@@ -81,9 +83,12 @@ public class HostessEventoManejadorBean {
         }
         elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
         file = new DefaultStreamedContent();
-        clientes = new ArrayList<Listasclientesevento>(0);
+        clientes = new ArrayList<ListasclienteseventoPojo>(0);
         try {
-            clientes = hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento"));
+            List<Listasclientesevento> clientes2 = hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento"));
+            for (Listasclientesevento lce : clientes2) {
+                clientes.add(new ListasclienteseventoPojo(lce));
+            }
         } catch (EventoSinClientesPorRevisarException ex) {
             LOGGER.info(ex);
         }
@@ -130,11 +135,11 @@ public class HostessEventoManejadorBean {
         this.hostessFacade = hostessFacade;
     }
 
-    public List<Listasclientesevento> getClientes() {
+    public List<ListasclienteseventoPojo> getClientes() {
         return clientes;
     }
 
-    public void setClientes(List<Listasclientesevento> clientes) {
+    public void setClientes(List<ListasclienteseventoPojo> clientes) {
         this.clientes = clientes;
     }
 
@@ -147,28 +152,53 @@ public class HostessEventoManejadorBean {
     }
 
     public void guardar(Integer idCliente) {
-        int index = clientes.indexOf(new Listasclientesevento(elemento.getIdEvento(), idCliente));
-        Listasclientesevento listasclientesevento = clientes.remove(index);
-        hostessFacade.guardarLCE(listasclientesevento);
         
+        int index=-1;
+        for(int i = 0; i < clientes.size(); i++){
+            if(clientes.get(i).getEventos().getIdEvento()==elemento.getIdEvento()&&clientes.get(i).getClientes().getIdCliente()==idCliente){
+                index = i;
+            }
+        }
+        ListasclienteseventoPojo l = clientes.remove(index);
+        Estadoscliente ec = hostessFacade.findEstadoClientesByName(l.getIdEstadoCliente());
+        Listasclientesevento lce = l.getListasclientesevento(ec);
+        hostessFacade.guardarLCE(l.getListasclientesevento(ec));
+        List<Listasclientesevento> clientes2 = new ArrayList<Listasclientesevento>();
+        for(ListasclienteseventoPojo pojo : clientes){
+            clientes2.add(pojo.getListasclientesevento(ec));
+        }
         try {
-            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes);
-            clientes.add(index, nuevo);
+            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes2, lce);
+            clientes2.add(nuevo);
+            clientes.clear();
+            for (Listasclientesevento lce2 : clientes2) {
+                clientes.add(new ListasclienteseventoPojo(lce2));
+            }
         } catch (EventoSinClientesPorRevisarException ex) {
             LOGGER.info(ex);
-            FacesUtil.addInfoMessage("No hay mas clientes por revisar","");
+            FacesUtil.addInfoMessage("No hay mas clientes por revisar", "");
         }
     }
 
     public void nuevo(Integer idCliente) {
         int index = clientes.indexOf(new Listasclientesevento(elemento.getIdEvento(), idCliente));
-        clientes.remove(index);
+        ListasclienteseventoPojo l = clientes.remove(index);
+        Estadoscliente ec = hostessFacade.findEstadoClientesByName(l.getIdEstadoCliente());
+        Listasclientesevento lce = l.getListasclientesevento(ec);
+        List<Listasclientesevento> clientes2 = new ArrayList<Listasclientesevento>();
+        for(ListasclienteseventoPojo pojo : clientes){
+            clientes2.add(pojo.getListasclientesevento(ec));
+        }
         try {
-            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes);
-            clientes.add(index, nuevo);
+            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes2, lce);
+            clientes2.add(nuevo);
+            clientes.clear();
+            for (Listasclientesevento lce2 : clientes2) {
+                clientes.add(new ListasclienteseventoPojo(lce2));
+            }
         } catch (EventoSinClientesPorRevisarException ex) {
             LOGGER.info(ex);
-            FacesUtil.addInfoMessage("No hay mas clientes por revisar","");
+            FacesUtil.addInfoMessage("No hay mas clientes por revisar", "");
         }
     }
 }

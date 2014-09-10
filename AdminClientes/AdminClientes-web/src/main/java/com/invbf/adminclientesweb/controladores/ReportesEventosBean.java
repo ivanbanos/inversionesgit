@@ -66,7 +66,7 @@ public class ReportesEventosBean {
 
     @PostConstruct
     public void init() {
-
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("Reportes")) {
             try {
                 sessionBean.Desconectar();
@@ -180,7 +180,7 @@ public class ReportesEventosBean {
             LOGGER.error(ex);
         }
     }
-    
+
     public void goEventoReporte(int id) {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));

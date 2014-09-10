@@ -31,8 +31,7 @@ import org.primefaces.model.UploadedFile;
 @ViewScoped
 public class CrudEventoBean {
 
-    private static final Logger LOGGER
-            = Logger.getLogger(SessionBean.class);
+    private static final Logger LOGGER = Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
     @EJB
@@ -66,7 +65,7 @@ public class CrudEventoBean {
 
     @PostConstruct
     public void init() {
-
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("Eventos")) {
             try {
                 sessionBean.Desconectar();

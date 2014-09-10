@@ -78,6 +78,7 @@ public class MarketingEventoManejadorBean {
 
     @PostConstruct
     public void init() {
+        sessionBean.checkUsuarioConectado();
         if (!sessionBean.perfilViewMatch("ManejadorEventosMarketing")) {
             try {
                 sessionBean.Desconectar();
