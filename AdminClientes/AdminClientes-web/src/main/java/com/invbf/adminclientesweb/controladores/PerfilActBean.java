@@ -4,14 +4,14 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Perfiles;
-import com.invbf.adminclientesapi.entity.Vistas;
+
+import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -32,7 +32,7 @@ public class PerfilActBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     AdminFacade adminFacade;
-    private Perfiles elemento;
+    private Perfil elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private boolean vistaUsuario = false;
@@ -79,6 +79,10 @@ public class PerfilActBean {
     private boolean agregarEstados = false;
     private boolean actualizarEstados = false;
     private boolean eliminarEstados = false;
+    private boolean vistaTipoevento = false;
+    private boolean agregarTipoevento = false;
+    private boolean actualizarTipoevento = false;
+    private boolean eliminarTipoevento = false;
     private boolean vistaEvMarketing = false;
     private boolean vistaEvHostess = false;
     private boolean vistaReportes = false;
@@ -97,6 +101,7 @@ public class PerfilActBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("configuracion");
         if (!sessionBean.perfilViewMatch("Perfiles")) {
             try {
                 sessionBean.Desconectar();
@@ -119,11 +124,11 @@ public class PerfilActBean {
 
     }
 
-    public Perfiles getElemento() {
+    public Perfil getElemento() {
         return elemento;
     }
 
-    public void setElemento(Perfiles elemento) {
+    public void setElemento(Perfil elemento) {
         this.elemento = elemento;
     }
 
@@ -152,9 +157,13 @@ public class PerfilActBean {
     }
 
     private void acomodaropciones() {
-        for (Formularios f : elemento.getFormulariosList()) {
+        for (Formulario f : elemento.getFormulariosList()) {
 
             if (f.getAccion().equals("crear")) {
+                
+                if (f.getTabla().equals("Tipoevento")) {
+                    agregarTipoevento = true;
+                }
                 if (f.getTabla().equals("Usuarios")) {
                     agregarUsuario = true;
                 }
@@ -190,6 +199,10 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("actualizar")) {
+                
+                if (f.getTabla().equals("Tipoevento")) {
+                    actualizarTipoevento = true;
+                }
                 if (f.getTabla().equals("Usuarios")) {
                     actualizarUsuario = true;
                 }
@@ -225,6 +238,9 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("eliminar")) {
+                if (f.getTabla().equals("Tipoevento")) {
+                    eliminarTipoevento = true;
+                }
                 if (f.getTabla().equals("Usuarios")) {
                     eliminarUsuario = true;
                 }
@@ -261,7 +277,10 @@ public class PerfilActBean {
             }
 
         }
-        for (Vistas v : elemento.getVistasList()) {
+        for (Vista v : elemento.getVistasList()) {
+            if (v.getNombreVista().equals("Tipoevento")) {
+                vistaTipoevento = true;
+            }
             if (v.getNombreVista().equals("Usuarios")) {
                 vistaUsuario = true;
             }
@@ -311,8 +330,8 @@ public class PerfilActBean {
     }
 
     private void acomodaropcionesdevuelta() {
-        Vistas v = adminFacade.findVistasByNombre("Usuarios");
-        Vistas v2 = adminFacade.findVistasByNombre("AtributosSistema");
+        Vista v = adminFacade.findVistasByNombre("Usuarios");
+        Vista v2 = adminFacade.findVistasByNombre("AtributosSistema");
         int count = 0;
         if (vistaUsuario == false) {
             count++;
@@ -416,6 +435,21 @@ public class PerfilActBean {
             }
         }
        
+        v = adminFacade.findVistasByNombre("Tipoevento");
+        if (vistaAtributos == false) {
+            count++;
+            if (elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().remove(v);
+            }
+        } else {
+
+            if (!elemento.getVistasList().contains(v2)) {
+                elemento.getVistasList().add(v2);
+            }
+            if (!elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().add(v);
+            }
+        }
         v = adminFacade.findVistasByNombre("Atributos");
         if (vistaAtributos == false) {
             count++;
@@ -478,7 +512,7 @@ public class PerfilActBean {
         }
 
 
-        if (count == 5) {
+        if (count == 6) {
             if (elemento.getVistasList().contains(v2)) {
                 elemento.getVistasList().remove(v2);
             }
@@ -526,7 +560,7 @@ public class PerfilActBean {
             }
         }
 
-        Formularios f = adminFacade.findFormularioByAccionAndTabla("crear", "Usuarios");
+        Formulario f = adminFacade.findFormularioByAccionAndTabla("crear", "Usuarios");
         if (agregarUsuario == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
@@ -638,6 +672,37 @@ public class PerfilActBean {
         }
         f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Formularios");
         if (eliminarForm == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        
+        f = adminFacade.findFormularioByAccionAndTabla("crear", "Tipoevento");
+        if (agregarCasinos == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Tipoevento");
+        if (actualizarCasinos == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Tipoevento");
+        if (eliminarCasinos == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
             }
@@ -1241,6 +1306,38 @@ public class PerfilActBean {
 
     public void setVistaConfiguraciones(boolean vistaConfiguraciones) {
         this.vistaConfiguraciones = vistaConfiguraciones;
+    }
+
+    public boolean isVistaTipoevento() {
+        return vistaTipoevento;
+    }
+
+    public void setVistaTipoevento(boolean vistaTipoevento) {
+        this.vistaTipoevento = vistaTipoevento;
+    }
+
+    public boolean isAgregarTipoevento() {
+        return agregarTipoevento;
+    }
+
+    public void setAgregarTipoevento(boolean agregarTipoevento) {
+        this.agregarTipoevento = agregarTipoevento;
+    }
+
+    public boolean isActualizarTipoevento() {
+        return actualizarTipoevento;
+    }
+
+    public void setActualizarTipoevento(boolean actualizarTipoevento) {
+        this.actualizarTipoevento = actualizarTipoevento;
+    }
+
+    public boolean isEliminarTipoevento() {
+        return eliminarTipoevento;
+    }
+
+    public void setEliminarTipoevento(boolean eliminarTipoevento) {
+        this.eliminarTipoevento = eliminarTipoevento;
     }
     
 }

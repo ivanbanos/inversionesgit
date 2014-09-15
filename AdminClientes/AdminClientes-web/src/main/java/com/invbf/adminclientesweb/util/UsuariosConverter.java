@@ -4,9 +4,7 @@
  */
 package com.invbf.adminclientesweb.util;
 
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Usuario;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -29,7 +27,7 @@ public class UsuariosConverter implements Converter {
         }
         // value must be of a type that can be cast to a String.
         try {
-            return ((Usuarios)value).toString();
+            return ((Usuario)value).toString();
         } catch (ClassCastException ce) {
             FacesMessage errMsg = new FacesMessage("Error al convertir valor");
             FacesContext.getCurrentInstance().addMessage(null, errMsg);
@@ -40,8 +38,8 @@ public class UsuariosConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Usuarios usuarios;
-        usuarios = new Usuarios();
+        Usuario usuarios;
+        usuarios = new Usuario();
         usuarios.setIdUsuario(Integer.parseInt(value.split(" ")[0]));
         usuarios.setNombreUsuario(value.split(" ")[1]);
         return usuarios;

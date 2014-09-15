@@ -17,14 +17,6 @@
 
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['codigo']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel value="#{perfilActBean.elemento.idPerfil}"/>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['nombres']}</label>
                         <div class="col-md-9">
                             <p:inputText id="nombres" value="#{perfilActBean.elemento.nombre}" required="true" />
@@ -127,6 +119,15 @@
                             <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEstados}"/></p:column>
                             <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarEstados}"/></p:column>
                             <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarEstados}"/></p:column>
+
+                        </p:row>
+                        <p:row >
+
+                            <p:column><label >#{label['tipoEvento']}</label></p:column>
+                            <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoevento}"/></p:column>
+                            <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoevento}"/></p:column>
+                            <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoevento}"/></p:column>
+                            <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoevento}"/></p:column>
 
                         </p:row>
                         <p:row >

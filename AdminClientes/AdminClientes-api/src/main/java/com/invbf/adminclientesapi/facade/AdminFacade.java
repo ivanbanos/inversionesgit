@@ -4,11 +4,11 @@
  */
 package com.invbf.adminclientesapi.facade;
 
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Perfiles;
-import com.invbf.adminclientesapi.entity.Usuarios;
-import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Usuario;
+import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.NombreUsuarioExistenteException;
 import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import java.util.List;
@@ -19,40 +19,40 @@ import java.util.List;
  */
 public interface AdminFacade {
 
-    public List<Usuarios> findAllUsuarios();
+    public List<Usuario> findAllUsuarios();
+   
+    public void deleteUsuarios(Usuario elemento);
     
-    public void deleteUsuarios(Usuarios elemento);
+    public boolean guardarUsuarios(Usuario elemento) throws NombreUsuarioExistenteException;
+    
+    public void deletePerfiles(Perfil elemento);
+    
+    public List<Perfil> findAllPerfiles();
+    
+    public boolean guardarPerfiles(Perfil elemento) throws PerfilExistenteException;
+    
+    public List<Formulario> findAllFormularios();
+    
+    public void deleteFormularios(Formulario elemento);
+    
+    public boolean guardarFormularios(Formulario elemento);
+    
+    public List<Vista> findAllVistas();
+    
+    public void deleteVistas(Vista elemento);
+    
+    public boolean guardarVistas(Vista elemento);
+    
+    public Perfil findPerfil(Integer idPerfil);
+    
+    public List<Usuario> findAllUsuariosHostess() ;
+    
+    public Usuario findUsuarios(Integer idUsuario);
 
-    public boolean guardarUsuarios(Usuarios elemento)throws NombreUsuarioExistenteException;
+    public void agregarEventoUsuarios(Usuario s, Evento elemento);
 
-    public void deletePerfiles(Perfiles elemento);
+    public Vista findVistasByNombre(String nombre);
 
-    public List<Perfiles> findAllPerfiles();
-
-    public boolean guardarPerfiles(Perfiles elemento)throws PerfilExistenteException;
-
-    public List<Formularios> findAllFormularios();
-
-    public void deleteFormularios(Formularios elemento);
-
-    public boolean guardarFormularios(Formularios elemento);
-
-    public List<Vistas> findAllVistas();
-
-    public void deleteVistas(Vistas elemento);
-
-    public boolean guardarVistas(Vistas elemento);
-
-    public Perfiles findPerfil(Integer idPerfil);
-
-    public List<Usuarios> findAllUsuariosHostess();
-
-    public Usuarios findUsuarios(Integer idUsuario);
-
-    public void agregarEventoUsuarios(Usuarios s, Eventos elemento);
-
-    public Vistas findVistasByNombre(String usuarios);
-
-    public Formularios findFormularioByAccionAndTabla(String crear, String usuarios);
+    public Formulario findFormularioByAccionAndTabla(String accion, String tabla);
     
 }

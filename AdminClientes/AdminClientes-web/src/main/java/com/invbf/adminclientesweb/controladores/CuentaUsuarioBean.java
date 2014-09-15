@@ -44,6 +44,7 @@ public class CuentaUsuarioBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("cuenta");
     }
 
     public SystemFacade getSystemFacade() {

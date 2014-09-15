@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,8 +27,8 @@ public class CrudFormulariosBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     AdminFacade adminFacade;
-    private List<Formularios> lista;
-    private Formularios elemento;
+    private List<Formulario> lista;
+    private Formulario elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -38,13 +36,13 @@ public class CrudFormulariosBean {
         this.sessionBean = sessionBean;
     }
     
-    private List<Formularios> flista;
+    private List<Formulario> flista;
 
-    public List<Formularios> getFlista() {
+    public List<Formulario> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Formularios> flista) {
+    public void setFlista(List<Formulario> flista) {
         this.flista = flista;
     }
     /**
@@ -56,23 +54,24 @@ public class CrudFormulariosBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Formularios();
+        sessionBean.setActive("configuracion");
+        elemento = new Formulario();
         lista = adminFacade.findAllFormularios();
     }
 
-    public List<Formularios> getLista() {
+    public List<Formulario> getLista() {
         return lista;
     }
 
-    public void setLista(List<Formularios> lista) {
+    public void setLista(List<Formulario> lista) {
         this.lista = lista;
     }
 
-    public Formularios getElemento() {
+    public Formulario getElemento() {
         return elemento;
     }
 
-    public void setElemento(Formularios elemento) {
+    public void setElemento(Formulario elemento) {
         this.elemento = elemento;
     }
 
@@ -92,7 +91,7 @@ public class CrudFormulariosBean {
         lista = adminFacade.findAllFormularios();
         sessionBean.registrarlog("eliminar", "Formularios", elemento.toString());
             FacesUtil.addInfoMessage("Formulario eliminado", elemento.getAccion()+" "+elemento.getTabla());
-        elemento = new Formularios();
+        elemento = new Formulario();
     }
     
     public void guardar(){
@@ -105,7 +104,7 @@ public class CrudFormulariosBean {
             sessionBean.registrarlog("crear", "Formularios", elemento.toString());
             FacesUtil.addInfoMessage("Formulario creado", elemento.getAccion()+" "+elemento.getTabla());
         }
-        elemento = new Formularios();
+        elemento = new Formulario();
     }
     
 }

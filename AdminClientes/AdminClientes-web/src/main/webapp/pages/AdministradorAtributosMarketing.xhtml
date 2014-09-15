@@ -34,17 +34,13 @@
 
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idCasino}" filterBy="#{element.idCasino}" filterMatchMode="contains">
-                                            <h:outputText value="#{element.idCasino}" />
-                                        </p:column>
-
                                         <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButtonCasinos" update=":#{p:component('editFormCasinos')}" 
+                                            <p:commandButton id="editButtonCasinos" update=":#{p:component('editDialogCasinos')}" 
                                                              oncomplete="PF('editDialogCasinos').show()" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}" 
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Casinos&quot;, &quot;actualizar&quot;)}">  
@@ -108,26 +104,39 @@
 
                         <h:form>
                             <p:dialog id="editDialogCasinos" header="Editar" widgetVar="editDialogCasinos" modal="true" closable="false" resizable="false">  
-                                
-                                
-                                <p:panelGrid id="editFormCasinos" columns="2">  
+                                <div class="panel panel-primary">
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudCasinosBean.elemento.idCasino}"/>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudCasinosBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreCasinos" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreCasinos" value="#{crudCasinosBean.elemento.nombre}" required="true" />
+                                            <div class="control-group">
+                                                <!-- Password-->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['direccion']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="clave" value="#{crudCasinosBean.elemento.direccion}" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="direccionCasinos" value="#{label['direccion']}" /> 
-                                    <p:inputText id="direccionCasinos" value="#{crudCasinosBean.elemento.direccion}" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" action="#{crudCasinosBean.guardar()}" 
                                                          oncomplete="PF('editDialogCasinos').hide()" icon="ui-icon-check"
-                                                         process=":#{p:component('editFormCasinos')}" update=":#{p:component('detailsTableCasinos')} :#{p:component('messages')}" style="margin:0"/>    
+                                                         update=":#{p:component('detailsTableCasinos')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogCasinos').hide()" icon="ui-icon-closethick"/> 
-                                    </f:facet>  
-                                </p:panelGrid>  
+                                    </div>
+                                </div>
                             </p:dialog>
                         </h:form>
                         <h:form>
@@ -163,25 +172,21 @@
                                 <h:form class="form-horizontal">
                                     <p:dataTable id="detailsTableEstadosClientes" var="element" value="#{crudEstadosClientesBean.lista}"  
                                                  emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEstadosClientes" filteredValue="#{crudEstadosClientesBean.flista}"
-                                                 rows="5"
+                                                 rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
+                                                 >
 
                                         <f:facet name="header">
 
                                         </f:facet>
-
-                                        <p:column headerText="Id" sortBy="#{element.idEstadoCliente}" filterBy="#{element.idEstadoCliente}" filterMatchMode="contains" >
-                                            <h:outputText value="#{element.idEstadoCliente}" />
-                                        </p:column>
 
                                         <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButtonEstadosClientes" update=":#{p:component('editFormEstadosClientes')}" 
+                                            <p:commandButton id="editButtonEstadosClientes" update=":#{p:component('editDialogEstadosClientes')}" 
                                                              oncomplete="PF('editDialogEstadosClientes').show()" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}" 
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;EstadosCliente&quot;, &quot;actualizar&quot;)}">  
@@ -208,39 +213,57 @@
 
                         <h:form>
                             <p:dialog id="addDialogEstadosClientes" header="Agregar" widgetVar="addDialogEstadosClientes" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
 
-                                <p:panelGrid columns="2">  
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudEstadosClientesBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreEstadosClientes" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreEstadosClientes" value="#{crudEstadosClientesBean.elemento.nombre}" required="true" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" actionListener="#{crudEstadosClientesBean.guardar()}" 
                                                          oncomplete="PF('addDialogEstadosClientes').hide()" icon="ui-icon-check" 
                                                          update=":#{p:component('detailsTableEstadosClientes')} :#{p:component('addDialogEstadosClientes')} :#{p:component('messages')}" style="margin:0" />   
                                         <p:commandButton value="Cerrar" oncomplete="PF('addDialogEstadosClientes').hide()" update=":#{p:component('addDialogEstadosClientes')}" icon="ui-icon-closethick"/>  
-                                    </f:facet>  
-                                </p:panelGrid> 
+                                    </div>
+                                </div>
                             </p:dialog> 
                         </h:form>
 
                         <h:form>
                             <p:dialog id="editDialogEstadosClientes" header="Editar" widgetVar="editDialogEstadosClientes" modal="true" closable="false" resizable="false">  
-                                <p:panelGrid id="editFormEstadosClientes" columns="2">  
+                                <div class="panel panel-primary">
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudEstadosClientesBean.elemento.idEstadoCliente}"/>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudEstadosClientesBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreEstadosClientes" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreEstadosClientes" value="#{crudEstadosClientesBean.elemento.nombre}" required="true" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" action="#{crudEstadosClientesBean.guardar()}" 
                                                          oncomplete="PF('editDialogEstadosClientes').hide()" icon="ui-icon-check"
-                                                         process=":#{p:component('editFormEstadosClientes')}" update=":#{p:component('detailsTableEstadosClientes')} :#{p:component('messages')}" style="margin:0"/>    
+                                                         update=":#{p:component('detailsTableEstadosClientes')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogEstadosClientes').hide()" icon="ui-icon-closethick"/> 
-                                    </f:facet>  
-                                </p:panelGrid>  
+                                    </div>
+                                </div> 
                             </p:dialog>
                         </h:form>
                         <h:form>
@@ -274,25 +297,21 @@
                                 <h:form class="form-horizontal">
                                     <p:dataTable id="detailsTableCategorias" var="element" value="#{crudCategoriasBean.lista}"  
                                                  emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableCategorias" filteredValue="#{crudCategoriasBean.flista}"
-                                                 rows="5"
+                                                 rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
+                                                 >
 
                                         <f:facet name="header">
 
                                         </f:facet>
-
-                                        <p:column headerText="Id" sortBy="#{element.idCategorias}" filterBy="#{element.idCategorias}" filterMatchMode="contains" >
-                                            <h:outputText value="#{element.idCategorias}" />
-                                        </p:column>
 
                                         <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButtonCategorias" update=":#{p:component('editFormCategorias')}" 
+                                            <p:commandButton id="editButtonCategorias" update=":#{p:component('editDialogCategorias')}" 
                                                              oncomplete="PF('editDialogCategorias').show()" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}" 
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Categorias&quot;, &quot;actualizar&quot;)}">  
@@ -318,39 +337,58 @@
 
                         <h:form>
                             <p:dialog id="addDialogCategorias" header="Agregar" widgetVar="addDialogCategorias" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
 
-                                <p:panelGrid columns="2">  
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudCategoriasBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreCategorias" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreCategorias" value="#{crudCategoriasBean.elemento.nombre}" required="true" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" actionListener="#{crudCategoriasBean.guardar()}" 
                                                          oncomplete="PF('addDialogCategorias').hide()" icon="ui-icon-check" 
                                                          update=":#{p:component('detailsTableCategorias')} :#{p:component('addDialogCategorias')} :#{p:component('messages')}" style="margin:0" />   
                                         <p:commandButton value="Cerrar" oncomplete="PF('addDialogCategorias').hide()" update=":#{p:component('addDialogCategorias')}" icon="ui-icon-closethick"/>  
-                                    </f:facet>  
-                                </p:panelGrid> 
+                                    </div>
+                                </div> 
+
                             </p:dialog> 
                         </h:form>
 
                         <h:form>
                             <p:dialog id="editDialogCategorias" header="Editar" widgetVar="editDialogCategorias" modal="true" closable="false" resizable="false">  
-                                <p:panelGrid id="editFormCategorias" columns="2">  
+                                <div class="panel panel-primary">
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudCategoriasBean.elemento.idCategorias}"/>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudCategoriasBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreCategorias" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreCategorias" value="#{crudCategoriasBean.elemento.nombre}" required="true" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" action="#{crudCategoriasBean.guardar()}" 
                                                          oncomplete="PF('editDialogCategorias').hide()" icon="ui-icon-check"
-                                                         process=":#{p:component('editFormCategorias')}" update=":#{p:component('detailsTableCategorias')} :#{p:component('messages')}" style="margin:0"/>    
+                                                         update=":#{p:component('detailsTableCategorias')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogCategorias').hide()" icon="ui-icon-closethick"/> 
-                                    </f:facet>  
-                                </p:panelGrid>  
+                                    </div>
+                                </div>  
                             </p:dialog>
                         </h:form>
                         <h:form>
@@ -386,25 +424,21 @@
                                 <h:form class="form-horizontal">
                                     <p:dataTable id="detailsTableTipoJuego" var="element" value="#{crudTipoJuegoBean.lista}"  
                                                  emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableTipoJuego" filteredValue="#{crudTipoJuegoBean.flista}"
-                                                 rows="5"
+                                                 rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
+                                                 >
 
                                         <f:facet name="header">
 
                                         </f:facet>
-
-                                        <p:column headerText="Id" sortBy="#{element.idTipoJuego}" filterBy="#{element.idTipoJuego}" filterMatchMode="contains" >
-                                            <h:outputText value="#{element.idTipoJuego}" />
-                                        </p:column>
 
                                         <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButtonTipoJuego" update=":#{p:component('editFormTipoJuego')}" 
+                                            <p:commandButton id="editButtonTipoJuego" update=":#{p:component('editDialogTipoJuego')}" 
                                                              oncomplete="PF('editDialogTipoJuego').show()" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}" 
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;TiposJuegos&quot;, &quot;actualizar&quot;)}">  
@@ -430,39 +464,58 @@
 
                         <h:form>
                             <p:dialog id="addDialogTipoJuego" header="Agregar" widgetVar="addDialogTipoJuego" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
 
-                                <p:panelGrid columns="2">  
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudTipoJuegoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreTipoJuego" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreTipoJuego" value="#{crudTipoJuegoBean.elemento.nombre}" required="true" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" actionListener="#{crudTipoJuegoBean.guardar()}" 
                                                          oncomplete="PF('addDialogTipoJuego').hide()" icon="ui-icon-check" 
                                                          update=":#{p:component('detailsTableTipoJuego')} :#{p:component('addDialogTipoJuego')} :#{p:component('messages')}" style="margin:0" />   
                                         <p:commandButton value="Cerrar" oncomplete="PF('addDialogTipoJuego').hide()" update=":#{p:component('addDialogTipoJuego')}" icon="ui-icon-closethick"/>  
-                                    </f:facet>  
-                                </p:panelGrid> 
+                                    </div>
+                                </div>  
                             </p:dialog> 
                         </h:form>
 
                         <h:form>
                             <p:dialog id="editDialogTipoJuego" header="Editar" widgetVar="editDialogTipoJuego" modal="true" closable="false" resizable="false">  
-                                <p:panelGrid id="editFormTipoJuego" columns="2">  
+                                <div class="panel panel-primary">
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudTipoJuegoBean.elemento.idTipoJuego}"/>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudTipoJuegoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreTipoJuego" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreTipoJuego" value="#{crudTipoJuegoBean.elemento.nombre}" required="true" />
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" action="#{crudTipoJuegoBean.guardar()}" 
                                                          oncomplete="PF('editDialogTipoJuego').hide()" icon="ui-icon-check"
-                                                         process=":#{p:component('editFormTipoJuego')}" update=":#{p:component('detailsTableTipoJuego')} :#{p:component('messages')}" style="margin:0"/>    
+                                                         update=":#{p:component('detailsTableTipoJuego')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogTipoJuego').hide()" icon="ui-icon-closethick"/> 
-                                    </f:facet>  
-                                </p:panelGrid>  
+                                    </div>
+                                </div> 
+
                             </p:dialog>
                         </h:form>
                         <h:form>
@@ -497,18 +550,14 @@
                                 <h:form class="form-horizontal">
                                     <p:dataTable id="detailsTableAtributos" var="element" value="#{crudAtributosBean.lista}"  
                                                  emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableAtributos" filteredValue="#{crudAtributosBean.flista}"
-                                                 rows="5"
+                                                 rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
+                                                 >
 
                                         <f:facet name="header">
 
                                         </f:facet>
-
-                                        <p:column headerText="Id" sortBy="#{element.idAtributo}" filterBy="#{element.idAtributo}" filterMatchMode="contains" >
-                                            <h:outputText value="#{element.idAtributo}" />
-                                        </p:column>
 
                                         <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
@@ -519,7 +568,7 @@
                                         </p:column>
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButtonAtributos" update=":#{p:component('editFormAtributos')}" 
+                                            <p:commandButton id="editButtonAtributos" update=":#{p:component('editDialogAtributos')}" 
                                                              oncomplete="PF('editDialogAtributos').show()" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}" 
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Atributos&quot;, &quot;actualizar&quot;)}">  
@@ -545,54 +594,59 @@
 
                         <h:form>
                             <p:dialog id="addDialogAtributos" header="Agregar" widgetVar="addDialogAtributos" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
 
-                                <p:panelGrid columns="2">  
-                                    <h:outputLabel for="nombreAtributos" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreAtributos" value="#{crudAtributosBean.elemento.nombre}" required="true" />
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudAtributosBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="tipodatoAtributos" value="#{label['tipodato']}" /> 
-                                    <p:selectOneMenu id="tipodatoAtributos" value="#{crudAtributosBean.elemento.tipoDato}">
-                                        <f:selectItem itemLabel="Select One" itemValue="" />
-                                        <f:selectItem itemLabel="Texto" itemValue="Texto" />
-                                        <f:selectItem itemLabel="Fecha" itemValue="Fecha" />
-                                        <f:selectItem itemLabel="Area de Texto" itemValue="ATexto" />
-                                    </p:selectOneMenu>
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" actionListener="#{crudAtributosBean.guardar()}" 
                                                          oncomplete="PF('addDialogAtributos').hide()" icon="ui-icon-check" 
                                                          update=":#{p:component('detailsTableAtributos')} :#{p:component('addDialogAtributos')} :#{p:component('messages')}" style="margin:0" />   
                                         <p:commandButton value="Cerrar" oncomplete="PF('addDialogAtributos').hide()" update=":#{p:component('addDialogAtributos')}" icon="ui-icon-closethick"/>  
-                                    </f:facet>  
-                                </p:panelGrid> 
+                                    </div>
+                                </div>
+
                             </p:dialog> 
                         </h:form>
 
                         <h:form>
                             <p:dialog id="editDialogAtributos" header="Editar" widgetVar="editDialogAtributos" modal="true" closable="false" resizable="false">  
-                                <p:panelGrid id="editFormAtributos" columns="2">  
+                                <div class="panel panel-primary">
 
-                                    <h:outputLabel value="#{label['codigo']}" /> 
-                                    <h:outputLabel value="#{crudAtributosBean.elemento.idAtributo}"/>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudAtributosBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <h:outputLabel for="nombreAtributos" value="#{label['nombre']}" /> 
-                                    <p:inputText id="nombreAtributos" value="#{crudAtributosBean.elemento.nombre}" required="true" />
-
-                                    <h:outputLabel for="tipodatoAtributos" value="#{label['tipodato']}" /> 
-                                    <p:selectOneMenu id="tipodatoAtributos" value="#{crudAtributosBean.elemento.tipoDato}">
-                                        <f:selectItem itemLabel="Select One" itemValue="" />
-                                        <f:selectItem itemLabel="Texto" itemValue="Texto" />
-                                        <f:selectItem itemLabel="Fecha" itemValue="Fecha" />
-                                        <f:selectItem itemLabel="Area de Texto" itemValue="ATexto" />
-                                    </p:selectOneMenu>
-
-                                    <f:facet name="footer">  
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
                                         <p:commandButton value="Confirmar" action="#{crudAtributosBean.guardar()}" 
                                                          oncomplete="PF('editDialogAtributos').hide()" icon="ui-icon-check"
-                                                         process=":#{p:component('editFormAtributos')}" update=":#{p:component('detailsTableAtributos')} :#{p:component('messages')}" style="margin:0"/>    
+                                                         update=":#{p:component('detailsTableAtributos')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogAtributos').hide()" icon="ui-icon-closethick"/> 
-                                    </f:facet>  
-                                </p:panelGrid>  
+                                    </div>
+                                </div>
+
                             </p:dialog>
                         </h:form>
                         <h:form>
@@ -611,6 +665,175 @@
                     <!--Fin Atributos-->
 
                 </div>
+
+                <div class="col-md-12 column">
+
+                    <!--TipoEvento-->
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Tipoevento&quot;)}">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Tipos de evento</h3>
+
+                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableTipoevento" var="element" value="#{crudTipoEventoBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableTipoevento" filteredValue="#{crudTipoEventoBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <f:facet name="header">
+
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:commandButton id="editButtonEstadosClientes" update=":#{p:component('editDialogTipoevento')}" 
+                                                             oncomplete="PF('editDialogTipoevento').show()" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipoevento&quot;, &quot;actualizar&quot;)}">  
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipoEventoBean.elemento}" />  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogTipoevento').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogTipoevento')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipoevento&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipoEventoBean.elemento}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer">  
+                                            <p:commandButton id="addButton" oncomplete="PF('addDialogTipoevento').show();" 
+                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipoevento&quot;, &quot;crear&quot;)}"/>  
+                                        </f:facet>
+                                    </p:dataTable>
+
+                                </h:form>
+                            </div>
+                        </div>
+
+
+                        <h:form>
+                            <p:dialog id="addDialogTipoevento" header="Agregar" widgetVar="addDialogTipoevento" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudTipoEventoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['estadoCliente']}</label>
+                                                    <div class="col-md-9">
+                                                        <p:pickList id="PojoPickList" value="#{crudTipoEventoBean.estadosClientesTodos}" var="form" effect="bounce"
+                                                                    itemValue="#{form}" itemLabel="#{form.nombre}"  showCheckbox="true"
+                                                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="estadosClientescom" >
+
+                                                            <f:facet name="sourceCaption">#{label['noagregadas']}</f:facet>
+                                                            <f:facet name="targetCaption">#{label['agregadas']}</f:facet>
+
+                                                            <p:column>
+                                                                <h:outputText value="#{form.nombre}" />
+                                                            </p:column>
+                                                        </p:pickList>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                        <p:commandButton value="Confirmar" actionListener="#{crudTipoEventoBean.guardar()}" 
+                                                         oncomplete="PF('addDialogTipoevento').hide()" icon="ui-icon-check" 
+                                                         update=":#{p:component('detailsTableTipoevento')} :#{p:component('addDialogTipoevento')} :#{p:component('messages')}" style="margin:0" />   
+                                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogTipoevento').hide()" update=":#{p:component('addDialogTipoevento')}" icon="ui-icon-closethick"/>  
+                                    </div>
+                                </div>
+
+                                
+                            </p:dialog> 
+                        </h:form>
+
+                        <h:form>
+                            <p:dialog id="editDialogTipoevento" header="Editar" widgetVar="editDialogTipoevento" modal="true" closable="false" resizable="false">  
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudTipoEventoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['estadoCliente']}</label>
+                                                    <div class="col-md-9">
+                                                        <p:pickList id="PojoPickList" value="#{crudTipoEventoBean.estadosClientesTodos}" var="form" effect="bounce"
+                                                                    itemValue="#{form}" itemLabel="#{form.nombre}"  showCheckbox="true"
+                                                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="estadosClientescom" >
+
+                                                            <f:facet name="sourceCaption">#{label['noagregadas']}</f:facet>
+                                                            <f:facet name="targetCaption">#{label['agregadas']}</f:facet>
+
+                                                            <p:column>
+                                                                <h:outputText value="#{form.nombre}" />
+                                                            </p:column>
+                                                        </p:pickList>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                         <p:commandButton value="Confirmar" action="#{crudTipoEventoBean.guardar()}" 
+                                                         oncomplete="PF('editDialogTipoevento').hide()" icon="ui-icon-check"
+                                                         update=":#{p:component('detailsTableTipoevento')} :#{p:component('messages')}" style="margin:0"/>    
+                                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogTipoevento').hide()" icon="ui-icon-closethick"/> 
+                                    </div>
+                                </div>
+                            </p:dialog>
+                        </h:form>
+                        <h:form>
+                            <p:confirmDialog id="deleteDialogTipoevento" message="Quiere borrar el tipo de evento #{crudTipoEventoBean.elemento.nombre}?"  
+                                             header="Borrar" severity="alert" widgetVar="deleteDialogTipoevento" closable="false">  
+
+                                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogTipoevento').hide()"  
+                                                 action="#{crudTipoEventoBean.delete()}" update=":#{p:component('detailsTableTipoevento')} :#{p:component('messages')}"/>  
+                                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogTipoevento').hide()" type="button" />   
+
+                            </p:confirmDialog> 
+                        </h:form>
+
+                    </c:if>
+
+                    <!--Fin TipoEvento-->
+
+
+                </div>
+
             </div>
 
         </div>

@@ -4,16 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Estadoscliente;
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Listasclientesevento;
-import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Cliente;
+import com.invbf.adminclientesapi.entity.Clienteevento;
+import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +22,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
 import org.apache.log4j.Logger;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
-import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -45,26 +41,26 @@ public class ReporteEventoEspesificoBean {
     SystemFacade systemFacade;
     @EJB
     AdminFacade adminFacade;
-    private Eventos elemento;
+    private Evento elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private List<Clientes> clienteses;
-    private List<Clientes> clientesesEvento;
-    private List<Usuarios> usuarioses;
-    private DualListModel<Clientes> todosclienteses;
-    private DualListModel<Usuarios> todosusuarioses;
+    private List<Cliente> clienteses;
+    private List<Cliente> clientesesEvento;
+    private List<Usuario> usuarioses;
+    private DualListModel<Cliente> todosclienteses;
+    private DualListModel<Usuario> todosusuarioses;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
     
-    private List<Listasclientesevento> flista;
+    private List<Clienteevento> flista;
 
-    public List<Listasclientesevento> getFlista() {
+    public List<Clienteevento> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Listasclientesevento> flista) {
+    public void setFlista(List<Clienteevento> flista) {
         this.flista = flista;
     }
 
@@ -77,6 +73,7 @@ public class ReporteEventoEspesificoBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("reportes");
         if (!sessionBean.perfilViewMatch("Reportes")) {
             try {
                 sessionBean.Desconectar();
@@ -97,27 +94,27 @@ public class ReporteEventoEspesificoBean {
 
         clienteses = marketingUserFacade.findAllClientes();
         usuarioses = adminFacade.findAllUsuariosHostess();
-        clientesesEvento = new ArrayList<Clientes>();
-        for (Listasclientesevento lce : elemento.getListasclienteseventoList()) {
+        clientesesEvento = new ArrayList<Cliente>();
+        for (Clienteevento lce : elemento.getListasclienteseventoList()) {
             clientesesEvento.add(lce.getClientes());
             if (clienteses.contains(lce.getClientes())) {
                 clienteses.remove(lce.getClientes());
             }
         }
-        for (Usuarios u : elemento.getUsuariosList()) {
+        for (Usuario u : elemento.getUsuariosList()) {
             if (usuarioses.contains(u)) {
                 usuarioses.remove(u);
             }
         }
-        todosclienteses = new DualListModel<Clientes>(clienteses, clientesesEvento);
-        todosusuarioses = new DualListModel<Usuarios>(usuarioses, elemento.getUsuariosList());
+        todosclienteses = new DualListModel<Cliente>(clienteses, clientesesEvento);
+        todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuariosList());
     }
 
-    public Eventos getElemento() {
+    public Evento getElemento() {
         return elemento;
     }
 
-    public void setElemento(Eventos elemento) {
+    public void setElemento(Evento elemento) {
         this.elemento = elemento;
     }
 
@@ -130,16 +127,16 @@ public class ReporteEventoEspesificoBean {
     }
 
     public void guardar() {
-        Estadoscliente estadoscliente = marketingUserFacade.findByNombreEstadoCliente("Inicial");
+        Estadocliente estadoscliente = marketingUserFacade.findByNombreEstadoCliente("Inicial");
         elemento.setUsuariosList(todosusuarioses.getTarget());
-        for (Usuarios s : todosusuarioses.getTarget()) {
+        for (Usuario s : todosusuarioses.getTarget()) {
             adminFacade.agregarEventoUsuarios(s, elemento);
         }
-        ArrayList<Listasclientesevento> al = new ArrayList<Listasclientesevento>(elemento.getListasclienteseventoList());
+        ArrayList<Clienteevento> al = new ArrayList<Clienteevento>(elemento.getListasclienteseventoList());
         elemento.getListasclienteseventoList().clear();
-        for (Clientes c : todosclienteses.getTarget()) {
+        for (Cliente c : todosclienteses.getTarget()) {
 
-            Listasclientesevento listasclientesevento = new Listasclientesevento(elemento.getIdEvento(), c.getIdCliente());
+            Clienteevento listasclientesevento = new Clienteevento(elemento.getIdEvento(), c.getIdCliente());
             if (al.contains(listasclientesevento)) {
                 elemento.getListasclienteseventoList().add(al.get(al.indexOf(listasclientesevento)));
             } else {
@@ -155,20 +152,20 @@ public class ReporteEventoEspesificoBean {
 
         clienteses = marketingUserFacade.findAllClientes();
         usuarioses = adminFacade.findAllUsuariosHostess();
-        clientesesEvento = new ArrayList<Clientes>();
-        for (Listasclientesevento lce : elemento.getListasclienteseventoList()) {
+        clientesesEvento = new ArrayList<Cliente>();
+        for (Clienteevento lce : elemento.getListasclienteseventoList()) {
             clientesesEvento.add(lce.getClientes());
             if (clienteses.contains(lce.getClientes())) {
                 clienteses.remove(lce.getClientes());
             }
         }
-        for (Usuarios u : elemento.getUsuariosList()) {
+        for (Usuario u : elemento.getUsuariosList()) {
             if (usuarioses.contains(u)) {
                 usuarioses.remove(u);
             }
         }
-        todosclienteses = new DualListModel<Clientes>(clienteses, clientesesEvento);
-        todosusuarioses = new DualListModel<Usuarios>(usuarioses, elemento.getUsuariosList());
+        todosclienteses = new DualListModel<Cliente>(clienteses, clientesesEvento);
+        todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuariosList());
 
         FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
     }
@@ -181,19 +178,19 @@ public class ReporteEventoEspesificoBean {
         this.adminFacade = adminFacade;
     }
 
-    public DualListModel<Clientes> getTodosclienteses() {
+    public DualListModel<Cliente> getTodosclienteses() {
         return todosclienteses;
     }
 
-    public void setTodosclienteses(DualListModel<Clientes> todosclienteses) {
+    public void setTodosclienteses(DualListModel<Cliente> todosclienteses) {
         this.todosclienteses = todosclienteses;
     }
 
-    public DualListModel<Usuarios> getTodosusuarioses() {
+    public DualListModel<Usuario> getTodosusuarioses() {
         return todosusuarioses;
     }
 
-    public void setTodosusuarioses(DualListModel<Usuarios> todosusuarioses) {
+    public void setTodosusuarioses(DualListModel<Usuario> todosusuarioses) {
         this.todosusuarioses = todosusuarioses;
     }
 }

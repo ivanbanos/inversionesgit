@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Categorias;
+import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,8 +27,8 @@ public class CrudCategoriasBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Categorias> lista;
-    private Categorias elemento;
+    private List<Categoria> lista;
+    private Categoria elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -39,13 +37,13 @@ public class CrudCategoriasBean {
     }
 
     
-    private List<Categorias> flista;
+    private List<Categoria> flista;
 
-    public List<Categorias> getFlista() {
+    public List<Categoria> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Categorias> flista) {
+    public void setFlista(List<Categoria> flista) {
         this.flista = flista;
     }
     /**
@@ -57,23 +55,24 @@ public class CrudCategoriasBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Categorias();
+        sessionBean.setActive("configuracion");
+        elemento = new Categoria();
         lista = marketingUserFacade.findAllCategorias();
     }
 
-    public List<Categorias> getLista() {
+    public List<Categoria> getLista() {
         return lista;
     }
 
-    public void setLista(List<Categorias> lista) {
+    public void setLista(List<Categoria> lista) {
         this.lista = lista;
     }
 
-    public Categorias getElemento() {
+    public Categoria getElemento() {
         return elemento;
     }
 
-    public void setElemento(Categorias elemento) {
+    public void setElemento(Categoria elemento) {
         this.elemento = elemento;
     }
 
@@ -91,7 +90,7 @@ public class CrudCategoriasBean {
         sessionBean.registrarlog("eliminar", "Categorias", elemento.getNombre());
         
             FacesUtil.addInfoMessage("Categoria eliminada", elemento.getNombre());
-        elemento = new Categorias();
+        elemento = new Categoria();
     }
 
     public void guardar() {
@@ -104,6 +103,6 @@ public class CrudCategoriasBean {
             sessionBean.registrarlog("crear", "Categorias", elemento.getNombre());
             FacesUtil.addInfoMessage("Categoria creada", elemento.getNombre());
         }
-        elemento = new Categorias();
+        elemento = new Categoria();
     }
 }

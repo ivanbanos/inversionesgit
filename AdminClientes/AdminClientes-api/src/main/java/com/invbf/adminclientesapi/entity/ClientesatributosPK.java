@@ -72,7 +72,7 @@ public class ClientesatributosPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.ClientesatributosPK[ idCliente=" + idCliente + ", idAtributo=" + idAtributo + " ]";
+        return "com.invbf.adminclientesapi.entity.ClientesatributosPK[ idCliente=" + idCliente + ", idAtributo=" + idAtributo + " ]";
     }
     
 }

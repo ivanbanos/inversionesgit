@@ -4,8 +4,7 @@
  */
 package com.invbf.adminclientesweb.util;
 
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.TipoJuego;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -28,7 +27,7 @@ public class TiposJuegosConverter implements Converter {
         }
         // value must be of a type that can be cast to a String.
         try {
-            return ((Tiposjuegos)value).toString();
+            return ((TipoJuego)value).toString();
         } catch (ClassCastException ce) {
             FacesMessage errMsg = new FacesMessage("Error al convertir valor");
             FacesContext.getCurrentInstance().addMessage(null, errMsg);
@@ -39,8 +38,8 @@ public class TiposJuegosConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Tiposjuegos tiposjuegos;
-        tiposjuegos = new Tiposjuegos();
+        TipoJuego tiposjuegos;
+        tiposjuegos = new TipoJuego();
         tiposjuegos.setIdTipoJuego(Integer.parseInt(value.split(" ")[0]));
         tiposjuegos.setNombre(value.split(" ")[1]);
         return tiposjuegos;

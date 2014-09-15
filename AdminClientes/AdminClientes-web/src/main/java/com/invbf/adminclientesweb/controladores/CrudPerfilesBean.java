@@ -4,9 +4,9 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Perfiles;
-import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
@@ -34,25 +34,25 @@ public class CrudPerfilesBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     AdminFacade adminFacade;
-    private List<Perfiles> lista;
-    private List<Formularios> listaformularios;
-    private List<Vistas> listavistas;
-    private Perfiles elemento;
+    private List<Perfil> lista;
+    private List<Formulario> listaformularios;
+    private List<Vista> listavistas;
+    private Perfil elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private DualListModel<Formularios> todosForm;
-    private DualListModel<Vistas> todasVistas;
+    private DualListModel<Formulario> todosForm;
+    private DualListModel<Vista> todasVistas;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Perfiles> flista;
+    private List<Perfil> flista;
 
-    public List<Perfiles> getFlista() {
+    public List<Perfil> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Perfiles> flista) {
+    public void setFlista(List<Perfil> flista) {
         this.flista = flista;
     }
 
@@ -65,27 +65,28 @@ public class CrudPerfilesBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Perfiles();
+        sessionBean.setActive("configuracion");
+        elemento = new Perfil();
         lista = adminFacade.findAllPerfiles();
-        listaformularios = new ArrayList<Formularios>();
-        listavistas = new ArrayList<Vistas>();
-        todasVistas = new DualListModel<Vistas>(listavistas, elemento.getVistasList());
-        todosForm = new DualListModel<Formularios>(listaformularios, elemento.getFormulariosList());
+        listaformularios = new ArrayList<Formulario>();
+        listavistas = new ArrayList<Vista>();
+        todasVistas = new DualListModel<Vista>(listavistas, elemento.getVistasList());
+        todosForm = new DualListModel<Formulario>(listaformularios, elemento.getFormulariosList());
     }
 
-    public List<Perfiles> getLista() {
+    public List<Perfil> getLista() {
         return lista;
     }
 
-    public void setLista(List<Perfiles> lista) {
+    public void setLista(List<Perfil> lista) {
         this.lista = lista;
     }
 
-    public Perfiles getElemento() {
+    public Perfil getElemento() {
         return elemento;
     }
 
-    public void setElemento(Perfiles elemento) {
+    public void setElemento(Perfil elemento) {
         this.elemento = elemento;
     }
 
@@ -97,19 +98,19 @@ public class CrudPerfilesBean {
         this.adminFacade = adminFacade;
     }
 
-    public List<Formularios> getListaformularios() {
+    public List<Formulario> getListaformularios() {
         return listaformularios;
     }
 
-    public void setListaformularios(List<Formularios> listaformularios) {
+    public void setListaformularios(List<Formulario> listaformularios) {
         this.listaformularios = listaformularios;
     }
 
-    public List<Vistas> getListavistas() {
+    public List<Vista> getListavistas() {
         return listavistas;
     }
 
-    public void setListavistas(List<Vistas> listavistas) {
+    public void setListavistas(List<Vista> listavistas) {
         this.listavistas = listavistas;
     }
 
@@ -118,7 +119,7 @@ public class CrudPerfilesBean {
         lista = adminFacade.findAllPerfiles();
         sessionBean.registrarlog("eliminar", "Perfiles", elemento.getNombre());
         FacesUtil.addInfoMessage("Perfil eliminado", elemento.getNombre());
-        elemento = new Perfiles();
+        elemento = new Perfil();
         sessionBean.notifyObserver("Perfiles");
 
     }
@@ -135,7 +136,7 @@ public class CrudPerfilesBean {
                 sessionBean.registrarlog("crear", "Perfiles", elemento.getNombre());
                 FacesUtil.addInfoMessage("Perfil creado", elemento.getNombre());
             }
-            elemento = new Perfiles();
+            elemento = new Perfil();
         } catch (PerfilExistenteException ex) {
             FacesUtil.addErrorMessage("Perfil no creado", "Nombre de perfil existente");
         }
@@ -150,19 +151,19 @@ public class CrudPerfilesBean {
         }
     }
 
-    public DualListModel<Formularios> getTodosForm() {
+    public DualListModel<Formulario> getTodosForm() {
         return todosForm;
     }
 
-    public void setTodosForm(DualListModel<Formularios> todosForm) {
+    public void setTodosForm(DualListModel<Formulario> todosForm) {
         this.todosForm = todosForm;
     }
 
-    public DualListModel<Vistas> getTodasVistas() {
+    public DualListModel<Vista> getTodasVistas() {
         return todasVistas;
     }
 
-    public void setTodasVistas(DualListModel<Vistas> todasVistas) {
+    public void setTodasVistas(DualListModel<Vista> todasVistas) {
         this.todasVistas = todasVistas;
     }
 }

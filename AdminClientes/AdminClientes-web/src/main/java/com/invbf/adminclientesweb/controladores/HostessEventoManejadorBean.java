@@ -4,9 +4,9 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Estadoscliente;
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Listasclientesevento;
+import com.invbf.adminclientesapi.entity.Clienteevento;
+import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.HostessFacade;
@@ -42,12 +42,12 @@ public class HostessEventoManejadorBean {
     AdminFacade adminFacade;
     @EJB
     HostessFacade hostessFacade;
-    private Eventos elemento;
+    private Evento elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private StreamedContent file;
     private List<ListasclienteseventoPojo> clientes;
-    private List<Estadoscliente> listaestadosclientes;
+    private List<Estadocliente> listaestadosclientes;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -62,6 +62,7 @@ public class HostessEventoManejadorBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("eventoshostess");
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
             try {
                 sessionBean.Desconectar();
@@ -82,8 +83,8 @@ public class HostessEventoManejadorBean {
         file = new DefaultStreamedContent();
         clientes = new ArrayList<ListasclienteseventoPojo>(0);
         try {
-            List<Listasclientesevento> clientes2 = hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento"));
-            for (Listasclientesevento lce : clientes2) {
+            List<Clienteevento> clientes2 = hostessFacade.findClienteEventosHostess((Integer) sessionBean.getAttributes().get("idEvento"));
+            for (Clienteevento lce : clientes2) {
                 clientes.add(new ListasclienteseventoPojo(lce));
             }
         } catch (EventoSinClientesPorRevisarException ex) {
@@ -92,11 +93,11 @@ public class HostessEventoManejadorBean {
         listaestadosclientes = marketingUserFacade.findAllEstadosClietes();
     }
 
-    public Eventos getElemento() {
+    public Evento getElemento() {
         return elemento;
     }
 
-    public void setElemento(Eventos elemento) {
+    public void setElemento(Evento elemento) {
         this.elemento = elemento;
     }
 
@@ -140,11 +141,11 @@ public class HostessEventoManejadorBean {
         this.clientes = clientes;
     }
 
-    public List<Estadoscliente> getListaestadosclientes() {
+    public List<Estadocliente> getListaestadosclientes() {
         return listaestadosclientes;
     }
 
-    public void setListaestadosclientes(List<Estadoscliente> listaestadosclientes) {
+    public void setListaestadosclientes(List<Estadocliente> listaestadosclientes) {
         this.listaestadosclientes = listaestadosclientes;
     }
 
@@ -157,18 +158,18 @@ public class HostessEventoManejadorBean {
             }
         }
         ListasclienteseventoPojo l = clientes.remove(index);
-        Estadoscliente ec = hostessFacade.findEstadoClientesByName(l.getIdEstadoCliente());
-        Listasclientesevento lce = l.getListasclientesevento(ec);
-        hostessFacade.guardarLCE(l.getListasclientesevento(ec));
-        List<Listasclientesevento> clientes2 = new ArrayList<Listasclientesevento>();
+        Estadocliente ec = hostessFacade.findEstadoClientesByName(l.getIdEstadoCliente());
+        Clienteevento lce = l.getListasclientesevento(ec, sessionBean.getUsuario());
+        hostessFacade.guardarLCE(l.getListasclientesevento(ec, sessionBean.getUsuario()));
+        List<Clienteevento> clientes2 = new ArrayList<Clienteevento>();
         for(ListasclienteseventoPojo pojo : clientes){
-            clientes2.add(pojo.getListasclientesevento(ec));
+            clientes2.add(pojo.getListasclientesevento(ec, sessionBean.getUsuario()));
         }
         try {
-            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes2, lce);
+            Clienteevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes2, lce);
             clientes2.add(nuevo);
             clientes.clear();
-            for (Listasclientesevento lce2 : clientes2) {
+            for (Clienteevento lce2 : clientes2) {
                 clientes.add(new ListasclienteseventoPojo(lce2));
             }
         } catch (EventoSinClientesPorRevisarException ex) {
@@ -185,17 +186,17 @@ public class HostessEventoManejadorBean {
             }
         }
         ListasclienteseventoPojo l = clientes.remove(index);
-        Estadoscliente ec = hostessFacade.findEstadoClientesByName(l.getIdEstadoCliente());
-        Listasclientesevento lce = l.getListasclientesevento(ec);
-        List<Listasclientesevento> clientes2 = new ArrayList<Listasclientesevento>();
+        Estadocliente ec = hostessFacade.findEstadoClientesByName(l.getIdEstadoCliente());
+        Clienteevento lce = l.getListasclientesevento(ec, sessionBean.getUsuario());
+        List<Clienteevento> clientes2 = new ArrayList<Clienteevento>();
         for(ListasclienteseventoPojo pojo : clientes){
-            clientes2.add(pojo.getListasclientesevento(ec));
+            clientes2.add(pojo.getListasclientesevento(ec, sessionBean.getUsuario()));
         }
         try {
-            Listasclientesevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes2, lce);
+            Clienteevento nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idEvento"), clientes2, lce);
             clientes2.add(nuevo);
             clientes.clear();
-            for (Listasclientesevento lce2 : clientes2) {
+            for (Clienteevento lce2 : clientes2) {
                 clientes.add(new ListasclienteseventoPojo(lce2));
             }
         } catch (EventoSinClientesPorRevisarException ex) {

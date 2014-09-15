@@ -33,49 +33,36 @@
                                                  >
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Buscar:" />
-                                                &nbsp;
-                                                <p:inputText id="globalFilterEventos" onkeyup="detailsTableEventos.filter()"  />
-
-                                            </p:outputPanel>
-
                                         </f:facet>
 
-                                        <p:column headerText="Id" sortBy="#{element.idEvento}" filterBy="#{element.idEvento}" filterMatchMode="contains" filterStyle="display:none">
-                                            <h:outputText value="#{element.idEvento}" />
-                                        </p:column>
-
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
+                                        <p:column headerText="Tipo de evento" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.tipo.nombre}" />
+                                        </p:column>
+
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="editButtonEventos" update=":#{p:component('editFormEventos')}" 
-                                                             oncomplete="PF('editDialogEventos').show()" icon="ui-icon-pencil" 
-                                                             title="#{label['lb_btn.editar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;actualizar&quot;)}">  
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" />  
+                                            
+                                            <p:commandButton id="marketing" icon="ui-icon-gear" 
+                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
+                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;) 
+                                                                         or sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;actualizar&quot;)}">  
                                             </p:commandButton>
                                             <p:commandButton id="deleteButtonEventos" oncomplete="PF('deleteDialogEventos').show();" 
                                                              icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogEventos')}"
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;eliminar&quot;)}">
                                                 <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" /> 
                                             </p:commandButton> 
-                                            <p:commandButton id="marketing" icon="ui-icon-gear" 
-                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
-                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;)}">  
-                                            </p:commandButton>
-                                            <p:commandButton id="hostess" icon="ui-icon-gear" 
-                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoHostess(element.idEvento)}"
-                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">  
-                                            </p:commandButton>
                                         </p:column>
 
                                         <f:facet name="footer">  
-                                            <p:commandButton id="addButton" oncomplete="PF('addDialogEventos').show();" 
-                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}"/>  
+                                            
+                                            <p:commandButton id="addButton" icon="ui-icon-plusthick" value="#{label['lb_btn.agregar']}"
+                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(0)}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}">
+                                            </p:commandButton> 
                                         </f:facet>
                                     </p:dataTable>
                                     <h:outputText value="#{crudEventoBean.contents}" />
@@ -96,115 +83,7 @@
             </div>
         </h:form>
 
-        <h:form>
-            <p:dialog id="addDialogEventos" header="Agregar" widgetVar="addDialogEventos" modal="true" closable="false" resizable="false">
-
-                <p:panelGrid columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudEventoBean.elemento.idEvento}"/>
-
-                    <h:outputLabel for="nombreEventos" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombreEventos" value="#{crudEventoBean.elemento.nombre}" required="true" />
-
-                    <p:outputLabel for="feciniEventos" value="#{label['fechainicio']}" />
-                    <p:calendar id="feciniEventos" value="#{crudEventoBean.elemento.fechaInicio}" pattern="MM/dd/yyyy HH:mm:ss" />
-
-                    <p:outputLabel for="fecfinEventos" value="#{label['fechafinal']}" />
-                    <p:calendar id="fecfinEventos" value="#{crudEventoBean.elemento.fechaFinalizacion}" pattern="MM/dd/yyyy HH:mm:ss" />
-
-                    <p:outputLabel for="descripcionEventos" value="#{label['descripcion']}" />
-                    <p:inputTextarea id="descripcionEventos" value="#{crudEventoBean.elemento.descripcion}"/>
-
-                    <h:outputLabel for="estadoEventos" value="#{label['estado']}" /> 
-                    <p:selectOneMenu id="estadoEventos" value="#{crudEventoBean.elemento.estado}">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItem itemLabel="Activo" itemValue="Activo" />
-                        <f:selectItem itemLabel="Inactivo" itemValue="Inactivo" />
-                        <f:selectItem itemLabel="Cancelado" itemValue="Cancelado" />
-                    </p:selectOneMenu>
-
-                    <h:outputLabel for="tipoEventos" value="#{label['tipo']}" /> 
-                    <p:selectOneMenu id="tipoEventos" value="#{crudEventoBean.elemento.tipo}" required="true">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItem itemLabel="Llamadas" itemValue="1" />
-                        <f:selectItem itemLabel="email" itemValue="2" />
-                    </p:selectOneMenu>
-
-                    <h:outputLabel for="casinoEventos" value="#{label['casino']}" /> 
-                    <p:selectOneMenu id="casinoEventos" value="#{crudEventoBean.elemento.idCasino.idCasino}"  required="true">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItems value="#{crudEventoBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
-                    </p:selectOneMenu>
-
-                    <h:outputLabel for="imagenEventos" value="#{label['imagen']}" />
-                        <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
-                    <f:facet name="footer">  
-                        <p:commandButton value="Confirmar" actionListener="#{crudEventoBean.guardar()}" 
-                                         oncomplete="PF('addDialogEventos').hide()" icon="ui-icon-check" 
-                                         update=":#{p:component('detailsTableEventos')} :#{p:component('addDialogEventos')} :#{p:component('messages')}" style="margin:0" />   
-                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogEventos').hide()" update=":#{p:component('addDialogEventos')}" icon="ui-icon-closethick"/>  
-                    </f:facet>  
-                </p:panelGrid> 
-            </p:dialog> 
-        </h:form>
-
-        <h:form>
-            <p:dialog id="editDialogEventos" header="Editar" widgetVar="editDialogEventos" modal="true" closable="false" resizable="false">  
-                <p:panelGrid id="editFormEventos" columns="2">  
-
-                    <h:outputLabel value="#{label['codigo']}" /> 
-                    <h:outputLabel value="#{crudEventoBean.elemento.idEvento}"/>
-
-                    <h:outputLabel for="nombreEventos" value="#{label['nombre']}" /> 
-                    <p:inputText id="nombreEventos" value="#{crudEventoBean.elemento.nombre}" required="true" />
-
-                    <p:outputLabel for="feciniEventos" value="#{label['fechainicio']}" />
-                    <p:calendar id="feciniEventos" value="#{crudEventoBean.elemento.fechaInicio}" pattern="MM/dd/yyyy HH:mm:ss" />
-
-                    <p:outputLabel for="fecfinEventos" value="#{label['fechafinal']}" />
-                    <p:calendar id="fecfinEventos" value="#{crudEventoBean.elemento.fechaFinalizacion}" pattern="MM/dd/yyyy HH:mm:ss" />
-
-                    <p:outputLabel for="descripcionEventos" value="#{label['descripcion']}" />
-                    <p:inputTextarea id="descripcionEventos" value="#{crudEventoBean.elemento.descripcion}"/>
-
-                    <h:outputLabel for="estadoEventos" value="#{label['estado']}" /> 
-                    <p:selectOneMenu id="estadoEventos" value="#{crudEventoBean.elemento.estado}">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItem itemLabel="Activo" itemValue="Activo" />
-                        <f:selectItem itemLabel="Inactivo" itemValue="Inactivo" />
-                        <f:selectItem itemLabel="Cancelado" itemValue="Cancelado" />
-                    </p:selectOneMenu>
-
-                    <h:outputLabel for="tipoEventos" value="#{label['tipo']}" /> 
-                    <p:selectOneMenu id="tipoEventos" value="#{crudEventoBean.elemento.tipo}">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItem itemLabel="Llamadas" itemValue="1" />
-                        <f:selectItem itemLabel="email" itemValue="2" />
-                    </p:selectOneMenu>
-
-                    <h:outputLabel for="casinoEventos" value="#{label['casino']}" /> 
-                    <p:selectOneMenu id="casinoEventos" value="#{crudEventoBean.elemento.idCasino.idCasino}">
-                        <f:selectItem itemLabel="Select One" itemValue="" />
-                        <f:selectItems value="#{crudEventoBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
-                    </p:selectOneMenu>
-
-                    <h:outputLabel value="#{label['imagen']}" />
-                        <p:fileUpload id="imagenEventos" fileUploadListener="#{crudEventoBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                        
-
-                    <f:facet name="footer">
-                        <p:commandButton value="Confirmar" action="#{crudEventoBean.guardar()}" 
-                                         oncomplete="PF('editDialogEventos').hide()" icon="ui-icon-check"
-                                         process=":#{p:component('editFormEventos')}" update=":#{p:component('detailsTableEventos')} :#{p:component('messages')}" style="margin:0"/>    
-                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogEventos').hide()" icon="ui-icon-closethick"/> 
-                    </f:facet>  
-                </p:panelGrid>  
-            </p:dialog>
-        </h:form>
+        
         <h:form>
             <p:confirmDialog id="deleteDialogEventos" message="Quiere borrar el evento #{crudEventoBean.elemento.nombre}?"  
                              header="Borrar" severity="alert" widgetVar="deleteDialogEventos" closable="false">  

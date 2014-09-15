@@ -72,7 +72,7 @@ public class ListasclienteseventoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.ListasclienteseventoPK[ idEvento=" + idEvento + ", idCliente=" + idCliente + " ]";
+        return "com.invbf.adminclientesapi.entity.ListasclienteseventoPK[ idEvento=" + idEvento + ", idCliente=" + idCliente + " ]";
     }
     
 }

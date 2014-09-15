@@ -4,10 +4,10 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Configuraciones;
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Usuarios;
-import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.entity.Configuracion;
+import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Usuario;
+import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
@@ -41,10 +41,11 @@ public class SessionBean implements Serializable, Subject {
             Logger.getLogger(SessionBean.class);
     @EJB
     SystemFacade sessionFacade;
-    private Usuarios usuario;//Almacena el objeto usuario de la session
+    private Usuario usuario;//Almacena el objeto usuario de la session
     private HashMap<String, Object> Attributes;
     private List<Observer> observers;
     private int paginacion;
+    private String active;
 
     /**
      * Creates a new instance of SessionFlowumiUtil
@@ -54,10 +55,10 @@ public class SessionBean implements Serializable, Subject {
 
     @PostConstruct
     public void init() {
-        usuario = new Usuarios();
+        usuario = new Usuario();
         Attributes = new HashMap<String, Object>();
         observers = new ArrayList<Observer>();
-        Configuraciones configuracion = sessionFacade.getConfiguracionByName("paginacion");
+        Configuracion configuracion = sessionFacade.getConfiguracionByName("paginacion");
         if (configuracion == null) {
             paginacion = 10;
         } else {
@@ -65,11 +66,11 @@ public class SessionBean implements Serializable, Subject {
         }
     }
 
-    public Usuarios getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuarios usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -78,32 +79,33 @@ public class SessionBean implements Serializable, Subject {
             LOGGER.info("Conectando...");
             usuario = sessionFacade.iniciarSession(usuario);
             LOGGER.info("Conectado.");
+            active = "inicio";
             return "/pages/index.xhtml";
         } catch (ClavesNoConcuerdanException ex) {
             LOGGER.error(ex.getMessage());
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
-            usuario = new Usuarios();
+            usuario = new Usuario();
         } catch (UsuarioNoExisteException ex) {
             LOGGER.error(ex.getMessage());
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
-            usuario = new Usuarios();
+            usuario = new Usuario();
         } catch (UsuarioNoConectadoException ex) {
             LOGGER.error(ex.getMessage());
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
-            usuario = new Usuarios();
+            usuario = new Usuario();
         }
         return "";
     }
 
     public String Desconectar() {
         LOGGER.info("Desconectando...");
-        usuario = new Usuarios();
+        usuario = new Usuario();
         return "/pages/InicioSession.xhtml";
     }
 
     public boolean perfilViewMatch(String vista) {
-        List<Vistas> vistasUsuario = usuario.getIdPerfil().getVistasList();
-        for (Vistas v : vistasUsuario) {
+        List<Vista> vistasUsuario = usuario.getIdPerfil().getVistasList();
+        for (Vista v : vistasUsuario) {
             if (v.getNombreVista().equals(vista)) {
                 return true;
             }
@@ -112,7 +114,7 @@ public class SessionBean implements Serializable, Subject {
     }
 
     public boolean perfilFormMatch(String tabla, String accion) {
-        for (Formularios f : usuario.getIdPerfil().getFormulariosList()) {
+        for (Formulario f : usuario.getIdPerfil().getFormulariosList()) {
             if (f.es(tabla + accion)) {
                 return true;
             }
@@ -190,11 +192,11 @@ public class SessionBean implements Serializable, Subject {
     public void setPaginacion(int paginacion) {
         this.paginacion = paginacion;
     }
-    
-    public void checkUsuarioConectado(){
-    if(usuario==null
-                ||usuario.getIdUsuario()==null
-                ||usuario.getIdUsuario()<=0){
+
+    public void checkUsuarioConectado() {
+        if (usuario == null
+                || usuario.getIdUsuario() == null
+                || usuario.getIdUsuario() <= 0) {
             try {
                 System.out.println("No lo coje");
                 Desconectar();
@@ -204,5 +206,57 @@ public class SessionBean implements Serializable, Subject {
             }
         }
     }
-    
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public boolean isActive(String pestaña) {
+        if (active == null) {
+            return false;
+        }
+        return active.equals(pestaña);
+    }
+
+    public boolean isNotActive(String pestaña) {
+        if (active == null) {
+            return true;
+        }
+        return !active.equals(pestaña);
+    }
+
+    public String go(String page) {
+        if (page.equals("inicio")) {
+            active = "inicio";
+            return "/pages/index.xhtml";
+        } else if (page.equals("AtributosSistema")) {
+            active = "configuracion";
+            return "/pages/AdministradorAtributosSistema.xhtml";
+        } else if (page.equals("AtributosMarketing")) {
+            active = "configuracion";
+            return "/pages/AdministradorAtributosMarketing.xhtml";
+        } else if (page.equals("ConfiguracionesGenerales")) {
+            active = "configuracion";
+            return "/pages/ConfiguracionesGenerales.xhtml";
+        } else if (page.equals("clientes")) {
+            active = "clientes";
+            return "/pages/clientes.xhtml";
+        } else if (page.equals("eventos")) {
+            active = "eventos";
+            return "/pages/eventos.xhtml";
+        } else if (page.equals("eventoshostess")) {
+            active = "eventoshostess";
+            return "/pages/eventosHostess.xhtml";
+        } else if (page.equals("reportes")) {
+            active = "reportes";
+            return "/pages/Reportes.xhtml";
+        } else if (page.equals("cuenta")){
+            active = "cuenta";
+            return "/pages/CuentaUsuarios.xhtml";
+        } return "/pages/InicioSession.xhtml";
+    }
 }

@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Eventos;
+import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import java.io.IOException;
 import java.util.List;
@@ -28,20 +28,20 @@ public class EventosHostessBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     HostessFacade hostessFacade;
-    private List<Eventos> lista;
+    private List<Evento> lista;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Eventos> flista;
+    private List<Evento> flista;
 
-    public List<Eventos> getFlista() {
+    public List<Evento> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Eventos> flista) {
+    public void setFlista(List<Evento> flista) {
         this.flista = flista;
     }
 
@@ -54,6 +54,7 @@ public class EventosHostessBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("eventoshostess");
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
             try {
                 sessionBean.Desconectar();
@@ -65,11 +66,11 @@ public class EventosHostessBean {
         lista = hostessFacade.findEventosHostess(sessionBean.getUsuario());
     }
 
-    public List<Eventos> getLista() {
+    public List<Evento> getLista() {
         return lista;
     }
 
-    public void setLista(List<Eventos> lista) {
+    public void setLista(List<Evento> lista) {
         this.lista = lista;
     }
 

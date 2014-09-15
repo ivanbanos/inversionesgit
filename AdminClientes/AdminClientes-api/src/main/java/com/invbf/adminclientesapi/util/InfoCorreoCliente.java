@@ -6,17 +6,17 @@
 
 package com.invbf.adminclientesapi.util;
 
-import com.invbf.adminclientesapi.entity.Clientes;
+import com.invbf.adminclientesapi.entity.Cliente;
 
 /**
  *
  * @author Celula4
  */
 public class InfoCorreoCliente {
-    private Clientes cliente;
+    private Cliente cliente;
     private String info;
 
-    public InfoCorreoCliente(Clientes cliente, String info) {
+    public InfoCorreoCliente(Cliente cliente, String info) {
         this.cliente = cliente;
         this.info = info;
     }
@@ -24,11 +24,11 @@ public class InfoCorreoCliente {
     public InfoCorreoCliente() {
     }
 
-    public Clientes getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Clientes cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 

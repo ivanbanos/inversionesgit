@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Casinos;
+import com.invbf.adminclientesapi.entity.Casino;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,8 +27,8 @@ public class CrudCasinosBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Casinos> lista;
-    private Casinos elemento;
+    private List<Casino> lista;
+    private Casino elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -39,13 +37,13 @@ public class CrudCasinosBean {
     }
 
     
-    private List<Casinos> flista;
+    private List<Casino> flista;
 
-    public List<Casinos> getFlista() {
+    public List<Casino> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Casinos> flista) {
+    public void setFlista(List<Casino> flista) {
         this.flista = flista;
     }
     /**
@@ -57,23 +55,24 @@ public class CrudCasinosBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Casinos();
+        sessionBean.setActive("configuracion");
+        elemento = new Casino();
         lista = marketingUserFacade.findAllCasinos();
     }
 
-    public List<Casinos> getLista() {
+    public List<Casino> getLista() {
         return lista;
     }
 
-    public void setLista(List<Casinos> lista) {
+    public void setLista(List<Casino> lista) {
         this.lista = lista;
     }
 
-    public Casinos getElemento() {
+    public Casino getElemento() {
         return elemento;
     }
 
-    public void setElemento(Casinos elemento) {
+    public void setElemento(Casino elemento) {
         this.elemento = elemento;
     }
 
@@ -90,8 +89,8 @@ public class CrudCasinosBean {
         marketingUserFacade.deleteCasinos(elemento);
         lista = marketingUserFacade.findAllCasinos();
         sessionBean.registrarlog("eliminar", "Casinos", elemento.getNombre());
-            FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
-        elemento = new Casinos();
+            FacesUtil.addInfoMessage("Casino eliminado", elemento.getNombre());
+        elemento = new Casino();
     }
     
     public void guardar(){
@@ -104,7 +103,7 @@ public class CrudCasinosBean {
             sessionBean.registrarlog("crear", "Casinos", elemento.getNombre());
             FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
         }
-        elemento = new Casinos();
+        elemento = new Casino();
     }
     
 }

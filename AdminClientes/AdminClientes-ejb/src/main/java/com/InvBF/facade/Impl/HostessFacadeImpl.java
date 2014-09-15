@@ -4,14 +4,16 @@
  */
 package com.InvBF.facade.Impl;
 
-import com.InvBF.EntityFacade.ConfiguracionesFacadeLocal;
-import com.InvBF.EntityFacade.EstadosclienteFacadeLocal;
-import com.InvBF.EntityFacade.EventosFacadeLocal;
-import com.InvBF.EntityFacade.ListasclienteseventoFacadeLocal;
-import com.invbf.adminclientesapi.entity.Estadoscliente;
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Listasclientesevento;
-import com.invbf.adminclientesapi.entity.Usuarios;
+import com.InvBF.EntityFacade.ClienteeventoFacadeLocal;
+import com.InvBF.EntityFacade.ConfiguracionFacadeLocal;
+import com.InvBF.EntityFacade.EstadoclienteFacadeLocal;
+import com.InvBF.EntityFacade.EventoFacadeLocal;
+import com.InvBF.EntityFacade.TipoeventoFacadeLocal;
+import com.invbf.adminclientesapi.entity.Clienteevento;
+import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Tipoevento;
+import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import java.util.ArrayList;
@@ -28,22 +30,25 @@ import javax.ejb.Stateless;
 public class HostessFacadeImpl implements HostessFacade {
 
     @EJB
-    EventosFacadeLocal eventosFacadeLocal;
+    EventoFacadeLocal eventoFacadeLocal;
     @EJB
-    ConfiguracionesFacadeLocal configuracionesFacadeLocal;
+    ConfiguracionFacadeLocal configuracionFacadeLocal;
     @EJB
-    EstadosclienteFacadeLocal estadosclienteFacadeLocal;
+    EstadoclienteFacadeLocal estadoclienteFacadeLocal;
     @EJB
-    ListasclienteseventoFacadeLocal listasclienteseventoFacadeLocal;
+    ClienteeventoFacadeLocal clienteeventoFacadeLocal;
+    @EJB
+    TipoeventoFacadeLocal tipoeventoFacadeLocal;
 
     @Override
-    public List<Eventos> findEventosHostess(Usuarios usuario) {
-        List<Eventos> eventosHostess;
-        eventosHostess = eventosFacadeLocal.findAll();
-        Iterator<Eventos> iterator = eventosHostess.iterator();
+    public List<Evento> findEventosHostess(Usuario usuario) {
+        List<Evento> eventosHostess;
+        eventosHostess = eventoFacadeLocal.findAll();
+        Iterator<Evento> iterator = eventosHostess.iterator();
+        Tipoevento tipo = tipoeventoFacadeLocal.findBynombre("EMAIL");
         while (iterator.hasNext()) {
-            Eventos e = iterator.next();
-            if(!e.getUsuariosList().contains(usuario)||!e.getEstado().equals("Activo")||e.getTipo()!=1){
+            Evento e = iterator.next();
+            if(!e.getUsuariosList().contains(usuario)||!e.getEstado().equals("ACTIVO")||e.getTipo().equals(tipo)){
                 iterator.remove();
             }
         }
@@ -51,21 +56,21 @@ public class HostessFacadeImpl implements HostessFacade {
     }
 
     @Override
-    public List<Listasclientesevento> findClienteEventosHostess(Integer integer) throws EventoSinClientesPorRevisarException {
-        Eventos evento = eventosFacadeLocal.find(integer);
-        List<Listasclientesevento> clientes = evento.getListasclienteseventoList();
-        List<Listasclientesevento> clientesAEnviar = new ArrayList<>();
-        Iterator<Listasclientesevento> iterator = clientes.iterator();
+    public List<Clienteevento> findClienteEventosHostess(Integer integer) throws EventoSinClientesPorRevisarException {
+        Evento evento = eventoFacadeLocal.find(integer);
+        List<Clienteevento> clientes = evento.getListasclienteseventoList();
+        List<Clienteevento> clientesAEnviar = new ArrayList<>();
+        Iterator<Clienteevento> iterator = clientes.iterator();
 
         int cantidadClientes = findCantidadClientes();
-        Estadoscliente inicial = estadosclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
+        Estadocliente inicial = estadoclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
         for (int i = 0; i < cantidadClientes; i++) {
 
             uncliente:
             while (iterator.hasNext()) {
-                Listasclientesevento lce = iterator.next();
+                Clienteevento lce = iterator.next();
                 if (lce.getIdEstadoCliente().equals(inicial)) {
-                    listasclienteseventoFacadeLocal.edit(lce);
+                    clienteeventoFacadeLocal.edit(lce);
                     clientesAEnviar.add(lce);
                     break uncliente;
                 }
@@ -81,24 +86,24 @@ public class HostessFacadeImpl implements HostessFacade {
 
     @Override
     public int findCantidadClientes() {
-        return Integer.parseInt(configuracionesFacadeLocal.findByNombre("CantidadClientes").getValor());
+        return Integer.parseInt(configuracionFacadeLocal.findByNombre("CantidadClientes").getValor());
     }
 
     @Override
-    public void guardarLCE(Listasclientesevento listasclientesevento) {
-        listasclienteseventoFacadeLocal.edit(listasclientesevento);
+    public void guardarLCE(Clienteevento listasclientesevento) {
+        clienteeventoFacadeLocal.edit(listasclientesevento);
     }
 
     @Override
-    public Listasclientesevento nuevoLCE(Integer index, List<Listasclientesevento> clientes, Listasclientesevento l) throws EventoSinClientesPorRevisarException {
-        Eventos evento = eventosFacadeLocal.find(index);
-        List<Listasclientesevento> clientesEv = evento.getListasclienteseventoList();
-        Iterator<Listasclientesevento> iterator = clientesEv.iterator();
+    public Clienteevento nuevoLCE(Integer index, List<Clienteevento> clientes, Clienteevento l) throws EventoSinClientesPorRevisarException {
+        Evento evento = eventoFacadeLocal.find(index);
+        List<Clienteevento> clientesEv = evento.getListasclienteseventoList();
+        Iterator<Clienteevento> iterator = clientesEv.iterator();
 
-        Estadoscliente inicial = estadosclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
+        Estadocliente inicial = estadoclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
         
             while (iterator.hasNext()) {
-                Listasclientesevento lce = iterator.next();
+                Clienteevento lce = iterator.next();
                 if (lce.getIdEstadoCliente().equals(inicial)) {
                     if (!clientes.contains(lce)&&!lce.equals(l)) {
                         return lce;
@@ -111,7 +116,7 @@ public class HostessFacadeImpl implements HostessFacade {
     }
 
     @Override
-    public Estadoscliente findEstadoClientesByName(String idEstadoCliente) {
-        return estadosclienteFacadeLocal.findByNombreEstadoCliente(idEstadoCliente);
+    public Estadocliente findEstadoClientesByName(String idEstadoCliente) {
+        return estadoclienteFacadeLocal.findByNombreEstadoCliente(idEstadoCliente);
     }
 }

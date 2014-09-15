@@ -4,8 +4,8 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Casinos;
-import com.invbf.adminclientesapi.entity.Eventos;
+import com.invbf.adminclientesapi.entity.Casino;
+import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
@@ -35,9 +35,9 @@ public class CrudEventoBean {
     MarketingUserFacade marketingUserFacade;
     @EJB
     SystemFacade systemFacade;
-    private List<Eventos> lista;
-    private Eventos elemento;
-    private List<Casinos> listacasinos;
+    private List<Evento> lista;
+    private Evento elemento;
+    private List<Casino> listacasinos;
     private UploadedFile file;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -46,13 +46,13 @@ public class CrudEventoBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Eventos> flista;
+    private List<Evento> flista;
 
-    public List<Eventos> getFlista() {
+    public List<Evento> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Eventos> flista) {
+    public void setFlista(List<Evento> flista) {
         this.flista = flista;
     }
 
@@ -65,6 +65,7 @@ public class CrudEventoBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("eventos");
         if (!sessionBean.perfilViewMatch("Eventos")) {
             try {
                 sessionBean.Desconectar();
@@ -73,33 +74,33 @@ public class CrudEventoBean {
                 LOGGER.error(ex);
             }
         }
-        elemento = new Eventos();
+        elemento = new Evento();
         lista = marketingUserFacade.findAllEventos();
         listacasinos = marketingUserFacade.findAllCasinos();
         editar = false;
     }
 
-    public List<Eventos> getLista() {
+    public List<Evento> getLista() {
         return lista;
     }
 
-    public void setLista(List<Eventos> lista) {
+    public void setLista(List<Evento> lista) {
         this.lista = lista;
     }
 
-    public Eventos getElemento() {
+    public Evento getElemento() {
         return elemento;
     }
 
-    public void setElemento(Eventos elemento) {
+    public void setElemento(Evento elemento) {
         this.elemento = elemento;
     }
 
-    public List<Casinos> getListacasinos() {
+    public List<Casino> getListacasinos() {
         return listacasinos;
     }
 
-    public void setListacasinos(List<Casinos> listacasinos) {
+    public void setListacasinos(List<Casino> listacasinos) {
         this.listacasinos = listacasinos;
     }
 
@@ -124,7 +125,7 @@ public class CrudEventoBean {
         lista = marketingUserFacade.findAllEventos();
         sessionBean.registrarlog("eliminar", "Eventos", elemento.getNombre());
         FacesUtil.addInfoMessage("Evento eliminado", elemento.getNombre());
-        elemento = new Eventos();
+        elemento = new Evento();
     }
 
     public void handleFileUpload(FileUploadEvent event) {
@@ -150,7 +151,7 @@ public class CrudEventoBean {
                 elemento.setImagen(elemento.getIdEvento() + file.getFileName());
             }
             marketingUserFacade.guardarEventos(elemento);
-            elemento = new Eventos();
+            elemento = new Evento();
         } else {
             if (fechainicio.before(nowDate)) {
                 FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha inicial antes de la fecha actual");
@@ -165,15 +166,6 @@ public class CrudEventoBean {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("MarketingEventoManejadorView.xhtml");
-        } catch (IOException ex) {
-            LOGGER.error(ex);
-        }
-    }
-
-    public void goEventoHostess(int id) {
-        try {
-            sessionBean.getAttributes().put("idEvento", new Integer(id));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
         } catch (IOException ex) {
             LOGGER.error(ex);
         }

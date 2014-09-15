@@ -6,6 +6,12 @@
         Purpose of the stylesheet follows.
 */
 
+body{
+    font-size: 17px!important;
+    line-height: 1.42857!important;
+    font-family: "News Cycle","Arial Narrow Bold",sans-serif!important;
+}
+
 #menuslide { 
     border: 1px solid #e3a1a1;
     background: #BE2C2C!important;
@@ -30,7 +36,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .navbar-background{
     background-color: #444343;
     background-repeat: no-repeat;
-     background-size: 50% 100%;
+    background-size: 50% 100%;
 }
 
 .navbar-text{
@@ -93,3 +99,15 @@ label{padding-left:20px;}
 }
 a.clickable { color: inherit; }
 a.clickable:hover { text-decoration:none; }
+
+.navbar-text-selected {
+    text-decoration: none;
+    background-color: #EEE;
+    margin-top: 19.5px;
+    margin-bottom: 19.5px;
+}
+.dropdown-selected {
+    text-decoration: none;
+    background-color: #EEE;
+    color: #E22620;
+}

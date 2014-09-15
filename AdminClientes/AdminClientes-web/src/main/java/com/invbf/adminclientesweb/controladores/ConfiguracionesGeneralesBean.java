@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Configuraciones;
+import com.invbf.adminclientesapi.entity.Configuracion;
 import com.invbf.adminclientesapi.facade.SystemFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -35,7 +33,7 @@ public class ConfiguracionesGeneralesBean {
     }
     @EJB
     SystemFacade systemFacade;
-    private List<Configuraciones> configuraciones;
+    private List<Configuracion> configuraciones;
     
     public ConfiguracionesGeneralesBean() {
     }
@@ -43,6 +41,7 @@ public class ConfiguracionesGeneralesBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("configuracion");
         configuraciones = systemFacade.getAllConfiguraciones();
     }
 
@@ -54,11 +53,11 @@ public class ConfiguracionesGeneralesBean {
         this.systemFacade = systemFacade;
     }
 
-    public List<Configuraciones> getConfiguraciones() {
+    public List<Configuracion> getConfiguraciones() {
         return configuraciones;
     }
 
-    public void setConfiguraciones(List<Configuraciones> configuraciones) {
+    public void setConfiguraciones(List<Configuracion> configuraciones) {
         this.configuraciones = configuraciones;
     }
     

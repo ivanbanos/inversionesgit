@@ -4,16 +4,16 @@
  */
 package com.InvBF.facade.Impl;
 
-import com.InvBF.EntityFacade.FormulariosFacadeLocal;
-import com.InvBF.EntityFacade.PerfilesFacadeLocal;
-import com.InvBF.EntityFacade.UsuariosFacadeLocal;
-import com.InvBF.EntityFacade.VistasFacadeLocal;
+import com.InvBF.EntityFacade.FormularioFacadeLocal;
+import com.InvBF.EntityFacade.PerfilFacadeLocal;
+import com.InvBF.EntityFacade.UsuarioFacadeLocal;
+import com.InvBF.EntityFacade.VistaFacadeLocal;
 import com.InvBF.util.EncryptUtil;
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Perfiles;
-import com.invbf.adminclientesapi.entity.Usuarios;
-import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Usuario;
+import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.NombreUsuarioExistenteException;
 import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
@@ -31,151 +31,151 @@ import javax.ejb.Stateless;
 public class AdminFacadeImpl implements AdminFacade {
 
     @EJB
-    UsuariosFacadeLocal usuariosFacadeLocal;
+    UsuarioFacadeLocal usuarioFacadeLocal;
     @EJB
-    PerfilesFacadeLocal perfilesFacadeLocal;
+    PerfilFacadeLocal perfilFacadeLocal;
     @EJB
-    FormulariosFacadeLocal formulariosFacadeLocal;
+    FormularioFacadeLocal formularioFacadeLocal;
     @EJB
-    VistasFacadeLocal vistasFacadeLocal;
+    VistaFacadeLocal vistaFacadeLocal;
 
     @Override
-    public List<Usuarios> findAllUsuarios() {
-        return usuariosFacadeLocal.findAll();
+    public List<Usuario> findAllUsuarios() {
+        return usuarioFacadeLocal.findAll();
     }
 
     @Override
-    public void deleteUsuarios(Usuarios elemento) {
-        usuariosFacadeLocal.remove(elemento);
+    public void deleteUsuarios(Usuario elemento) {
+        usuarioFacadeLocal.remove(elemento);
     }
 
     @Override
-    public boolean guardarUsuarios(Usuarios elemento) throws NombreUsuarioExistenteException{
+    public boolean guardarUsuarios(Usuario elemento) throws NombreUsuarioExistenteException{
         if (elemento.getIdUsuario() == null) {
             try {
                 elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
             } catch (NoSuchAlgorithmException ex) {
             }
-            if(usuariosFacadeLocal.findByNombreUsuario(elemento.getNombreUsuario())!=null){
+            if(usuarioFacadeLocal.findByNombreUsuario(elemento.getNombreUsuario())!=null){
                 throw new NombreUsuarioExistenteException();
             }
-            usuariosFacadeLocal.create(elemento);
+            usuarioFacadeLocal.create(elemento);
             return false;
         } else {
             try {
                 elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
             } catch (NoSuchAlgorithmException ex) {
             }
-            usuariosFacadeLocal.edit(elemento);
+            usuarioFacadeLocal.edit(elemento);
             return true;
         }
     }
 
     @Override
-    public void deletePerfiles(Perfiles elemento) {
-        perfilesFacadeLocal.remove(elemento);
+    public void deletePerfiles(Perfil elemento) {
+        perfilFacadeLocal.remove(elemento);
     }
 
     @Override
-    public List<Perfiles> findAllPerfiles() {
-        return perfilesFacadeLocal.findAll();
+    public List<Perfil> findAllPerfiles() {
+        return perfilFacadeLocal.findAll();
     }
 
     @Override
-    public boolean guardarPerfiles(Perfiles elemento) throws PerfilExistenteException{
+    public boolean guardarPerfiles(Perfil elemento) throws PerfilExistenteException{
         if (elemento.getIdPerfil() == null) {
-            if(perfilesFacadeLocal.findByNombre(elemento.getNombre())!=null){
+            if(perfilFacadeLocal.findByNombre(elemento.getNombre())!=null){
                 throw new PerfilExistenteException();
             }
-            perfilesFacadeLocal.create(elemento);
+            perfilFacadeLocal.create(elemento);
             
             return false;
         } else {
-            for(Formularios f : elemento.getFormulariosList()){
-                f = formulariosFacadeLocal.find(f.getIdFormulario());
+            for(Formulario f : elemento.getFormulariosList()){
+                f = formularioFacadeLocal.find(f.getIdFormulario());
             }
-            for(Vistas l : elemento.getVistasList()){
-                l = vistasFacadeLocal.find(l.getIdVista());
+            for(Vista l : elemento.getVistasList()){
+                l = vistaFacadeLocal.find(l.getIdVista());
             }
-            perfilesFacadeLocal.edit(elemento);
+            perfilFacadeLocal.edit(elemento);
             return true;
         }
     }
 
     @Override
-    public List<Formularios> findAllFormularios() {
-        return formulariosFacadeLocal.findAll();
+    public List<Formulario> findAllFormularios() {
+        return formularioFacadeLocal.findAll();
     }
 
     @Override
-    public void deleteFormularios(Formularios elemento) {
-        formulariosFacadeLocal.remove(elemento);
+    public void deleteFormularios(Formulario elemento) {
+        formularioFacadeLocal.remove(elemento);
     }
 
     @Override
-    public boolean guardarFormularios(Formularios elemento) {
+    public boolean guardarFormularios(Formulario elemento) {
         if (elemento.getIdFormulario() == null) {
-            formulariosFacadeLocal.create(elemento);
+            formularioFacadeLocal.create(elemento);
             return false;
         } else {
-            formulariosFacadeLocal.edit(elemento);
+            formularioFacadeLocal.edit(elemento);
             return true;
         }
     }
 
     @Override
-    public List<Vistas> findAllVistas() {
-        return vistasFacadeLocal.findAll();
+    public List<Vista> findAllVistas() {
+        return vistaFacadeLocal.findAll();
     }
 
     @Override
-    public void deleteVistas(Vistas elemento) {
-        vistasFacadeLocal.remove(elemento);
+    public void deleteVistas(Vista elemento) {
+        vistaFacadeLocal.remove(elemento);
     }
 
     @Override
-    public boolean guardarVistas(Vistas elemento) {
+    public boolean guardarVistas(Vista elemento) {
         if (elemento.getIdVista() == null) {
-            vistasFacadeLocal.create(elemento);
+            vistaFacadeLocal.create(elemento);
             return false;
         } else {
-            vistasFacadeLocal.edit(elemento);
+            vistaFacadeLocal.edit(elemento);
             return true;
         }
     }
 
     @Override
-    public Perfiles findPerfil(Integer idPerfil) {
-        return perfilesFacadeLocal.find(idPerfil);
+    public Perfil findPerfil(Integer idPerfil) {
+        return perfilFacadeLocal.find(idPerfil);
     }
 
     @Override
-    public List<Usuarios> findAllUsuariosHostess() {
-        return usuariosFacadeLocal.findAllHostess();
+    public List<Usuario> findAllUsuariosHostess() {
+        return usuarioFacadeLocal.findAllHostess();
     }
 
     @Override
-    public Usuarios findUsuarios(Integer idUsuario) {
-        return usuariosFacadeLocal.find(idUsuario);
+    public Usuario findUsuarios(Integer idUsuario) {
+        return usuarioFacadeLocal.find(idUsuario);
     }
 
     @Override
-    public void agregarEventoUsuarios(Usuarios s, Eventos elemento) {
-        Usuarios usuario = usuariosFacadeLocal.find(s.getIdUsuario());
+    public void agregarEventoUsuarios(Usuario s, Evento elemento) {
+        Usuario usuario = usuarioFacadeLocal.find(s.getIdUsuario());
         if(usuario.getEventosList()==null){
-            usuario.setEventosList(new ArrayList<Eventos>(0));
+            usuario.setEventosList(new ArrayList<Evento>(0));
         }
         usuario.getEventosList().add(elemento);
     }
 
     @Override
-    public Vistas findVistasByNombre(String nombre) {
-        return vistasFacadeLocal.findByNombre(nombre);
+    public Vista findVistasByNombre(String nombre) {
+        return vistaFacadeLocal.findByNombre(nombre);
     }
 
     @Override
-    public Formularios findFormularioByAccionAndTabla(String accion, String tabla) {
-      return formulariosFacadeLocal.findByAccionAndTabla(accion, tabla);
+    public Formulario findFormularioByAccionAndTabla(String accion, String tabla) {
+      return formularioFacadeLocal.findByAccionAndTabla(accion, tabla);
     }
 
 

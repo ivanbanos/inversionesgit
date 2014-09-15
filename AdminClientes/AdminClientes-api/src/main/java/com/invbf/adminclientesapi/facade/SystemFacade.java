@@ -4,20 +4,16 @@
  */
 package com.invbf.adminclientesapi.facade;
 
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Configuraciones;
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Configuracion;
+import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
-import com.invbf.adminclientesapi.exceptions.MensajeNoEnviadoException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoConectadoException;
 import com.invbf.adminclientesapi.exceptions.UsuarioNoExisteException;
 import com.invbf.adminclientesapi.util.InfoCorreoCliente;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,23 +22,23 @@ import java.util.List;
  */
 public interface SystemFacade {
 
-    public Usuarios iniciarSession(Usuarios usuario)throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException ;
+    public Usuario iniciarSession(Usuario usuario)throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException ;
 
-    public Usuarios actualizarUsuario(Usuarios usuario);
+    public Usuario actualizarUsuario(Usuario usuario);
 
-    public Usuarios cambiarContrasena(String contrasena, String nueva, Usuarios usuario)throws ClavesNoConcuerdanException, NoCambioContrasenaException;
+    public Usuario cambiarContrasena(String contrasena, String nueva, Usuario usuario)throws ClavesNoConcuerdanException, NoCambioContrasenaException;
 
-    public List<Configuraciones> getAllConfiguraciones();
+    public List<Configuracion> getAllConfiguraciones();
 
-    public void setAllConfiguraciones(List<Configuraciones> configuraciones);
+    public void setAllConfiguraciones(List<Configuracion> configuraciones);
 
-    public void registrarlog(String accion, String tabla, String mensaje, Usuarios usuairo);
+    public void registrarlog(String accion, String tabla, String mensaje, Usuario usuairo);
 
-    public Configuraciones getConfiguracionByName(String nombre);
+    public Configuracion getConfiguracionByName(String nombre);
 
     public ByteArrayOutputStream getOutputStreamImage(byte[] imagen, String mime)throws IOException ;
     
     public String getPathImage(byte[] imagen, String mime, String nombre)throws IOException ;
 
-    public List<InfoCorreoCliente> enviarCorreo(Eventos elemento) ;
+    public List<InfoCorreoCliente> enviarCorreo(Evento elemento) ;
 }

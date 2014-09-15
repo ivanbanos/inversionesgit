@@ -1,0 +1,30 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.InvBF.EntityFacade;
+
+import com.invbf.adminclientesapi.entity.Clienteevento;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+/**
+ *
+ * @author ideacentre
+ */
+@Stateless
+public class ClienteeventoFacade extends AbstractFacade<Clienteevento> implements ClienteeventoFacadeLocal {
+    @PersistenceContext(unitName = "AdminClientesPU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public ClienteeventoFacade() {
+        super(Clienteevento.class);
+    }
+    
+}

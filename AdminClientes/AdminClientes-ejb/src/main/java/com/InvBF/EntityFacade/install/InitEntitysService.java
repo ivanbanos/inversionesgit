@@ -4,20 +4,20 @@
  */
 package com.InvBF.EntityFacade.install;
 
-import com.InvBF.EntityFacade.ConfiguracionesFacade;
-import com.InvBF.EntityFacade.ConfiguracionesFacadeLocal;
-import com.InvBF.EntityFacade.EstadosclienteFacadeLocal;
-import com.InvBF.EntityFacade.FormulariosFacadeLocal;
-import com.InvBF.EntityFacade.PerfilesFacadeLocal;
-import com.InvBF.EntityFacade.UsuariosFacadeLocal;
-import com.InvBF.EntityFacade.VistasFacadeLocal;
+
+import com.InvBF.EntityFacade.ConfiguracionFacadeLocal;
+import com.InvBF.EntityFacade.EstadoclienteFacadeLocal;
+import com.InvBF.EntityFacade.FormularioFacadeLocal;
+import com.InvBF.EntityFacade.PerfilFacadeLocal;
+import com.InvBF.EntityFacade.UsuarioFacadeLocal;
+import com.InvBF.EntityFacade.VistaFacadeLocal;
 import com.InvBF.util.EncryptUtil;
-import com.invbf.adminclientesapi.entity.Configuraciones;
-import com.invbf.adminclientesapi.entity.Estadoscliente;
-import com.invbf.adminclientesapi.entity.Formularios;
-import com.invbf.adminclientesapi.entity.Perfiles;
-import com.invbf.adminclientesapi.entity.Usuarios;
-import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.entity.Configuracion;
+import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Usuario;
+import com.invbf.adminclientesapi.entity.Vista;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -39,17 +39,17 @@ public class InitEntitysService {
             org.apache.log4j.Logger.getLogger(InitEntitysService.class);
     // @Inject @Config("status.proyect")
     @EJB
-    private UsuariosFacadeLocal usuariosFacadeLocal;
+    private UsuarioFacadeLocal usuariosFacadeLocal;
     @EJB
-    private PerfilesFacadeLocal perfilesFacadeLocal;
+    private PerfilFacadeLocal perfilesFacadeLocal;
     @EJB
-    private FormulariosFacadeLocal formulariosFacadeLocal;
+    private FormularioFacadeLocal formulariosFacadeLocal;
     @EJB
-    private VistasFacadeLocal vistasFacadeLocal;
+    private VistaFacadeLocal vistasFacadeLocal;
     @EJB
-    private ConfiguracionesFacadeLocal configuracionesFacadeLocal;
+    private ConfiguracionFacadeLocal configuracionesFacadeLocal;
     @EJB
-    private EstadosclienteFacadeLocal estadosclienteFacadeLocal;
+    private EstadoclienteFacadeLocal estadosclienteFacadeLocal;
 
     /**
      * 1. dependiendo de un parametro de configuracion el sistema debe
@@ -81,94 +81,106 @@ public class InitEntitysService {
 
     private void crearPerfilAdmin() {
         try {
-            Perfiles perfil = new Perfiles();
+            Perfil perfil = new Perfil();
             perfil.setNombre("Administrador");
-            perfil.setFormulariosList(new ArrayList<Formularios>());
-            perfil.setVistasList(new ArrayList<Vistas>());
+            perfil.setFormulariosList(new ArrayList<Formulario>());
+            perfil.setVistasList(new ArrayList<Vista>());
             perfilesFacadeLocal.create(perfil);
 
-            Formularios formulario;
-            formulario = new Formularios(null, "Usuarios", "crear");
+            Formulario formulario;
+            formulario = new Formulario(null, "Usuarios", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Usuarios", "actualizar");
+            formulario = new Formulario(null, "Usuarios", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Usuarios", "eliminar");
+            formulario = new Formulario(null, "Usuarios", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Perfiles", "crear");
+            formulario = new Formulario(null, "Perfiles", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Perfiles", "actualizar");
+            formulario = new Formulario(null, "Perfiles", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Perfiles", "eliminar");
+            formulario = new Formulario(null, "Perfiles", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Formularios", "crear");
+            formulario = new Formulario(null, "Formularios", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Formularios", "actualizar");
+            formulario = new Formulario(null, "Formularios", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Formularios", "eliminar");
+            formulario = new Formulario(null, "Formularios", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Vistas", "crear");
+            formulario = new Formulario(null, "Vistas", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Vistas", "actualizar");
+            formulario = new Formulario(null, "Vistas", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Vistas", "eliminar");
+            formulario = new Formulario(null, "Vistas", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "Tipoevento", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "Tipoevento", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "Tipoevento", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
 
-            Vistas vista;
-            vista = new Vistas(null, "Usuarios");
+            Vista vista;
+            vista = new Vista(null, "Usuarios");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Perfiles");
+            vista = new Vista(null, "Perfiles");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Vistas");
+            vista = new Vista(null, "Vistas");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Formularios");
+            vista = new Vista(null, "Formularios");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "AtributosSistema");
+            vista = new Vista(null, "AtributosSistema");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "ConfiguracionesGenerales");
+            vista = new Vista(null, "ConfiguracionesGenerales");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Casinos");
+            vista = new Vista(null, "Casinos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Categorias");
+            vista = new Vista(null, "Categorias");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "EstadosClientes");
+            vista = new Vista(null, "EstadosClientes");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "TipoJuego");
+            vista = new Vista(null, "TipoJuego");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Atributos");
+            vista = new Vista(null, "Atributos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "AtributosMarketing");
+            vista = new Vista(null, "Tipoevento");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "ManejadorEventosMarketing");
+            vista = new Vista(null, "AtributosMarketing");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vista(null, "ManejadorEventosMarketing");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 
             perfilesFacadeLocal.edit(perfil);
 
-            Usuarios usuario = new Usuarios();
+            Usuario usuario = new Usuario();
             usuario.setNombreUsuario("admin");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
             usuario.setIdPerfil(perfil);
@@ -180,91 +192,91 @@ public class InitEntitysService {
 
     private void crearPerfilMarketing() {
         try {
-            Perfiles perfil = new Perfiles();
+            Perfil perfil = new Perfil();
             perfil.setNombre("Marketing");
-            perfil.setFormulariosList(new ArrayList<Formularios>());
-            perfil.setVistasList(new ArrayList<Vistas>());
+            perfil.setFormulariosList(new ArrayList<Formulario>());
+            perfil.setVistasList(new ArrayList<Vista>());
 
-            Formularios formulario;
-            formulario = new Formularios(null, "Atributos", "crear");
+            Formulario formulario;
+            formulario = new Formulario(null, "Atributos", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Atributos", "actualizar");
+            formulario = new Formulario(null, "Atributos", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Atributos", "eliminar");
+            formulario = new Formulario(null, "Atributos", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Casinos", "crear");
+            formulario = new Formulario(null, "Casinos", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Casinos", "actualizar");
+            formulario = new Formulario(null, "Casinos", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Casinos", "eliminar");
+            formulario = new Formulario(null, "Casinos", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Eventos", "crear");
+            formulario = new Formulario(null, "Eventos", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Eventos", "actualizar");
+            formulario = new Formulario(null, "Eventos", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Eventos", "eliminar");
+            formulario = new Formulario(null, "Eventos", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Categorias", "crear");
+            formulario = new Formulario(null, "Categorias", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Categorias", "actualizar");
+            formulario = new Formulario(null, "Categorias", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Categorias", "eliminar");
+            formulario = new Formulario(null, "Categorias", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "TiposJuegos", "crear");
+            formulario = new Formulario(null, "TiposJuegos", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "TiposJuegos", "actualizar");
+            formulario = new Formulario(null, "TiposJuegos", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "TiposJuegos", "eliminar");
+            formulario = new Formulario(null, "TiposJuegos", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "EstadosCliente", "crear");
+            formulario = new Formulario(null, "EstadosCliente", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "EstadosCliente", "actualizar");
+            formulario = new Formulario(null, "EstadosCliente", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "EstadosCliente", "eliminar");
+            formulario = new Formulario(null, "EstadosCliente", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Clientes", "crear");
+            formulario = new Formulario(null, "Clientes", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Clientes", "actualizar");
+            formulario = new Formulario(null, "Clientes", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Clientes", "eliminar");
+            formulario = new Formulario(null, "Clientes", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formularios(null, "Eventos", "listaclientes");
+            formulario = new Formulario(null, "Eventos", "listaclientes");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
 
-            Vistas vista;
-            vista = new Vistas(null, "Clientes");
+            Vista vista;
+            vista = new Vista(null, "Clientes");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vistas(null, "Eventos");
+            vista = new Vista(null, "Eventos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             
 
             perfilesFacadeLocal.create(perfil);
 
-            Usuarios usuario = new Usuarios();
+            Usuario usuario = new Usuario();
             usuario.setNombreUsuario("marketing");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
             usuario.setIdPerfil(perfil);
@@ -276,19 +288,19 @@ public class InitEntitysService {
 
     private void crearPerfilHostess() {
         try {
-            Perfiles perfil = new Perfiles();
+            Perfil perfil = new Perfil();
             perfil.setNombre("Hostess");
-            perfil.setFormulariosList(new ArrayList<Formularios>());
-            perfil.setVistasList(new ArrayList<Vistas>());
+            perfil.setFormulariosList(new ArrayList<Formulario>());
+            perfil.setVistasList(new ArrayList<Vista>());
 
-            Vistas vista;
-            vista = new Vistas(null, "ManejadorEventosHostess");
+            Vista vista;
+            vista = new Vista(null, "ManejadorEventosHostess");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 
             perfilesFacadeLocal.create(perfil);
 
-            Usuarios usuario = new Usuarios();
+            Usuario usuario = new Usuario();
             usuario.setNombreUsuario("hostess");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
             usuario.setIdPerfil(perfil);
@@ -299,60 +311,60 @@ public class InitEntitysService {
     }
 
     private void congfiguracionesIniciales() {
-        Configuraciones configuracion = new Configuraciones();
+        Configuracion configuracion = new Configuracion();
         configuracion.setNombre("CantidadClientes");
         configuracion.setValor("4");
         configuracionesFacadeLocal.create(configuracion);
-        configuracion = new Configuraciones();
+        configuracion = new Configuracion();
         configuracion.setNombre("correo");
         configuracionesFacadeLocal.create(configuracion);
-        configuracion = new Configuraciones();
+        configuracion = new Configuracion();
         configuracion.setNombre("contrasena");
         configuracionesFacadeLocal.create(configuracion);
         
-        configuracion = new Configuraciones();
+        configuracion = new Configuracion();
         configuracion.setNombre("host");
         configuracionesFacadeLocal.create(configuracion);
-        configuracion = new Configuraciones();
+        configuracion = new Configuracion();
         configuracion.setNombre("username");
         configuracionesFacadeLocal.create(configuracion);
-        configuracion = new Configuraciones();
+        configuracion = new Configuracion();
         configuracion.setNombre("protocol");
         configuracionesFacadeLocal.create(configuracion);
-        configuracion = new Configuraciones();
+        configuracion = new Configuracion();
         configuracion.setNombre("port");
         configuracionesFacadeLocal.create(configuracion);
         
         
-        configuracion = new Configuraciones();
+        configuracion = new Configuracion();
         configuracion.setNombre("paginacion");
         configuracion.setValor("10");
 
 
         configuracionesFacadeLocal.create(configuracion);
-        Estadoscliente estadoscliente = new Estadoscliente();
+        Estadocliente estadoscliente = new Estadocliente();
         estadoscliente.setNombre("Inicial");
         estadosclienteFacadeLocal.create(estadoscliente);
-        estadoscliente = new Estadoscliente();
+        estadoscliente = new Estadocliente();
         estadoscliente.setNombre("En revision");
         estadosclienteFacadeLocal.create(estadoscliente);
     }
 
     private void crearPerfilGerente() {
         try {
-            Perfiles perfil = new Perfiles();
+            Perfil perfil = new Perfil();
             perfil.setNombre("Gerente");
-            perfil.setFormulariosList(new ArrayList<Formularios>());
-            perfil.setVistasList(new ArrayList<Vistas>());
+            perfil.setFormulariosList(new ArrayList<Formulario>());
+            perfil.setVistasList(new ArrayList<Vista>());
 
-            Vistas vista;
-            vista = new Vistas(null, "Reportes");
+            Vista vista;
+            vista = new Vista(null, "Reportes");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
 
             perfilesFacadeLocal.create(perfil);
 
-            Usuarios usuario = new Usuarios();
+            Usuario usuario = new Usuario();
             usuario.setNombreUsuario("gerente");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
             usuario.setIdPerfil(perfil);

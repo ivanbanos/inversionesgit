@@ -10,11 +10,6 @@
 
     <ui:define name="content">
         <h:form>
-            <div class="container">
-
-
-
-                <div class="row clearfix">
 
                     <div class="col-md-12 ">
                         <!--Clientes-->
@@ -26,8 +21,7 @@
                                 <div class="panel-body">
                                     <h:form class="form-horizontal">
                                         <p:dataTable id="detailsTableClientes" var="element" value="#{reportesClientesBean.lista}"  
-                                                     emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" filteredValue="#{crudClientesBean.flista}"
-                                                     rows="#{sessionBean.paginacion}"
+                                                     emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" rows="#{sessionBean.paginacion}"
                                                      paginator="true"
                                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                      >
@@ -48,15 +42,31 @@
                                                 <h:outputText value="#{element.apellidos}" />
                                             </p:column>
 
+                                            <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
+                                                <h:outputText value="#{element.identificacion}" />
+                                            </p:column>
+
+                                            <p:column headerText="Telefono 1" sortBy="#{element.telefono1}" filterBy="#{element.telefono1}" filterMatchMode="contains" >
+                                                <h:outputText value="#{element.telefono1}" />
+                                            </p:column>
+
+                                            <p:column headerText="Telefono 2" sortBy="#{element.telefono2}" filterBy="#{element.telefono2}" filterMatchMode="contains" >
+                                                <h:outputText value="#{element.telefono2}" />
+                                            </p:column>
+
+                                            <p:column headerText="Correo" sortBy="#{element.correo}" filterBy="#{element.correo}" filterMatchMode="contains" >
+                                                <h:outputText value="#{element.correo}" />
+                                            </p:column>
+
                                             <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.idCategorias.nombre}" />
                                             </p:column>
 
-                                            <p:column headerText="Categoria" sortBy="#{element.idCasinoPreferencial.nombre}" filterBy="#{element.idCasinoPreferencial.nombre}" filterMatchMode="contains" >
+                                            <p:column headerText="Casino preferencial" sortBy="#{element.idCasinoPreferencial.nombre}" filterBy="#{element.idCasinoPreferencial.nombre}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.idCasinoPreferencial.nombre}" />
                                             </p:column>
 
-                                            <p:column headerText="Tipos de Juegos" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:column headerText="Preferencias de Juegos" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
 
                                                 <p:dataList value="#{element.tiposjuegosList}" var="tipo" emptyMessage="No tiene juegos favoritos">
 
@@ -82,8 +92,6 @@
                         </c:if>
                     </div>
 
-                </div>
-            </div>
         </h:form>
 
 

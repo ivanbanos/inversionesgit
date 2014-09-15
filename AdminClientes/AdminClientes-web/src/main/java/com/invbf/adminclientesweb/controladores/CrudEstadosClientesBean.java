@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Estadoscliente;
+import com.invbf.adminclientesapi.entity.Estadocliente;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,8 +27,8 @@ public class CrudEstadosClientesBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Estadoscliente> lista;
-    private Estadoscliente elemento;
+    private List<Estadocliente> lista;
+    private Estadocliente elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -38,13 +36,13 @@ public class CrudEstadosClientesBean {
         this.sessionBean = sessionBean;
     }
 
-    private List<Estadoscliente> flista;
+    private List<Estadocliente> flista;
 
-    public List<Estadoscliente> getFlista() {
+    public List<Estadocliente> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Estadoscliente> flista) {
+    public void setFlista(List<Estadocliente> flista) {
         this.flista = flista;
     }
     /**
@@ -56,23 +54,24 @@ public class CrudEstadosClientesBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Estadoscliente();
+        sessionBean.setActive("configuracion");
+        elemento = new Estadocliente();
         lista = marketingUserFacade.findAllEstadosClietes();
     }
 
-    public List<Estadoscliente> getLista() {
+    public List<Estadocliente> getLista() {
         return lista;
     }
 
-    public void setLista(List<Estadoscliente> lista) {
+    public void setLista(List<Estadocliente> lista) {
         this.lista = lista;
     }
 
-    public Estadoscliente getElemento() {
+    public Estadocliente getElemento() {
         return elemento;
     }
 
-    public void setElemento(Estadoscliente elemento) {
+    public void setElemento(Estadocliente elemento) {
         this.elemento = elemento;
     }
 
@@ -90,7 +89,7 @@ public class CrudEstadosClientesBean {
         lista = marketingUserFacade.findAllEstadosClietes();
         sessionBean.registrarlog("eliminar", "EstadosCliente", elemento.toString());
         FacesUtil.addInfoMessage("Estado eliminado", elemento.getNombre());
-        elemento = new Estadoscliente();
+        elemento = new Estadocliente();
     }
     
     public void guardar(){
@@ -103,7 +102,7 @@ public class CrudEstadosClientesBean {
             sessionBean.registrarlog("crear", "EstadosCliente", elemento.toString());
         FacesUtil.addInfoMessage("Estado creado", elemento.getNombre());
         }
-        elemento = new Estadoscliente();
+        elemento = new Estadocliente();
     }
     
 }

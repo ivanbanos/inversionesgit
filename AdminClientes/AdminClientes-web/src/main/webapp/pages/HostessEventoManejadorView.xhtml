@@ -80,14 +80,23 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['tel1']}</label>
+                                    <div class="col-md-9">
+                                        <h:outputLabel value="#{clientes.clientes.telefono1} #{clientes.clientes.telefono1}"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['tel2']}</label>
+                                    <div class="col-md-9">
+                                        <h:outputLabel value="#{clientes.clientes.telefono2} #{clientes.clientes.telefono2}"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
                                     <label class="col-md-3 control-label" >#{label['Observaciones']}</label>
                                     <div class="col-md-9">
-                                        <p:selectOneMenu  value="#{clientes.observaciones}">
-                                            <f:selectItem itemLabel="Select One" itemValue="" />
-                                            <f:selectItem itemLabel="Ira" itemValue="Ira" />
-                                            <f:selectItem itemLabel="No ira" itemValue="No ira" />
-                                            <f:selectItem itemLabel="Tal vez" itemValue="Tal vez" />
-                                        </p:selectOneMenu>
+                                        <h:inputTextarea  value="#{clientes.observaciones}"/>
                                     </div>
                                 </div>
 
@@ -95,30 +104,13 @@
                                     <label class="col-md-3 control-label" >#{label['estados']}</label>
                                     <div class="col-md-9">
                                         <p:selectOneMenu  value="#{clientes.idEstadoCliente}">
-                                            <f:selectItems value="#{hostessEventoManejadorBean.listaestadosclientes}" 
+                                            <f:selectItems value="#{hostessEventoManejadorBean.elemento.tipo.estadosclienteList}" 
                                                            var="var" 
                                                            itemLabel="#{var.nombre}" 
                                                            itemValue="#{var.nombre}"/> 
                                         </p:selectOneMenu>
                                     </div>
                                 </div>
-
-                                <c:forEach var="item" items="#{clientes.clientes.clientesatributosList}">
-                                    <c:if test="#{item.atributos.nombre eq 'Telefono' or item.atributos.nombre eq 'Celular'}">
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" >#{item.atributos.nombre}</label>
-                                            <div class="col-md-9">
-                                                <c:if test="#{item.valor eq null or item.valor eq ''}">
-                                                    <h:outputLabel value="no registrado"/>
-                                                </c:if>
-                                                <c:otherwise>
-                                                    <h:outputLabel value="#{item.valor}"/>
-                                                </c:otherwise>
-
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                </c:forEach>
 
                             </div>
                             <div class="panel-footer text-right"> 

@@ -4,8 +4,7 @@
  */
 package com.invbf.adminclientesweb.util;
 
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Cliente;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -28,7 +27,7 @@ public class ClientesConverter implements Converter {
         }
         // value must be of a type that can be cast to a String.
         try {
-            return ((Clientes)value).toString();
+            return ((Cliente)value).toString();
         } catch (ClassCastException ce) {
             FacesMessage errMsg = new FacesMessage("Error al convertir valor");
             FacesContext.getCurrentInstance().addMessage(null, errMsg);
@@ -39,8 +38,8 @@ public class ClientesConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Clientes clientes;
-        clientes = new Clientes();
+        Cliente clientes;
+        clientes = new Cliente();
         clientes.setIdCliente(Integer.parseInt(value.split(" ")[0]));
         clientes.setNombres(value.split(" ")[1]);
         clientes.setApellidos(value.split(" ")[2]);

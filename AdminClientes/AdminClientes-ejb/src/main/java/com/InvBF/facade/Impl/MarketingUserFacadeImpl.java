@@ -4,22 +4,24 @@
  */
 package com.InvBF.facade.Impl;
 
-import com.InvBF.EntityFacade.AtributosFacadeLocal;
-import com.InvBF.EntityFacade.CasinosFacadeLocal;
-import com.InvBF.EntityFacade.CategoriasFacadeLocal;
-import com.InvBF.EntityFacade.ClientesFacadeLocal;
-import com.InvBF.EntityFacade.ClientesatributosFacadeLocal;
-import com.InvBF.EntityFacade.EstadosclienteFacadeLocal;
-import com.InvBF.EntityFacade.EventosFacadeLocal;
-import com.InvBF.EntityFacade.TiposjuegosFacadeLocal;
-import com.invbf.adminclientesapi.entity.Atributos;
-import com.invbf.adminclientesapi.entity.Casinos;
-import com.invbf.adminclientesapi.entity.Categorias;
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Clientesatributos;
-import com.invbf.adminclientesapi.entity.Estadoscliente;
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Tiposjuegos;
+import com.InvBF.EntityFacade.AtributoFacadeLocal;
+import com.InvBF.EntityFacade.CasinoFacadeLocal;
+import com.InvBF.EntityFacade.CategoriaFacadeLocal;
+import com.InvBF.EntityFacade.ClienteFacadeLocal;
+import com.InvBF.EntityFacade.ClienteatributoFacadeLocal;
+import com.InvBF.EntityFacade.EstadoclienteFacadeLocal;
+import com.InvBF.EntityFacade.EventoFacadeLocal;
+import com.InvBF.EntityFacade.TipoJuegoFacadeLocal;
+import com.InvBF.EntityFacade.TipoeventoFacadeLocal;
+import com.invbf.adminclientesapi.entity.Atributo;
+import com.invbf.adminclientesapi.entity.Casino;
+import com.invbf.adminclientesapi.entity.Categoria;
+import com.invbf.adminclientesapi.entity.Cliente;
+import com.invbf.adminclientesapi.entity.Clienteatributo;
+import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.TipoJuego;
+import com.invbf.adminclientesapi.entity.Tipoevento;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,205 +44,198 @@ import javax.ejb.Stateless;
 public class MarketingUserFacadeImpl implements MarketingUserFacade {
 
     @EJB
-    ClientesFacadeLocal clientesFacadeLocal;
+    ClienteFacadeLocal clienteFacadeLocal;
     @EJB
-    ClientesatributosFacadeLocal clientesatributosFacadeLocal;
+    ClienteatributoFacadeLocal clienteatributoFacadeLocal;
     @EJB
-    EstadosclienteFacadeLocal estadosclienteFacadeLocal;
+    EstadoclienteFacadeLocal estadoclienteFacadeLocal;
     @EJB
-    CategoriasFacadeLocal categoriasFacadeLocal;
+    CategoriaFacadeLocal categoriaFacadeLocal;
     @EJB
-    AtributosFacadeLocal atributosFacadeLocal;
+    AtributoFacadeLocal atributoFacadeLocal;
     @EJB
-    TiposjuegosFacadeLocal tiposjuegosFacadeLocal;
+    TipoJuegoFacadeLocal tipoJuegoFacadeLocal;
     @EJB
-    CasinosFacadeLocal casinosFacadeLocal;
+    CasinoFacadeLocal casinoFacadeLocal;
     @EJB
-    EventosFacadeLocal eventosFacadeLocal;
+    EventoFacadeLocal eventoFacadeLocal;
+    @EJB
+    TipoeventoFacadeLocal tipoeventoFacadeLocal;
 
     @Override
-    public List<Clientes> findAllClientes() {
-        return clientesFacadeLocal.findAll();
+    public List<Cliente> findAllClientes() {
+        return clienteFacadeLocal.findAll();
     }
 
     @Override
-    public List<Estadoscliente> findAllEstadosClietes() {
-        return estadosclienteFacadeLocal.findAll();
+    public List<Estadocliente> findAllEstadosClietes() {
+        return estadoclienteFacadeLocal.findAll();
     }
 
     @Override
-    public Estadoscliente findByIdEstadoCliente(int idEstadoCliente) {
-        return estadosclienteFacadeLocal.find(new Estadoscliente(idEstadoCliente));
+    public Estadocliente findByIdEstadoCliente(int idEstadoCliente) {
+        return estadoclienteFacadeLocal.find(new Estadocliente(idEstadoCliente));
     }
 
     @Override
-    public void deleteEstadoCliente(Estadoscliente estadoCliente) {
-        estadosclienteFacadeLocal.remove(estadoCliente);
+    public void deleteEstadoCliente(Estadocliente estadoCliente) {
+        estadoclienteFacadeLocal.remove(estadoCliente);
     }
 
     @Override
-    public boolean guardarEstadoCliente(Estadoscliente elemento) {
+    public boolean guardarEstadoCliente(Estadocliente elemento) {
         if (elemento.getIdEstadoCliente() == null) {
-            estadosclienteFacadeLocal.create(elemento);
+            estadoclienteFacadeLocal.create(elemento);
             return false;
         } else {
-            estadosclienteFacadeLocal.edit(elemento);
+            estadoclienteFacadeLocal.edit(elemento);
             return true;
         }
     }
 
     @Override
-    public List<Categorias> findAllCategorias() {
-        return categoriasFacadeLocal.findAll();
+    public List<Categoria> findAllCategorias() {
+        return categoriaFacadeLocal.findAll();
     }
 
     @Override
-    public void deleteCategorias(Categorias elemento) {
-        categoriasFacadeLocal.remove(elemento);
+    public void deleteCategorias(Categoria elemento) {
+        categoriaFacadeLocal.remove(elemento);
     }
 
     @Override
-    public boolean guardarCategorias(Categorias elemento) {
+    public boolean guardarCategorias(Categoria elemento) {
         if (elemento.getIdCategorias() == null) {
-            categoriasFacadeLocal.create(elemento);
+            categoriaFacadeLocal.create(elemento);
             return false;
         } else {
-            categoriasFacadeLocal.edit(elemento);
+            categoriaFacadeLocal.edit(elemento);
             return true;
         }
 
     }
 
     @Override
-    public List<Atributos> findAllAtributos() {
-        return atributosFacadeLocal.findAll();
+    public List<Atributo> findAllAtributos() {
+        return atributoFacadeLocal.findAll();
     }
 
     @Override
-    public void deleteAtributos(Atributos elemento) {
-        List<Clientesatributos> listaca = clientesatributosFacadeLocal.findByAtributo(elemento);
-        List<Clientes> clientes = clientesFacadeLocal.findAll();
-        for (Clientes c : clientes) {
-            c.getClientesatributosList().remove(new Clientesatributos(c.getIdCliente(), elemento.getIdAtributo()));
+    public void deleteAtributos(Atributo elemento) {
+        List<Clienteatributo> listaca = clienteatributoFacadeLocal.findByAtributo(elemento);
+        List<Cliente> clientes = clienteFacadeLocal.findAll();
+        for (Cliente c : clientes) {
+            c.getClientesatributosList().remove(new Clienteatributo(c.getIdCliente(), elemento.getIdAtributo()));
         }
-        for (Clientesatributos ca : listaca) {
+        for (Clienteatributo ca : listaca) {
 
-            clientesatributosFacadeLocal.remove(ca);
+            clienteatributoFacadeLocal.remove(ca);
         }
-        atributosFacadeLocal.remove(elemento);
+        atributoFacadeLocal.remove(elemento);
     }
 
     @Override
-    public boolean guardarAtributos(Atributos elemento) {
+    public boolean guardarAtributos(Atributo elemento) {
         if (elemento.getIdAtributo() == null) {
-            atributosFacadeLocal.create(elemento);
-            List<Clientes> clientes = clientesFacadeLocal.findAll();
-            List<Clientesatributos> clientesatributos = new ArrayList<>();
-            for (Clientes c : clientes) {
-                Clientesatributos ca = new Clientesatributos(c.getIdCliente(), elemento.getIdAtributo());
+            atributoFacadeLocal.create(elemento);
+            List<Cliente> clientes = clienteFacadeLocal.findAll();
+            List<Clienteatributo> clientesatributos = new ArrayList<>();
+            for (Cliente c : clientes) {
+                Clienteatributo ca = new Clienteatributo(c.getIdCliente(), elemento.getIdAtributo());
                 ca.setAtributos(elemento);
                 ca.setClientes(c);
-                clientesatributosFacadeLocal.create(ca);
+                clienteatributoFacadeLocal.create(ca);
                 clientesatributos.add(ca);
             }
             elemento.setClientesatributosList(clientesatributos);
-            atributosFacadeLocal.edit(elemento);
+            atributoFacadeLocal.edit(elemento);
             return false;
         } else {
-            atributosFacadeLocal.edit(elemento);
+            atributoFacadeLocal.edit(elemento);
             return true;
         }
     }
 
     @Override
-    public void deleteTiposjuegos(Tiposjuegos elemento) {
-        tiposjuegosFacadeLocal.remove(elemento);
+    public void deleteTiposjuegos(TipoJuego elemento) {
+        tipoJuegoFacadeLocal.remove(elemento);
     }
 
     @Override
-    public List<Tiposjuegos> findAllTiposjuegos() {
-        return tiposjuegosFacadeLocal.findAll();
+    public List<TipoJuego> findAllTiposjuegos() {
+        return tipoJuegoFacadeLocal.findAll();
     }
 
     @Override
-    public boolean guardarTiposjuegos(Tiposjuegos elemento) {
+    public boolean guardarTiposjuegos(TipoJuego elemento) {
         if (elemento.getIdTipoJuego() == null) {
-            tiposjuegosFacadeLocal.create(elemento);
+            tipoJuegoFacadeLocal.create(elemento);
             return true;
         } else {
-            tiposjuegosFacadeLocal.edit(elemento);
+            tipoJuegoFacadeLocal.edit(elemento);
             return true;
         }
 
     }
 
     @Override
-    public void deleteCasinos(Casinos elemento) {
-        casinosFacadeLocal.remove(elemento);
+    public void deleteCasinos(Casino elemento) {
+        casinoFacadeLocal.remove(elemento);
     }
 
     @Override
-    public boolean guardarCasinos(Casinos elemento) {
+    public boolean guardarCasinos(Casino elemento) {
         if (elemento.getIdCasino() == null) {
-            casinosFacadeLocal.create(elemento);
+            casinoFacadeLocal.create(elemento);
             return false;
         } else {
-            casinosFacadeLocal.edit(elemento);
+            casinoFacadeLocal.edit(elemento);
             return true;
         }
     }
 
     @Override
-    public List<Casinos> findAllCasinos() {
-        return casinosFacadeLocal.findAll();
+    public List<Casino> findAllCasinos() {
+        return casinoFacadeLocal.findAll();
     }
 
     @Override
-    public List<Eventos> findAllEventos() {
-        return eventosFacadeLocal.findAll();
+    public List<Evento> findAllEventos() {
+        return eventoFacadeLocal.findAll();
     }
 
     @Override
-    public void deleteEventos(Eventos elemento) {
-        eventosFacadeLocal.remove(elemento);
+    public void deleteEventos(Evento elemento) {
+        eventoFacadeLocal.remove(elemento);
     }
 
     @Override
-    public void deleteClientes(Clientes elemento) {
-        List<Clientesatributos> listaca = clientesatributosFacadeLocal.findByCliente(elemento);
-        for (Clientesatributos ca : listaca) {
-            clientesatributosFacadeLocal.remove(ca);
-        }
-        clientesFacadeLocal.remove(elemento);
-    }
-
-    @Override
-    public boolean guardarClientes(Clientes elemento) {
-        if (elemento.getIdCliente() == null) {
-            clientesFacadeLocal.create(elemento);
-            List<Atributos> atributos = atributosFacadeLocal.findAll();
-            List<Clientesatributos> clientesatributos = new ArrayList<>();
-            for (Atributos a : atributos) {
-                Clientesatributos ca = new Clientesatributos(elemento.getIdCliente(), a.getIdAtributo());
-                ca.setAtributos(a);
-                ca.setClientes(elemento);
-                clientesatributosFacadeLocal.create(ca);
-                clientesatributos.add(ca);
+    public void deleteClientes(Cliente elemento) {
+        List<Clienteatributo> listaca = clienteatributoFacadeLocal.findByCliente(elemento);
+        if (listaca != null) {
+            for (Clienteatributo ca : listaca) {
+                clienteatributoFacadeLocal.remove(ca);
             }
-            elemento.setClientesatributosList(clientesatributos);
-            clientesFacadeLocal.edit(elemento);
-            return false;
+        }
+        clienteFacadeLocal.remove(elemento);
+    }
+
+    @Override
+    public Cliente guardarClientes(Cliente elemento) {
+        if (elemento.getIdCliente() == null) {
+            clienteFacadeLocal.create(elemento);
+            return elemento;
         } else {
-            clientesFacadeLocal.edit(elemento);
-            return true;
+            clienteFacadeLocal.edit(elemento);
+            return elemento;
         }
     }
 
     @Override
-    public List<Tiposjuegos> getTiposJuegosNoClientes(Integer idCliente) {
-        Clientes cliente = clientesFacadeLocal.find(idCliente);
-        List<Tiposjuegos> tiposjuego = tiposjuegosFacadeLocal.findAll();
-        Iterator<Tiposjuegos> iter = tiposjuego.iterator();
+    public List<TipoJuego> getTiposJuegosNoClientes(Integer idCliente) {
+        Cliente cliente = clienteFacadeLocal.find(idCliente);
+        List<TipoJuego> tiposjuego = tipoJuegoFacadeLocal.findAll();
+        Iterator<TipoJuego> iter = tiposjuego.iterator();
         while (iter.hasNext()) {
             if (iter.next().getClientesList().contains(cliente)) {
                 iter.remove();
@@ -250,28 +245,28 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public Clientes findCliente(Integer integer) {
-        return clientesFacadeLocal.find(integer);
+    public Cliente findCliente(Integer integer) {
+        return clienteFacadeLocal.find(integer);
     }
 
     @Override
-    public Eventos findEvento(Integer integer) {
-        return eventosFacadeLocal.find(integer);
+    public Evento findEvento(Integer integer) {
+        return eventoFacadeLocal.find(integer);
     }
 
     @Override
-    public Estadoscliente findByNombreEstadoCliente(String iniciado) {
-        return estadosclienteFacadeLocal.findByNombreEstadoCliente(iniciado);
+    public Estadocliente findByNombreEstadoCliente(String iniciado) {
+        return estadoclienteFacadeLocal.findByNombreEstadoCliente(iniciado);
     }
 
     @Override
-    public Eventos guardarEventos(Eventos elemento) {
+    public Evento guardarEventos(Evento elemento) {
         if (elemento.getIdEvento() == null) {
 
-            eventosFacadeLocal.create(elemento);
+            eventoFacadeLocal.create(elemento);
             return elemento;
         } else {
-            eventosFacadeLocal.edit(elemento);
+            eventoFacadeLocal.edit(elemento);
             return elemento;
         }
     }
@@ -303,4 +298,25 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         }
     }
 
+    @Override
+    public List<Tipoevento> findAllTipoevento() {
+        return tipoeventoFacadeLocal.findAll();
+    }
+
+    @Override
+    public void deleteTipoevento(Tipoevento elemento) {
+        tipoeventoFacadeLocal.remove(elemento);
+    }
+
+    @Override
+    public boolean guardarTipoevento(Tipoevento elemento) {
+        if (elemento.getIdTiposeventos() == null) {
+
+            tipoeventoFacadeLocal.create(elemento);
+            return false;
+        } else {
+            tipoeventoFacadeLocal.edit(elemento);
+            return true;
+        }
+    }
 }

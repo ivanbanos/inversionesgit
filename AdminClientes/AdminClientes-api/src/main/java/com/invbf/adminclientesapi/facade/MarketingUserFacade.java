@@ -4,15 +4,14 @@
  */
 package com.invbf.adminclientesapi.facade;
 
-import com.invbf.adminclientesapi.entity.Atributos;
-import com.invbf.adminclientesapi.entity.Casinos;
-import com.invbf.adminclientesapi.entity.Categorias;
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Estadoscliente;
-import com.invbf.adminclientesapi.entity.Eventos;
-import com.invbf.adminclientesapi.entity.Perfiles;
-import com.invbf.adminclientesapi.entity.Tiposjuegos;
-import com.invbf.adminclientesapi.entity.Usuarios;
+import com.invbf.adminclientesapi.entity.Atributo;
+import com.invbf.adminclientesapi.entity.Casino;
+import com.invbf.adminclientesapi.entity.Categoria;
+import com.invbf.adminclientesapi.entity.Cliente;
+import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.TipoJuego;
+import com.invbf.adminclientesapi.entity.Tipoevento;
 import java.util.List;
 
 /**
@@ -21,58 +20,64 @@ import java.util.List;
  */
 public interface MarketingUserFacade {
 
-    public List<Clientes> findAllClientes();
+    public List<Cliente> findAllClientes();
 
-    public List<Estadoscliente> findAllEstadosClietes();
+    public List<Estadocliente> findAllEstadosClietes();
 
-    public Estadoscliente findByIdEstadoCliente(int idEstadoCliente);
+    public Estadocliente findByIdEstadoCliente(int idEstadoCliente);
 
-    public void deleteEstadoCliente(Estadoscliente estadoCliente);
+    public void deleteEstadoCliente(Estadocliente estadoCliente);
 
-    public boolean guardarEstadoCliente(Estadoscliente estadoscliente);
+    public boolean guardarEstadoCliente(Estadocliente estadoscliente);
 
-    public List<Categorias> findAllCategorias();
+    public List<Categoria> findAllCategorias();
 
-    public void deleteCategorias(Categorias elemento);
+    public void deleteCategorias(Categoria elemento);
 
-    public boolean guardarCategorias(Categorias elemento);
+    public boolean guardarCategorias(Categoria elemento);
 
-    public List<Atributos> findAllAtributos();
+    public List<Atributo> findAllAtributos();
 
-    public void deleteAtributos(Atributos elemento);
+    public void deleteAtributos(Atributo elemento);
 
-    public boolean guardarAtributos(Atributos elemento);
+    public boolean guardarAtributos(Atributo elemento);
 
-    public void deleteTiposjuegos(Tiposjuegos elemento);
+    public void deleteTiposjuegos(TipoJuego elemento);
 
-    public List<Tiposjuegos> findAllTiposjuegos();
+    public List<TipoJuego> findAllTiposjuegos();
 
-    public boolean guardarTiposjuegos(Tiposjuegos elemento);
+    public boolean guardarTiposjuegos(TipoJuego elemento);
 
-    public void deleteCasinos(Casinos elemento);
+    public void deleteCasinos(Casino elemento);
 
-    public boolean guardarCasinos(Casinos elemento);
+    public boolean guardarCasinos(Casino elemento);
 
-    public List<Casinos> findAllCasinos();
+    public List<Casino> findAllCasinos();
 
-    public List<Eventos> findAllEventos();
+    public List<Evento> findAllEventos();
 
-    public void deleteEventos(Eventos elemento);
+    public void deleteEventos(Evento elemento);
 
-    public Eventos guardarEventos(Eventos elemento);
+    public Evento guardarEventos(Evento elemento);
 
-    public void deleteClientes(Clientes elemento);
+    public void deleteClientes(Cliente elemento);
 
-    public boolean guardarClientes(Clientes elemento);
+    public Cliente guardarClientes(Cliente elemento);
 
-    public List<Tiposjuegos> getTiposJuegosNoClientes(Integer idCliente);
+    public List<TipoJuego> getTiposJuegosNoClientes(Integer idCliente);
 
-    public Clientes findCliente(Integer integer);
+    public Cliente findCliente(Integer integer);
 
-    public Eventos findEvento(Integer integer);
+    public Evento findEvento(Integer integer);
 
-    public Estadoscliente findByNombreEstadoCliente(String iniciado);
+    public Estadocliente findByNombreEstadoCliente(String iniciado);
 
     public void guardarImagen(byte[] contents, Integer idEvento, String fileName);
+
+    public List<Tipoevento> findAllTipoevento();
+
+    public void deleteTipoevento(Tipoevento elemento);
+
+    public boolean guardarTipoevento(Tipoevento elemento);
 
 }

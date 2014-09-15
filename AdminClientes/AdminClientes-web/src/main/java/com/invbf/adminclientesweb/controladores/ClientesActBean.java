@@ -4,15 +4,17 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Atributos;
-import com.invbf.adminclientesapi.entity.Casinos;
-import com.invbf.adminclientesapi.entity.Categorias;
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Clientesatributos;
-import com.invbf.adminclientesapi.entity.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.Atributo;
+import com.invbf.adminclientesapi.entity.Casino;
+import com.invbf.adminclientesapi.entity.Categoria;
+import com.invbf.adminclientesapi.entity.Cliente;
+import com.invbf.adminclientesapi.entity.Clienteatributo;
+import com.invbf.adminclientesapi.entity.ClientesatributosPK;
+import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -30,20 +32,20 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class ClientesActBean {
-
+    
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Tiposjuegos> tiposjuegos;
-    private List<Atributos> atributos;
-    private Clientes elemento;
+    private List<TipoJuego> tiposjuegos;
+    private List<Atributo> atributos;
+    private Cliente elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private DualListModel<Tiposjuegos> tiposJuegosTodos;
-    private List<Casinos> listacasinos;
-    private List<Categorias> listacategorias;
-
+    private DualListModel<TipoJuego> tiposJuegosTodos;
+    private List<Casino> listacasinos;
+    private List<Categoria> listacategorias;
+    
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
@@ -53,10 +55,11 @@ public class ClientesActBean {
      */
     public ClientesActBean() {
     }
-
+    
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("clientes");
         if (!sessionBean.perfilViewMatch("Clientes")) {
             try {
                 System.out.println("No lo coje");
@@ -66,7 +69,7 @@ public class ClientesActBean {
                 LOGGER.error(ex);
             }
         }
-
+        
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idCliente")) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosMarketing.xhtml");
@@ -74,65 +77,86 @@ public class ClientesActBean {
                 LOGGER.error(ex);
             }
         }
-        elemento = marketingUserFacade.findCliente((Integer) sessionBean.getAttributes().get("idCliente"));
-        tiposjuegos = marketingUserFacade.findAllTiposjuegos();
-        atributos = marketingUserFacade.findAllAtributos();
-        for (Tiposjuegos tj : elemento.getTiposjuegosList()) {
-            if (tiposjuegos.contains(tj)) {
-                tiposjuegos.remove(tj);
+        if ((Integer) sessionBean.getAttributes().get("idCliente") != 0) {
+            elemento = marketingUserFacade.findCliente((Integer) sessionBean.getAttributes().get("idCliente"));
+            tiposjuegos = marketingUserFacade.findAllTiposjuegos();
+            for (TipoJuego tj : elemento.getTiposjuegosList()) {
+                if (tiposjuegos.contains(tj)) {
+                    tiposjuegos.remove(tj);
+                }
             }
+            tiposJuegosTodos = new DualListModel<TipoJuego>(tiposjuegos, elemento.getTiposjuegosList());
+        } else {
+            elemento = new Cliente();
+            elemento.setIdCliente(0);
+            elemento.setIdCategorias(new Categoria(0));
+            elemento.setIdCasinoPreferencial(new Casino(0));
+            elemento.setTiposjuegosList(new ArrayList<TipoJuego>());
+            elemento.setClientesatributosList(new ArrayList<Clienteatributo>());
+            tiposjuegos = marketingUserFacade.findAllTiposjuegos();
+            tiposJuegosTodos = new DualListModel<TipoJuego>(tiposjuegos, elemento.getTiposjuegosList());
         }
-        for (Atributos a : atributos) {
-            Clientesatributos clientesatributos = new Clientesatributos(elemento.getIdCliente(), a.getIdAtributo());
-            if(!elemento.getClientesatributosList().contains(clientesatributos)){
+        atributos = marketingUserFacade.findAllAtributos();
+        for (Atributo a : atributos) {
+            Clienteatributo clientesatributos = new Clienteatributo(elemento.getIdCliente(), a.getIdAtributo());
+            if (!elemento.getClientesatributosList().contains(clientesatributos)) {
+                clientesatributos.setClientesatributosPK(new ClientesatributosPK(elemento.getIdCliente(), a.getIdAtributo()));
                 clientesatributos.setAtributos(a);
                 clientesatributos.setClientes(elemento);
                 elemento.getClientesatributosList().add(clientesatributos);
             }
         }
-        tiposJuegosTodos = new DualListModel<Tiposjuegos>(tiposjuegos, elemento.getTiposjuegosList());
-
         listacasinos = marketingUserFacade.findAllCasinos();
         listacategorias = marketingUserFacade.findAllCategorias();
     }
-
-    public Clientes getElemento() {
+    
+    public Cliente getElemento() {
         return elemento;
     }
-
-    public void setElemento(Clientes elemento) {
+    
+    public void setElemento(Cliente elemento) {
         this.elemento = elemento;
     }
-
+    
     public MarketingUserFacade getMarketingUserFacade() {
         return marketingUserFacade;
     }
-
+    
     public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
         this.marketingUserFacade = marketingUserFacade;
     }
-
-    public List<Atributos> getAtributos() {
+    
+    public List<Atributo> getAtributos() {
         return atributos;
     }
-
-    public void setAtributos(List<Atributos> atributos) {
+    
+    public void setAtributos(List<Atributo> atributos) {
         this.atributos = atributos;
     }
-
-    public DualListModel<Tiposjuegos> getTiposJuegosTodos() {
+    
+    public DualListModel<TipoJuego> getTiposJuegosTodos() {
         return tiposJuegosTodos;
     }
-
-    public void setTiposJuegosTodos(DualListModel<Tiposjuegos> tiposJuegosTodos) {
+    
+    public void setTiposJuegosTodos(DualListModel<TipoJuego> tiposJuegosTodos) {
         this.tiposJuegosTodos = tiposJuegosTodos;
     }
-
+    
     public void guardar() {
         try {
+            if (elemento.getIdCliente() == 0) {
+                elemento.setIdCliente(null);
+            }
             elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
-            marketingUserFacade.guardarClientes(elemento);
-            sessionBean.getAttributes().remove("idCliente");
+            List<Clienteatributo> clienteatributos = elemento.getClientesatributosList();
+            elemento.setClientesatributosList(new ArrayList<Clienteatributo>());
+            elemento = marketingUserFacade.guardarClientes(elemento);
+            for (Clienteatributo clienteatributo : clienteatributos) {
+                clienteatributo.getClientesatributosPK().setIdCliente(elemento.getIdCliente());
+                clienteatributo.setClientes(elemento);
+                elemento.getClientesatributosList().add(clienteatributo);
+            }
+            elemento = marketingUserFacade.guardarClientes(elemento);
             FacesUtil.addInfoMessage("Cliente actualizado", elemento.toString());
             FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
@@ -140,20 +164,20 @@ public class ClientesActBean {
             LOGGER.error(ex);
         }
     }
-
-    public List<Casinos> getListacasinos() {
+    
+    public List<Casino> getListacasinos() {
         return listacasinos;
     }
-
-    public void setListacasinos(List<Casinos> listacasinos) {
+    
+    public void setListacasinos(List<Casino> listacasinos) {
         this.listacasinos = listacasinos;
     }
-
-    public List<Categorias> getListacategorias() {
+    
+    public List<Categoria> getListacategorias() {
         return listacategorias;
     }
-
-    public void setListacategorias(List<Categorias> listacategorias) {
+    
+    public void setListacategorias(List<Categoria> listacategorias) {
         this.listacategorias = listacategorias;
     }
 }

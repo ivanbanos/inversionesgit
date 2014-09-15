@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.util;
 
-import com.invbf.adminclientesapi.entity.Formularios;
+import com.invbf.adminclientesapi.entity.Formulario;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -27,7 +27,7 @@ public class FormulariosConverter implements Converter {
         }
         // value must be of a type that can be cast to a String.
         try {
-            return ((Formularios)value).toString();
+            return ((Formulario)value).toString();
         } catch (ClassCastException ce) {
             FacesMessage errMsg = new FacesMessage("Error al convertir valor");
             FacesContext.getCurrentInstance().addMessage(null, errMsg);
@@ -38,8 +38,8 @@ public class FormulariosConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Formularios formulario;
-        formulario = new Formularios();
+        Formulario formulario;
+        formulario = new Formulario();
         formulario.setIdFormulario(Integer.parseInt(value.split(" ")[0]));
         formulario.setTabla(value.split(" ")[1]);
         formulario.setAccion(value.split(" ")[2]);

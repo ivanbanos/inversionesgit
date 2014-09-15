@@ -4,11 +4,11 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Atributos;
-import com.invbf.adminclientesapi.entity.Casinos;
-import com.invbf.adminclientesapi.entity.Categorias;
-import com.invbf.adminclientesapi.entity.Clientes;
-import com.invbf.adminclientesapi.entity.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.Atributo;
+import com.invbf.adminclientesapi.entity.Casino;
+import com.invbf.adminclientesapi.entity.Categoria;
+import com.invbf.adminclientesapi.entity.Cliente;
+import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
@@ -33,12 +33,12 @@ public class CrudClientesBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Clientes> lista;
-    private Clientes elemento;
-    private List<Casinos> listacasinos;
-    private List<Atributos> listaatributos;
-    private List<Categorias> listacategorias;
-    private List<Tiposjuegos> listatiposjuegos;
+    private List<Cliente> lista;
+    private Cliente elemento;
+    private List<Casino> listacasinos;
+    private List<Atributo> listaatributos;
+    private List<Categoria> listacategorias;
+    private List<TipoJuego> listatiposjuegos;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private boolean editar;
@@ -46,13 +46,13 @@ public class CrudClientesBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Clientes> flista;
+    private List<Cliente> flista;
 
-    public List<Clientes> getFlista() {
+    public List<Cliente> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Clientes> flista) {
+    public void setFlista(List<Cliente> flista) {
         this.flista = flista;
     }
 
@@ -65,6 +65,7 @@ public class CrudClientesBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
+        sessionBean.setActive("clientes");
         if (!sessionBean.perfilViewMatch("Clientes")) {
             try {
                 sessionBean.Desconectar();
@@ -73,7 +74,7 @@ public class CrudClientesBean {
                 LOGGER.error(ex);
             }
         }
-        elemento = new Clientes();
+        elemento = new Cliente();
         lista = marketingUserFacade.findAllClientes();
         listacasinos = marketingUserFacade.findAllCasinos();
         listaatributos = marketingUserFacade.findAllAtributos();
@@ -82,27 +83,27 @@ public class CrudClientesBean {
         editar = false;
     }
 
-    public List<Clientes> getLista() {
+    public List<Cliente> getLista() {
         return lista;
     }
 
-    public void setLista(List<Clientes> lista) {
+    public void setLista(List<Cliente> lista) {
         this.lista = lista;
     }
 
-    public Clientes getElemento() {
+    public Cliente getElemento() {
         return elemento;
     }
 
-    public void setElemento(Clientes elemento) {
+    public void setElemento(Cliente elemento) {
         this.elemento = elemento;
     }
 
-    public List<Casinos> getListacasinos() {
+    public List<Casino> getListacasinos() {
         return listacasinos;
     }
 
-    public void setListacasinos(List<Casinos> listacasinos) {
+    public void setListacasinos(List<Casino> listacasinos) {
         this.listacasinos = listacasinos;
     }
 
@@ -110,27 +111,27 @@ public class CrudClientesBean {
         return marketingUserFacade;
     }
 
-    public List<Atributos> getListaatributos() {
+    public List<Atributo> getListaatributos() {
         return listaatributos;
     }
 
-    public void setListaatributos(List<Atributos> listaatributos) {
+    public void setListaatributos(List<Atributo> listaatributos) {
         this.listaatributos = listaatributos;
     }
 
-    public List<Categorias> getListacategorias() {
+    public List<Categoria> getListacategorias() {
         return listacategorias;
     }
 
-    public void setListacategorias(List<Categorias> listacategorias) {
+    public void setListacategorias(List<Categoria> listacategorias) {
         this.listacategorias = listacategorias;
     }
 
-    public List<Tiposjuegos> getListatiposjuegos() {
+    public List<TipoJuego> getListatiposjuegos() {
         return listatiposjuegos;
     }
 
-    public void setListatiposjuegos(List<Tiposjuegos> listatiposjuegos) {
+    public void setListatiposjuegos(List<TipoJuego> listatiposjuegos) {
         this.listatiposjuegos = listatiposjuegos;
     }
 
@@ -143,20 +144,7 @@ public class CrudClientesBean {
         lista = marketingUserFacade.findAllClientes();
         sessionBean.registrarlog("eliminar", "Clientes", elemento.toString());
         FacesUtil.addInfoMessage("Cliente eliminado", elemento.toString());
-        elemento = new Clientes();
-    }
-
-    public void guardar() {
-        boolean opcion = marketingUserFacade.guardarClientes(elemento);
-        lista = marketingUserFacade.findAllClientes();
-        if (opcion) {
-            sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
-            FacesUtil.addInfoMessage("Cliente actualizado", elemento.toString());
-        } else {
-            sessionBean.registrarlog("crear", "Clientes", elemento.toString());
-            FacesUtil.addInfoMessage("Cliente creado", elemento.toString());
-        }
-        elemento = new Clientes();
+        elemento = new Cliente();
     }
 
     public void goCliente(int id) {

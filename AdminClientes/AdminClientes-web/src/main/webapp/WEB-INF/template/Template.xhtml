@@ -17,13 +17,14 @@
         <h:outputStylesheet library="css/blitzer" name="jquery-ui-1.10.3.custom.css" />
         <h:outputScript library="js" name="bootstrap.min.js"/>
         <h:outputScript library="js" name="toggeablePanelScript.js"/>
+        <h:outputScript library="js" name="tableFilter.js"/>
 
         <f:loadBundle var="label" basename="labels" />
         <title>#{label['title.app']}</title>
     </h:head>
 
     <h:body>
-
+        <h:form>
         <nav class="navbar navbar-primary navbar-static-top navbar-background" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -32,71 +33,135 @@
                         <span class="sr-only">Toggle navigation</span>
                         <span class="fa fa-bars"></span>
                     </button>
-                    <h2 class="navbar-text">Sistema de Gesti&oacute;n de Clientes y Marketing</h2>
+                    <h2 class="navbar-text">#{label['title.app']}</h2>
 
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-left">
-                        <li >
-                            <h:link outcome="/pages/index.xhtml" class="navbar-text" value="#{label['inicio']}"/>
-                        </li>
+                            <li >
+                                <h:commandLink  action="#{sessionBean.go(&quot;inicio&quot;)}" class="navbar-text-selected" value="#{label['inicio']}" rendered="#{sessionBean.isActive(&quot;inicio&quot;)}"/>
+                                <h:commandLink action="#{sessionBean.go(&quot;inicio&quot;)}" class="navbar-text" value="#{label['inicio']}" rendered="#{sessionBean.isNotActive(&quot;inicio&quot;)}"/>
+                            </li>
 
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;) 
                                       || sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)
                                       || sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
-                            <li class="dropdown ">
-                                <a href="#" class="dropdown-toggle navbar-text" data-toggle="dropdown">Configuraci&oacute;n<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
-                                        <li >
-                                            <h:link outcome="/pages/AdministradorAtributosSistema.xhtml" class="navbar-text" value="#{label['atributossistemas']}"/>
-                                        </li>
-                                    </c:if>
-                                    <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}">
-                                        <li>
-                                            <h:link outcome="/pages/AdministradorAtributosMarketing.xhtml" class="navbar-text" value="#{label['atributosmarketing']}"/>
-                                        </li>
-                                    </c:if>
-                                    <c:if test="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
-                                        <li>
-                                            <h:link outcome="/pages/ConfiguracionesGenerales.xhtml" class="navbar-text" value="#{label['configuraciones']}"/>
-                                        </li>
-                                    </c:if>
-                                </ul>
-                            </li>
+                            <c:if test="#{sessionBean.isActive(&quot;configuracion&quot;)}">
+                                <li class="dropdown dropdown-selected">
+                                    <a href="#" class="dropdown-toggle navbar-text" data-toggle="dropdown">Configuraci&oacute;n<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
+                                            <li >
+                                                <h:commandLink  action="#{sessionBean.go(&quot;AtributosSistema&quot;)}" class="navbar-text" value="#{label['atributossistemas']}"/>
+                                            </li>
+                                        </c:if>
+                                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}">
+                                            <li>
+                                                <h:commandLink  action="#{sessionBean.go(&quot;AtributosMarketing&quot;)}" class="navbar-text" value="#{label['atributosmarketing']}"/>
+                                            </li>
+                                        </c:if>
+                                        <c:if test="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
+                                            <li>
+                                                <h:commandLink  action="#{sessionBean.go(&quot;ConfiguracionesGenerales&quot;)}" class="navbar-text" value="#{label['configuraciones']}"/>
+                                            </li>
+                                        </c:if>
+                                    </ul>
+                                </li>
+                            </c:if>
+                            <c:if test="#{sessionBean.isNotActive(&quot;configuracion&quot;)}">
+                                <li class="dropdown">
+                                   <a href="#" class="dropdown-toggle navbar-text" data-toggle="dropdown">Configuraci&oacute;n<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosSistema&quot;)}">
+                                            <li >
+                                                <h:commandLink  action="#{sessionBean.go(&quot;AtributosSistema&quot;)}" class="navbar-text" value="#{label['atributossistemas']}"/>
+                                            </li>
+                                        </c:if>
+                                        <c:if test="#{sessionBean.perfilViewMatch(&quot;AtributosMarketing&quot;)}">
+                                            <li>
+                                                <h:commandLink  action="#{sessionBean.go(&quot;AtributosMarketing&quot;)}" class="navbar-text" value="#{label['atributosmarketing']}"/>
+                                            </li>
+                                        </c:if>
+                                        <c:if test="#{sessionBean.perfilViewMatch(&quot;ConfiguracionesGenerales&quot;)}">
+                                            <li>
+                                                <h:commandLink  action="#{sessionBean.go(&quot;ConfiguracionesGenerales&quot;)}" class="navbar-text" value="#{label['configuraciones']}"/>
+                                            </li>
+                                        </c:if>
+                                    </ul>
+                                </li>
+                            </c:if>
                         </c:if>
 
 
 
 
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;Clientes&quot;)}">
-                            <li>
-                                <h:link outcome="/pages/clientes.xhtml" class="navbar-text" value="#{label['clientes']}"/>
-                            </li>
+
+                            <c:if test="#{sessionBean.isActive(&quot;clientes&quot;)}">
+                                <li >
+                                    <h:commandLink  action="#{sessionBean.go(&quot;clientes&quot;)}" class="navbar-text-selected" value="#{label['clientes']}"/>
+                                </li>
+                            </c:if>
+                            <c:if test="#{sessionBean.isNotActive(&quot;clientes&quot;)}">
+                                <li >
+                                    <h:commandLink  action="#{sessionBean.go(&quot;clientes&quot;)}" class="navbar-text" value="#{label['clientes']}"/>
+                                </li>
+                            </c:if>
                         </c:if>
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;Eventos&quot;)}">
-                            <li>
-                                <h:link outcome="/pages/eventos.xhtml" class="navbar-text" value="#{label['eventos']}"/>
-                            </li>
+
+                            <c:if test="#{sessionBean.isActive(&quot;eventos&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;eventos&quot;)}" class="navbar-text-selected" value="#{label['eventos']}"/>
+                                </li>
+                            </c:if>
+                            <c:if test="#{sessionBean.isNotActive(&quot;eventos&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;eventos&quot;)}" class="navbar-text" value="#{label['eventos']}"/>
+                                </li>
+                            </c:if>
                         </c:if>
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">
-                            <li>
-                                <h:link outcome="/pages/eventosHostess.xhtml" class="navbar-text" value="#{label['eventos']}"/>
-                            </li>
+
+                            <c:if test="#{sessionBean.isActive(&quot;eventoshostess&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;eventoshostess&quot;)}" class="navbar-text-selected" value="#{label['eventos']}"/>
+                                </li>
+                            </c:if>
+                            <c:if test="#{sessionBean.isNotActive(&quot;eventoshostess&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;eventoshostess&quot;)}" class="navbar-text" value="#{label['eventos']}"/>
+                                </li>
+                            </c:if>
                         </c:if>
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
+                            <c:if test="#{sessionBean.isActive(&quot;reportes&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;reportes&quot;)}" class="navbar-text-selected" value="#{label['reportes']}"/>
+                                </li> 
+                            </c:if>
+                            <c:if test="#{sessionBean.isNotActive(&quot;reportes&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;reportes&quot;)}" class="navbar-text" value="#{label['reportes']}"/>
+                                </li> 
+                            </c:if>
+                        </c:if>
+
+                        <c:if test="#{sessionBean.isActive(&quot;cuenta&quot;)}">
                             <li>
-                                <h:link outcome="/pages/Reportes.xhtml" class="navbar-text" value="#{label['reportes']}"/>
+                                <h:commandLink  action="#{sessionBean.go(&quot;cuenta&quot;)}" class="navbar-text-selected" value="#{label['cuentausuarios']}"/>
                             </li>
                         </c:if>
-                        <li>
-                            <h:link outcome="/pages/CuentaUsuarios.xhtml" class="navbar-text" value="#{label['cuentausuarios']}"/>
-                        </li>
+                            <c:if test="#{sessionBean.isNotActive(&quot;cuenta&quot;)}">
+                            <li>
+                                <h:commandLink  action="#{sessionBean.go(&quot;cuenta&quot;)}" class="navbar-text" value="#{label['cuentausuarios']}"/>
+                            </li>
+                        </c:if>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <h:form class="navbar-form navbar-right">
+                        <div class="navbar-form navbar-right">
                             <div class="form-group">
                                 <p class="navbar-text">#{sessionBean.usuario.nombreUsuario}</p>
                             </div>
@@ -105,11 +170,12 @@
                                            styleClass="btn btn-primary">
                                 #{label['salir']}
                             </h:commandLink> 
-                        </h:form> 
+                        </div> 
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        </h:form>
 
 
         <div class="container-fluid">
@@ -118,22 +184,13 @@
                 <div class="col-sm-12 col-md-12 main">
 
 
-                    <div class="container">
-                        <div class="row clearfix">
-                            <div class="col-md-12 column">
+                    <h:form>
+                        <p:growl id="messages" showDetail="true" sticky="true" />  
+                    </h:form>
 
-                                <div id="mensajes">
-                                    <h:form>
-                                        <p:growl id="messages" showDetail="true" sticky="true" />  
-                                    </h:form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row clearfix">
-                            <div id="parent_content">
-                                <ui:insert name="content">Content</ui:insert>
-                            </div>
+                    <div class="row clearfix">
+                        <div id="parent_content">
+                            <ui:insert name="content">Content</ui:insert>
                         </div>
                     </div>
                 </div>

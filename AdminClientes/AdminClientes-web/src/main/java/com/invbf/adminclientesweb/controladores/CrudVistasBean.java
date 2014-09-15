@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Vistas;
+import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,21 +27,21 @@ public class CrudVistasBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     AdminFacade adminFacade;
-    private List<Vistas> lista;
-    private Vistas elemento;
+    private List<Vista> lista;
+    private Vista elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Vistas> flista;
+    private List<Vista> flista;
 
-    public List<Vistas> getFlista() {
+    public List<Vista> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Vistas> flista) {
+    public void setFlista(List<Vista> flista) {
         this.flista = flista;
     }
 
@@ -56,23 +54,24 @@ public class CrudVistasBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Vistas();
+        sessionBean.setActive("configuracion");
+        elemento = new Vista();
         lista = adminFacade.findAllVistas();
     }
 
-    public List<Vistas> getLista() {
+    public List<Vista> getLista() {
         return lista;
     }
 
-    public void setLista(List<Vistas> lista) {
+    public void setLista(List<Vista> lista) {
         this.lista = lista;
     }
 
-    public Vistas getElemento() {
+    public Vista getElemento() {
         return elemento;
     }
 
-    public void setElemento(Vistas elemento) {
+    public void setElemento(Vista elemento) {
         this.elemento = elemento;
     }
 
@@ -90,7 +89,7 @@ public class CrudVistasBean {
 
         sessionBean.registrarlog("eliminar", "Vistas", elemento.toString());
         FacesUtil.addInfoMessage("Vista borrada", elemento.getNombreVista());
-        elemento = new Vistas();
+        elemento = new Vista();
 
     }
 
@@ -105,6 +104,6 @@ public class CrudVistasBean {
             sessionBean.registrarlog("crear", "Vistas", elemento.toString());
             FacesUtil.addInfoMessage("Vista creada", elemento.getNombreVista());
         }
-        elemento = new Vistas();
+        elemento = new Vista();
     }
 }

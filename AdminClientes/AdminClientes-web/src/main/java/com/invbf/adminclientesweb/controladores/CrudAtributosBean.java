@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Atributos;
+import com.invbf.adminclientesapi.entity.Atributo;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,8 +27,8 @@ public class CrudAtributosBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Atributos> lista;
-    private Atributos elemento;
+    private List<Atributo> lista;
+    private Atributo elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -38,13 +36,13 @@ public class CrudAtributosBean {
         this.sessionBean = sessionBean;
     }
     
-private List<Atributos> flista;
+private List<Atributo> flista;
 
-    public List<Atributos> getFlista() {
+    public List<Atributo> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Atributos> flista) {
+    public void setFlista(List<Atributo> flista) {
         this.flista = flista;
     }
     /**
@@ -56,24 +54,25 @@ private List<Atributos> flista;
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Atributos();
+        sessionBean.setActive("configuracion");
+        elemento = new Atributo();
         lista = marketingUserFacade.findAllAtributos();
         
     }
 
-    public List<Atributos> getLista() {
+    public List<Atributo> getLista() {
         return lista;
     }
 
-    public void setLista(List<Atributos> lista) {
+    public void setLista(List<Atributo> lista) {
         this.lista = lista;
     }
 
-    public Atributos getElemento() {
+    public Atributo getElemento() {
         return elemento;
     }
 
-    public void setElemento(Atributos elemento) {
+    public void setElemento(Atributo elemento) {
         this.elemento = elemento;
     }
 
@@ -91,7 +90,7 @@ private List<Atributos> flista;
         lista = marketingUserFacade.findAllAtributos();
         sessionBean.registrarlog("eliminar", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo eliminado", elemento.getNombre());
-        elemento = new Atributos();
+        elemento = new Atributo();
     }
     
     public void guardar(){
@@ -105,7 +104,7 @@ private List<Atributos> flista;
             sessionBean.registrarlog("crear", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo creado", elemento.getNombre());
         }
-        elemento = new Atributos();
+        elemento = new Atributo();
     }
     
 }

@@ -4,17 +4,15 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Tiposjuegos;
+import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import java.io.IOException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,8 +27,8 @@ public class CrudTipoJuegoBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Tiposjuegos> lista;
-    private Tiposjuegos elemento;
+    private List<TipoJuego> lista;
+    private TipoJuego elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     
@@ -38,13 +36,13 @@ public class CrudTipoJuegoBean {
         this.sessionBean = sessionBean;
     }
     
-    private List<Tiposjuegos> flista;
+    private List<TipoJuego> flista;
 
-    public List<Tiposjuegos> getFlista() {
+    public List<TipoJuego> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Tiposjuegos> flista) {
+    public void setFlista(List<TipoJuego> flista) {
         this.flista = flista;
     }
 
@@ -57,23 +55,24 @@ public class CrudTipoJuegoBean {
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
-        elemento = new Tiposjuegos();
+        sessionBean.setActive("configuracion");
+        elemento = new TipoJuego();
         lista = marketingUserFacade.findAllTiposjuegos();
     }
 
-    public List<Tiposjuegos> getLista() {
+    public List<TipoJuego> getLista() {
         return lista;
     }
 
-    public void setLista(List<Tiposjuegos> lista) {
+    public void setLista(List<TipoJuego> lista) {
         this.lista = lista;
     }
 
-    public Tiposjuegos getElemento() {
+    public TipoJuego getElemento() {
         return elemento;
     }
 
-    public void setElemento(Tiposjuegos elemento) {
+    public void setElemento(TipoJuego elemento) {
         this.elemento = elemento;
     }
 
@@ -91,7 +90,7 @@ public class CrudTipoJuegoBean {
         lista = marketingUserFacade.findAllTiposjuegos();
         sessionBean.registrarlog("eliminar", "TiposJuegos", elemento.toString());
             FacesUtil.addInfoMessage("Tipo de juegos eliminado", elemento.getNombre());
-        elemento = new Tiposjuegos();
+        elemento = new TipoJuego();
     }
     
     public void guardar(){
@@ -105,7 +104,7 @@ public class CrudTipoJuegoBean {
             sessionBean.registrarlog("crear", "TiposJuegos", elemento.toString());
             FacesUtil.addInfoMessage("Tipo de juegos creado", elemento.getNombre());
         }
-        elemento = new Tiposjuegos();
+        elemento = new TipoJuego();
     }
     
 }
