@@ -9,16 +9,17 @@
     <class>com.invbf.adminclientesapi.entity.Cliente</class>
     <class>com.invbf.adminclientesapi.entity.Clienteatributo</class>
     <class>com.invbf.adminclientesapi.entity.Configuracion</class>
-    <class>com.invbf.adminclientesapi.entity.Estadocliente</class>
     <class>com.invbf.adminclientesapi.entity.Evento</class>
     <class>com.invbf.adminclientesapi.entity.Formulario</class>
-    <class>com.invbf.adminclientesapi.entity.Clienteevento</class>
     <class>com.invbf.adminclientesapi.entity.Log</class>
     <class>com.invbf.adminclientesapi.entity.Perfil</class>
-    <class>com.invbf.adminclientesapi.entity.Tipoevento</class>
     <class>com.invbf.adminclientesapi.entity.TipoJuego</class>
     <class>com.invbf.adminclientesapi.entity.Usuario</class>
     <class>com.invbf.adminclientesapi.entity.Vista</class>
+    <class>com.invbf.adminclientesapi.entity.Listasclientestareas</class>
+    <class>com.invbf.adminclientesapi.entity.Tarea</class>
+    <class>com.invbf.adminclientesapi.entity.Tipotarea</class>
+    <class>com.invbf.adminclientesapi.entity.Permiso</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

@@ -25,8 +25,8 @@
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
-                                    <p:dataTable id="detailsTableEventos" var="element" value="#{eventosHostessBean.lista}"  
-                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{eventosHostessBean.flista}"
+                                    <p:dataTable id="detailsTableEventos" var="element" value="#{tareasHostessBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{tareasHostessBean.flista}"
                                                  rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -48,8 +48,8 @@
                                         </p:column>
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="hostess" icon="ui-icon-gear" 
-                                                             title="#{label['lb_btn.Go']}" action="#{eventosHostessBean.goEvento(element.idEvento)}"
+                                            <p:commandButton id="hostess" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.Go']}" action="#{tareasHostessBean.goEvento(element.idEvento)}"
                                                              rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">  
                                             </p:commandButton>
                                         </p:column>

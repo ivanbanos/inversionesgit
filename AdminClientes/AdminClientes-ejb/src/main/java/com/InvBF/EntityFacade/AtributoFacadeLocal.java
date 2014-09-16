@@ -28,7 +28,5 @@ public interface AtributoFacadeLocal {
     List<Atributo> findRange(int[] range);
 
     int count();
-
-    public Atributo findByName(String correo);
     
 }

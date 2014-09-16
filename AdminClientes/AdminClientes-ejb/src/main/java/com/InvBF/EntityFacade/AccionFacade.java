@@ -5,6 +5,7 @@
 package com.InvBF.EntityFacade;
 
 import com.invbf.adminclientesapi.entity.Accion;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +26,18 @@ public class AccionFacade extends AbstractFacade<Accion> implements AccionFacade
 
     public AccionFacade() {
         super(Accion.class);
+    }
+
+    @Override
+    public Accion findByNombreAccion(String nombre) {
+         List<Accion> acciones = (List<Accion>)em.createNamedQuery("Acciones.findByNombre")
+            .setParameter("nombre", nombre)
+            .getResultList();
+        if(acciones==null||acciones.isEmpty()){
+            return null;
+        }else{
+            return acciones.get(0);
+        }
     }
     
 }

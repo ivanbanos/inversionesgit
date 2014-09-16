@@ -140,7 +140,7 @@ public class CrudEventoBean {
         Calendar fechafinal = Calendar.getInstance();
         Calendar nowDate = Calendar.getInstance();
         fechainicio.setTime(elemento.getFechaInicio());
-        fechafinal.setTime(elemento.getFechaFinalizacion());
+        fechafinal.setTime(elemento.getFechaFinal());
         if (!fechainicio.before(nowDate) && !fechafinal.before(fechainicio)) {
             elemento = marketingUserFacade.guardarEventos(elemento);
             lista = marketingUserFacade.findAllEventos();

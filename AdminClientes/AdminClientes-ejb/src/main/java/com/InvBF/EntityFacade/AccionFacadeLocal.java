@@ -28,5 +28,7 @@ public interface AccionFacadeLocal {
     List<Accion> findRange(int[] range);
 
     int count();
+
+    public Accion findByNombreAccion(String enviadO);
     
 }

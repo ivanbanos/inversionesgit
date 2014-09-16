@@ -4,7 +4,9 @@
  */
 package com.InvBF.EntityFacade;
 
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Vista;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,9 +31,14 @@ public class VistaFacade extends AbstractFacade<Vista> implements VistaFacadeLoc
 
     @Override
     public Vista findByNombre(String nombre) {
-        return (Vista)em.createNamedQuery("Vistas.findByNombreVista")
+        List<Vista> vistas = (List<Vista>)em.createNamedQuery("Vistas.findByNombreVista")
             .setParameter("nombreVista", nombre)
-            .getResultList().get(0);
+            .getResultList();
+        if(vistas==null||vistas.isEmpty()){
+            return null;
+        }else{
+            return vistas.get(0);
+        }
     }
     
 }

@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.entity.Tipoevento;
+import com.invbf.adminclientesapi.entity.Tipotarea;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author ideacentre
  */
 @Stateless
-public class TipoeventoFacade extends AbstractFacade<Tipoevento> implements TipoeventoFacadeLocal {
+public class TipostareasFacade extends AbstractFacade<Tipotarea> implements TipostareasFacadeLocal {
     @PersistenceContext(unitName = "AdminClientesPU")
     private EntityManager em;
 
@@ -24,19 +24,19 @@ public class TipoeventoFacade extends AbstractFacade<Tipoevento> implements Tipo
         return em;
     }
 
-    public TipoeventoFacade() {
-        super(Tipoevento.class);
+    public TipostareasFacade() {
+        super(Tipotarea.class);
     }
 
     @Override
-    public Tipoevento findBynombre(String nombre) {
-        List<Tipoevento> tiposeventos = (List<Tipoevento>)em.createNamedQuery("Tiposeventos.findByNombre")
+    public Tipotarea findBynombre(String nombre) {
+        List<Tipotarea> tipotareas = (List<Tipotarea>)em.createNamedQuery("Tipostareas.findByNombre")
             .setParameter("nombre", nombre)
             .getResultList();
-        if(tiposeventos==null||tiposeventos.isEmpty()){
+        if(tipotareas==null||tipotareas.isEmpty()){
             return null;
         }else{
-            return tiposeventos.get(0);
+            return tipotareas.get(0);
         }
     }
     

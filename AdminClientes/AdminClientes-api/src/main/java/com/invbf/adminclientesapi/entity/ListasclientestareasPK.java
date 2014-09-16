@@ -14,28 +14,28 @@ import javax.persistence.Embeddable;
  * @author ideacentre
  */
 @Embeddable
-public class ListasclienteseventoPK implements Serializable {
+public class ListasclientestareasPK implements Serializable {
     @Basic(optional = false)
-    @Column(name = "idEvento")
-    private int idEvento;
+    @Column(name = "idTarea")
+    private int idTarea;
     @Basic(optional = false)
     @Column(name = "idCliente")
     private int idCliente;
 
-    public ListasclienteseventoPK() {
+    public ListasclientestareasPK() {
     }
 
-    public ListasclienteseventoPK(int idEvento, int idCliente) {
-        this.idEvento = idEvento;
+    public ListasclientestareasPK(int idTarea, int idCliente) {
+        this.idTarea = idTarea;
         this.idCliente = idCliente;
     }
 
-    public int getIdEvento() {
-        return idEvento;
+    public int getIdTarea() {
+        return idTarea;
     }
 
-    public void setIdEvento(int idEvento) {
-        this.idEvento = idEvento;
+    public void setIdTarea(int idTarea) {
+        this.idTarea = idTarea;
     }
 
     public int getIdCliente() {
@@ -49,7 +49,7 @@ public class ListasclienteseventoPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) idEvento;
+        hash += (int) idTarea;
         hash += (int) idCliente;
         return hash;
     }
@@ -57,11 +57,11 @@ public class ListasclienteseventoPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ListasclienteseventoPK)) {
+        if (!(object instanceof ListasclientestareasPK)) {
             return false;
         }
-        ListasclienteseventoPK other = (ListasclienteseventoPK) object;
-        if (this.idEvento != other.idEvento) {
+        ListasclientestareasPK other = (ListasclientestareasPK) object;
+        if (this.idTarea != other.idTarea) {
             return false;
         }
         if (this.idCliente != other.idCliente) {
@@ -72,7 +72,7 @@ public class ListasclienteseventoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.entity.ListasclienteseventoPK[ idEvento=" + idEvento + ", idCliente=" + idCliente + " ]";
+        return "com.invbf.adminclientesapi.entity.ListasclientestareasPK[ idTarea=" + idTarea + ", idCliente=" + idCliente + " ]";
     }
     
 }

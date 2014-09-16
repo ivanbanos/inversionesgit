@@ -5,7 +5,7 @@
 package com.invbf.adminclientesapi.facade;
 
 import com.invbf.adminclientesapi.entity.Configuracion;
-import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
@@ -40,5 +40,5 @@ public interface SystemFacade {
     
     public String getPathImage(byte[] imagen, String mime, String nombre)throws IOException ;
 
-    public List<InfoCorreoCliente> enviarCorreo(Evento elemento) ;
+    public List<InfoCorreoCliente> enviarCorreo(Tarea elemento) ;
 }

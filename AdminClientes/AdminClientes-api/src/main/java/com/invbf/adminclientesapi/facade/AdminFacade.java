@@ -7,6 +7,7 @@ package com.invbf.adminclientesapi.facade;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.NombreUsuarioExistenteException;
@@ -49,7 +50,7 @@ public interface AdminFacade {
     
     public Usuario findUsuarios(Integer idUsuario);
 
-    public void agregarEventoUsuarios(Usuario s, Evento elemento);
+    public void agregarTareaUsuarios(Usuario s, Tarea elemento);
 
     public Vista findVistasByNombre(String nombre);
 

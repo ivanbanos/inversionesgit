@@ -41,6 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clientes.findByIdentificacion", query = "SELECT c FROM Cliente c WHERE c.identificacion = :identificacion"),
     @NamedQuery(name = "Clientes.findByCorreo", query = "SELECT c FROM Cliente c WHERE c.correo = :correo")})
 public class Cliente implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    private List<Listasclientestareas> listasclientestareasList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,8 +70,6 @@ public class Cliente implements Serializable {
     private List<TipoJuego> tiposjuegosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientes")
     private List<Clienteatributo> clientesatributosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientes")
-    private List<Clienteevento> listasclienteseventoList;
     @JoinColumn(name = "idCategorias", referencedColumnName = "idCategorias")
     @ManyToOne(optional = false)
     private Categoria idCategorias;
@@ -156,15 +156,6 @@ public class Cliente implements Serializable {
         this.clientesatributosList = clientesatributosList;
     }
 
-    @XmlTransient
-    public List<Clienteevento> getListasclienteseventoList() {
-        return listasclienteseventoList;
-    }
-
-    public void setListasclienteseventoList(List<Clienteevento> listasclienteseventoList) {
-        this.listasclienteseventoList = listasclienteseventoList;
-    }
-
     public Categoria getIdCategorias() {
         return idCategorias;
     }
@@ -212,6 +203,15 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return idCliente + " " + nombres + " "+ apellidos;
+    }
+
+    @XmlTransient
+    public List<Listasclientestareas> getListasclientestareasList() {
+        return listasclientestareasList;
+    }
+
+    public void setListasclientestareasList(List<Listasclientestareas> listasclientestareasList) {
+        this.listasclientestareasList = listasclientestareasList;
     }
     
 }

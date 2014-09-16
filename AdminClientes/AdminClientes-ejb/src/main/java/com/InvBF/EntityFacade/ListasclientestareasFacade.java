@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.entity.Atributo;
+import com.invbf.adminclientesapi.entity.Listasclientestareas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author ideacentre
  */
 @Stateless
-public class AtributoFacade extends AbstractFacade<Atributo> implements AtributoFacadeLocal {
+public class ListasclientestareasFacade extends AbstractFacade<Listasclientestareas> implements ListasclientestareasFacadeLocal {
     @PersistenceContext(unitName = "AdminClientesPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class AtributoFacade extends AbstractFacade<Atributo> implements Atributo
         return em;
     }
 
-    public AtributoFacade() {
-        super(Atributo.class);
+    public ListasclientestareasFacade() {
+        super(Listasclientestareas.class);
     }
     
 }

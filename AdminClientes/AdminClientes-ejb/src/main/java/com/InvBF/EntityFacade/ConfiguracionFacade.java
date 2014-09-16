@@ -29,14 +29,14 @@ public class ConfiguracionFacade extends AbstractFacade<Configuracion> implement
     }
 
     @Override
-    public Configuracion findByNombre(String cantidadClientes) {
-        List<Configuracion> configuracion = em.createNamedQuery("Configuraciones.findByNombre")
-                .setParameter("nombre", cantidadClientes)
+    public Configuracion findByNombre(String nombre) {
+        List<Configuracion> configuraciones = em.createNamedQuery("Configuraciones.findByNombre")
+                .setParameter("nombre", nombre)
                 .getResultList();
-        if (configuracion == null || configuracion.isEmpty()) {
+        if (configuraciones == null || configuraciones.isEmpty()) {
             return null;
         } else {
-            return configuracion.get(0);
+            return configuraciones.get(0);
         }
     }
     

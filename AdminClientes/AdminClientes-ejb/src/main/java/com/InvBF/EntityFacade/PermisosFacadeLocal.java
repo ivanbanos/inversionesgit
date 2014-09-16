@@ -5,6 +5,7 @@
 package com.InvBF.EntityFacade;
 
 import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Permiso;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -13,19 +14,19 @@ import javax.ejb.Local;
  * @author ideacentre
  */
 @Local
-public interface PerfilFacadeLocal {
+public interface PermisosFacadeLocal {
 
-    void create(Perfil perfil);
+    void create(Permiso perfil);
 
-    void edit(Perfil perfil);
+    void edit(Permiso perfil);
 
-    void remove(Perfil perfil);
+    void remove(Permiso perfil);
 
-    Perfil find(Object id);
+    Permiso find(Object id);
 
-    List<Perfil> findAll();
+    List<Permiso> findAll();
 
-    List<Perfil> findRange(int[] range);
+    List<Permiso> findRange(int[] range);
 
     int count();
 

@@ -6,12 +6,8 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Casino;
 import com.invbf.adminclientesapi.entity.Categoria;
-import com.invbf.adminclientesapi.entity.Cliente;
-import com.invbf.adminclientesapi.entity.Clienteevento;
-import com.invbf.adminclientesapi.entity.Estadocliente;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
-import com.invbf.adminclientesapi.entity.Tipoevento;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
@@ -56,22 +52,13 @@ public class MarketingEventoManejadorBean {
     private List<CategoriaBoolean> categoriasBoolean;
     private List<TipoJuegoBoolean> tipoJuegosBoolean;
     private DualListModel<Usuario> todosusuarioses;
-    private List<Tipoevento> tiposeventos;
     private UploadedFile file;
     private List<Casino> listacasinos;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Clienteevento> flista;
 
-    public List<Clienteevento> getFlista() {
-        return flista;
-    }
-
-    public void setFlista(List<Clienteevento> flista) {
-        this.flista = flista;
-    }
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
@@ -113,39 +100,12 @@ public class MarketingEventoManejadorBean {
         }
         if ((Integer) sessionBean.getAttributes().get("idEvento") != 0) {
             elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
-            for (String s : elemento.getCategorias().split(" ")) {
-                for (CategoriaBoolean cb : categoriasBoolean) {
-                    if (cb.compareIdCategorias(Integer.parseInt(s))) {
-                        cb.setSelected(true);
-                    }
-                }
-            }
-            for (String s : elemento.getTiposdejuegos().split(" ")) {
-                for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                    if (tjb.compareIdTipoJuego(Integer.parseInt(s))) {
-                        tjb.setSelected(true);
-                    }
-                }
-            }
-            usuarioses = adminFacade.findAllUsuariosHostess();
-            for (Usuario u : elemento.getUsuariosList()) {
-                if (usuarioses.contains(u)) {
-                    usuarioses.remove(u);
-                }
-            }
-            todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuariosList());
         } else {
             elemento = new Evento();
-            elemento.setEstado("Ninguno");
             elemento.setIdCasino(new Casino(0));
-            elemento.setTipo(new Tipoevento(0));
             usuarioses = adminFacade.findAllUsuariosHostess();
-            elemento.setListasclienteseventoList(new ArrayList<Clienteevento>());
-            elemento.setUsuariosList(new ArrayList<Usuario>());
-            todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuariosList());
         }
         listacasinos = marketingUserFacade.findAllCasinos();
-        tiposeventos = marketingUserFacade.findAllTipoevento();
     }
 
     public Evento getElemento() {
@@ -169,90 +129,16 @@ public class MarketingEventoManejadorBean {
         Calendar fechafinal = Calendar.getInstance();
         Calendar nowDate = Calendar.getInstance();
         fechainicio.setTime(elemento.getFechaInicio());
-        fechafinal.setTime(elemento.getFechaFinalizacion());
+        fechafinal.setTime(elemento.getFechaFinal());
         if (!fechainicio.before(nowDate) && !fechafinal.before(fechainicio)) {
             elemento = marketingUserFacade.guardarEventos(elemento);
-            elemento.setEstado("Por iniciar");
-            if (fechainicio.get(Calendar.DAY_OF_YEAR) == nowDate.get(Calendar.DAY_OF_YEAR)) {
-                elemento.setEstado("Activo");
-            }
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
             if (file != null && file.getContents() != null) {
                 marketingUserFacade.guardarImagen(file.getContents(), elemento.getIdEvento(), file.getFileName());
                 elemento.setImagen(elemento.getIdEvento() + file.getFileName());
             }
             marketingUserFacade.guardarEventos(elemento);
-
-            Estadocliente estadoscliente = marketingUserFacade.findByNombreEstadoCliente("Inicial");
-            elemento.setUsuariosList(todosusuarioses.getTarget());
-            for (Usuario s : todosusuarioses.getTarget()) {
-                adminFacade.agregarEventoUsuarios(s, elemento);
-            }
-            ArrayList<Clienteevento> al = new ArrayList<Clienteevento>(elemento.getListasclienteseventoList());
-            elemento.getListasclienteseventoList().clear();
-            List<Cliente> todosclienteses = marketingUserFacade.findAllClientes();
-            for (Cliente c : todosclienteses) {
-                boolean siCategoria = false;
-                boolean siTipoJuego = false;
-
-                for (CategoriaBoolean cb : categoriasBoolean) {
-                    if (cb.isSelected()) {
-                        if (c.getIdCategorias().equals(cb.getCategoria())) {
-                            siCategoria = true;
-                            break;
-                        }
-                    }
-                }
-
-                for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                    if (tjb.isSelected()) {
-                        for (TipoJuego tj : c.getTiposjuegosList()) {
-                            if (tj.equals(tjb.getTipoJuego())) {
-                                siTipoJuego = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (siCategoria && siTipoJuego) {
-                    Clienteevento listasclientesevento = new Clienteevento(elemento.getIdEvento(), c.getIdCliente());
-                    if (al.contains(listasclientesevento)) {
-                        elemento.getListasclienteseventoList().add(al.get(al.indexOf(listasclientesevento)));
-                    } else {
-                        listasclientesevento.setIdEstadoCliente(estadoscliente);
-                        listasclientesevento.setEventos(elemento);
-                        listasclientesevento.setClientes(c);
-                        elemento.getListasclienteseventoList().add(listasclientesevento);
-                    }
-                } else {
-                    Clienteevento listasclientesevento = new Clienteevento(elemento.getIdEvento(), c.getIdCliente());
-                    if (al.contains(listasclientesevento)) {
-                        elemento.getListasclienteseventoList().remove(al.get(al.indexOf(listasclientesevento)));
-                    }
-                }
-            }
-            elemento.setCategorias("");
-            for (CategoriaBoolean cb : categoriasBoolean) {
-                if (cb.isSelected()) {
-                    elemento.setCategorias(elemento.getCategorias()+cb.getCategoria().getIdCategorias()+" ");
-                }
-            }
-            
-            elemento.setTiposdejuegos("");
-            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                if (tjb.isSelected()) {
-                    elemento.setTiposdejuegos(elemento.getTiposdejuegos()+tjb.getTipoJuego().getIdTipoJuego()+" ");
-                }
-            }
             sessionBean.actualizarUsuario();
-
-            usuarioses = adminFacade.findAllUsuariosHostess();
-            for (Usuario u : elemento.getUsuariosList()) {
-                if (usuarioses.contains(u)) {
-                    usuarioses.remove(u);
-                }
-            }
-            todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuariosList());
             elemento = marketingUserFacade.guardarEventos(elemento);
             FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
         } else {
@@ -278,18 +164,6 @@ public class MarketingEventoManejadorBean {
 
     public void setTodosusuarioses(DualListModel<Usuario> todosusuarioses) {
         this.todosusuarioses = todosusuarioses;
-    }
-
-    public void enviarCorreo() {
-        systemFacade.enviarCorreo(elemento);
-    }
-
-    public List<Tipoevento> getTiposeventos() {
-        return tiposeventos;
-    }
-
-    public void setTiposeventos(List<Tipoevento> tiposeventos) {
-        this.tiposeventos = tiposeventos;
     }
 
     public List<Casino> getListacasinos() {

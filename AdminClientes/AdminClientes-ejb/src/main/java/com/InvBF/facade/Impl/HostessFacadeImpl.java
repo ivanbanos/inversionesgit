@@ -4,19 +4,19 @@
  */
 package com.InvBF.facade.Impl;
 
-import com.InvBF.EntityFacade.ClienteeventoFacadeLocal;
+import com.InvBF.EntityFacade.AccionFacadeLocal;
 import com.InvBF.EntityFacade.ConfiguracionFacadeLocal;
-import com.InvBF.EntityFacade.EstadoclienteFacadeLocal;
 import com.InvBF.EntityFacade.EventoFacadeLocal;
-import com.InvBF.EntityFacade.TipoeventoFacadeLocal;
-import com.invbf.adminclientesapi.entity.Clienteevento;
-import com.invbf.adminclientesapi.entity.Estadocliente;
-import com.invbf.adminclientesapi.entity.Evento;
-import com.invbf.adminclientesapi.entity.Tipoevento;
+import com.InvBF.EntityFacade.ListasclientestareasFacadeLocal;
+import com.InvBF.EntityFacade.TareasFacadeLocal;
+import com.InvBF.EntityFacade.TipostareasFacadeLocal;
+import com.invbf.adminclientesapi.entity.Accion;
+import com.invbf.adminclientesapi.entity.Listasclientestareas;
+import com.invbf.adminclientesapi.entity.Tarea;
+import com.invbf.adminclientesapi.entity.Tipotarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.HostessFacade;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -32,57 +32,17 @@ public class HostessFacadeImpl implements HostessFacade {
     @EJB
     EventoFacadeLocal eventoFacadeLocal;
     @EJB
+    TareasFacadeLocal tareasFacadeLocal;
+    @EJB
     ConfiguracionFacadeLocal configuracionFacadeLocal;
     @EJB
-    EstadoclienteFacadeLocal estadoclienteFacadeLocal;
+    AccionFacadeLocal accionFacadeLocal;
     @EJB
-    ClienteeventoFacadeLocal clienteeventoFacadeLocal;
+    Listasclientestareas clienteeventoFacadeLocal;
     @EJB
-    TipoeventoFacadeLocal tipoeventoFacadeLocal;
-
-    @Override
-    public List<Evento> findEventosHostess(Usuario usuario) {
-        List<Evento> eventosHostess;
-        eventosHostess = eventoFacadeLocal.findAll();
-        Iterator<Evento> iterator = eventosHostess.iterator();
-        Tipoevento tipo = tipoeventoFacadeLocal.findBynombre("EMAIL");
-        while (iterator.hasNext()) {
-            Evento e = iterator.next();
-            if(!e.getUsuariosList().contains(usuario)||!e.getEstado().equals("ACTIVO")||e.getTipo().equals(tipo)){
-                iterator.remove();
-            }
-        }
-        return eventosHostess;
-    }
-
-    @Override
-    public List<Clienteevento> findClienteEventosHostess(Integer integer) throws EventoSinClientesPorRevisarException {
-        Evento evento = eventoFacadeLocal.find(integer);
-        List<Clienteevento> clientes = evento.getListasclienteseventoList();
-        List<Clienteevento> clientesAEnviar = new ArrayList<>();
-        Iterator<Clienteevento> iterator = clientes.iterator();
-
-        int cantidadClientes = findCantidadClientes();
-        Estadocliente inicial = estadoclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
-        for (int i = 0; i < cantidadClientes; i++) {
-
-            uncliente:
-            while (iterator.hasNext()) {
-                Clienteevento lce = iterator.next();
-                if (lce.getIdEstadoCliente().equals(inicial)) {
-                    clienteeventoFacadeLocal.edit(lce);
-                    clientesAEnviar.add(lce);
-                    break uncliente;
-                }
-            }
-        }
-        if (clientesAEnviar.isEmpty()) {
-            throw new EventoSinClientesPorRevisarException();
-        } else {
-            return clientesAEnviar;
-        }
-
-    }
+    TipostareasFacadeLocal tipostareasFacadeLocal;
+    @EJB
+    ListasclientestareasFacadeLocal listasclientestareasFacadeLocal;
 
     @Override
     public int findCantidadClientes() {
@@ -90,33 +50,54 @@ public class HostessFacadeImpl implements HostessFacade {
     }
 
     @Override
-    public void guardarLCE(Clienteevento listasclientesevento) {
-        clienteeventoFacadeLocal.edit(listasclientesevento);
+    public List<Tarea> findTareaHostess(Usuario usuario) {
+        List<Tarea> tareasHostess;
+        tareasHostess = tareasFacadeLocal.findAll();
+        Iterator<Tarea> iterator = tareasHostess.iterator();
+        Tipotarea tipo = tipostareasFacadeLocal.findBynombre("EMAIL");
+        while (iterator.hasNext()) {
+            Tarea e = iterator.next();
+            if (!e.getUsuarioList().contains(usuario)
+                    || !e.getEstado().equals("ACTIVO")
+                    || e.getTipo().equals(tipo)) {
+                iterator.remove();
+            }
+        }
+        return tareasHostess;
     }
 
     @Override
-    public Clienteevento nuevoLCE(Integer index, List<Clienteevento> clientes, Clienteevento l) throws EventoSinClientesPorRevisarException {
-        Evento evento = eventoFacadeLocal.find(index);
-        List<Clienteevento> clientesEv = evento.getListasclienteseventoList();
-        Iterator<Clienteevento> iterator = clientesEv.iterator();
+    public List<Listasclientestareas> findClienteTareaHostess(Integer integer) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-        Estadocliente inicial = estadoclienteFacadeLocal.findByNombreEstadoCliente("Inicial");
-        
-            while (iterator.hasNext()) {
-                Clienteevento lce = iterator.next();
-                if (lce.getIdEstadoCliente().equals(inicial)) {
-                    if (!clientes.contains(lce)&&!lce.equals(l)) {
-                        return lce;
-                    }
+    @Override
+    public Accion findAccionByName(String idAccion) {
+        return accionFacadeLocal.findByNombreAccion(idAccion);
+    }
+
+    @Override
+    public void guardarLCE(Listasclientestareas l) {
+        listasclientestareasFacadeLocal.edit(l);
+    }
+
+    @Override
+    public Listasclientestareas nuevoLCE(Integer index, List<Listasclientestareas> clientes, Listasclientestareas l) throws EventoSinClientesPorRevisarException {
+        Tarea tarea = tareasFacadeLocal.find(index);
+        List<Listasclientestareas> clientesEv = tarea.getListasclientestareasList();
+        Iterator<Listasclientestareas> iterator = clientesEv.iterator();
+
+        Accion inicial = accionFacadeLocal.findByNombreAccion("Inicial");
+
+        while (iterator.hasNext()) {
+            Listasclientestareas lce = iterator.next();
+            if (lce.getIdAccion().equals(inicial)) {
+                if (!clientes.contains(lce) && !lce.equals(l)) {
+                    return lce;
                 }
             }
-        
+        }
+
         throw new EventoSinClientesPorRevisarException();
-
-    }
-
-    @Override
-    public Estadocliente findEstadoClientesByName(String idEstadoCliente) {
-        return estadoclienteFacadeLocal.findByNombreEstadoCliente(idEstadoCliente);
     }
 }

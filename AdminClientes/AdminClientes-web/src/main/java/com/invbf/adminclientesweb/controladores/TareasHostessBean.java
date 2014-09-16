@@ -5,6 +5,7 @@
 package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import java.io.IOException;
 import java.util.List;
@@ -22,33 +23,33 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @ViewScoped
-public class EventosHostessBean {
+public class TareasHostessBean {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
     @EJB
     HostessFacade hostessFacade;
-    private List<Evento> lista;
+    private List<Tarea> lista;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    private List<Evento> flista;
+    private List<Tarea> flista;
 
-    public List<Evento> getFlista() {
+    public List<Tarea> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Evento> flista) {
+    public void setFlista(List<Tarea> flista) {
         this.flista = flista;
     }
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public EventosHostessBean() {
+    public TareasHostessBean() {
     }
 
     @PostConstruct
@@ -63,14 +64,14 @@ public class EventosHostessBean {
                 LOGGER.error(ex);
             }
         }
-        lista = hostessFacade.findEventosHostess(sessionBean.getUsuario());
+        lista = hostessFacade.findTareaHostess(sessionBean.getUsuario());
     }
 
-    public List<Evento> getLista() {
+    public List<Tarea> getLista() {
         return lista;
     }
 
-    public void setLista(List<Evento> lista) {
+    public void setLista(List<Tarea> lista) {
         this.lista = lista;
     }
 
@@ -84,7 +85,7 @@ public class EventosHostessBean {
     
     public void goEvento(int id) {
         try {
-            sessionBean.getAttributes().put("idEvento", new Integer(id));
+            sessionBean.getAttributes().put("idTarea", new Integer(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
         } catch (IOException ex) {
                 LOGGER.error(ex);

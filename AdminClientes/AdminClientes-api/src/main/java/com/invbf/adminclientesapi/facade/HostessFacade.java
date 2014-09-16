@@ -4,9 +4,9 @@
  */
 package com.invbf.adminclientesapi.facade;
 
-import com.invbf.adminclientesapi.entity.Clienteevento;
-import com.invbf.adminclientesapi.entity.Estadocliente;
-import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Accion;
+import com.invbf.adminclientesapi.entity.Listasclientestareas;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import java.util.List;
@@ -17,15 +17,15 @@ import java.util.List;
  */
 public interface HostessFacade {
 
-    public List<Evento> findEventosHostess(Usuario usuario);
-
-    public List<Clienteevento> findClienteEventosHostess(Integer integer)throws EventoSinClientesPorRevisarException;
+    public List<Tarea> findTareaHostess(Usuario usuario);
 
     public int findCantidadClientes();
 
-    public void guardarLCE(Clienteevento listasclientesevento);
+    public List<Listasclientestareas> findClienteTareaHostess(Integer integer);
 
-    public Clienteevento nuevoLCE(Integer index, List<Clienteevento> clientes, Clienteevento l)throws EventoSinClientesPorRevisarException;
+    public Accion findAccionByName(String idAccion);
 
-    public Estadocliente findEstadoClientesByName(String idEstadoCliente);
+    public void guardarLCE(Listasclientestareas l);
+
+    public Listasclientestareas nuevoLCE(Integer integer, List<Listasclientestareas> clientes, Listasclientestareas l)throws EventoSinClientesPorRevisarException;
 }

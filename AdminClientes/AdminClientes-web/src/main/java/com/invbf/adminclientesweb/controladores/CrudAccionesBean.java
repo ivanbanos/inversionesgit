@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.util.List;
@@ -21,14 +21,14 @@ import org.apache.log4j.Logger;
  */
 @ManagedBean
 @ViewScoped
-public class CrudEstadosClientesBean {
+public class CrudAccionesBean {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
-    private List<Estadocliente> lista;
-    private Estadocliente elemento;
+    private List<Accion> lista;
+    private Accion elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -36,42 +36,42 @@ public class CrudEstadosClientesBean {
         this.sessionBean = sessionBean;
     }
 
-    private List<Estadocliente> flista;
+    private List<Accion> flista;
 
-    public List<Estadocliente> getFlista() {
+    public List<Accion> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Estadocliente> flista) {
+    public void setFlista(List<Accion> flista) {
         this.flista = flista;
     }
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public CrudEstadosClientesBean() {
+    public CrudAccionesBean() {
     }
 
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
-        elemento = new Estadocliente();
-        lista = marketingUserFacade.findAllEstadosClietes();
+        elemento = new Accion();
+        lista = marketingUserFacade.findAllAcciones();
     }
 
-    public List<Estadocliente> getLista() {
+    public List<Accion> getLista() {
         return lista;
     }
 
-    public void setLista(List<Estadocliente> lista) {
+    public void setLista(List<Accion> lista) {
         this.lista = lista;
     }
 
-    public Estadocliente getElemento() {
+    public Accion getElemento() {
         return elemento;
     }
 
-    public void setElemento(Estadocliente elemento) {
+    public void setElemento(Accion elemento) {
         this.elemento = elemento;
     }
 
@@ -85,24 +85,24 @@ public class CrudEstadosClientesBean {
 
     
     public void delete(){
-        marketingUserFacade.deleteEstadoCliente(elemento);
-        lista = marketingUserFacade.findAllEstadosClietes();
-        sessionBean.registrarlog("eliminar", "EstadosCliente", elemento.toString());
-        FacesUtil.addInfoMessage("Estado eliminado", elemento.getNombre());
-        elemento = new Estadocliente();
+        marketingUserFacade.deleteAccion(elemento);
+        lista = marketingUserFacade.findAllAcciones();
+        sessionBean.registrarlog("eliminar", "Acciones", elemento.toString());
+        FacesUtil.addInfoMessage("Accion eliminada", elemento.getNombre());
+        elemento = new Accion();
     }
     
     public void guardar(){
-        boolean opcion = marketingUserFacade.guardarEstadoCliente(elemento);
-        lista = marketingUserFacade.findAllEstadosClietes();
+        boolean opcion = marketingUserFacade.guardarAccion(elemento);
+        lista = marketingUserFacade.findAllAcciones();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "EstadosCliente", elemento.toString());
+            sessionBean.registrarlog("actualizar", "Acciones", elemento.toString());
         FacesUtil.addInfoMessage("Estado actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "EstadosCliente", elemento.toString());
+            sessionBean.registrarlog("crear", "Acciones", elemento.toString());
         FacesUtil.addInfoMessage("Estado creado", elemento.getNombre());
         }
-        elemento = new Estadocliente();
+        elemento = new Accion();
     }
     
 }

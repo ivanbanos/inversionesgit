@@ -20,14 +20,14 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['nombre']}</label>
                         <div class="col-md-9">
-                            <h:outputLabel id="nombre" value="#{hostessEventoManejadorBean.elemento.nombre}" />
+                            <h:outputLabel id="nombre" value="#{hostessTareaManejadorBean.elemento.nombre}" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
                         <div class="col-md-9">
-                            <h:outputLabel id="fecini" value="#{hostessEventoManejadorBean.elemento.fechaInicio}" >
+                            <h:outputLabel id="fecini" value="#{hostessTareaManejadorBean.elemento.fechaInicio}" >
                                 <f:convertDateTime pattern="MM-dd-yyyy" />
                             </h:outputLabel>
                         </div>
@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
                         <div class="col-md-9">
-                            <h:outputLabel id="fecfin" value="#{hostessEventoManejadorBean.elemento.fechaFinalizacion}"  >
+                            <h:outputLabel id="fecfin" value="#{hostessTareaManejadorBean.elemento.fechaFinalizacion}"  >
                                 <f:convertDateTime pattern="MM-dd-yyyy" />
                             </h:outputLabel>
                         </div>
@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['casino']}</label>
                         <div class="col-md-9">
-                            <h:outputLabel id="casino" value="#{hostessEventoManejadorBean.elemento.idCasino.nombre}" />
+                            <h:outputLabel id="casino" value="#{hostessTareaManejadorBean.elemento.idCasino.nombre}" />
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
                 <div class="panel-heading">Clientes</div>
 
                 <div class="panel-body">
-                    <c:forEach items="#{hostessEventoManejadorBean.clientes}" var="clientes">
+                    <c:forEach items="#{hostessTareaManejadorBean.clientes}" var="clientes">
                         <div class="panel panel-primary">
 
                             <div class="panel-body">
@@ -104,7 +104,7 @@
                                     <label class="col-md-3 control-label" >#{label['estados']}</label>
                                     <div class="col-md-9">
                                         <p:selectOneMenu  value="#{clientes.idEstadoCliente}">
-                                            <f:selectItems value="#{hostessEventoManejadorBean.elemento.tipo.estadosclienteList}" 
+                                            <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.estadosclienteList}" 
                                                            var="var" 
                                                            itemLabel="#{var.nombre}" 
                                                            itemValue="#{var.nombre}"/> 
@@ -114,11 +114,11 @@
 
                             </div>
                             <div class="panel-footer text-right"> 
-                                <h:commandLink action="#{hostessEventoManejadorBean.guardar(clientes.clientes.idCliente)}" 
+                                <h:commandLink action="#{hostessTareaManejadorBean.guardar(clientes.clientes.idCliente)}" 
                                                class="btn btn-primary">
                                     <i class="icon-search"></i> #{label['guardar']}
                                 </h:commandLink> 
-                                <h:commandLink action="#{hostessEventoManejadorBean.nuevo(clientes.clientes.idCliente)}" 
+                                <h:commandLink action="#{hostessTareaManejadorBean.nuevo(clientes.clientes.idCliente)}" 
                                                class="btn btn-primary">
                                     <i class="icon-search"></i> #{label['nuevo']}
                                 </h:commandLink> 

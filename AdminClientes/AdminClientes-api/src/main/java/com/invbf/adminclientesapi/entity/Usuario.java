@@ -38,6 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado"),
     @NamedQuery(name = "Usuarios.findByTipoPerfil", query = "SELECT u FROM Usuario u WHERE u.idPerfil.nombre = :nombrePerfil")})
 public class Usuario implements Serializable {
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<Tarea> tareasList;
+    @OneToMany(mappedBy = "usuario")
+    private List<Listasclientestareas> listasclientestareasList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,12 +56,8 @@ public class Usuario implements Serializable {
     private String contrasena;
     @Column(name = "estado")
     private String estado;
-    @ManyToMany(mappedBy = "usuariosList")
-    private List<Evento> eventosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Log> logsList;
-    @OneToMany(mappedBy = "usuario")
-    private List<Clienteevento> listasclienteseventoList;
     @JoinColumn(name = "idPerfil", referencedColumnName = "idPerfil")
     @ManyToOne(optional = false)
     private Perfil idPerfil;
@@ -108,30 +108,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Evento> getEventosList() {
-        return eventosList;
-    }
-
-    public void setEventosList(List<Evento> eventosList) {
-        this.eventosList = eventosList;
-    }
-
-    @XmlTransient
     public List<Log> getLogsList() {
         return logsList;
     }
 
     public void setLogsList(List<Log> logsList) {
         this.logsList = logsList;
-    }
-
-    @XmlTransient
-    public List<Clienteevento> getListasclienteseventoList() {
-        return listasclienteseventoList;
-    }
-
-    public void setListasclienteseventoList(List<Clienteevento> listasclienteseventoList) {
-        this.listasclienteseventoList = listasclienteseventoList;
     }
 
     public Perfil getIdPerfil() {
@@ -165,6 +147,24 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return idUsuario + " "+nombreUsuario;
+    }
+
+    @XmlTransient
+    public List<Tarea> getTareasList() {
+        return tareasList;
+    }
+
+    public void setTareasList(List<Tarea> tareasList) {
+        this.tareasList = tareasList;
+    }
+
+    @XmlTransient
+    public List<Listasclientestareas> getListasclientestareasList() {
+        return listasclientestareasList;
+    }
+
+    public void setListasclientestareasList(List<Listasclientestareas> listasclientestareasList) {
+        this.listasclientestareasList = listasclientestareasList;
     }
     
 }

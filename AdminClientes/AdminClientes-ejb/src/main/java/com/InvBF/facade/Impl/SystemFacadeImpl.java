@@ -4,25 +4,22 @@
  */
 package com.InvBF.facade.Impl;
 
+import com.InvBF.EntityFacade.AccionFacadeLocal;
 import com.InvBF.EntityFacade.AtributoFacadeLocal;
 import com.InvBF.EntityFacade.ClienteatributoFacadeLocal;
-import com.InvBF.EntityFacade.ClienteeventoFacadeLocal;
 import com.InvBF.EntityFacade.ConfiguracionFacadeLocal;
-import com.InvBF.EntityFacade.EstadoclienteFacadeLocal;
 import com.InvBF.EntityFacade.FormularioFacadeLocal;
+import com.InvBF.EntityFacade.ListasclientestareasFacadeLocal;
 import com.InvBF.EntityFacade.LogFacadeLocal;
 import com.InvBF.EntityFacade.UsuarioFacadeLocal;
 import com.InvBF.util.EmailSender;
 import com.InvBF.util.EncryptUtil;
-import com.invbf.adminclientesapi.entity.Atributo;
-import com.invbf.adminclientesapi.entity.Clienteatributo;
-import com.invbf.adminclientesapi.entity.Clienteevento;
-import com.invbf.adminclientesapi.entity.ClientesatributosPK;
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Configuracion;
-import com.invbf.adminclientesapi.entity.Estadocliente;
-import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Listasclientestareas;
 import com.invbf.adminclientesapi.entity.Log;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
 import com.invbf.adminclientesapi.exceptions.NoCambioContrasenaException;
@@ -38,7 +35,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -63,11 +59,11 @@ public class SystemFacadeImpl implements SystemFacade {
     @EJB
     AtributoFacadeLocal atributoFacadeLocal;
     @EJB
-    ClienteeventoFacadeLocal clienteeventoFacadeLocal;
+    ListasclientestareasFacadeLocal  listasclientestareasFacadeLocal;
     @EJB
     ClienteatributoFacadeLocal clienteatributoFacadeLocal;
     @EJB
-    EstadoclienteFacadeLocal estadoclienteFacadeLocal;
+    AccionFacadeLocal accionFacadeLocal;
 
     @Override
     public Usuario iniciarSession(Usuario usuario) throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException {
@@ -159,7 +155,7 @@ public class SystemFacadeImpl implements SystemFacade {
     }
 
     @Override
-    public List<InfoCorreoCliente> enviarCorreo(Evento elemento) {
+    public List<InfoCorreoCliente> enviarCorreo(Tarea elemento) {
         EmailSender es = new EmailSender();
         es.setAuth(true);
         es.setDebug(true);
@@ -169,24 +165,24 @@ public class SystemFacadeImpl implements SystemFacade {
         es.setProtocol(configuracionFacadeLocal.findByNombre("protocol").getValor());
         es.setUsername(configuracionFacadeLocal.findByNombre("username").getValor());
         es.setPassword(configuracionFacadeLocal.findByNombre("contrasena").getValor());
-        Estadocliente enviado = estadoclienteFacadeLocal.findByNombreEstadoCliente("ENVIADO");
-        Estadocliente noenviado = estadoclienteFacadeLocal.findByNombreEstadoCliente("NO ENVIADO");
-        for (Clienteevento lce : elemento.getListasclienteseventoList()) {
+        Accion enviado = accionFacadeLocal.findByNombreAccion("ENVIADO");
+        Accion noenviado = accionFacadeLocal.findByNombreAccion("NO ENVIADO");
+        for (Listasclientestareas lce : elemento.getListasclientestareasList()) {
             try {
-                String correoString = lce.getClientes().getCorreo();
+                String correoString = lce.getCliente().getCorreo();
                 if (correoString.equals("")) {
                     
-                    lce.setIdEstadoCliente(noenviado);
+                    lce.setIdAccion(noenviado);
                     lce.setObservaciones("Correo vacio");
                 }
-                es.sendEmail(correoString, elemento.getNombre(), elemento.getDescripcion(), elemento.getIdEvento() + elemento.getImagen());
+                es.sendEmail(correoString, elemento.getNombre(), elemento.getDescripcion(), elemento.getIdEvento() + elemento.getIdEvento().getImagen());
 
-                lce.setIdEstadoCliente(enviado);
+                lce.setIdAccion(enviado);
             } catch (MessagingException ex) {
-                lce.setIdEstadoCliente(noenviado);
+                lce.setIdAccion(noenviado);
                     lce.setObservaciones("Correo invalido");
             } catch (IOException ex) {
-                lce.setIdEstadoCliente(noenviado);
+                lce.setIdAccion(noenviado);
                     lce.setObservaciones("problemas externos llamas administrador");
             }
         }

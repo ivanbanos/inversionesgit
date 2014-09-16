@@ -5,16 +5,24 @@
 package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,99 +33,70 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Acciones.findAll", query = "SELECT a FROM Accion a"),
-    @NamedQuery(name = "Acciones.findByIdAcciones", query = "SELECT a FROM Accion a WHERE a.idAcciones = :idAcciones"),
-    @NamedQuery(name = "Acciones.findByTipo", query = "SELECT a FROM Accion a WHERE a.tipo = :tipo"),
-    @NamedQuery(name = "Acciones.findById", query = "SELECT a FROM Accion a WHERE a.id = :id"),
-    @NamedQuery(name = "Acciones.findByTabla", query = "SELECT a FROM Accion a WHERE a.tabla = :tabla"),
-    @NamedQuery(name = "Acciones.findByCampo", query = "SELECT a FROM Accion a WHERE a.campo = :campo"),
-    @NamedQuery(name = "Acciones.findByNuevoValor", query = "SELECT a FROM Accion a WHERE a.nuevoValor = :nuevoValor")})
+    @NamedQuery(name = "Acciones.findByNombre", query = "SELECT a FROM Accion a WHERE a.nombre = :nombre")})
 public class Accion implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idAcciones")
-    private Integer idAcciones;
-    @Column(name = "tipo")
-    private String tipo;
-    @Column(name = "id")
-    private String id;
-    @Column(name = "tabla")
-    private String tabla;
-    @Column(name = "campo")
-    private String campo;
-    @Column(name = "nuevoValor")
-    private String nuevoValor;
-    @JoinColumn(name = "Perfil", referencedColumnName = "idPerfil")
-    @ManyToOne(optional = false)
-    private Perfil perfil;
+    @Column(name = "idAccion")
+    private Integer idAccion;
+    @Basic(optional = false)
+    @Column(name = "nombre")
+    private String nombre;
+    @JoinTable(name = "acciones_has_tipostareas", joinColumns = {
+        @JoinColumn(name = "idAccion", referencedColumnName = "idAccion")}, inverseJoinColumns = {
+        @JoinColumn(name = "idTipoTarea", referencedColumnName = "idTipotarea")})
+    @ManyToMany
+    private List<Tipotarea> tipostareasList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAccion")
+    private List<Listasclientestareas> listasclientestareasList;
 
     public Accion() {
     }
 
-    public Accion(Integer idAcciones) {
-        this.idAcciones = idAcciones;
+    public Accion(Integer idAccion, String nombre) {
+        this.idAccion = idAccion;
+        this.nombre = nombre;
     }
 
-    public Integer getIdAcciones() {
-        return idAcciones;
+    public Integer getIdAccion() {
+        return idAccion;
     }
 
-    public void setIdAcciones(Integer idAcciones) {
-        this.idAcciones = idAcciones;
+    public void setIdAccion(Integer idAccion) {
+        this.idAccion = idAccion;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getId() {
-        return id;
+    @XmlTransient
+    public List<Tipotarea> getTipostareasList() {
+        return tipostareasList;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTipostareasList(List<Tipotarea> tipostareasList) {
+        this.tipostareasList = tipostareasList;
     }
 
-    public String getTabla() {
-        return tabla;
+    @XmlTransient
+    public List<Listasclientestareas> getListasclientestareasList() {
+        return listasclientestareasList;
     }
 
-    public void setTabla(String tabla) {
-        this.tabla = tabla;
-    }
-
-    public String getCampo() {
-        return campo;
-    }
-
-    public void setCampo(String campo) {
-        this.campo = campo;
-    }
-
-    public String getNuevoValor() {
-        return nuevoValor;
-    }
-
-    public void setNuevoValor(String nuevoValor) {
-        this.nuevoValor = nuevoValor;
-    }
-
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+    public void setListasclientestareasList(List<Listasclientestareas> listasclientestareasList) {
+        this.listasclientestareasList = listasclientestareasList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idAcciones != null ? idAcciones.hashCode() : 0);
+        hash += (idAccion != null ? idAccion.hashCode() : 0);
         return hash;
     }
 
@@ -128,7 +107,7 @@ public class Accion implements Serializable {
             return false;
         }
         Accion other = (Accion) object;
-        if ((this.idAcciones == null && other.idAcciones != null) || (this.idAcciones != null && !this.idAcciones.equals(other.idAcciones))) {
+        if ((this.idAccion == null && other.idAccion != null) || (this.idAccion != null && !this.idAccion.equals(other.idAccion))) {
             return false;
         }
         return true;
@@ -136,7 +115,7 @@ public class Accion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.entity.Acciones[ idAcciones=" + idAcciones + " ]";
+        return  idAccion + " " + nombre;
     }
     
 }

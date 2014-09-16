@@ -28,7 +28,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         super(Usuario.class);
     }
 
-    @Override
+   @Override
     public Usuario findByNombreUsuario(String nombreUsuario) {
         List<Usuario> usuarios = (List<Usuario>) em.createNamedQuery("Usuarios.findByNombreUsuario")
                 .setParameter("nombreUsuario", nombreUsuario)

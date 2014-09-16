@@ -12,6 +12,7 @@ import com.InvBF.util.EncryptUtil;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.NombreUsuarioExistenteException;
@@ -160,12 +161,13 @@ public class AdminFacadeImpl implements AdminFacade {
     }
 
     @Override
-    public void agregarEventoUsuarios(Usuario s, Evento elemento) {
+    public void agregarTareaUsuarios(Usuario s, Tarea elemento) {
         Usuario usuario = usuarioFacadeLocal.find(s.getIdUsuario());
-        if(usuario.getEventosList()==null){
-            usuario.setEventosList(new ArrayList<Evento>(0));
+        if(usuario.getTareasList()==null){
+            usuario.setTareasList(new ArrayList<Tarea>(0));
         }
-        usuario.getEventosList().add(elemento);
+        usuario.getTareasList().add(elemento);
+        usuarioFacadeLocal.edit(usuario);
     }
 
     @Override

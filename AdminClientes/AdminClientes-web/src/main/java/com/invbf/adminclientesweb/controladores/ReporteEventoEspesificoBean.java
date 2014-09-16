@@ -5,14 +5,11 @@
 package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Cliente;
-import com.invbf.adminclientesapi.entity.Clienteevento;
-import com.invbf.adminclientesapi.entity.Estadocliente;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
-import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +51,13 @@ public class ReporteEventoEspesificoBean {
         this.sessionBean = sessionBean;
     }
     
-    private List<Clienteevento> flista;
+    private List<Evento> flista;
 
-    public List<Clienteevento> getFlista() {
+    public List<Evento> getFlista() {
         return flista;
     }
 
-    public void setFlista(List<Clienteevento> flista) {
+    public void setFlista(List<Evento> flista) {
         this.flista = flista;
     }
 
@@ -95,19 +92,7 @@ public class ReporteEventoEspesificoBean {
         clienteses = marketingUserFacade.findAllClientes();
         usuarioses = adminFacade.findAllUsuariosHostess();
         clientesesEvento = new ArrayList<Cliente>();
-        for (Clienteevento lce : elemento.getListasclienteseventoList()) {
-            clientesesEvento.add(lce.getClientes());
-            if (clienteses.contains(lce.getClientes())) {
-                clienteses.remove(lce.getClientes());
-            }
-        }
-        for (Usuario u : elemento.getUsuariosList()) {
-            if (usuarioses.contains(u)) {
-                usuarioses.remove(u);
-            }
-        }
         todosclienteses = new DualListModel<Cliente>(clienteses, clientesesEvento);
-        todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuariosList());
     }
 
     public Evento getElemento() {
@@ -124,50 +109,6 @@ public class ReporteEventoEspesificoBean {
 
     public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
         this.marketingUserFacade = marketingUserFacade;
-    }
-
-    public void guardar() {
-        Estadocliente estadoscliente = marketingUserFacade.findByNombreEstadoCliente("Inicial");
-        elemento.setUsuariosList(todosusuarioses.getTarget());
-        for (Usuario s : todosusuarioses.getTarget()) {
-            adminFacade.agregarEventoUsuarios(s, elemento);
-        }
-        ArrayList<Clienteevento> al = new ArrayList<Clienteevento>(elemento.getListasclienteseventoList());
-        elemento.getListasclienteseventoList().clear();
-        for (Cliente c : todosclienteses.getTarget()) {
-
-            Clienteevento listasclientesevento = new Clienteevento(elemento.getIdEvento(), c.getIdCliente());
-            if (al.contains(listasclientesevento)) {
-                elemento.getListasclienteseventoList().add(al.get(al.indexOf(listasclientesevento)));
-            } else {
-                listasclientesevento.setIdEstadoCliente(estadoscliente);
-                listasclientesevento.setEventos(elemento);
-                listasclientesevento.setClientes(c);
-                elemento.getListasclienteseventoList().add(listasclientesevento);
-            }
-        }
-        marketingUserFacade.guardarEventos(elemento);
-        sessionBean.actualizarUsuario();
-        elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
-
-        clienteses = marketingUserFacade.findAllClientes();
-        usuarioses = adminFacade.findAllUsuariosHostess();
-        clientesesEvento = new ArrayList<Cliente>();
-        for (Clienteevento lce : elemento.getListasclienteseventoList()) {
-            clientesesEvento.add(lce.getClientes());
-            if (clienteses.contains(lce.getClientes())) {
-                clienteses.remove(lce.getClientes());
-            }
-        }
-        for (Usuario u : elemento.getUsuariosList()) {
-            if (usuarioses.contains(u)) {
-                usuarioses.remove(u);
-            }
-        }
-        todosclienteses = new DualListModel<Cliente>(clienteses, clientesesEvento);
-        todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuariosList());
-
-        FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
     }
 
     public AdminFacade getAdminFacade() {

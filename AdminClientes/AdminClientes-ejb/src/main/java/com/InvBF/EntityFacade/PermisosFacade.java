@@ -4,7 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
-import com.invbf.adminclientesapi.entity.Clienteevento;
+import com.invbf.adminclientesapi.entity.Permiso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author ideacentre
  */
 @Stateless
-public class ClienteeventoFacade extends AbstractFacade<Clienteevento> implements ClienteeventoFacadeLocal {
+public class PermisosFacade extends AbstractFacade<Permiso> implements PermisosFacadeLocal {
     @PersistenceContext(unitName = "AdminClientesPU")
     private EntityManager em;
 
@@ -23,8 +23,13 @@ public class ClienteeventoFacade extends AbstractFacade<Clienteevento> implement
         return em;
     }
 
-    public ClienteeventoFacade() {
-        super(Clienteevento.class);
+    public PermisosFacade() {
+        super(Permiso.class);
+    }
+
+    @Override
+    public Object findByNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

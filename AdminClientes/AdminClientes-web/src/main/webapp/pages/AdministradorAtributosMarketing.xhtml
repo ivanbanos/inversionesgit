@@ -161,17 +161,17 @@
                 <div class="col-md-12 column">
 
                     <!--EstadosClientes-->
-                    <c:if test="#{sessionBean.perfilViewMatch(&quot;EstadosClientes&quot;)}">
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Acciones&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Estados de Clientes</h3>
+                                <h3 class="panel-title">Acciones</h3>
 
                                 <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
-                                    <p:dataTable id="detailsTableEstadosClientes" var="element" value="#{crudEstadosClientesBean.lista}"  
-                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEstadosClientes" filteredValue="#{crudEstadosClientesBean.flista}"
+                                    <p:dataTable id="detailsTableEstadosClientes" var="element" value="#{crudAccionesBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEstadosClientes" filteredValue="#{crudAccionesBean.flista}"
                                                  rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -189,20 +189,20 @@
                                             <p:commandButton id="editButtonEstadosClientes" update=":#{p:component('editDialogEstadosClientes')}" 
                                                              oncomplete="PF('editDialogEstadosClientes').show()" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;EstadosCliente&quot;, &quot;actualizar&quot;)}">  
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudEstadosClientesBean.elemento}" />  
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Acciones&quot;, &quot;actualizar&quot;)}">  
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudAccionesBean.elemento}" />  
                                             </p:commandButton>
                                             <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogEstadosClientes').show();" 
                                                              icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogEstadosClientes')}"
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;EstadosCliente&quot;, &quot;eliminar&quot;)}">
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudEstadosClientesBean.elemento}" /> 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Acciones&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudAccionesBean.elemento}" /> 
                                             </p:commandButton> 
                                         </p:column>
 
                                         <f:facet name="footer">  
                                             <p:commandButton id="addButton" oncomplete="PF('addDialogEstadosClientes').show();" 
                                                              value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;EstadosCliente&quot;, &quot;crear&quot;)}"/>  
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Acciones&quot;, &quot;crear&quot;)}"/>  
                                         </f:facet>
                                     </p:dataTable>
 
@@ -222,7 +222,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label" >#{label['nombre']}</label>
                                                     <div class="col-md-9">
-                                                        <h:inputText id="codigo" value="#{crudEstadosClientesBean.elemento.nombre}" required="true" class="form-control"/>
+                                                        <h:inputText id="codigo" value="#{crudAccionesBean.elemento.nombre}" required="true" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -230,7 +230,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="panel-footer text-right"> 
-                                        <p:commandButton value="Confirmar" actionListener="#{crudEstadosClientesBean.guardar()}" 
+                                        <p:commandButton value="Confirmar" actionListener="#{crudAccionesBean.guardar()}" 
                                                          oncomplete="PF('addDialogEstadosClientes').hide()" icon="ui-icon-check" 
                                                          update=":#{p:component('detailsTableEstadosClientes')} :#{p:component('addDialogEstadosClientes')} :#{p:component('messages')}" style="margin:0" />   
                                         <p:commandButton value="Cerrar" oncomplete="PF('addDialogEstadosClientes').hide()" update=":#{p:component('addDialogEstadosClientes')}" icon="ui-icon-closethick"/>  
@@ -250,7 +250,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label" >#{label['nombre']}</label>
                                                     <div class="col-md-9">
-                                                        <h:inputText id="codigo" value="#{crudEstadosClientesBean.elemento.nombre}" required="true" class="form-control"/>
+                                                        <h:inputText id="codigo" value="#{crudAccionesBean.elemento.nombre}" required="true" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -258,7 +258,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="panel-footer text-right"> 
-                                        <p:commandButton value="Confirmar" action="#{crudEstadosClientesBean.guardar()}" 
+                                        <p:commandButton value="Confirmar" action="#{crudAccionesBean.guardar()}" 
                                                          oncomplete="PF('editDialogEstadosClientes').hide()" icon="ui-icon-check"
                                                          update=":#{p:component('detailsTableEstadosClientes')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogEstadosClientes').hide()" icon="ui-icon-closethick"/> 
@@ -267,11 +267,11 @@
                             </p:dialog>
                         </h:form>
                         <h:form>
-                            <p:confirmDialog id="deleteDialogEstadosClientes" message="Quiere borrar el estado de cliente #{crudEstadosClientesBean.elemento.nombre}?"  
+                            <p:confirmDialog id="deleteDialogEstadosClientes" message="Quiere borrar el estado de cliente #{crudAccionesBean.elemento.nombre}?"  
                                              header="Borrar" severity="alert" widgetVar="deleteDialogEstadosClientes" closable="false">  
 
                                 <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogEstadosClientes').hide()"  
-                                                 action="#{crudEstadosClientesBean.delete()}" update=":#{p:component('detailsTableEstadosClientes')} :#{p:component('messages')}"/>  
+                                                 action="#{crudAccionesBean.delete()}" update=":#{p:component('detailsTableEstadosClientes')} :#{p:component('messages')}"/>  
                                 <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogEstadosClientes').hide()" type="button" />   
 
                             </p:confirmDialog> 
@@ -669,17 +669,17 @@
                 <div class="col-md-12 column">
 
                     <!--TipoEvento-->
-                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Tipoevento&quot;)}">
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Tipotareas&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Tipos de evento</h3>
+                                <h3 class="panel-title">Tipos de Tarea</h3>
 
                                 <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
-                                    <p:dataTable id="detailsTableTipoevento" var="element" value="#{crudTipoEventoBean.lista}"  
-                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableTipoevento" filteredValue="#{crudTipoEventoBean.flista}"
+                                    <p:dataTable id="detailsTableTipoevento" var="element" value="#{crudTipotareaBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableTipoevento" filteredValue="#{crudTipotareaBean.flista}"
                                                  rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -697,20 +697,20 @@
                                             <p:commandButton id="editButtonEstadosClientes" update=":#{p:component('editDialogTipoevento')}" 
                                                              oncomplete="PF('editDialogTipoevento').show()" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipoevento&quot;, &quot;actualizar&quot;)}">  
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipoEventoBean.elemento}" />  
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipotareas&quot;, &quot;actualizar&quot;)}">  
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipotareaBean.elemento}" />  
                                             </p:commandButton>
                                             <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogTipoevento').show();" 
                                                              icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogTipoevento')}"
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipoevento&quot;, &quot;eliminar&quot;)}">
-                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipoEventoBean.elemento}" /> 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipotareas&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipotareaBean.elemento}" /> 
                                             </p:commandButton> 
                                         </p:column>
 
                                         <f:facet name="footer">  
                                             <p:commandButton id="addButton" oncomplete="PF('addDialogTipoevento').show();" 
                                                              value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
-                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipoevento&quot;, &quot;crear&quot;)}"/>  
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tipotareas&quot;, &quot;crear&quot;)}"/>  
                                         </f:facet>
                                     </p:dataTable>
 
@@ -730,7 +730,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label" >#{label['nombre']}</label>
                                                     <div class="col-md-9">
-                                                        <h:inputText id="codigo" value="#{crudTipoEventoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                        <h:inputText id="codigo" value="#{crudTipotareaBean.elemento.nombre}" required="true" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -740,9 +740,9 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label" >#{label['estadoCliente']}</label>
                                                     <div class="col-md-9">
-                                                        <p:pickList id="PojoPickList" value="#{crudTipoEventoBean.estadosClientesTodos}" var="form" effect="bounce"
+                                                        <p:pickList id="PojoPickList" value="#{crudTipotareaBean.accionesTodos}" var="form" effect="bounce"
                                                                     itemValue="#{form}" itemLabel="#{form.nombre}"  showCheckbox="true"
-                                                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="estadosClientescom" >
+                                                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="accionescom" >
 
                                                             <f:facet name="sourceCaption">#{label['noagregadas']}</f:facet>
                                                             <f:facet name="targetCaption">#{label['agregadas']}</f:facet>
@@ -758,7 +758,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="panel-footer text-right"> 
-                                        <p:commandButton value="Confirmar" actionListener="#{crudTipoEventoBean.guardar()}" 
+                                        <p:commandButton value="Confirmar" actionListener="#{crudTipotareaBean.guardar()}" 
                                                          oncomplete="PF('addDialogTipoevento').hide()" icon="ui-icon-check" 
                                                          update=":#{p:component('detailsTableTipoevento')} :#{p:component('addDialogTipoevento')} :#{p:component('messages')}" style="margin:0" />   
                                         <p:commandButton value="Cerrar" oncomplete="PF('addDialogTipoevento').hide()" update=":#{p:component('addDialogTipoevento')}" icon="ui-icon-closethick"/>  
@@ -780,7 +780,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label" >#{label['nombre']}</label>
                                                     <div class="col-md-9">
-                                                        <h:inputText id="codigo" value="#{crudTipoEventoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                        <h:inputText id="codigo" value="#{crudTipotareaBean.elemento.nombre}" required="true" class="form-control"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -790,9 +790,9 @@
                                                 <div class="form-group">
                                                     <label class="col-md-3 control-label" >#{label['estadoCliente']}</label>
                                                     <div class="col-md-9">
-                                                        <p:pickList id="PojoPickList" value="#{crudTipoEventoBean.estadosClientesTodos}" var="form" effect="bounce"
+                                                        <p:pickList id="PojoPickList" value="#{crudTipotareaBean.accionesTodos}" var="form" effect="bounce"
                                                                     itemValue="#{form}" itemLabel="#{form.nombre}"  showCheckbox="true"
-                                                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="estadosClientescom" >
+                                                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="accionescom" >
 
                                                             <f:facet name="sourceCaption">#{label['noagregadas']}</f:facet>
                                                             <f:facet name="targetCaption">#{label['agregadas']}</f:facet>
@@ -808,7 +808,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="panel-footer text-right"> 
-                                         <p:commandButton value="Confirmar" action="#{crudTipoEventoBean.guardar()}" 
+                                         <p:commandButton value="Confirmar" action="#{crudTipotareaBean.guardar()}" 
                                                          oncomplete="PF('editDialogTipoevento').hide()" icon="ui-icon-check"
                                                          update=":#{p:component('detailsTableTipoevento')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogTipoevento').hide()" icon="ui-icon-closethick"/> 
@@ -817,11 +817,11 @@
                             </p:dialog>
                         </h:form>
                         <h:form>
-                            <p:confirmDialog id="deleteDialogTipoevento" message="Quiere borrar el tipo de evento #{crudTipoEventoBean.elemento.nombre}?"  
+                            <p:confirmDialog id="deleteDialogTipoevento" message="Quiere borrar el tipo de evento #{crudTipotareaBean.elemento.nombre}?"  
                                              header="Borrar" severity="alert" widgetVar="deleteDialogTipoevento" closable="false">  
 
                                 <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogTipoevento').hide()"  
-                                                 action="#{crudTipoEventoBean.delete()}" update=":#{p:component('detailsTableTipoevento')} :#{p:component('messages')}"/>  
+                                                 action="#{crudTipotareaBean.delete()}" update=":#{p:component('detailsTableTipoevento')} :#{p:component('messages')}"/>  
                                 <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogTipoevento').hide()" type="button" />   
 
                             </p:confirmDialog> 

@@ -4,14 +4,14 @@
  */
 package com.invbf.adminclientesapi.facade;
 
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Atributo;
 import com.invbf.adminclientesapi.entity.Casino;
 import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
-import com.invbf.adminclientesapi.entity.Estadocliente;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
-import com.invbf.adminclientesapi.entity.Tipoevento;
+import com.invbf.adminclientesapi.entity.Tipotarea;
 import java.util.List;
 
 /**
@@ -21,14 +21,6 @@ import java.util.List;
 public interface MarketingUserFacade {
 
     public List<Cliente> findAllClientes();
-
-    public List<Estadocliente> findAllEstadosClietes();
-
-    public Estadocliente findByIdEstadoCliente(int idEstadoCliente);
-
-    public void deleteEstadoCliente(Estadocliente estadoCliente);
-
-    public boolean guardarEstadoCliente(Estadocliente estadoscliente);
 
     public List<Categoria> findAllCategorias();
 
@@ -70,14 +62,18 @@ public interface MarketingUserFacade {
 
     public Evento findEvento(Integer integer);
 
-    public Estadocliente findByNombreEstadoCliente(String iniciado);
-
     public void guardarImagen(byte[] contents, Integer idEvento, String fileName);
 
-    public List<Tipoevento> findAllTipoevento();
+    public List<Accion> findAllAcciones();
 
-    public void deleteTipoevento(Tipoevento elemento);
+    public void deleteAccion(Accion elemento);
 
-    public boolean guardarTipoevento(Tipoevento elemento);
+    public boolean guardarAccion(Accion elemento);
+
+    public List<Tipotarea> findAllTipotarea();
+
+    public boolean guardarTipotarea(Tipotarea elemento);
+
+    public void deleteTipotarea(Tipotarea elemento);
 
 }

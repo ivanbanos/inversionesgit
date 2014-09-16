@@ -32,7 +32,7 @@ public class ClienteatributoFacade extends AbstractFacade<Clienteatributo> imple
 
     @Override
     public List<Clienteatributo> findByCliente(Cliente elemento) {
-        List<Clienteatributo> clientesatributos = (List<Clienteatributo>)em.createNamedQuery("Clientesatributos.findByIdCliente")
+       List<Clienteatributo> clientesatributos = (List<Clienteatributo>)em.createNamedQuery("Clientesatributos.findByIdCliente")
             .setParameter("idCliente", elemento.getIdCliente())
             .getResultList();
         if(clientesatributos==null||clientesatributos.isEmpty()){
@@ -44,7 +44,7 @@ public class ClienteatributoFacade extends AbstractFacade<Clienteatributo> imple
 
     @Override
     public List<Clienteatributo> findByAtributo(Atributo elemento) {
-        List<Clienteatributo> clientesatributos = (List<Clienteatributo>)em.createNamedQuery("Clientesatributos.findByIdAtributo")
+       List<Clienteatributo> clientesatributos = (List<Clienteatributo>)em.createNamedQuery("Clientesatributos.findByIdAtributo")
             .setParameter("idAtributo", elemento.getIdAtributo())
             .getResultList();
         if(clientesatributos==null||clientesatributos.isEmpty()){

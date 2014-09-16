@@ -39,13 +39,9 @@
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
-                                        <p:column headerText="Tipo de evento" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains" >
-                                            <h:outputText value="#{element.tipo.nombre}" />
-                                        </p:column>
-
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                                             
-                                            <p:commandButton id="marketing" icon="ui-icon-gear" 
+                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
                                                              rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;) 
                                                                          or sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;actualizar&quot;)}">  

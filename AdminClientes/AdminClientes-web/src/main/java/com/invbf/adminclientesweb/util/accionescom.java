@@ -4,7 +4,7 @@
  */
 package com.invbf.adminclientesweb.util;
 
-import com.invbf.adminclientesapi.entity.Estadocliente;
+import com.invbf.adminclientesapi.entity.Accion;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,16 +16,16 @@ import javax.faces.convert.FacesConverter;
  *
  * @author ideacentre
  */
-@FacesConverter("estadosClientescom")
-public class estadosClientescom implements Converter{
+@FacesConverter("accionescom")
+public class accionescom implements Converter{
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        Estadocliente estadocliente;
-        estadocliente = new Estadocliente();
-        estadocliente.setIdEstadoCliente(Integer.parseInt(value.split(" ")[0]));
-        estadocliente.setNombre(value.split(" ")[1]);
-        return estadocliente;
+        Accion accion;
+        accion = new Accion();
+        accion.setIdAccion(Integer.parseInt(value.split(" ")[0]));
+        accion.setNombre(value.split(" ")[1]);
+        return accion;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class estadosClientescom implements Converter{
         }
         // value must be of a type that can be cast to a String.
         try {
-            return ((Estadocliente)value).toString();
+            return ((Accion)value).toString();
         } catch (ClassCastException ce) {
             FacesMessage errMsg = new FacesMessage("Error al convertir valor");
             FacesContext.getCurrentInstance().addMessage(null, errMsg);

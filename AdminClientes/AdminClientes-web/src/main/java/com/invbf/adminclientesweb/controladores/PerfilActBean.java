@@ -39,6 +39,10 @@ public class PerfilActBean {
     private boolean agregarUsuario = false;
     private boolean actualizarUsuario = false;
     private boolean eliminarUsuario = false;
+    private boolean vistaTareas = false;
+    private boolean agregarTareas = false;
+    private boolean actualizarTareas = false;
+    private boolean eliminarTareas = false;
     private boolean vistaPerfiles = false;
     private boolean agregarPerfiles = false;
     private boolean actualizarPerfiles = false;
@@ -75,10 +79,10 @@ public class PerfilActBean {
     private boolean agregarCat = false;
     private boolean actualizarCat = false;
     private boolean eliminarCat = false;
-    private boolean vistaEstados = false;
-    private boolean agregarEstados = false;
-    private boolean actualizarEstados = false;
-    private boolean eliminarEstados = false;
+    private boolean vistaAcciones = false;
+    private boolean agregarAcciones = false;
+    private boolean actualizarAcciones = false;
+    private boolean eliminarAcciones = false;
     private boolean vistaTipoevento = false;
     private boolean agregarTipoevento = false;
     private boolean actualizarTipoevento = false;
@@ -161,8 +165,11 @@ public class PerfilActBean {
 
             if (f.getAccion().equals("crear")) {
                 
-                if (f.getTabla().equals("Tipoevento")) {
+                if (f.getTabla().equals("Tipotareas")) {
                     agregarTipoevento = true;
+                }
+                if (f.getTabla().equals("Tareas")) {
+                    agregarTareas = true;
                 }
                 if (f.getTabla().equals("Usuarios")) {
                     agregarUsuario = true;
@@ -194,14 +201,17 @@ public class PerfilActBean {
                 if (f.getTabla().equals("Categorias")) {
                     agregarCat = true;
                 }
-                if (f.getTabla().equals("EstadosCliente")) {
-                    agregarEstados = true;
+                if (f.getTabla().equals("Acciones")) {
+                    agregarAcciones = true;
                 }
             }
             if (f.getAccion().equals("actualizar")) {
                 
-                if (f.getTabla().equals("Tipoevento")) {
+                if (f.getTabla().equals("Tipotareas")) {
                     actualizarTipoevento = true;
+                }
+                if (f.getTabla().equals("Tareas")) {
+                    actualizarTareas = true;
                 }
                 if (f.getTabla().equals("Usuarios")) {
                     actualizarUsuario = true;
@@ -233,13 +243,16 @@ public class PerfilActBean {
                 if (f.getTabla().equals("Categorias")) {
                     actualizarCat = true;
                 }
-                if (f.getTabla().equals("EstadosCliente")) {
-                    actualizarEstados = true;
+                if (f.getTabla().equals("Acciones")) {
+                    actualizarAcciones = true;
                 }
             }
             if (f.getAccion().equals("eliminar")) {
-                if (f.getTabla().equals("Tipoevento")) {
+                if (f.getTabla().equals("Tipotareas")) {
                     eliminarTipoevento = true;
+                }
+                if (f.getTabla().equals("Tareas")) {
+                    eliminarTareas = true;
                 }
                 if (f.getTabla().equals("Usuarios")) {
                     eliminarUsuario = true;
@@ -271,15 +284,18 @@ public class PerfilActBean {
                 if (f.getTabla().equals("Categorias")) {
                     eliminarCat = true;
                 }
-                if (f.getTabla().equals("EstadosCliente")) {
-                    eliminarEstados = true;
+                if (f.getTabla().equals("Acciones")) {
+                    eliminarAcciones = true;
                 }
             }
 
         }
         for (Vista v : elemento.getVistasList()) {
-            if (v.getNombreVista().equals("Tipoevento")) {
+            if (v.getNombreVista().equals("Tipotareas")) {
                 vistaTipoevento = true;
+            }
+            if (v.getNombreVista().equals("Tareas")) {
+                vistaTareas = true;
             }
             if (v.getNombreVista().equals("Usuarios")) {
                 vistaUsuario = true;
@@ -311,8 +327,8 @@ public class PerfilActBean {
             if (v.getNombreVista().equals("Categorias")) {
                 vistaCat = true;
             }
-            if (v.getNombreVista().equals("EstadosClientes")) {
-                vistaEstados = true;
+            if (v.getNombreVista().equals("Acciones")) {
+                vistaAcciones = true;
             }
             if (v.getNombreVista().equals("ManejadorEventosMarketing")) {
                 vistaEvMarketing = true;
@@ -406,6 +422,16 @@ public class PerfilActBean {
                 elemento.getVistasList().add(v);
             }
         }
+         v = adminFacade.findVistasByNombre("Tareas");
+        if (vistaTareas == false) {
+            if (elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().remove(v);
+            }
+        } else {
+            if (!elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().add(v);
+            }
+        }
         v = adminFacade.findVistasByNombre("Clientes");
         if (vistaClientes == false) {
             if (elemento.getVistasList().contains(v)) {
@@ -435,7 +461,7 @@ public class PerfilActBean {
             }
         }
        
-        v = adminFacade.findVistasByNombre("Tipoevento");
+        v = adminFacade.findVistasByNombre("Tipotareas");
         if (vistaAtributos == false) {
             count++;
             if (elemento.getVistasList().contains(v)) {
@@ -495,8 +521,8 @@ public class PerfilActBean {
                 elemento.getVistasList().add(v);
             }
         }
-        v = adminFacade.findVistasByNombre("EstadosClientes");
-        if (vistaEstados == false) {
+        v = adminFacade.findVistasByNombre("Acciones");
+        if (vistaAcciones == false) {
             count++;
             if (elemento.getVistasList().contains(v)) {
                 elemento.getVistasList().remove(v);
@@ -590,6 +616,40 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
+        
+        
+
+        f = adminFacade.findFormularioByAccionAndTabla("crear", "Tareas");
+        if (agregarTareas == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Tareas");
+        if (actualizarTareas == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Tareas");
+        if (eliminarTareas == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        
         f = adminFacade.findFormularioByAccionAndTabla("crear", "Perfiles");
         if ( agregarPerfiles == false) {
             if (elemento.getFormulariosList().contains(f)) {
@@ -681,7 +741,7 @@ public class PerfilActBean {
             }
         }
         
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Tipoevento");
+        f = adminFacade.findFormularioByAccionAndTabla("crear", "Tipotareas");
         if (agregarCasinos == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
@@ -691,7 +751,7 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Tipoevento");
+        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Tipotareas");
         if (actualizarCasinos == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
@@ -701,7 +761,7 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Tipoevento");
+        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Tipotareas");
         if (eliminarCasinos == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
@@ -891,8 +951,8 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "EstadosCliente");
-        if (agregarEstados == false) {
+        f = adminFacade.findFormularioByAccionAndTabla("crear", "Acciones");
+        if (agregarAcciones == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
             }
@@ -901,8 +961,8 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "EstadosCliente");
-        if (actualizarEstados == false) {
+        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Acciones");
+        if (actualizarAcciones == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
             }
@@ -911,8 +971,8 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "EstadosCliente");
-        if (eliminarEstados == false) {
+        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Acciones");
+        if (eliminarAcciones == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
             }
@@ -1244,36 +1304,100 @@ public class PerfilActBean {
         this.eliminarCat = eliminarCat;
     }
 
+    public boolean isVistaTareas() {
+        return vistaTareas;
+    }
+
+    public void setVistaTareas(boolean vistaTareas) {
+        this.vistaTareas = vistaTareas;
+    }
+
+    public boolean isAgregarTareas() {
+        return agregarTareas;
+    }
+
+    public void setAgregarTareas(boolean agregarTareas) {
+        this.agregarTareas = agregarTareas;
+    }
+
+    public boolean isActualizarTareas() {
+        return actualizarTareas;
+    }
+
+    public void setActualizarTareas(boolean actualizarTareas) {
+        this.actualizarTareas = actualizarTareas;
+    }
+
+    public boolean isEliminarTareas() {
+        return eliminarTareas;
+    }
+
+    public void setEliminarTareas(boolean eliminarTareas) {
+        this.eliminarTareas = eliminarTareas;
+    }
+
+    public boolean isVistaAcciones() {
+        return vistaAcciones;
+    }
+
+    public void setVistaAcciones(boolean vistaAcciones) {
+        this.vistaAcciones = vistaAcciones;
+    }
+
+    public boolean isAgregarAcciones() {
+        return agregarAcciones;
+    }
+
+    public void setAgregarAcciones(boolean agregarAcciones) {
+        this.agregarAcciones = agregarAcciones;
+    }
+
+    public boolean isActualizarAcciones() {
+        return actualizarAcciones;
+    }
+
+    public void setActualizarAcciones(boolean actualizarAcciones) {
+        this.actualizarAcciones = actualizarAcciones;
+    }
+
+    public boolean isEliminarAcciones() {
+        return eliminarAcciones;
+    }
+
+    public void setEliminarAcciones(boolean eliminarAcciones) {
+        this.eliminarAcciones = eliminarAcciones;
+    }
+
     public boolean isVistaEstados() {
-        return vistaEstados;
+        return vistaAcciones;
     }
 
     public void setVistaEstados(boolean vistaEstados) {
-        this.vistaEstados = vistaEstados;
+        this.vistaAcciones = vistaEstados;
     }
 
     public boolean isAgregarEstados() {
-        return agregarEstados;
+        return agregarAcciones;
     }
 
     public void setAgregarEstados(boolean agregarEstados) {
-        this.agregarEstados = agregarEstados;
+        this.agregarAcciones = agregarEstados;
     }
 
     public boolean isActualizarEstados() {
-        return actualizarEstados;
+        return actualizarAcciones;
     }
 
     public void setActualizarEstados(boolean actualizarEstados) {
-        this.actualizarEstados = actualizarEstados;
+        this.actualizarAcciones = actualizarEstados;
     }
 
     public boolean isEliminarEstados() {
-        return eliminarEstados;
+        return eliminarAcciones;
     }
 
     public void setEliminarEstados(boolean eliminarEstados) {
-        this.eliminarEstados = eliminarEstados;
+        this.eliminarAcciones = eliminarEstados;
     }
 
     public boolean isVistaEvMarketing() {

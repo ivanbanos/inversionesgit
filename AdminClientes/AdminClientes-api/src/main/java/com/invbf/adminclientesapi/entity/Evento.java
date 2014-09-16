@@ -15,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,18 +29,18 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author ideacentre
  */
+
 @Entity
 @Table(name = "eventos")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Eventos.findAll", query = "SELECT e FROM Evento e"),
-    @NamedQuery(name = "Eventos.findByIdEvento", query = "SELECT e FROM Evento e WHERE e.idEvento = :idEvento"),
-    @NamedQuery(name = "Eventos.findByNombre", query = "SELECT e FROM Evento e WHERE e.nombre = :nombre"),
-    @NamedQuery(name = "Eventos.findByFechaInicio", query = "SELECT e FROM Evento e WHERE e.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "Eventos.findByFechaFinalizacion", query = "SELECT e FROM Evento e WHERE e.fechaFinalizacion = :fechaFinalizacion"),
-    @NamedQuery(name = "Eventos.findByDescripcion", query = "SELECT e FROM Evento e WHERE e.descripcion = :descripcion"),
-    @NamedQuery(name = "Eventos.findByEstado", query = "SELECT e FROM Evento e WHERE e.estado = :estado"),
-    @NamedQuery(name = "Eventos.findByImagen", query = "SELECT e FROM Evento e WHERE e.imagen = :imagen")})
+    @NamedQuery(name = "Evento.findAll", query = "SELECT e FROM Evento e"),
+    @NamedQuery(name = "Evento.findByIdEvento", query = "SELECT e FROM Evento e WHERE e.idEvento = :idEvento"),
+    @NamedQuery(name = "Evento.findByNombre", query = "SELECT e FROM Evento e WHERE e.nombre = :nombre"),
+    @NamedQuery(name = "Evento.findByFechaInicio", query = "SELECT e FROM Evento e WHERE e.fechaInicio = :fechaInicio"),
+    @NamedQuery(name = "Evento.findByFechaFinal", query = "SELECT e FROM Evento e WHERE e.fechaFinal = :fechaFinal"),
+    @NamedQuery(name = "Evento.findByDecripcion", query = "SELECT e FROM Evento e WHERE e.decripcion = :decripcion"),
+    @NamedQuery(name = "Evento.findByImagen", query = "SELECT e FROM Evento e WHERE e.imagen = :imagen")})
 public class Evento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,34 +54,19 @@ public class Evento implements Serializable {
     @Column(name = "fechaInicio")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
-    @Column(name = "fechaFinalizacion")
+    @Column(name = "fechaFinal")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaFinalizacion;
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Column(name = "speech")
-    private String speech;
-    @Column(name = "estado")
-    private String estado;
-    @Column(name = "categorias")
-    private String categorias;
-    @Column(name = "tiposdejuegos")
-    private String tiposdejuegos;
+    private Date fechaFinal;
+    @Column(name = "decripcion")
+    private String decripcion;
     @Column(name = "imagen")
     private String imagen;
-    @JoinTable(name = "eventosusuarios", joinColumns = {
-        @JoinColumn(name = "idEvento", referencedColumnName = "idEvento")}, inverseJoinColumns = {
-        @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")})
-    @ManyToMany
-    private List<Usuario> usuariosList;
-    @JoinColumn(name = "tipo", referencedColumnName = "idTiposeventos")
-    @ManyToOne(optional = false)
-    private Tipoevento tipo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEvento")
+    private List<Tarea> tareasList;
     @JoinColumn(name = "idCasino", referencedColumnName = "idCasino")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Casino idCasino;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventos")
-    private List<Clienteevento> listasclienteseventoList;
+    
 
     public Evento() {
     }
@@ -121,53 +104,12 @@ public class Evento implements Serializable {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFinalizacion() {
-        return fechaFinalizacion;
-    }
-
-    public void setFechaFinalizacion(Date fechaFinalizacion) {
-        this.fechaFinalizacion = fechaFinalizacion;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public String getImagen() {
         return imagen;
     }
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuariosList() {
-        return usuariosList;
-    }
-
-    public void setUsuariosList(List<Usuario> usuariosList) {
-        this.usuariosList = usuariosList;
-    }
-
-    public Tipoevento getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Tipoevento tipo) {
-        this.tipo = tipo;
     }
 
     public Casino getIdCasino() {
@@ -178,62 +120,29 @@ public class Evento implements Serializable {
         this.idCasino = idCasino;
     }
 
-    public String getSpeech() {
-        return speech;
+    public Date getFechaFinal() {
+        return fechaFinal;
     }
 
-    public void setSpeech(String speech) {
-        this.speech = speech;
+    public void setFechaFinal(Date fechaFinal) {
+        this.fechaFinal = fechaFinal;
     }
 
-    public String getCategorias() {
-        return categorias;
+    public String getDecripcion() {
+        return decripcion;
     }
 
-    public void setCategorias(String categorias) {
-        this.categorias = categorias;
-    }
-
-    public String getTiposdejuegos() {
-        return tiposdejuegos;
-    }
-
-    public void setTiposdejuegos(String tiposdejuegos) {
-        this.tiposdejuegos = tiposdejuegos;
+    public void setDecripcion(String decripcion) {
+        this.decripcion = decripcion;
     }
 
     @XmlTransient
-    public List<Clienteevento> getListasclienteseventoList() {
-        return listasclienteseventoList;
+    public List<Tarea> getTareasList() {
+        return tareasList;
     }
 
-    public void setListasclienteseventoList(List<Clienteevento> listasclienteseventoList) {
-        this.listasclienteseventoList = listasclienteseventoList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idEvento != null ? idEvento.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Evento)) {
-            return false;
-        }
-        Evento other = (Evento) object;
-        if ((this.idEvento == null && other.idEvento != null) || (this.idEvento != null && !this.idEvento.equals(other.idEvento))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.invbf.adminclientesapi.entity.Eventos[ idEvento=" + idEvento + " ]";
+    public void setTareasList(List<Tarea> tareasList) {
+        this.tareasList = tareasList;
     }
     
 }

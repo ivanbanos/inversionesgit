@@ -4,24 +4,24 @@
  */
 package com.InvBF.facade.Impl;
 
+import com.InvBF.EntityFacade.AccionFacadeLocal;
 import com.InvBF.EntityFacade.AtributoFacadeLocal;
 import com.InvBF.EntityFacade.CasinoFacadeLocal;
 import com.InvBF.EntityFacade.CategoriaFacadeLocal;
 import com.InvBF.EntityFacade.ClienteFacadeLocal;
 import com.InvBF.EntityFacade.ClienteatributoFacadeLocal;
-import com.InvBF.EntityFacade.EstadoclienteFacadeLocal;
 import com.InvBF.EntityFacade.EventoFacadeLocal;
 import com.InvBF.EntityFacade.TipoJuegoFacadeLocal;
-import com.InvBF.EntityFacade.TipoeventoFacadeLocal;
+import com.InvBF.EntityFacade.TipostareasFacadeLocal;
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Atributo;
 import com.invbf.adminclientesapi.entity.Casino;
 import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Clienteatributo;
-import com.invbf.adminclientesapi.entity.Estadocliente;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
-import com.invbf.adminclientesapi.entity.Tipoevento;
+import com.invbf.adminclientesapi.entity.Tipotarea;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,9 +46,9 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @EJB
     ClienteFacadeLocal clienteFacadeLocal;
     @EJB
-    ClienteatributoFacadeLocal clienteatributoFacadeLocal;
+    AccionFacadeLocal accionFacadeLocal;
     @EJB
-    EstadoclienteFacadeLocal estadoclienteFacadeLocal;
+    ClienteatributoFacadeLocal clienteatributoFacadeLocal;
     @EJB
     CategoriaFacadeLocal categoriaFacadeLocal;
     @EJB
@@ -56,41 +56,15 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @EJB
     TipoJuegoFacadeLocal tipoJuegoFacadeLocal;
     @EJB
+    TipostareasFacadeLocal tipostareasFacadeLocal;
+    @EJB
     CasinoFacadeLocal casinoFacadeLocal;
     @EJB
     EventoFacadeLocal eventoFacadeLocal;
-    @EJB
-    TipoeventoFacadeLocal tipoeventoFacadeLocal;
 
     @Override
     public List<Cliente> findAllClientes() {
         return clienteFacadeLocal.findAll();
-    }
-
-    @Override
-    public List<Estadocliente> findAllEstadosClietes() {
-        return estadoclienteFacadeLocal.findAll();
-    }
-
-    @Override
-    public Estadocliente findByIdEstadoCliente(int idEstadoCliente) {
-        return estadoclienteFacadeLocal.find(new Estadocliente(idEstadoCliente));
-    }
-
-    @Override
-    public void deleteEstadoCliente(Estadocliente estadoCliente) {
-        estadoclienteFacadeLocal.remove(estadoCliente);
-    }
-
-    @Override
-    public boolean guardarEstadoCliente(Estadocliente elemento) {
-        if (elemento.getIdEstadoCliente() == null) {
-            estadoclienteFacadeLocal.create(elemento);
-            return false;
-        } else {
-            estadoclienteFacadeLocal.edit(elemento);
-            return true;
-        }
     }
 
     @Override
@@ -127,9 +101,12 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         for (Cliente c : clientes) {
             c.getClientesatributosList().remove(new Clienteatributo(c.getIdCliente(), elemento.getIdAtributo()));
         }
-        for (Clienteatributo ca : listaca) {
 
-            clienteatributoFacadeLocal.remove(ca);
+        if (listaca != null) {
+            for (Clienteatributo ca : listaca) {
+
+                clienteatributoFacadeLocal.remove(ca);
+            }
         }
         atributoFacadeLocal.remove(elemento);
     }
@@ -255,11 +232,6 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public Estadocliente findByNombreEstadoCliente(String iniciado) {
-        return estadoclienteFacadeLocal.findByNombreEstadoCliente(iniciado);
-    }
-
-    @Override
     public Evento guardarEventos(Evento elemento) {
         if (elemento.getIdEvento() == null) {
 
@@ -299,24 +271,46 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public List<Tipoevento> findAllTipoevento() {
-        return tipoeventoFacadeLocal.findAll();
+    public List<Accion> findAllAcciones() {
+        return accionFacadeLocal.findAll();
     }
 
     @Override
-    public void deleteTipoevento(Tipoevento elemento) {
-        tipoeventoFacadeLocal.remove(elemento);
+    public void deleteAccion(Accion elemento) {
+        accionFacadeLocal.remove(elemento);
     }
 
     @Override
-    public boolean guardarTipoevento(Tipoevento elemento) {
-        if (elemento.getIdTiposeventos() == null) {
+    public boolean guardarAccion(Accion elemento) {
+        if (elemento.getIdAccion() == null) {
 
-            tipoeventoFacadeLocal.create(elemento);
+            accionFacadeLocal.create(elemento);
             return false;
         } else {
-            tipoeventoFacadeLocal.edit(elemento);
+            accionFacadeLocal.edit(elemento);
             return true;
         }
+    }
+
+    @Override
+    public List<Tipotarea> findAllTipotarea() {
+        return tipostareasFacadeLocal.findAll();
+    }
+
+    @Override
+    public boolean guardarTipotarea(Tipotarea elemento) {
+        if (elemento.getIdTipotarea() == null) {
+
+            tipostareasFacadeLocal.create(elemento);
+            return false;
+        } else {
+            tipostareasFacadeLocal.edit(elemento);
+            return true;
+        }
+    }
+
+    @Override
+    public void deleteTipotarea(Tipotarea elemento) {
+        tipostareasFacadeLocal.remove(elemento);
     }
 }

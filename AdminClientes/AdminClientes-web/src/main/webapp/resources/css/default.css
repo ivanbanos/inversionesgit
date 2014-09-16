@@ -111,3 +111,10 @@ a.clickable:hover { text-decoration:none; }
     background-color: #EEE;
     color: #E22620;
 }
+.form-control {
+    margin-bottom: 10px;
+}
+
+.control-label {
+    margin-bottom: 10px;
+}

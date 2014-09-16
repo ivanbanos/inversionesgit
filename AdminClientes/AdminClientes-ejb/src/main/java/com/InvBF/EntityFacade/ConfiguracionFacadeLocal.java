@@ -29,6 +29,6 @@ public interface ConfiguracionFacadeLocal {
 
     int count();
 
-    public Configuracion findByNombre(String cantidadClientes);
+    public Configuracion findByNombre(String nombre);
     
 }

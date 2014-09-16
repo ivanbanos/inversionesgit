@@ -6,14 +6,12 @@ package com.InvBF.EntityFacade.install;
 
 
 import com.InvBF.EntityFacade.ConfiguracionFacadeLocal;
-import com.InvBF.EntityFacade.EstadoclienteFacadeLocal;
 import com.InvBF.EntityFacade.FormularioFacadeLocal;
 import com.InvBF.EntityFacade.PerfilFacadeLocal;
 import com.InvBF.EntityFacade.UsuarioFacadeLocal;
 import com.InvBF.EntityFacade.VistaFacadeLocal;
 import com.InvBF.util.EncryptUtil;
 import com.invbf.adminclientesapi.entity.Configuracion;
-import com.invbf.adminclientesapi.entity.Estadocliente;
 import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.entity.Perfil;
 import com.invbf.adminclientesapi.entity.Usuario;
@@ -48,8 +46,6 @@ public class InitEntitysService {
     private VistaFacadeLocal vistasFacadeLocal;
     @EJB
     private ConfiguracionFacadeLocal configuracionesFacadeLocal;
-    @EJB
-    private EstadoclienteFacadeLocal estadosclienteFacadeLocal;
 
     /**
      * 1. dependiendo de un parametro de configuracion el sistema debe
@@ -124,13 +120,13 @@ public class InitEntitysService {
             formulario = new Formulario(null, "Vistas", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formulario(null, "Tipoevento", "crear");
+            formulario = new Formulario(null, "Tipotareas", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formulario(null, "Tipoevento", "actualizar");
+            formulario = new Formulario(null, "Tipotareas", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formulario(null, "Tipoevento", "eliminar");
+            formulario = new Formulario(null, "Tipotareas", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
 
@@ -159,7 +155,7 @@ public class InitEntitysService {
             vista = new Vista(null, "Categorias");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vista(null, "EstadosClientes");
+            vista = new Vista(null, "Acciones");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             vista = new Vista(null, "TipoJuego");
@@ -168,7 +164,7 @@ public class InitEntitysService {
             vista = new Vista(null, "Atributos");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-            vista = new Vista(null, "Tipoevento");
+            vista = new Vista(null, "Tipotareas");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             vista = new Vista(null, "AtributosMarketing");
@@ -225,6 +221,15 @@ public class InitEntitysService {
             formulario = new Formulario(null, "Eventos", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "Tareas", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "Tareas", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "Tareas", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
             formulario = new Formulario(null, "Categorias", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
@@ -243,13 +248,13 @@ public class InitEntitysService {
             formulario = new Formulario(null, "TiposJuegos", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formulario(null, "EstadosCliente", "crear");
+            formulario = new Formulario(null, "Acciones", "crear");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formulario(null, "EstadosCliente", "actualizar");
+            formulario = new Formulario(null, "Acciones", "actualizar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-            formulario = new Formulario(null, "EstadosCliente", "eliminar");
+            formulario = new Formulario(null, "Acciones", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
             formulario = new Formulario(null, "Clientes", "crear");
@@ -270,6 +275,9 @@ public class InitEntitysService {
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             vista = new Vista(null, "Eventos");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            vista = new Vista(null, "Tareas");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             
@@ -342,12 +350,6 @@ public class InitEntitysService {
 
 
         configuracionesFacadeLocal.create(configuracion);
-        Estadocliente estadoscliente = new Estadocliente();
-        estadoscliente.setNombre("Inicial");
-        estadosclienteFacadeLocal.create(estadoscliente);
-        estadoscliente = new Estadocliente();
-        estadoscliente.setNombre("En revision");
-        estadosclienteFacadeLocal.create(estadoscliente);
     }
 
     private void crearPerfilGerente() {
