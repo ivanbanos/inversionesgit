@@ -18,6 +18,13 @@
                 <div class="panel-body">
 
                     <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['evento']}</label>
+                        <div class="col-md-9">
+                            <h:outputLabel id="evento" value="#{hostessTareaManejadorBean.elemento.idEvento.nombre}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['nombre']}</label>
                         <div class="col-md-9">
                             <h:outputLabel id="nombre" value="#{hostessTareaManejadorBean.elemento.nombre}" />
@@ -41,12 +48,14 @@
                             </h:outputLabel>
                         </div>
                     </div>
+                    
+                    <h:graphicImage value="/image/#{hostessTareaManejadorBean.elemento.idEvento.imagen}" />
 
 
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['casino']}</label>
                         <div class="col-md-9">
-                            <h:outputLabel id="casino" value="#{hostessTareaManejadorBean.elemento.idCasino.nombre}" />
+                            <h:outputLabel id="casino" value="#{hostessTareaManejadorBean.elemento.idEvento.idCasino.nombre}" />
                         </div>
                     </div>
 
@@ -54,7 +63,7 @@
 
                 </div>
                 <div class="panel-footer text-right"> 
-                    <h:link id="btnclose" outcome="/pages/eventosHostess.xhtml" class="btn btn-primary"
+                    <h:link id="btnclose" outcome="/pages/tareasHostess.xhtml" class="btn btn-primary"
                             >
                         #{label['Volver']}
                     </h:link>
@@ -75,21 +84,21 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" >#{label['nombre']}</label>
                                     <div class="col-md-9">
-                                        <h:outputLabel value="#{clientes.clientes.nombres} #{clientes.clientes.apellidos}"/>
+                                        <h:outputLabel value="#{clientes.cliente.nombres} #{clientes.cliente.apellidos}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" >#{label['tel1']}</label>
                                     <div class="col-md-9">
-                                        <h:outputLabel value="#{clientes.clientes.telefono1} #{clientes.clientes.telefono1}"/>
+                                        <h:outputLabel value="#{clientes.cliente.telefono1} #{clientes.cliente.telefono1}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" >#{label['tel2']}</label>
                                     <div class="col-md-9">
-                                        <h:outputLabel value="#{clientes.clientes.telefono2} #{clientes.clientes.telefono2}"/>
+                                        <h:outputLabel value="#{clientes.cliente.telefono2} #{clientes.cliente.telefono2}"/>
                                     </div>
                                 </div>
 
@@ -101,10 +110,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label" >#{label['estados']}</label>
+                                    <label class="col-md-3 control-label" >#{label['accion']}</label>
                                     <div class="col-md-9">
-                                        <p:selectOneMenu  value="#{clientes.idEstadoCliente}">
-                                            <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.estadosclienteList}" 
+                                        <p:selectOneMenu  value="#{clientes.idAccion}">
+                                            <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.accionList}" 
                                                            var="var" 
                                                            itemLabel="#{var.nombre}" 
                                                            itemValue="#{var.nombre}"/> 
@@ -114,11 +123,11 @@
 
                             </div>
                             <div class="panel-footer text-right"> 
-                                <h:commandLink action="#{hostessTareaManejadorBean.guardar(clientes.clientes.idCliente)}" 
+                                <h:commandLink action="#{hostessTareaManejadorBean.guardar(clientes.cliente.idCliente)}" 
                                                class="btn btn-primary">
                                     <i class="icon-search"></i> #{label['guardar']}
                                 </h:commandLink> 
-                                <h:commandLink action="#{hostessTareaManejadorBean.nuevo(clientes.clientes.idCliente)}" 
+                                <h:commandLink action="#{hostessTareaManejadorBean.nuevo(clientes.cliente.idCliente)}" 
                                                class="btn btn-primary">
                                     <i class="icon-search"></i> #{label['nuevo']}
                                 </h:commandLink> 

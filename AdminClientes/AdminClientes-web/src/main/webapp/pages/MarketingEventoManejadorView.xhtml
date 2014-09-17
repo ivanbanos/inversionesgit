@@ -57,9 +57,56 @@
                         <label class="col-md-3 control-label" >#{label['imagen']}</label>
                         <div class="col-md-9">
                             <p:fileUpload id="imagenEventos" fileUploadListener="#{marketingEventoManejadorBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                                          label="Escoger" cancelLabel="Cancelar" uploadLabel="Cargar" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                         </div>
                     </div>
+
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                                <label class="col-md-12 control-label" >#{label['Tareas']}:</label>
+                                <div class="col-md-12">
+                                    <p:dataTable id="detailsTableTareas" var="element" value="#{marketingEventoManejadorBean.elemento.tareasList}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableCasinos"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
+                                            <h:outputText value="#{element.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Tipo" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains">
+                                            <h:outputText value="#{element.tipo.nombre}" />
+                                        </p:column>
+
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+
+                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.Go']}" action="#{marketingEventoManejadorBean.goTareaMarketing(element.idTarea)}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;actualizar&quot;)}">  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButtonEventos" oncomplete="PF('deleteDialogTareas').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogTareas')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{marketingEventoManejadorBean.tarea}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer">  
+
+                                            <p:commandButton id="addButton" icon="ui-icon-plusthick" value="#{label['lb_btn.agregar']}"
+                                                             title="#{label['lb_btn.Go']}" action="#{marketingEventoManejadorBean.goTareaMarketing(0)}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;crear&quot;)}">
+                                            </p:commandButton> 
+                                        </f:facet>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
 
                 </div>
                 <div class="panel-footer text-right"> 
@@ -76,7 +123,17 @@
                 </div>
             </div>
         </h:form>
+        <c:if test="#{sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
+            <h:form>
+                <p:confirmDialog id="deleteDialogTareas" message="Quiere borrar la tarea #{marketingEventoManejadorBean.tarea.nombre}?"  
+                                 header="Borrar" severity="alert" widgetVar="deleteDialogTareas" closable="false">  
 
+                    <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogTareas').hide()"  
+                                     action="#{marketingEventoManejadorBean.deleteTarea()}" update=":#{p:component('detailsTableTareas')} :#{p:component('messages')}"/>  
+                    <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogTareas').hide()" type="button" />   
 
+                </p:confirmDialog> 
+            </h:form>
+        </c:if>
     </ui:define>            
 </ui:composition>

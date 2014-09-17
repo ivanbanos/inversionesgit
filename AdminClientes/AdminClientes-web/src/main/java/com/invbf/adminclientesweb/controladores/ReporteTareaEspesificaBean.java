@@ -1,15 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Listasclientestareas;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
+import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import org.primefaces.model.DualListModel;
  */
 @ManagedBean
 @ViewScoped
-public class ReporteEventoEspesificoBean {
+public class ReporteTareaEspesificaBean {
 
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
@@ -38,33 +38,18 @@ public class ReporteEventoEspesificoBean {
     SystemFacade systemFacade;
     @EJB
     AdminFacade adminFacade;
-    private Evento elemento;
+    private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private List<Cliente> clienteses;
-    private List<Cliente> clientesesEvento;
-    private List<Usuario> usuarioses;
-    private DualListModel<Cliente> todosclienteses;
-    private DualListModel<Usuario> todosusuarioses;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
-    }
-    
-    private List<Evento> flista;
-
-    public List<Evento> getFlista() {
-        return flista;
-    }
-
-    public void setFlista(List<Evento> flista) {
-        this.flista = flista;
     }
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public ReporteEventoEspesificoBean() {
+    public ReporteTareaEspesificaBean() {
     }
 
     @PostConstruct
@@ -80,27 +65,14 @@ public class ReporteEventoEspesificoBean {
             }
         }
 
-        if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idEvento")) {
+        if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idTarea")) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("eventos.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("ReporteTareas.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
         }
-        elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
-
-        clienteses = marketingUserFacade.findAllClientes();
-        usuarioses = adminFacade.findAllUsuariosHostess();
-        clientesesEvento = new ArrayList<Cliente>();
-        todosclienteses = new DualListModel<Cliente>(clienteses, clientesesEvento);
-    }
-
-    public Evento getElemento() {
-        return elemento;
-    }
-
-    public void setElemento(Evento elemento) {
-        this.elemento = elemento;
+        elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
     }
 
     public MarketingUserFacade getMarketingUserFacade() {
@@ -119,27 +91,12 @@ public class ReporteEventoEspesificoBean {
         this.adminFacade = adminFacade;
     }
 
-    public DualListModel<Cliente> getTodosclienteses() {
-        return todosclienteses;
+    public Tarea getElemento() {
+        return elemento;
     }
 
-    public void setTodosclienteses(DualListModel<Cliente> todosclienteses) {
-        this.todosclienteses = todosclienteses;
+    public void setElemento(Tarea elemento) {
+        this.elemento = elemento;
     }
 
-    public DualListModel<Usuario> getTodosusuarioses() {
-        return todosusuarioses;
-    }
-
-    public void setTodosusuarioses(DualListModel<Usuario> todosusuarioses) {
-        this.todosusuarioses = todosusuarioses;
-    }
-    public void goTareaReporte(int id) {
-        try {
-            sessionBean.getAttributes().put("idTarea", new Integer(id));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ReporteTareaEspesifica.xhtml");
-        } catch (IOException ex) {
-            LOGGER.error(ex);
-        }
-    }
 }

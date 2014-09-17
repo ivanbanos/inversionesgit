@@ -14,41 +14,79 @@
 
                 <div class="panel-heading">Evento</div>
                 <div class="panel-body">
-                    
-                    <label class="col-md-3 control-label" >#{label['estado']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="estado" value="#{reporteEventoEspesificoBean.elemento.estado}" />
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <label class="col-md-3 control-label" >#{label['nombre']}:</label>
+                            <div class="col-md-9">
+                                <h:outputLabel id="nombre" value="#{reporteEventoEspesificoBean.elemento.nombre}" />
+                            </div>
+                        </div>
                     </div>
 
-                    <label class="col-md-3 control-label" >#{label['nombre']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="nombre" value="#{reporteEventoEspesificoBean.elemento.nombre}" />
-                    </div>
-                    
-                    <label class="col-md-3 control-label" >#{label['fechainicio']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="fecini" value="#{reporteEventoEspesificoBean.elemento.fechaInicio}" >
-                            <f:convertDateTime pattern="MM-dd-yyyy" />
-                        </h:outputLabel>
-                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
+                            <label class="col-md-6 control-label" >#{label['fechainicio']}:</label>
+                            <div class="col-md-6">
+                                <h:outputLabel id="fecini" value="#{reporteEventoEspesificoBean.elemento.fechaInicio}" >
+                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                </h:outputLabel>
+                            </div>
+                        </div>
 
-                    <label class="col-md-3 control-label" >#{label['fechafinal']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="fecfin" value="#{reporteEventoEspesificoBean.elemento.fechaFinal}"  >
-                            <f:convertDateTime pattern="MM-dd-yyyy" />
-                        </h:outputLabel>
-                    </div>
-
-                    <label class="col-md-3 control-label" >#{label['descripcion']}:</label>
-                    <div class="col-md-9">
-                        <h:outputLabel id="descripcion" value="#{reporteEventoEspesificoBean.elemento.decripcion}" />
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
+                            <label class="col-md-6 control-label" >#{label['fechafinal']}:</label>
+                            <div class="col-md-6">
+                                <h:outputLabel id="fecfin" value="#{reporteEventoEspesificoBean.elemento.fechaFinal}"  >
+                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                </h:outputLabel>
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <label class="col-md-3 control-label" >#{label['descripcion']}:</label>
+                            <div class="col-md-9">
+                                <h:outputLabel id="descripcion" value="#{reporteEventoEspesificoBean.elemento.decripcion}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <label class="col-md-3 control-label" >#{label['casino']}:</label>
+                            <div class="col-md-9">
+                                <h:outputLabel id="casino" value="#{reporteEventoEspesificoBean.elemento.idCasino.nombre}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <label class="col-md-12 control-label" >#{label['Tareas']}:</label>
+                            <div class="col-md-12">
+                                <p:dataTable id="detailsTableCasinos" var="element" value="#{reporteEventoEspesificoBean.elemento.tareasList}"  
+                                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableCasinos"
+                                             rows="#{sessionBean.paginacion}"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             >
+
+                                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
+                                        <h:outputText value="#{element.nombre}" />
+                                    </p:column>
 
 
-                    <label class="col-md-3 control-label" >#{label['casino']}:</label>
-                    <div class="col-md-9">
-                        <h:outputLabel id="casino" value="#{reporteEventoEspesificoBean.elemento.idCasino.nombre}" />
+                                    <p:column headerText="" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                                         title="#{label['lb_btn.Go']}" action="#{reporteEventoEspesificoBean.goTareaReporte(element.idTarea)}"
+                                                                 >  
+                                                </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

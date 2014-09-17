@@ -10,6 +10,7 @@ import com.invbf.adminclientesapi.entity.Casino;
 import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.entity.Tipotarea;
 import java.util.List;
@@ -75,5 +76,15 @@ public interface MarketingUserFacade {
     public boolean guardarTipotarea(Tipotarea elemento);
 
     public void deleteTipotarea(Tipotarea elemento);
+
+    public void deleteTarea(Tarea tarea);
+
+    public Tarea guardarTarea(Tarea elemento);
+
+    public Accion findByNombreAccion(String iniciaL);
+
+    public List<Tarea> findAllTareas();
+
+    public Tarea findTarea(Integer integer);
 
 }

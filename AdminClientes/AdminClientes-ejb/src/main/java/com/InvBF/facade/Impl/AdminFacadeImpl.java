@@ -6,10 +6,10 @@ package com.InvBF.facade.Impl;
 
 import com.InvBF.EntityFacade.FormularioFacadeLocal;
 import com.InvBF.EntityFacade.PerfilFacadeLocal;
+import com.InvBF.EntityFacade.TareasFacadeLocal;
 import com.InvBF.EntityFacade.UsuarioFacadeLocal;
 import com.InvBF.EntityFacade.VistaFacadeLocal;
 import com.InvBF.util.EncryptUtil;
-import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.entity.Perfil;
 import com.invbf.adminclientesapi.entity.Tarea;
@@ -20,6 +20,7 @@ import com.invbf.adminclientesapi.exceptions.PerfilExistenteException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -39,6 +40,8 @@ public class AdminFacadeImpl implements AdminFacade {
     FormularioFacadeLocal formularioFacadeLocal;
     @EJB
     VistaFacadeLocal vistaFacadeLocal;
+    @EJB
+    TareasFacadeLocal tareasFacadeLocal;
 
     @Override
     public List<Usuario> findAllUsuarios() {
@@ -47,6 +50,13 @@ public class AdminFacadeImpl implements AdminFacade {
 
     @Override
     public void deleteUsuarios(Usuario elemento) {
+        List<Tarea> tareas = tareasFacadeLocal.findAll();
+        for(Tarea t : tareas){
+            if(t.getUsuarioList().contains(elemento)){
+                t.getUsuarioList().remove(elemento);
+                tareasFacadeLocal.edit(t);
+            }
+        }
         usuarioFacadeLocal.remove(elemento);
     }
 
@@ -152,7 +162,15 @@ public class AdminFacadeImpl implements AdminFacade {
 
     @Override
     public List<Usuario> findAllUsuariosHostess() {
-        return usuarioFacadeLocal.findAllHostess();
+        List<Usuario> usuarios = findAllUsuarios();
+        Vista v = findVistasByNombre("ManejadorEventosHostess");
+        for (Iterator<Usuario> it = usuarios.iterator(); it.hasNext();) {
+            Usuario usuario = it.next();
+            if(!usuario.getIdPerfil().getVistasList().contains(v)){
+                it.remove();
+            }
+        }
+        return usuarios;
     }
 
     @Override

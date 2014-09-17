@@ -21,44 +21,46 @@
                         <!--Eventos-->
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Eventos</h3>
+                                <h3 class="panel-title">Tareas</h3>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
-                                    <p:dataTable id="detailsTableEventos" var="element" value="#{sessionBean.usuario.tareasList}"  
-                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{tareasHostessBean.flista}"
+                                    <p:dataTable id="detailsTableEventos" var="element" value="#{reporteTareasBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{reporteTareasBean.flista}"
                                                  rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  >
 
                                         <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterEventos" onkeyup="PF('detailsTableEventos').filter()" style="width:150px" placeholder="Enter keyword" />
-                                            </p:outputPanel>
                                         </f:facet>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="estado" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.estado}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains" filterStyle="display:none">
+
+                                        <p:column headerText="tipo" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.tipo.nombre}" />
                                         </p:column>
 
+
+                                        <p:column headerText="evento" sortBy="#{element.idEvento.nombre}" filterBy="#{element.idEvento.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.idEvento.nombre}" />
+                                        </p:column>
+
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            <p:commandButton id="hostess" icon="ui-icon-pencil" 
-                                                             title="#{label['lb_btn.Go']}" action="#{tareasHostessBean.goEvento(element.idTarea)}"
-                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">  
+                                            
+                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.Go']}" action="#{reporteTareasBean.goTareaReporte(element.idTarea)}">
                                             </p:commandButton>
                                         </p:column>
                                     </p:dataTable>
-
+                                    <h:outputText value="#{crudEventoBean.contents}" />
                                 </h:form>
                             </div>
                         </div>
@@ -74,6 +76,18 @@
 
                 </div>
             </div>
+        </h:form>
+
+        
+        <h:form>
+            <p:confirmDialog id="deleteDialogEventos" message="Quiere borrar la tarea #{crudTareasBean.elemento.nombre}?"  
+                             header="Borrar" severity="alert" widgetVar="deleteDialogEventos" closable="false">  
+
+                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogEventos').hide()"  
+                                 action="#{crudTareasBean.delete()}" update=":#{p:component('detailsTableEventos')} :#{p:component('messages')}"/>  
+                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogEventos').hide()" type="button" />   
+
+            </p:confirmDialog> 
         </h:form>
 
     </ui:define>            

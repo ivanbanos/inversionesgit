@@ -123,6 +123,19 @@
                                 </li>
                             </c:if>
                         </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
+
+                            <c:if test="#{sessionBean.isActive(&quot;tareas&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;tareas&quot;)}" class="navbar-text-selected" value="#{label['tareas']}"/>
+                                </li>
+                            </c:if>
+                            <c:if test="#{sessionBean.isNotActive(&quot;tareas&quot;)}">
+                                <li>
+                                    <h:commandLink  action="#{sessionBean.go(&quot;tareas&quot;)}" class="navbar-text" value="#{label['tareas']}"/>
+                                </li>
+                            </c:if>
+                        </c:if>
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">
 
                             <c:if test="#{sessionBean.isActive(&quot;eventoshostess&quot;)}">

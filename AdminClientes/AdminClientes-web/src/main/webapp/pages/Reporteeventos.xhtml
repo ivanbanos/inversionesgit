@@ -34,20 +34,20 @@
                                             <f:facet name="header">
                                             </f:facet>
 
+                                            <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                                                <h:outputText value="#{element.nombre}" />
+                                            </p:column>
+
                                             <p:column headerText="Fecha de Inicio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.fechaInicio}" >
                                                     <f:convertDateTime pattern="MM-dd-yyyy" />
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column headerText="Fecha finalizacion" sortBy="#{element.fechaFinalizacion}" filterBy="#{element.fechaFinalizacion}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.fechaFinalizacion}" >
+                                            <p:column headerText="Fecha finalizacion" sortBy="#{element.fechaFinal}" filterBy="#{element.fechaFinal}" filterMatchMode="contains" >
+                                                <h:outputText value="#{element.fechaFinal}" >
                                                     <f:convertDateTime pattern="MM-dd-yyyy" />
                                                 </h:outputText>
-                                            </p:column>
-
-                                            <p:column headerText="Tipo" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.tipo.nombre}" />
                                             </p:column>
 
                                             <p:column headerText="Casino" sortBy="#{element.idCasino.nombre}" filterBy="#{element.idCasino.nombre}" filterMatchMode="contains" >

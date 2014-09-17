@@ -6,6 +6,7 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Listasclientestareas;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.HostessFacade;
@@ -13,6 +14,7 @@ import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -39,7 +41,7 @@ public class HostessTareaManejadorBean {
     AdminFacade adminFacade;
     @EJB
     HostessFacade hostessFacade;
-    private Evento elemento;
+    private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private StreamedContent file;
@@ -75,16 +77,20 @@ public class HostessTareaManejadorBean {
                 LOGGER.error(ex);
             }
         }
-        elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idTarea"));
+        elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
         file = new DefaultStreamedContent();
-        clientes = hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
+        try {
+            clientes = hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
+        } catch (EventoSinClientesPorRevisarException ex) {
+            
+        }
     }
 
-    public Evento getElemento() {
+    public Tarea getElemento() {
         return elemento;
     }
 
-    public void setElemento(Evento elemento) {
+    public void setElemento(Tarea elemento) {
         this.elemento = elemento;
     }
 
@@ -145,5 +151,13 @@ public class HostessTareaManejadorBean {
             LOGGER.info(ex);
             FacesUtil.addInfoMessage("No hay mas clientes por revisar", "");
         }
+    }
+
+    public List<Listasclientestareas> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Listasclientestareas> clientes) {
+        this.clientes = clientes;
     }
 }

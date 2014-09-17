@@ -34,6 +34,10 @@
                             <h:commandLink  action="#{sessionBean.go(&quot;eventos&quot;)}" class="btn btn-primary btn-lg"><i class="fa fa-calendar fa-5x"></i> 
                                 <br/>#{label['eventos']}</h:commandLink>
                         </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
+                            <h:commandLink  action="#{sessionBean.go(&quot;tareas&quot;)}" class="btn btn-primary btn-lg"><i class="fa fa-calendar fa-5x"></i> 
+                                <br/>#{label['tareas']}</h:commandLink>
+                        </c:if>
                         <c:if test="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosHostess&quot;)}">
                             <h:commandLink  action="#{sessionBean.go(&quot;eventoshostess&quot;)}" class="btn btn-primary btn-lg"><i class="fa fa-calendar fa-5x"></i> 
                                 <br/>#{label['eventos']}</h:commandLink>

@@ -17,6 +17,7 @@ import com.invbf.adminclientesapi.entity.Tipotarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.HostessFacade;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -38,8 +39,6 @@ public class HostessFacadeImpl implements HostessFacade {
     @EJB
     AccionFacadeLocal accionFacadeLocal;
     @EJB
-    Listasclientestareas clienteeventoFacadeLocal;
-    @EJB
     TipostareasFacadeLocal tipostareasFacadeLocal;
     @EJB
     ListasclientestareasFacadeLocal listasclientestareasFacadeLocal;
@@ -57,9 +56,8 @@ public class HostessFacadeImpl implements HostessFacade {
         Tipotarea tipo = tipostareasFacadeLocal.findBynombre("EMAIL");
         while (iterator.hasNext()) {
             Tarea e = iterator.next();
-            if (!e.getUsuarioList().contains(usuario)
-                    || !e.getEstado().equals("ACTIVO")
-                    || e.getTipo().equals(tipo)) {
+            if (e.getUsuarioList().contains(usuario) && e.getEstado().equals("ACTIVO") && !e.getTipo().equals(tipo)) {
+            } else {
                 iterator.remove();
             }
         }
@@ -67,8 +65,30 @@ public class HostessFacadeImpl implements HostessFacade {
     }
 
     @Override
-    public List<Listasclientestareas> findClienteTareaHostess(Integer integer) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Listasclientestareas> findClienteTareaHostess(Integer integer)throws EventoSinClientesPorRevisarException {
+        Tarea evento = tareasFacadeLocal.find(integer);
+        List<Listasclientestareas> clientes = evento.getListasclientestareasList();
+        List<Listasclientestareas> clientesAEnviar = new ArrayList<>();
+        Iterator<Listasclientestareas> iterator = clientes.iterator();
+
+        int cantidadClientes = findCantidadClientes();
+        Accion inicial = accionFacadeLocal.findByNombreAccion("INICIAL");
+        for (int i = 0; i < cantidadClientes; i++) {
+
+            uncliente:
+            while (iterator.hasNext()) {
+                Listasclientestareas lce = iterator.next();
+                if (lce.getIdAccion().equals(inicial)) {
+                    clientesAEnviar.add(lce);
+                    break uncliente;
+                }
+            }
+        }
+        if (clientesAEnviar.isEmpty()) {
+            throw new EventoSinClientesPorRevisarException();
+        } else {
+            return clientesAEnviar;
+        }
     }
 
     @Override
@@ -99,5 +119,11 @@ public class HostessFacadeImpl implements HostessFacade {
         }
 
         throw new EventoSinClientesPorRevisarException();
+    }
+
+    @Override
+    public Tipotarea findByNombreTipoTarea(String emaiL) {
+        
+        return tipostareasFacadeLocal.findBynombre("EMAIL");
     }
 }

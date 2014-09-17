@@ -4,10 +4,11 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.facade.HostessFacade;
+import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -29,6 +30,8 @@ public class TareasHostessBean {
             Logger.getLogger(SessionBean.class);
     @EJB
     HostessFacade hostessFacade;
+    @EJB
+    MarketingUserFacade marketingFadace;
     private List<Tarea> lista;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -64,7 +67,15 @@ public class TareasHostessBean {
                 LOGGER.error(ex);
             }
         }
-        lista = hostessFacade.findTareaHostess(sessionBean.getUsuario());
+
+        lista = sessionBean.getUsuario().getTareasList();
+        Iterator<Tarea> iterator = lista.iterator();
+        while (iterator.hasNext()) {
+            Tarea e = iterator.next();
+            if (!e.getEstado().equals("ACTIVO") || e.getTipo().getNombre().equals("EMAIL")) {
+                iterator.remove();
+            }
+        }
     }
 
     public List<Tarea> getLista() {
@@ -82,13 +93,13 @@ public class TareasHostessBean {
     public void setHostessFacade(HostessFacade hostessFacade) {
         this.hostessFacade = hostessFacade;
     }
-    
+
     public void goEvento(int id) {
         try {
             sessionBean.getAttributes().put("idTarea", new Integer(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
         } catch (IOException ex) {
-                LOGGER.error(ex);
+            LOGGER.error(ex);
         }
     }
 }

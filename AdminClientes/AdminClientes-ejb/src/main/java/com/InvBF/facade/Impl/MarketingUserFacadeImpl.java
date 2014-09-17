@@ -11,8 +11,10 @@ import com.InvBF.EntityFacade.CategoriaFacadeLocal;
 import com.InvBF.EntityFacade.ClienteFacadeLocal;
 import com.InvBF.EntityFacade.ClienteatributoFacadeLocal;
 import com.InvBF.EntityFacade.EventoFacadeLocal;
+import com.InvBF.EntityFacade.TareasFacadeLocal;
 import com.InvBF.EntityFacade.TipoJuegoFacadeLocal;
 import com.InvBF.EntityFacade.TipostareasFacadeLocal;
+import com.InvBF.EntityFacade.UsuarioFacadeLocal;
 import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Atributo;
 import com.invbf.adminclientesapi.entity.Casino;
@@ -20,8 +22,10 @@ import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Clienteatributo;
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.entity.Tipotarea;
+import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,9 +62,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @EJB
     TipostareasFacadeLocal tipostareasFacadeLocal;
     @EJB
+    TareasFacadeLocal tareasFacadeLocal;
+    @EJB
     CasinoFacadeLocal casinoFacadeLocal;
     @EJB
     EventoFacadeLocal eventoFacadeLocal;
+    @EJB
+    UsuarioFacadeLocal usuarioFacadeLocal;
 
     @Override
     public List<Cliente> findAllClientes() {
@@ -312,5 +320,44 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @Override
     public void deleteTipotarea(Tipotarea elemento) {
         tipostareasFacadeLocal.remove(elemento);
+    }
+
+    @Override
+    public void deleteTarea(Tarea tarea) {
+        List<Usuario> usuarios = usuarioFacadeLocal.findAll();
+        for(Usuario u : usuarios){
+            if(u.getTareasList().contains(tarea)){
+                u.getTareasList().remove(tarea);
+                usuarioFacadeLocal.edit(u);
+            }
+        }
+        tareasFacadeLocal.remove(tarea);
+    }
+
+    @Override
+    public Tarea guardarTarea(Tarea elemento) {
+        if (elemento.getIdTarea() == null) {
+
+            tareasFacadeLocal.create(elemento);
+            return elemento;
+        } else {
+            tareasFacadeLocal.edit(elemento);
+            return elemento;
+        }
+    }
+
+    @Override
+    public Accion findByNombreAccion(String nombre) {
+        return accionFacadeLocal.findByNombreAccion(nombre);
+    }
+
+    @Override
+    public List<Tarea> findAllTareas() {
+        return tareasFacadeLocal.findAll();
+    }
+
+    @Override
+    public Tarea findTarea(Integer integer) {
+        return tareasFacadeLocal.find(integer);
     }
 }

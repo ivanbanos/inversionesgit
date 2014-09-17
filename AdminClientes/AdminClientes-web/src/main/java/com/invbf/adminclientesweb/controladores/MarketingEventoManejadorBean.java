@@ -4,9 +4,11 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Casino;
 import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
@@ -54,11 +56,11 @@ public class MarketingEventoManejadorBean {
     private DualListModel<Usuario> todosusuarioses;
     private UploadedFile file;
     private List<Casino> listacasinos;
+    private Tarea tarea;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-
 
     /**
      * Creates a new instance of AtributosSistemaViewBean
@@ -124,7 +126,7 @@ public class MarketingEventoManejadorBean {
         this.marketingUserFacade = marketingUserFacade;
     }
 
-    public void guardar() {
+    public String guardar() {
         Calendar fechainicio = Calendar.getInstance();
         Calendar fechafinal = Calendar.getInstance();
         Calendar nowDate = Calendar.getInstance();
@@ -134,8 +136,12 @@ public class MarketingEventoManejadorBean {
             elemento = marketingUserFacade.guardarEventos(elemento);
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
             if (file != null && file.getContents() != null) {
-                marketingUserFacade.guardarImagen(file.getContents(), elemento.getIdEvento(), file.getFileName());
-                elemento.setImagen(elemento.getIdEvento() + file.getFileName());
+                marketingUserFacade.guardarImagen(file.getContents(),
+                        elemento.getIdEvento(),
+                        file.getFileName().substring(file.getFileName().lastIndexOf("."),
+                        file.getFileName().length()));
+                elemento.setImagen(elemento.getIdEvento() + file.getFileName().substring(file.getFileName().lastIndexOf("."),
+                        file.getFileName().length()));
             }
             marketingUserFacade.guardarEventos(elemento);
             sessionBean.actualizarUsuario();
@@ -148,6 +154,7 @@ public class MarketingEventoManejadorBean {
                 FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha final antes de la fecha inicial");
             }
         }
+        return "/pages/eventos.xhtml";
     }
 
     public AdminFacade getAdminFacade() {
@@ -198,10 +205,35 @@ public class MarketingEventoManejadorBean {
         this.file = file;
     }
 
+    public void deleteTarea() {
+        elemento.getTareasList().remove(tarea);
+        marketingUserFacade.deleteTarea(tarea);
+        sessionBean.registrarlog("eliminar", "Tareas", elemento.toString());
+        FacesUtil.addInfoMessage("Tarea eliminada", tarea.getNombre());
+        tarea = new Tarea();
+    }
+
+    public Tarea getTarea() {
+        return tarea;
+    }
+
+    public void setTarea(Tarea tarea) {
+        this.tarea = tarea;
+    }
+
     public void handleFileUpload(FileUploadEvent event) {
         if (event != null) {
             file = event.getFile();
             FacesUtil.addInfoMessage(event.getFile().getFileName());
+        }
+    }
+
+    public void goTareaMarketing(Integer idTarea) {
+        try {
+            sessionBean.getAttributes().put("idTarea", idTarea);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("tareaAccion.xhtml");
+        } catch (IOException ex) {
+            LOGGER.error(ex);
         }
     }
 }
