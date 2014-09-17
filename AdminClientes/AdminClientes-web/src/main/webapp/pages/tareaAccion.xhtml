@@ -42,14 +42,14 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
                         <div class="col-md-9">
-                            <p:calendar id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" pattern="MM/dd/yyyy HH:mm:ss" />
+                            <p:calendar id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
                         <div class="col-md-9">
-                            <p:calendar id="fecfinEventos" value="#{tareaAccionBean.elemento.fechaFinalizacion}" pattern="MM/dd/yyyy HH:mm:ss" />
+                            <p:calendar id="fecfinEventos" value="#{tareaAccionBean.elemento.fechaFinalizacion}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
                         </div>
                     </div>
 

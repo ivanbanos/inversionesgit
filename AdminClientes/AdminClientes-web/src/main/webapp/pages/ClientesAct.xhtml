@@ -52,6 +52,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['cumpleanos']}</label>
+                        <div class="col-md-9">
+                            <p:calendar id="cumpleanos" value="#{clientesActBean.elemento.cumpleanos}" pattern="dd/MMM" locale="es" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['correo']}</label>
                         <div class="col-md-9">
                             <p:inputText id="correo" value="#{clientesActBean.elemento.correo}" required="true" />

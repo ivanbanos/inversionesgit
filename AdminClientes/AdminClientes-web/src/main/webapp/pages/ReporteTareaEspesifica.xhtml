@@ -33,14 +33,14 @@
                     <label class="col-md-3 control-label" >#{label['fechainicio']}:</label>
                     <div class="col-md-3">
                         <h:outputLabel id="fecini" value="#{reporteTareaEspesificaBean.elemento.fechaInicio}" >
-                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                            <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
                         </h:outputLabel>
                     </div>
 
                     <label class="col-md-3 control-label" >#{label['fechafinal']}:</label>
                     <div class="col-md-3">
                         <h:outputLabel id="fecfin" value="#{reporteTareaEspesificaBean.elemento.fechaFinalizacion}"  >
-                            <f:convertDateTime pattern="MM-dd-yyyy" />
+                            <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
                         </h:outputLabel>
                     </div>
 
@@ -78,7 +78,9 @@
                             </p:column>
                             
                             <p:column headerText="Fecha de atencion" sortBy="#{element.fechaAtencion}" filterBy="#{element.fechaAtencion}" filterMatchMode="contains" >
-                                <h:outputText value="#{element.fechaAtencion}" />
+                                <h:outputText value="#{element.fechaAtencion}" >
+                                    <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                </h:outputText>
                             </p:column>
                             
                             <p:column headerText="nombre del usuario" sortBy="#{element.usuario.nombreUsuario}" filterBy="#{element.usuario.nombreUsuario}" filterMatchMode="contains" >

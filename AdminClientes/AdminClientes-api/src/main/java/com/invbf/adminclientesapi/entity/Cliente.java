@@ -5,6 +5,7 @@
 package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,6 +22,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -59,6 +62,9 @@ public class Cliente implements Serializable {
     private String telefono1;
     @Column(name = "telefono2")
     private String telefono2;
+    @Column(name = "cumpleanos")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date cumpleanos;
     @Column(name = "correo")
     private String correo;
     @Column(name = "identificacion")
@@ -212,6 +218,14 @@ public class Cliente implements Serializable {
 
     public void setListasclientestareasList(List<Listasclientestareas> listasclientestareasList) {
         this.listasclientestareasList = listasclientestareasList;
+    }
+
+    public Date getCumpleanos() {
+        return cumpleanos;
+    }
+
+    public void setCumpleanos(Date cumpleanos) {
+        this.cumpleanos = cumpleanos;
     }
     
 }

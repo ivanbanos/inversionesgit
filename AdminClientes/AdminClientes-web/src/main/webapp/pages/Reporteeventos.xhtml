@@ -40,13 +40,13 @@
 
                                             <p:column headerText="Fecha de Inicio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.fechaInicio}" >
-                                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                                    <f:convertDateTime pattern="dd/MMM/yyyy " locale="es"/>
                                                 </h:outputText>
                                             </p:column>
 
                                             <p:column headerText="Fecha finalizacion" sortBy="#{element.fechaFinal}" filterBy="#{element.fechaFinal}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.fechaFinal}" >
-                                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                                    <f:convertDateTime pattern="dd/MMM/yyyy " locale="es" />
                                                 </h:outputText>
                                             </p:column>
 
