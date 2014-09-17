@@ -191,6 +191,16 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
 
     @Override
     public void deleteEventos(Evento elemento) {
+        File imagen = null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(System.getProperty("APP_CONF"))
+                .append(System.getProperty("file.separator"))
+                .append("images").append(System.getProperty("file.separator"))
+                .append("inversiones").append(System.getProperty("file.separator")).append(elemento.getImagen());
+        imagen = new File(sb.toString());
+        if (imagen.exists()) {
+            imagen.delete();
+        }
         eventoFacadeLocal.remove(elemento);
     }
 
@@ -325,8 +335,8 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @Override
     public void deleteTarea(Tarea tarea) {
         List<Usuario> usuarios = usuarioFacadeLocal.findAll();
-        for(Usuario u : usuarios){
-            if(u.getTareasList().contains(tarea)){
+        for (Usuario u : usuarios) {
+            if (u.getTareasList().contains(tarea)) {
                 u.getTareasList().remove(tarea);
                 usuarioFacadeLocal.edit(u);
             }

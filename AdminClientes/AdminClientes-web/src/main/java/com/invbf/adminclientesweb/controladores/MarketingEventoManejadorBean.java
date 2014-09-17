@@ -4,21 +4,14 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Casino;
-import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Tarea;
-import com.invbf.adminclientesapi.entity.TipoJuego;
-import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesapi.facade.SystemFacade;
-import com.invbf.adminclientesweb.util.CategoriaBoolean;
 import com.invbf.adminclientesweb.util.FacesUtil;
-import com.invbf.adminclientesweb.util.TipoJuegoBoolean;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -29,7 +22,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DualListModel;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -50,10 +42,6 @@ public class MarketingEventoManejadorBean {
     private Evento elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private List<Usuario> usuarioses;
-    private List<CategoriaBoolean> categoriasBoolean;
-    private List<TipoJuegoBoolean> tipoJuegosBoolean;
-    private DualListModel<Usuario> todosusuarioses;
     private UploadedFile file;
     private List<Casino> listacasinos;
     private Tarea tarea;
@@ -90,22 +78,11 @@ public class MarketingEventoManejadorBean {
                 LOGGER.error(ex);
             }
         }
-        List<Categoria> categorias = marketingUserFacade.findAllCategorias();
-        List<TipoJuego> tipoJuegos = marketingUserFacade.findAllTiposjuegos();
-        categoriasBoolean = new ArrayList<CategoriaBoolean>();
-        tipoJuegosBoolean = new ArrayList<TipoJuegoBoolean>();
-        for (TipoJuego tipoJuego : tipoJuegos) {
-            tipoJuegosBoolean.add(new TipoJuegoBoolean(tipoJuego, false));
-        }
-        for (Categoria categoria : categorias) {
-            categoriasBoolean.add(new CategoriaBoolean(categoria, false));
-        }
         if ((Integer) sessionBean.getAttributes().get("idEvento") != 0) {
             elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
         } else {
             elemento = new Evento();
             elemento.setIdCasino(new Casino(0));
-            usuarioses = adminFacade.findAllUsuariosHostess();
         }
         listacasinos = marketingUserFacade.findAllCasinos();
     }
@@ -127,12 +104,22 @@ public class MarketingEventoManejadorBean {
     }
 
     public String guardar() {
-        Calendar fechainicio = Calendar.getInstance();
-        Calendar fechafinal = Calendar.getInstance();
-        Calendar nowDate = Calendar.getInstance();
-        fechainicio.setTime(elemento.getFechaInicio());
-        fechafinal.setTime(elemento.getFechaFinal());
-        if (!fechainicio.before(nowDate) && !fechafinal.before(fechainicio)) {
+        guardar:
+        {
+            Calendar fechainicio = Calendar.getInstance();
+            Calendar fechafinal = Calendar.getInstance();
+            Calendar nowDate = Calendar.getInstance();
+            fechainicio.setTime(elemento.getFechaInicio());
+            fechafinal.setTime(elemento.getFechaFinal());
+            if (elemento.getIdEvento() == null || elemento.getIdEvento() == 0) {
+                if (fechainicio.before(nowDate)) {
+                    FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha inicial antes de la fecha actual");
+                    break guardar;
+                } else if (fechafinal.before(fechainicio)) {
+                    FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha final antes de la fecha inicial");
+                    break guardar;
+                }
+            }
             elemento = marketingUserFacade.guardarEventos(elemento);
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
             if (file != null && file.getContents() != null) {
@@ -147,14 +134,10 @@ public class MarketingEventoManejadorBean {
             sessionBean.actualizarUsuario();
             elemento = marketingUserFacade.guardarEventos(elemento);
             FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
-        } else {
-            if (fechainicio.before(nowDate)) {
-                FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha inicial antes de la fecha actual");
-            } else {
-                FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha final antes de la fecha inicial");
-            }
+
+            return "/pages/eventos.xhtml";
         }
-        return "/pages/eventos.xhtml";
+        return "";
     }
 
     public AdminFacade getAdminFacade() {
@@ -165,36 +148,12 @@ public class MarketingEventoManejadorBean {
         this.adminFacade = adminFacade;
     }
 
-    public DualListModel<Usuario> getTodosusuarioses() {
-        return todosusuarioses;
-    }
-
-    public void setTodosusuarioses(DualListModel<Usuario> todosusuarioses) {
-        this.todosusuarioses = todosusuarioses;
-    }
-
     public List<Casino> getListacasinos() {
         return listacasinos;
     }
 
     public void setListacasinos(List<Casino> listacasinos) {
         this.listacasinos = listacasinos;
-    }
-
-    public List<CategoriaBoolean> getCategoriasBoolean() {
-        return categoriasBoolean;
-    }
-
-    public void setCategoriasBoolean(List<CategoriaBoolean> categoriasBoolean) {
-        this.categoriasBoolean = categoriasBoolean;
-    }
-
-    public List<TipoJuegoBoolean> getTipoJuegosBoolean() {
-        return tipoJuegosBoolean;
-    }
-
-    public void setTipoJuegosBoolean(List<TipoJuegoBoolean> tipoJuegosBoolean) {
-        this.tipoJuegosBoolean = tipoJuegosBoolean;
     }
 
     public UploadedFile getFile() {
@@ -224,6 +183,14 @@ public class MarketingEventoManejadorBean {
     public void handleFileUpload(FileUploadEvent event) {
         if (event != null) {
             file = event.getFile();
+            if (elemento.getIdEvento() != null) {
+                marketingUserFacade.guardarImagen(file.getContents(),
+                        elemento.getIdEvento(),
+                        file.getFileName().substring(file.getFileName().lastIndexOf("."),
+                        file.getFileName().length()));
+                elemento.setImagen(elemento.getIdEvento() + file.getFileName().substring(file.getFileName().lastIndexOf("."),
+                        file.getFileName().length()));
+            }
             FacesUtil.addInfoMessage(event.getFile().getFileName());
         }
     }

@@ -135,33 +135,6 @@ public class CrudEventoBean {
         }
     }
 
-    public void guardar() {
-        Calendar fechainicio = Calendar.getInstance();
-        Calendar fechafinal = Calendar.getInstance();
-        Calendar nowDate = Calendar.getInstance();
-        fechainicio.setTime(elemento.getFechaInicio());
-        fechafinal.setTime(elemento.getFechaFinal());
-        if (!fechainicio.before(nowDate) && !fechafinal.before(fechainicio)) {
-            elemento = marketingUserFacade.guardarEventos(elemento);
-            lista = marketingUserFacade.findAllEventos();
-            sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
-            FacesUtil.addInfoMessage("Evento actualizado", elemento.getNombre());
-            if (file != null && file.getContents() != null) {
-                marketingUserFacade.guardarImagen(file.getContents(), elemento.getIdEvento(), file.getFileName());
-                elemento.setImagen(elemento.getIdEvento() + file.getFileName());
-            }
-            marketingUserFacade.guardarEventos(elemento);
-            elemento = new Evento();
-        } else {
-            if (fechainicio.before(nowDate)) {
-                FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha inicial antes de la fecha actual");
-            } else {
-                FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha final antes de la fecha inicial");
-            }
-        }
-
-    }
-
     public void goEventoMarketing(int id) {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));
