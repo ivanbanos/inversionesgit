@@ -54,14 +54,21 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['cumpleanos']}</label>
                         <div class="col-md-9">
-                            <p:calendar id="cumpleanos" value="#{clientesActBean.elemento.cumpleanos}" pattern="dd/MMM" locale="es" />
+                            <p:calendar id="cumpleanos" value="#{clientesActBean.elemento.cumpleanos}" pattern="dd/MMM" locale="es"
+                                        requiredMessage="Por favor introducir una fecha"
+                                        />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['correo']}</label>
                         <div class="col-md-9">
-                            <p:inputText id="correo" value="#{clientesActBean.elemento.correo}"  />
+                            <p:inputText id="correo" value="#{clientesActBean.elemento.correo}"  size="40"
+                                         requiredMessage="Por favor introducir el correo electronico"
+                                         validatorMessage="Formato de email invalido">
+                                <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
                         </div>
                     </div>
 
@@ -114,15 +121,15 @@
                     </c:forEach>
                 </div>
                 <div class="panel-footer text-right"> 
-                        <h:commandLink id="btnconfirm"
-                                       action="#{clientesActBean.guardar()}"
-                                       styleClass="btn btn-primary">
-                            #{label['Confirmar']}
-                        </h:commandLink> 
-                        <h:link id="btnclose" outcome="/pages/clientes.xhtml" class="btn btn-primary"
-                                >
-                            #{label['Volver']}
-                        </h:link>
+                    <h:commandLink id="btnconfirm"
+                                   action="#{clientesActBean.guardar()}"
+                                   styleClass="btn btn-primary">
+                        #{label['Confirmar']}
+                    </h:commandLink> 
+                    <h:link id="btnclose" outcome="/pages/clientes.xhtml" class="btn btn-primary"
+                            >
+                        #{label['Volver']}
+                    </h:link>
 
                 </div>
             </div>

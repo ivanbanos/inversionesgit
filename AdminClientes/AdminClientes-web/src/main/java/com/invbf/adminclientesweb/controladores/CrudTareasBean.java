@@ -123,7 +123,7 @@ public class CrudTareasBean {
 
     public void goTareaMarketing(int id) {
         try {
-            sessionBean.getAttributes().put("idTarea", new Integer(id));
+            sessionBean.getAttributes().put("idTarea", id);
             sessionBean.getAttributes().remove("idEvento");
             FacesContext.getCurrentInstance().getExternalContext().redirect("tareaAccion.xhtml");
         } catch (IOException ex) {
@@ -133,7 +133,7 @@ public class CrudTareasBean {
 
     public void goTareaReporte(int id) {
         try {
-            sessionBean.getAttributes().put("idTarea", new Integer(id));
+            sessionBean.getAttributes().put("idTarea", id);
             FacesContext.getCurrentInstance().getExternalContext().redirect("tareaAccion.xhtml");
         } catch (IOException ex) {
             LOGGER.error(ex);

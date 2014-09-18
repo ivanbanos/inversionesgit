@@ -27,9 +27,9 @@ body{
 }
 
 .ui-widget-header .ui-state-active{
-    
+
     color: #CE6B0F!important;
-    
+
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -107,11 +107,11 @@ a.clickable { color: inherit; }
 a.clickable:hover { text-decoration:none; }
 
 .navbar-text:hover {
-    
+
     color: #CE6B0F!important;
 }
 a:focus{
-    
+
     color: #CE6B0F!important;
 }
 .navbar-text-selected {
@@ -140,4 +140,12 @@ a:focus{
 
 .LogoImage{
     width: 100%;
+}
+
+.titulo{
+    color: #CE6B0F!important;
+}
+
+.ui-state-default .ui-icon {
+    background-image: url(images/ui-icons_CE6B0F_256x240.png)!important;
 }

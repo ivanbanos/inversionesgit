@@ -43,11 +43,22 @@
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="Estado" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Estados" onchange="PF('detailsTableEventos').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.estados}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
                                             <h:outputText value="#{element.estado}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains" filterStyle="display:none">
+
+                                        <p:column headerText="Tipo de tarea" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Tipos" onchange="PF('detailsTableEventos').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.tipostareas}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
                                             <h:outputText value="#{element.tipo.nombre}" />
                                         </p:column>
 

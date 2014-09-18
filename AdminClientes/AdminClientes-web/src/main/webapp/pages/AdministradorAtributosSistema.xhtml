@@ -37,7 +37,12 @@
                                             <h:outputText value="#{element.nombreUsuario}" />
                                         </p:column>
 
-                                        <p:column headerText="Perfil" sortBy="#{element.idPerfil.nombre}" filterBy="#{element.idPerfil.nombre}" filterMatchMode="contains" >
+                                        <p:column headerText="Perfil" sortBy="#{element.idPerfil.nombre}" filterBy="#{element.idPerfil.nombre}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Perfiles" onchange="PF('detailsTableUsuarios').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.perfiles}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
                                             <h:outputText value="#{element.idPerfil.nombre}" />
                                         </p:column>
 
@@ -125,7 +130,7 @@
 
                         <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
                             <p:dialog id="editDialogUsuarios" header="Editar" widgetVar="editDialogUsuarios" modal="true" closable="false" resizable="false"> 
-                                 <div class="panel panel-primary">
+                                <div class="panel panel-primary">
 
                                     <div class="panel-body">
                                         <fieldset>

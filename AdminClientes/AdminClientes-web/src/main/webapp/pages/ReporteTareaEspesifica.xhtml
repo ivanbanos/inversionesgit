@@ -82,10 +82,6 @@
                                 <h:outputText value="#{element.cliente.apellidos}" />
                             </p:column>
 
-                            <p:column headerText="observaciones" sortBy="#{element.observaciones}" filterBy="#{element.observaciones}" filterMatchMode="contains" >
-                                <h:outputText value="#{element.observaciones}" />
-                            </p:column>
-
                             <p:column headerText="Accion tomada" sortBy="#{element.idAccion.nombre}" filterBy="#{element.idAccion.nombre}" filterMatchMode="contains" >
                                 <h:outputText value="#{element.idAccion.nombre}" />
                             </p:column>
@@ -96,8 +92,12 @@
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="nombre del usuario" sortBy="#{element.usuario.nombreUsuario}" filterBy="#{element.usuario.nombreUsuario}" filterMatchMode="contains" >
+                            <p:column headerText="Responsable" sortBy="#{element.usuario.nombreUsuario}" filterBy="#{element.usuario.nombreUsuario}" filterMatchMode="contains" >
                                 <h:outputText value="#{element.usuario.nombreUsuario}" />
+                            </p:column>
+
+                            <p:column headerText="observaciones" sortBy="#{element.observaciones}" filterBy="#{element.observaciones}" filterMatchMode="contains" >
+                                <h:outputText value="#{element.observaciones}" />
                             </p:column>
 
                         </p:dataTable>

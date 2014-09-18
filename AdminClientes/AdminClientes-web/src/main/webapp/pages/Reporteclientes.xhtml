@@ -42,7 +42,12 @@
                                         <h:outputText value="#{element.apellidos}" />
                                     </p:column>
 
-                                    <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="contains" >
+                                    <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Categorias" onchange="PF('detailsTableClientes').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.categorias}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
                                         <h:outputText value="#{element.idCategorias.nombre}" />
                                     </p:column>
 

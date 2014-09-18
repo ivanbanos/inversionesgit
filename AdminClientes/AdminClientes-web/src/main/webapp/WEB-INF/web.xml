@@ -13,10 +13,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+     <session-config>
+      <!-- Session idle timeout in min. -->
+      <session-timeout>5</session-timeout>
     </session-config>
     
     <welcome-file-list>
@@ -30,5 +29,6 @@
     <filter-mapping>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 </web-app>

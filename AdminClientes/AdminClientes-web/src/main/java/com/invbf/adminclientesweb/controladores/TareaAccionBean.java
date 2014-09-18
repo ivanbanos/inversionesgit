@@ -94,7 +94,7 @@ public class TareaAccionBean {
         for (Categoria categoria : categorias) {
             categoriasBoolean.add(new CategoriaBoolean(categoria, false));
         }
-        if ((Integer) sessionBean.getAttributes().get("idTarea") == 0) {
+        if (((Integer) sessionBean.getAttributes().get("idTarea")) == 0) {
             elemento = new Tarea();
             if (sessionBean.getAttributes().containsKey("idEvento")) {
                 evento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
@@ -109,23 +109,25 @@ public class TareaAccionBean {
         } else {
             elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
             evento = elemento.getIdEvento();
-            if (elemento.getCategorias() == null) {
+            if (elemento.getCategorias() == null || elemento.getCategorias().equals("")) {
                 elemento.setCategorias("");
-            }
-            if (elemento.getTiposdejuegos() == null) {
-                elemento.setTiposdejuegos("");
-            }
-            for (String s : elemento.getCategorias().split(" ")) {
-                for (CategoriaBoolean cb : categoriasBoolean) {
-                    if (cb.compareIdCategorias(Integer.parseInt(s))) {
-                        cb.setSelected(true);
+            } else {
+                for (String s : elemento.getCategorias().split(" ")) {
+                    for (CategoriaBoolean cb : categoriasBoolean) {
+                        if (cb.compareIdCategorias(Integer.parseInt(s))) {
+                            cb.setSelected(true);
+                        }
                     }
                 }
             }
-            for (String s : elemento.getTiposdejuegos().split(" ")) {
-                for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                    if (tjb.compareIdTipoJuego(Integer.parseInt(s))) {
-                        tjb.setSelected(true);
+            if (elemento.getTiposdejuegos() == null||elemento.getTiposdejuegos().equals("")) {
+                elemento.setTiposdejuegos("");
+            } else {
+                for (String s : elemento.getTiposdejuegos().split(" ")) {
+                    for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                        if (tjb.compareIdTipoJuego(Integer.parseInt(s))) {
+                            tjb.setSelected(true);
+                        }
                     }
                 }
             }
@@ -151,7 +153,7 @@ public class TareaAccionBean {
     public void guardar() {
         guardar:
         {
-            if (elemento.getTipo() == null) {
+            if (elemento.getTipo() == null || elemento.getTipo().getIdTipotarea() == 0) {
                 FacesUtil.addErrorMessage("Elemento no creado", "Debe seleccionar un tipo de tarea");
                 break guardar;
             }
@@ -174,7 +176,7 @@ public class TareaAccionBean {
             if (fechainicio.before(nowDate)) {
                 elemento.setEstado("ACTIVO");
             }
-            if (fechafinal.before(nowDate)){
+            if (fechafinal.before(nowDate)) {
                 elemento.setEstado("VENCIDO");
             }
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
@@ -188,25 +190,46 @@ public class TareaAccionBean {
             ArrayList<Listasclientestareas> al = new ArrayList<Listasclientestareas>(elemento.getListasclientestareasList());
             elemento.getListasclientestareasList().clear();
             List<Cliente> todosclienteses = marketingUserFacade.findAllClientes();
+            boolean noCatselected = true;
+            boolean noTipselected = true;
+            for (CategoriaBoolean cb : categoriasBoolean) {
+                if (cb.isSelected()) {
+                    noCatselected = false;
+                    break;
+                }
+            }
+            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                if (tjb.isSelected()) {
+                    noTipselected = false;
+                    break;
+                }
+            }
             for (Cliente c : todosclienteses) {
                 boolean siCategoria = false;
                 boolean siTipoJuego = false;
 
-                for (CategoriaBoolean cb : categoriasBoolean) {
-                    if (cb.isSelected()) {
-                        if (c.getIdCategorias().equals(cb.getCategoria())) {
-                            siCategoria = true;
-                            break;
+                if (noCatselected) {
+                    siCategoria = true;
+                } else {
+                    for (CategoriaBoolean cb : categoriasBoolean) {
+                        if (cb.isSelected()) {
+                            if (c.getIdCategorias().equals(cb.getCategoria())) {
+                                siCategoria = true;
+                                break;
+                            }
                         }
                     }
                 }
-
-                for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                    if (tjb.isSelected()) {
-                        for (TipoJuego tj : c.getTiposjuegosList()) {
-                            if (tj.equals(tjb.getTipoJuego())) {
-                                siTipoJuego = true;
-                                break;
+                if (noTipselected) {
+                    siTipoJuego = true;
+                } else {
+                    for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                        if (tjb.isSelected()) {
+                            for (TipoJuego tj : c.getTiposjuegosList()) {
+                                if (tj.equals(tjb.getTipoJuego())) {
+                                    siTipoJuego = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -250,7 +273,12 @@ public class TareaAccionBean {
                 }
             }
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
+
             elemento = marketingUserFacade.guardarTarea(elemento);
+            if (evento!=null) {
+                evento.getTareasList().add(elemento);
+                marketingUserFacade.guardarEventos(evento);
+            }
             FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
 
         }

@@ -35,7 +35,7 @@
                             <span class="sr-only">Toggle navigation</span>
                             <span class="fa fa-bars"></span>
                         </button>
-                        <h2 class="navbar-text">#{label['title.app']}</h2>
+                        <h2 class="titulo">#{label['title.app']}</h2>
 
                     </div>
 
@@ -177,6 +177,7 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <div class="navbar-form navbar-right">
+                                
                                 <div class="form-group">
                                     <p class="navbar-text">Hola! #{sessionBean.usuario.nombreUsuario}</p>
                                 </div>
@@ -184,7 +185,7 @@
                                                action="#{sessionBean.Desconectar()}"
                                                styleClass="btn btn-primary">
                                     #{label['salir']}
-                                </h:commandLink> 
+                                </h:commandLink>
                             </div> 
                         </ul>
                     </div><!-- /.navbar-collapse -->
@@ -200,7 +201,7 @@
 
 
                     <h:form>
-                        <p:growl id="messages" showDetail="true" sticky="true" />  
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                     </h:form>
 
                     <div class="row clearfix">
@@ -226,20 +227,28 @@
                         <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 column">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
 
-                                
+
 
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 column">
-                            
-                        <p class="muted pull-right">Inversiones Buena Fortuna S.A.S. Derechos reservados © 2014</p>
+
+                            <p class="muted pull-right">Derechos reservados © 2014</p>
                             <h:graphicImage class="secondaryImage pull-right" value="#{resource['images/IBFLogo01.png']}" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <p:idleMonitor onactive="sessionTimeOutDialog.show()" 
+                       timeout="#{session.maxInactiveInterval * 10000 }" />
+
+            <p:dialog header="#{label['tiempo.inactividad']}" 
+                      widgetVar="sessionTimeOutDialog"
+                      modal="true" closable="false" width="400">
+    <h:outputText value="#{label['leyenda.inactividad']}" />
+           </p:dialog>
     </h:body>
 
 </html>
