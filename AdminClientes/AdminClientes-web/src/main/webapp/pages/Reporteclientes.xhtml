@@ -11,86 +11,95 @@
     <ui:define name="content">
         <h:form>
 
-                    <div class="col-md-12 ">
-                        <!--Clientes-->
-                        <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Clientes</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <h:form class="form-horizontal">
-                                        <p:dataTable id="detailsTableClientes" var="element" value="#{reportesClientesBean.lista}"  
-                                                     emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" rows="#{sessionBean.paginacion}"
-                                                     paginator="true"
-                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                     >
+            <div class="col-md-12 ">
+                <!--Clientes-->
+                <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Clientes</h3>
+                        </div>
+                        <div class="panel-body">
+                            <h:form class="form-horizontal">
+                                <p:dataTable id="detailsTableClientes" var="element" value="#{reportesClientesBean.lista}"  
+                                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" rows="#{sessionBean.paginacion}"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             >
+                                    
+                                    <p:column style="width:5%">
+                                        <p:rowToggler />
+                                    </p:column>
+                                    
+                                    <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
+                                        <h:outputText value="#{element.identificacion}" />
+                                    </p:column>
 
-                                            <f:facet name="header">
+                                    <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
+                                        <h:outputText value="#{element.nombres}" />
+                                    </p:column>
+
+                                    <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
+                                        <h:outputText value="#{element.apellidos}" />
+                                    </p:column>
+
+                                    <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="contains" >
+                                        <h:outputText value="#{element.idCategorias.nombre}" />
+                                    </p:column>
+
+                                    <p:rowExpansion>
+                                            <div class="row clearfix">
+                                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                                    <h:outputLabel class="col-md-6 control-label" value="Telefono 1:" />
+                                                    <h:outputText class="col-md-6" value="#{element.telefono1}" />
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                                    <h:outputLabel class="col-md-6 control-label" value="Telefono 2:" />
+                                                    <h:outputText class="col-md-6" value="#{element.telefono2}" />
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                                    <h:outputLabel class="col-md-6 control-label" value="Correo:" />
+                                                    <h:outputText class="col-md-6" value="#{element.correo}" />
+                                                </div>
                                                 
-                                            </f:facet>
+                                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                                    <h:outputLabel class="col-md-6 control-label" value="Cumplea&ntilde;os:" />
+                                                    <h:outputText class="col-md-6" value="#{element.cumpleanos}" >
+                                                        <f:convertDateTime pattern="dd/MMM" locale="es" />
+                                                    </h:outputText>
+                                                </div>
+                                                
+                                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                                    <h:outputLabel class="col-md-6 control-label" value="Casino:" />
+                                                    <h:outputText class="col-md-6" value="#{element.idCasinoPreferencial.nombre}" />
+                                                </div>
 
-                                            <p:column style="width:5%">
-                                                <p:rowToggler />
-                                            </p:column>
-
-                                            <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.nombres}" />
-                                            </p:column>
-
-                                            <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.apellidos}" />
-                                            </p:column>
-
-                                            <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.identificacion}" />
-                                            </p:column>
-
-                                            <p:column headerText="Telefono 1" sortBy="#{element.telefono1}" filterBy="#{element.telefono1}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.telefono1}" />
-                                            </p:column>
-
-                                            <p:column headerText="Telefono 2" sortBy="#{element.telefono2}" filterBy="#{element.telefono2}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.telefono2}" />
-                                            </p:column>
-
-                                            <p:column headerText="Correo" sortBy="#{element.correo}" filterBy="#{element.correo}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.correo}" />
-                                            </p:column>
-
-                                            <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.idCategorias.nombre}" />
-                                            </p:column>
-
-                                            <p:column headerText="Casino preferencial" sortBy="#{element.idCasinoPreferencial.nombre}" filterBy="#{element.idCasinoPreferencial.nombre}" filterMatchMode="contains" >
-                                                <h:outputText value="#{element.idCasinoPreferencial.nombre}" />
-                                            </p:column>
-
-                                            <p:column headerText="Preferencias de Juegos" filterBy="#{element.idCliente}" filterMatchMode="contains" filterStyle="display:none">
-
-                                                <p:dataList value="#{element.tiposjuegosList}" var="tipo" emptyMessage="No tiene juegos favoritos">
-
-                                                    #{tipo.nombre}
+                                                <p:dataList value="#{element.clientesatributosList}" var="attr" >
+                                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                                        <h:outputLabel class="col-md-6 control-label" value="#{attr.atributos.nombre}:" />
+                                                        <h:outputText class="col-md-6" value="#{attr.valor}" /> 
+                                                    </div>
                                                 </p:dataList>
-                                            </p:column>
 
-                                            <p:rowExpansion>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <h:outputLabel class="col-md-12 control-label" value="Preferencias de Juegos:" />
+                                                    <p:dataList value="#{element.tiposjuegosList}" var="tipo" emptyMessage="No tiene juegos favoritos">
+                                                        #{tipo.nombre}
+                                                    </p:dataList>
+                                                </div>
 
-                                                <p:dataList value="#{element.clientesatributosList}" var="attr" type="definition" >
-                                                    <h:outputText value="#{attr.atributos.nombre}:" />
-                                                    <f:facet name="description">
-                                                        <h:outputText value="#{attr.valor}" /> 
-                                                    </f:facet>
-                                                </p:dataList>
-                                            </p:rowExpansion>
 
-                                        </p:dataTable>
+                                            </div>
+                                    </p:rowExpansion>
 
-                                    </h:form>
-                                </div>
-                            </div>
-                        </c:if>
+                                </p:dataTable>
+
+                            </h:form>
+                        </div>
                     </div>
+                </c:if>
+            </div>
 
         </h:form>
 

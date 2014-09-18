@@ -12,44 +12,57 @@
         <h:form>
             <div class="panel panel-primary">
 
-                <div class="panel-heading">Evento</div>
+                <div class="panel-heading"><h4>Tarea</h4></div>
                 <div class="panel-body">
-                    
-                    <label class="col-md-3 control-label" >#{label['estado']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="estado" value="#{reporteTareaEspesificaBean.elemento.estado}" />
+                    <div class="col-md-12">
+
+                        <b><label class="col-md-3 control-label" >#{label['nombre']}:</label></b>
+                        <div class="col-md-9">
+                            <h:outputText id="nombre" value="#{reporteTareaEspesificaBean.elemento.nombre}" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="col-md-3 control-label" >#{label['estado']}:</label>
+                        <div class="col-md-3">
+                            <h:outputText id="estado" value="#{reporteTareaEspesificaBean.elemento.estado}" />
+                        </div>
+
+                        <b><label class="col-md-3 control-label" >#{label['tipo']}:</label></b>
+                        <div class="col-md-3">
+                            <h:outputText id="tipo" value="#{reporteTareaEspesificaBean.elemento.tipo.nombre}" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <b><label class="col-md-3 control-label" >#{label['fechainicio']}:</label></b>
+                        <div class="col-md-3">
+                            <h:outputText id="fecini" value="#{reporteTareaEspesificaBean.elemento.fechaInicio}" >
+                                <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                            </h:outputText>
+                        </div>
+
+                        <b><label class="col-md-3 control-label" >#{label['fechafinal']}:</label></b>
+                        <div class="col-md-3">
+                            <h:outputText id="fecfin" value="#{reporteTareaEspesificaBean.elemento.fechaFinalizacion}"  >
+                                <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                            </h:outputText>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <b><label class="col-md-3 control-label" >#{label['descripcion']}:</label></b>
+                        <div class="col-md-9">
+                            <h:outputText id="descripcion" value="#{reporteTareaEspesificaBean.elemento.descripcion}" />
+                        </div>
                     </div>
 
-                    <label class="col-md-3 control-label" >#{label['nombre']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="nombre" value="#{reporteTareaEspesificaBean.elemento.nombre}" />
-                    </div>
-                    
-                    <label class="col-md-3 control-label" >#{label['tipo']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="tipo" value="#{reporteTareaEspesificaBean.elemento.tipo.nombre}" />
-                    </div>
-                    
-                    <label class="col-md-3 control-label" >#{label['fechainicio']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="fecini" value="#{reporteTareaEspesificaBean.elemento.fechaInicio}" >
-                            <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
-                        </h:outputLabel>
+                    <div class="col-md-12">
+                        <b><label class="col-md-3 control-label" >#{label['speech']}:</label></b>
+                        <div class="col-md-9">
+                            <h:outputText id="speech" value="#{reporteTareaEspesificaBean.elemento.speech}" />
+                        </div>
                     </div>
 
-                    <label class="col-md-3 control-label" >#{label['fechafinal']}:</label>
-                    <div class="col-md-3">
-                        <h:outputLabel id="fecfin" value="#{reporteTareaEspesificaBean.elemento.fechaFinalizacion}"  >
-                            <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
-                        </h:outputLabel>
-                    </div>
-
-                    <label class="col-md-3 control-label" >#{label['descripcion']}:</label>
-                    <div class="col-md-9">
-                        <h:outputLabel id="descripcion" value="#{reporteTareaEspesificaBean.elemento.descripcion}" />
-                    </div>
-
-                    <label class="col-md-12 control-label" >#{label['clientes']}</label>
+                    <b><label class="col-md-12 control-label" >#{label['clientes']}</label></b>
                     <div class="col-md-12">
                         <p:dataTable id="detailsTableClientes" var="element" value="#{reporteTareaEspesificaBean.elemento.listasclientestareasList}"  
                                      emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" 
@@ -76,13 +89,13 @@
                             <p:column headerText="Accion tomada" sortBy="#{element.idAccion.nombre}" filterBy="#{element.idAccion.nombre}" filterMatchMode="contains" >
                                 <h:outputText value="#{element.idAccion.nombre}" />
                             </p:column>
-                            
+
                             <p:column headerText="Fecha de atencion" sortBy="#{element.fechaAtencion}" filterBy="#{element.fechaAtencion}" filterMatchMode="contains" >
                                 <h:outputText value="#{element.fechaAtencion}" >
                                     <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
                                 </h:outputText>
                             </p:column>
-                            
+
                             <p:column headerText="nombre del usuario" sortBy="#{element.usuario.nombreUsuario}" filterBy="#{element.usuario.nombreUsuario}" filterMatchMode="contains" >
                                 <h:outputText value="#{element.usuario.nombreUsuario}" />
                             </p:column>

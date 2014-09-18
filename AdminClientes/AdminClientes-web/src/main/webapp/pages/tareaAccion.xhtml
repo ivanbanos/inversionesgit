@@ -12,15 +12,22 @@
         <h:form>
             <div class="panel panel-primary">
 
-                <div class="panel-heading">Tarea</div>
+                <div class="panel-heading"><h4>Tarea</h4></div>
                 <div class="panel-body">
-
-                    <c:if test="#{tareaAccionBean.evento!=null}">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" >#{label['evento']}</label>
-                            <label class="col-md-9 control-label" >#{tareaAccionBean.evento.nombre}</label>
-                        </div>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="#{tareaAccionBean.evento!=null}">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" >#{label['evento']}</label>
+                                <label class="col-md-9 control-label" >#{tareaAccionBean.evento.nombre}</label>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" >#{label['evento']}</label>
+                                <label class="col-md-9 control-label" >Ninguno</label>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['tipo']}</label>
