@@ -5,12 +5,20 @@
 package com.InvBF.EntityFacade.install;
 
 
+import com.InvBF.EntityFacade.AccionFacadeLocal;
+import com.InvBF.EntityFacade.AtributoFacadeLocal;
+import com.InvBF.EntityFacade.CasinoFacadeLocal;
+import com.InvBF.EntityFacade.CategoriaFacadeLocal;
 import com.InvBF.EntityFacade.ConfiguracionFacadeLocal;
 import com.InvBF.EntityFacade.FormularioFacadeLocal;
 import com.InvBF.EntityFacade.PerfilFacadeLocal;
 import com.InvBF.EntityFacade.UsuarioFacadeLocal;
 import com.InvBF.EntityFacade.VistaFacadeLocal;
 import com.InvBF.util.EncryptUtil;
+import com.invbf.adminclientesapi.entity.Accion;
+import com.invbf.adminclientesapi.entity.Atributo;
+import com.invbf.adminclientesapi.entity.Casino;
+import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Configuracion;
 import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.entity.Perfil;
@@ -46,6 +54,15 @@ public class InitEntitysService {
     private VistaFacadeLocal vistasFacadeLocal;
     @EJB
     private ConfiguracionFacadeLocal configuracionesFacadeLocal;
+    @EJB
+    private CasinoFacadeLocal casinoFacadeLocal;
+    @EJB
+    private CategoriaFacadeLocal categoriaFacadeLocal;
+    @EJB
+    private AtributoFacadeLocal atributoFacadeLocal;
+    @EJB
+    private AccionFacadeLocal accionFacadeLocal;
+    
 
     /**
      * 1. dependiendo de un parametro de configuracion el sistema debe
@@ -347,9 +364,96 @@ public class InitEntitysService {
         configuracion = new Configuracion();
         configuracion.setNombre("paginacion");
         configuracion.setValor("10");
-
-
         configuracionesFacadeLocal.create(configuracion);
+        
+        
+        Casino c = new Casino();
+        c.setNombre("Masters Royale Casino");
+        c.setDireccion("Bocagrande");
+        casinoFacadeLocal.create(c);
+        c = new Casino();
+        c.setNombre("Texas Luxury Casino - San Fernando");
+        c.setDireccion("San Fernando");
+        casinoFacadeLocal.create(c);
+        c = new Casino();
+        c.setNombre("Texas Luxury Casino - Centro");
+        c.setDireccion("Centro");
+        casinoFacadeLocal.create(c);
+        c = new Casino();
+        c.setNombre("Texas Luxury Casino - Barranquilla");
+        c.setDireccion("Barranquilla");
+        casinoFacadeLocal.create(c);
+        
+        Categoria cat = new Categoria();
+        cat.setNombre("VIP");
+        categoriaFacadeLocal.create(cat);
+        cat = new Categoria();
+        cat.setNombre("A");
+        categoriaFacadeLocal.create(cat);
+        cat = new Categoria();
+        cat.setNombre("B");
+        categoriaFacadeLocal.create(cat);
+        cat = new Categoria();
+        cat.setNombre("C");
+        categoriaFacadeLocal.create(cat);
+        cat = new Categoria();
+        cat.setNombre("INTERNACIONAL");
+        categoriaFacadeLocal.create(cat);
+        
+        Atributo a = new Atributo();
+        a.setNombre("Dirección");
+        a.setTipoDato("Text");
+        atributoFacadeLocal.create(a);
+        a = new Atributo();
+        a.setNombre("Ciudad");
+        a.setTipoDato("Text");
+        atributoFacadeLocal.create(a);
+        a = new Atributo();
+        a.setNombre("Pais");
+        a.setTipoDato("Text");
+        atributoFacadeLocal.create(a);
+        a = new Atributo();
+        a.setNombre("Cupo de Fidelización");
+        a.setTipoDato("Text");
+        atributoFacadeLocal.create(a);
+        
+        Accion ac = new Accion();
+        ac.setNombre("ASISTIRÁ");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("DATOS ACTUALIZADOS");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("EN REVISIÓN");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("ENVIADO");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("INFORMACIÓN ENTREGADA");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("INICIAL");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("TELEFONO ERRONEO");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("NO ASISTIRÁ");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("NO CONTESTO");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("NO ENVIADO");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("NO LE INTERESA");
+        accionFacadeLocal.create(ac);
+        ac = new Accion();
+        ac.setNombre("TALVEZ");
+        accionFacadeLocal.create(ac);
+                
     }
 
     private void crearPerfilGerente() {

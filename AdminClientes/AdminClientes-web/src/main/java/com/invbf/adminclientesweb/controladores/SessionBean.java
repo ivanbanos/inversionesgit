@@ -106,6 +106,12 @@ public class SessionBean implements Serializable, Subject {
     }
 
     public boolean perfilViewMatch(String vista) {
+        if(usuario==null){
+            try {            
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+            } catch (IOException ex) {
+            }
+        }
         List<Vista> vistasUsuario = usuario.getIdPerfil().getVistasList();
         for (Vista v : vistasUsuario) {
             if (v.getNombreVista().equals(vista)) {
@@ -116,6 +122,12 @@ public class SessionBean implements Serializable, Subject {
     }
 
     public boolean perfilFormMatch(String tabla, String accion) {
+        if(usuario==null){
+            try {            
+                FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+            } catch (IOException ex) {
+            }
+        }
         for (Formulario f : usuario.getIdPerfil().getFormulariosList()) {
             if (f.es(tabla + accion)) {
                 return true;

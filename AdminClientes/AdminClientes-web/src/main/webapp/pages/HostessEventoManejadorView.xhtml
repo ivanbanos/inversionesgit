@@ -14,41 +14,62 @@
 
             <div class="panel panel-primary">
 
-                <div class="panel-heading"><h4>Evento</h4></div>
+                <div class="panel-heading"><h4>Tarea</h4></div>
                 <div class="panel-body">
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['evento']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="evento" value="#{hostessTareaManejadorBean.elemento.idEvento.nombre}" />
-                        </div>
-                    </div>
+                    <div class="row clearfix">
+                        <c:choose>
+                            <c:when test="#{tareaAccionBean.evento!=null}">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['evento']}</label>
+                                    <h:outputText class="col-md-9" id="evento" value="#{hostessTareaManejadorBean.elemento.idEvento.nombre}" />
 
-                    <div class="form-group">
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['evento']}</label>
+                                    <h:outputText class="col-md-9" id="evento" value="Ninguno" />
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
+                    </div>
+                    <div class="row clearfix">
+
+
                         <label class="col-md-3 control-label" >#{label['nombre']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="nombre" value="#{hostessTareaManejadorBean.elemento.nombre}" />
-                        </div>
+                        <h:outputText class="col-md-9" id="nombre" value="#{hostessTareaManejadorBean.elemento.nombre}" />
+
                     </div>
 
-                    <div class="form-group">
+                    <div class="row clearfix">
+
                         <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="fecini" value="#{hostessTareaManejadorBean.elemento.fechaInicio}" >
-                                <f:convertDateTime pattern="MM-dd-yyyy" />
-                            </h:outputLabel>
+                        <div class="col-md-3">
+                            <h:outputText id="fecini" value="#{hostessTareaManejadorBean.elemento.fechaInicio}" >
+                                <f:convertDateTime  pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
+                            </h:outputText>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
+                            <div class="col-md-3">
+                                <h:outputText id="fecfin" value="#{hostessTareaManejadorBean.elemento.fechaFinalizacion}"  >
+                                    <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                </h:outputText>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row clearfix">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" >#{label['casino']}</label>
+                            <h:outputText class="col-md-9" id="casino" value="#{hostessTareaManejadorBean.elemento.idEvento.idCasino.nombre}" />
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="fecfin" value="#{hostessTareaManejadorBean.elemento.fechaFinalizacion}"  >
-                                <f:convertDateTime pattern="MM-dd-yyyy" />
-                            </h:outputLabel>
-                        </div>
-                    </div>
-                    
+
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['banner']}</label>
                         <div class="col-md-9">
@@ -59,12 +80,6 @@
 
 
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['casino']}</label>
-                        <div class="col-md-9">
-                            <h:outputLabel id="casino" value="#{hostessTareaManejadorBean.elemento.idEvento.idCasino.nombre}" />
-                        </div>
-                    </div>
 
 
 
@@ -87,44 +102,48 @@
                         <div class="panel panel-primary">
 
                             <div class="panel-body">
+                                <div class="row clearfix">
 
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
-                                    <div class="col-md-9">
-                                        <h:outputLabel value="#{clientes.cliente.nombres} #{clientes.cliente.apellidos}"/>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                        <h:outputText class="col-md-9" value="#{clientes.cliente.nombres} #{clientes.cliente.apellidos}"/>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row clearfix">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" >#{label['tel1']}</label>
+                                        <h:outputText class="col-md-3" value="#{clientes.cliente.telefono1}"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" >#{label['tel2']}</label>
+                                        <h:outputText class="col-md-3" value="#{clientes.cliente.telefono2}"/>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" >#{label['tel1']}</label>
-                                    <div class="col-md-9">
-                                        <h:outputLabel value="#{clientes.cliente.telefono1} #{clientes.cliente.telefono1}"/>
+                                <div class="row clearfix">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" >#{label['Observaciones']}</label>
+                                        <div class="col-md-9">
+                                            <h:inputTextarea  value="#{clientes.observaciones}"/>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" >#{label['tel2']}</label>
-                                    <div class="col-md-9">
-                                        <h:outputLabel value="#{clientes.cliente.telefono2} #{clientes.cliente.telefono2}"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" >#{label['Observaciones']}</label>
-                                    <div class="col-md-9">
-                                        <h:inputTextarea  value="#{clientes.observaciones}"/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" >#{label['accion']}</label>
-                                    <div class="col-md-9">
-                                        <p:selectOneMenu  value="#{clientes.idAccion}">
-                                            <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.accionList}" 
-                                                           var="var" 
-                                                           itemLabel="#{var.nombre}" 
-                                                           itemValue="#{var.nombre}"/> 
-                                        </p:selectOneMenu>
+                                <div class="row clearfix">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" >#{label['accionposible']}</label>
+                                        <div class="col-md-9">
+                                            <p:selectOneMenu  value="#{clientes.idAccion}">
+                                                <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.accionList}" 
+                                                               var="var" 
+                                                               itemLabel="#{var.nombre}" 
+                                                               itemValue="#{var.nombre}"/> 
+                                            </p:selectOneMenu>
+                                        </div>
                                     </div>
                                 </div>
 
