@@ -75,6 +75,11 @@ public class ReporteTareasBean {
         }
         elemento = new Tarea();
         lista = marketingUserFacade.findAllTareas();
+        for(Tarea t :lista){
+            if(!t.getEstado().equals("VENCIDO")) {
+                sessionBean.checkEstadoTarea(t);
+            }
+        }
     }
 
     public List<Tarea> getLista() {

@@ -69,6 +69,11 @@ public class TareasHostessBean {
         }
 
         lista = sessionBean.getUsuario().getTareasList();
+        for(Tarea t :lista){
+            if(!t.getEstado().equals("VENCIDO")) {
+                sessionBean.checkEstadoTarea(t);
+            }
+        }
         Iterator<Tarea> iterator = lista.iterator();
         while (iterator.hasNext()) {
             Tarea e = iterator.next();
@@ -76,6 +81,7 @@ public class TareasHostessBean {
                 iterator.remove();
             }
         }
+        
     }
 
     public List<Tarea> getLista() {

@@ -6,6 +6,7 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
@@ -50,7 +51,6 @@ public class ReporteEventoEspesificoBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    
     private List<Evento> flista;
 
     public List<Evento> getFlista() {
@@ -88,7 +88,11 @@ public class ReporteEventoEspesificoBean {
             }
         }
         elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
-
+        for (Tarea t : elemento.getTareasList()) {
+            if (!t.getEstado().equals("VENCIDO")) {
+                sessionBean.checkEstadoTarea(t);
+            }
+        }
         clienteses = marketingUserFacade.findAllClientes();
         usuarioses = adminFacade.findAllUsuariosHostess();
         clientesesEvento = new ArrayList<Cliente>();
@@ -134,6 +138,7 @@ public class ReporteEventoEspesificoBean {
     public void setTodosusuarioses(DualListModel<Usuario> todosusuarioses) {
         this.todosusuarioses = todosusuarioses;
     }
+
     public void goTareaReporte(int id) {
         try {
             sessionBean.getAttributes().put("idTarea", new Integer(id));

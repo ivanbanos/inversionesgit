@@ -6,6 +6,7 @@ package com.invbf.adminclientesweb.controladores;
 
 import com.invbf.adminclientesapi.entity.Configuracion;
 import com.invbf.adminclientesapi.entity.Formulario;
+import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.entity.Vista;
 import com.invbf.adminclientesapi.exceptions.ClavesNoConcuerdanException;
@@ -18,6 +19,7 @@ import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -254,12 +256,28 @@ public class SessionBean implements Serializable, Subject {
         } else if (page.equals("reportes")) {
             active = "reportes";
             return "/pages/Reportes.xhtml";
-        } else if (page.equals("cuenta")){
+        } else if (page.equals("cuenta")) {
             active = "cuenta";
             return "/pages/CuentaUsuarios.xhtml";
-        }else if (page.equals("tareas")){
+        } else if (page.equals("tareas")) {
             active = "tareas";
             return "/pages/tareas.xhtml";
-        } return "/pages/InicioSession.xhtml";
+        }
+        return "/pages/InicioSession.xhtml";
+    }
+
+    public void checkEstadoTarea(Tarea tarea) {
+        Calendar fechainicio = Calendar.getInstance();
+        Calendar fechafinal = Calendar.getInstance();
+        Calendar nowDate = Calendar.getInstance();
+        fechainicio.setTime(tarea.getFechaInicio());
+        fechafinal.setTime(tarea.getFechaFinalizacion());
+        tarea.setEstado("POR INICIAR");
+        if (fechainicio.before(nowDate)) {
+            tarea.setEstado("ACTIVO");
+        }
+        if (fechafinal.before(nowDate)) {
+            tarea.setEstado("VENCIDO");
+        }
     }
 }
