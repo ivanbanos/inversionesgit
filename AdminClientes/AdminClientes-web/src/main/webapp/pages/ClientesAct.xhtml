@@ -31,6 +31,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['tipoident']}</label>
+                        <div class="col-md-9">
+                            <p:selectOneMenu id="tipoident" value="#{clientesActBean.elemento.tipoident}"  required="true">
+                                <f:selectItem itemLabel="Select One" itemValue="" /> 
+                                <f:selectItems value="#{filtrosListas.tipoident}" var="var" itemLabel="#{var}" itemValue="#{var}"/>  
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['identificacion']}</label>
                         <div class="col-md-9">
                             <p:inputText id="identificacion" value="#{clientesActBean.elemento.identificacion}"  />
@@ -75,9 +84,9 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >#{label['categoria']}</label>
                         <div class="col-md-9">
-                            <p:selectOneMenu id="estado" value="#{clientesActBean.elemento.idCategorias.idCategorias}" required="true">
+                            <p:selectOneMenu id="categoria" value="#{clientesActBean.elemento.idCategorias.idCategorias}" required="true">
                                 <f:selectItem itemLabel="Select One" itemValue="" />
-                                <f:selectItems value="#{clientesActBean.listacategorias}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCategorias}"/> 
+                                <f:selectItems value="#{clientesActBean.listacategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idCategorias}"/> 
                             </p:selectOneMenu>
                         </div>
                     </div>
@@ -89,6 +98,34 @@
                                 <f:selectItem itemLabel="Select One" itemValue="" />
                                 <f:selectItems value="#{clientesActBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                             </p:selectOneMenu>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['bonofidelizacion']}</label>
+                        <div class="col-md-9">
+                            <p:inputText id="cupo" value="#{clientesActBean.elemento.bonoFidelizacion}"  />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['pais']}</label>
+                        <div class="col-md-9">
+                            <p:inputText id="pais" value="#{clientesActBean.elemento.pais}"  />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['ciudad']}</label>
+                        <div class="col-md-9">
+                            <p:inputText id="ciudad" value="#{clientesActBean.elemento.ciudad}"  />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" >#{label['direccion']}</label>
+                        <div class="col-md-9">
+                            <p:inputText id="direccion" value="#{clientesActBean.elemento.direccion}"  />
                         </div>
                     </div>
 

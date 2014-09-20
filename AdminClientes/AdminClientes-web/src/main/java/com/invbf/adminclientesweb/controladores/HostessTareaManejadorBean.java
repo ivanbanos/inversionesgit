@@ -82,7 +82,6 @@ public class HostessTareaManejadorBean {
         try {
             clientes = hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
         } catch (EventoSinClientesPorRevisarException ex) {
-            
         }
     }
 
@@ -127,21 +126,32 @@ public class HostessTareaManejadorBean {
     }
 
     public void guardar(Integer idCliente) {
-        int index= clientes.indexOf(new Listasclientestareas((Integer) sessionBean.getAttributes().get("idTarea"), idCliente));
-        Listasclientestareas l = clientes.remove(index);
-        l.setUsuario(sessionBean.getUsuario());
-        hostessFacade.guardarLCE(l);
-        try {
-            Listasclientestareas nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idTarea"), clientes, l);
-            clientes.add(nuevo);
-        } catch (EventoSinClientesPorRevisarException ex) {
-            LOGGER.info(ex);
-            FacesUtil.addInfoMessage("No hay mas clientes por revisar", "");
+        guardar:
+        {
+            int index = clientes.indexOf(new Listasclientestareas((Integer) sessionBean.getAttributes().get("idTarea"), idCliente));
+            Listasclientestareas l = clientes.get(index);
+            if (l.getIdAccion() == null || l.getIdAccion().getIdAccion() <= 0) {
+                FacesUtil.addErrorMessage("No se puede guardar accion de cliente", "Debe seleccionar una Accion");
+                break guardar;
+            }
+            
+            l = clientes.remove(index);
+            l.setUsuario(sessionBean.getUsuario());
+
+            
+            hostessFacade.guardarLCE(l);
+            try {
+                Listasclientestareas nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idTarea"), clientes, l);
+                clientes.add(nuevo);
+            } catch (EventoSinClientesPorRevisarException ex) {
+                LOGGER.info(ex);
+                FacesUtil.addInfoMessage("No hay mas clientes por revisar", "");
+            }
         }
     }
 
     public void nuevo(Integer idCliente) {
-       int index= clientes.indexOf(new Listasclientestareas((Integer) sessionBean.getAttributes().get("idTarea"), idCliente));
+        int index = clientes.indexOf(new Listasclientestareas((Integer) sessionBean.getAttributes().get("idTarea"), idCliente));
         Listasclientestareas l = clientes.remove(index);
         l.setUsuario(sessionBean.getUsuario());
         try {

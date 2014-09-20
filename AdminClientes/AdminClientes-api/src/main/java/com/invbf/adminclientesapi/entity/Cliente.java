@@ -62,6 +62,14 @@ public class Cliente implements Serializable {
     private String telefono1;
     @Column(name = "telefono2")
     private String telefono2;
+    @Column(name = "pais")
+    private String pais;
+    @Column(name = "direccion")
+    private String direccion;
+    @Column(name = "ciudad")
+    private String ciudad;
+    @Column(name = "bonoFidelizacion")
+    private String bonoFidelizacion;
     @Column(name = "cumpleanos")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cumpleanos;
@@ -69,6 +77,8 @@ public class Cliente implements Serializable {
     private String correo;
     @Column(name = "identificacion")
     private String identificacion;
+    @Column(name = "tipoident")
+    private String tipoident;
     @JoinTable(name = "clientestiposjuegos", joinColumns = {
         @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")}, inverseJoinColumns = {
         @JoinColumn(name = "idTipoJuego", referencedColumnName = "idTipoJuego")})
@@ -174,8 +184,48 @@ public class Cliente implements Serializable {
         return idCasinoPreferencial;
     }
 
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getBonoFidelizacion() {
+        return bonoFidelizacion;
+    }
+
+    public void setBonoFidelizacion(String bonoFidelizacion) {
+        this.bonoFidelizacion = bonoFidelizacion;
+    }
+
     public void setIdCasinoPreferencial(Casino idCasinoPreferencial) {
         this.idCasinoPreferencial = idCasinoPreferencial;
+    }
+
+    public String getTipoident() {
+        return tipoident;
+    }
+
+    public void setTipoident(String tipoident) {
+        this.tipoident = tipoident;
     }
 
     public String getCorreo() {

@@ -32,7 +32,7 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class ClientesActBean {
-    
+
     private static final Logger LOGGER =
             Logger.getLogger(SessionBean.class);
     @EJB
@@ -45,7 +45,7 @@ public class ClientesActBean {
     private DualListModel<TipoJuego> tiposJuegosTodos;
     private List<Casino> listacasinos;
     private List<Categoria> listacategorias;
-    
+
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
@@ -55,7 +55,7 @@ public class ClientesActBean {
      */
     public ClientesActBean() {
     }
-    
+
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
@@ -69,7 +69,7 @@ public class ClientesActBean {
                 LOGGER.error(ex);
             }
         }
-        
+
         if (sessionBean.getAttributes() == null || !sessionBean.getAttributes().containsKey("idCliente")) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosMarketing.xhtml");
@@ -109,74 +109,84 @@ public class ClientesActBean {
         listacasinos = marketingUserFacade.findAllCasinos();
         listacategorias = marketingUserFacade.findAllCategorias();
     }
-    
+
     public Cliente getElemento() {
         return elemento;
     }
-    
+
     public void setElemento(Cliente elemento) {
         this.elemento = elemento;
     }
-    
+
     public MarketingUserFacade getMarketingUserFacade() {
         return marketingUserFacade;
     }
-    
+
     public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
         this.marketingUserFacade = marketingUserFacade;
     }
-    
+
     public List<Atributo> getAtributos() {
         return atributos;
     }
-    
+
     public void setAtributos(List<Atributo> atributos) {
         this.atributos = atributos;
     }
-    
+
     public DualListModel<TipoJuego> getTiposJuegosTodos() {
         return tiposJuegosTodos;
     }
-    
+
     public void setTiposJuegosTodos(DualListModel<TipoJuego> tiposJuegosTodos) {
         this.tiposJuegosTodos = tiposJuegosTodos;
     }
-    
+
     public void guardar() {
-        try {
-            if (elemento.getIdCliente() == 0) {
-                elemento.setIdCliente(null);
+        guardar:
+        {
+            try {
+                if (elemento.getIdCliente() == 0) {
+                    elemento.setIdCliente(null);
+                }
+                if (elemento.getIdentificacion() == null || elemento.getIdentificacion().equals("")) {
+                    elemento.setTipoident("");
+                }
+                if ((elemento.getTipoident() == null || elemento.getTipoident().equals(""))
+                        &&(elemento.getIdentificacion() != null && !elemento.getIdentificacion().equals(""))) {
+                    FacesUtil.addErrorMessage("No se puede guardar cliente","Si tiene identificación debe seleccionar un tipo");
+                }
+                elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
+                List<Clienteatributo> clienteatributos = elemento.getClientesatributosList();
+                elemento.setClientesatributosList(new ArrayList<Clienteatributo>());
+                elemento = marketingUserFacade.guardarClientes(elemento);
+                for (Clienteatributo clienteatributo : clienteatributos) {
+                    clienteatributo.getClientesatributosPK().setIdCliente(elemento.getIdCliente());
+                    clienteatributo.setClientes(elemento);
+                    elemento.getClientesatributosList().add(clienteatributo);
+                }
+                elemento = marketingUserFacade.guardarClientes(elemento);
+                FacesUtil.addInfoMessage("Cliente actualizado", elemento.toString());
+                FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
+                sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
+            } catch (IOException ex) {
+                LOGGER.error(ex);
             }
-            elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
-            List<Clienteatributo> clienteatributos = elemento.getClientesatributosList();
-            elemento.setClientesatributosList(new ArrayList<Clienteatributo>());
-            elemento = marketingUserFacade.guardarClientes(elemento);
-            for (Clienteatributo clienteatributo : clienteatributos) {
-                clienteatributo.getClientesatributosPK().setIdCliente(elemento.getIdCliente());
-                clienteatributo.setClientes(elemento);
-                elemento.getClientesatributosList().add(clienteatributo);
-            }
-            elemento = marketingUserFacade.guardarClientes(elemento);
-            FacesUtil.addInfoMessage("Cliente actualizado", elemento.toString());
-            FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
-            sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
-        } catch (IOException ex) {
-            LOGGER.error(ex);
         }
     }
-    
+
     public List<Casino> getListacasinos() {
         return listacasinos;
     }
-    
+
     public void setListacasinos(List<Casino> listacasinos) {
         this.listacasinos = listacasinos;
     }
-    
+
     public List<Categoria> getListacategorias() {
         return listacategorias;
     }
-    
+
     public void setListacategorias(List<Categoria> listacategorias) {
         this.listacategorias = listacategorias;
     }

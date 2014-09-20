@@ -40,7 +40,7 @@ public class FiltrosListas {
     public List<String> getPerfiles() {
         List<String> lista = new ArrayList<String>();
         List<Perfil> perfiles = adminFacade.findAllPerfiles();
-        for(Perfil p : perfiles){
+        for (Perfil p : perfiles) {
             lista.add(p.getNombre());
         }
         return lista;
@@ -49,7 +49,7 @@ public class FiltrosListas {
     public List<String> getCategorias() {
         List<String> lista = new ArrayList<String>();
         List<Categoria> perfiles = marketingUserFacade.findAllCategorias();
-        for(Categoria p : perfiles){
+        for (Categoria p : perfiles) {
             lista.add(p.getNombre());
         }
         return lista;
@@ -66,10 +66,18 @@ public class FiltrosListas {
     public List<String> getTipostareas() {
         List<String> lista = new ArrayList<String>();
         List<Tipotarea> perfiles = marketingUserFacade.findAllTipotarea();
-        for(Tipotarea p : perfiles){
+        for (Tipotarea p : perfiles) {
             lista.add(p.getNombre());
         }
         return lista;
     }
 
+    public List<String> getTipoident() {
+        List<String> lista = new ArrayList<String>();
+        lista.add("CC");
+        lista.add("Pasaporte");
+        lista.add("Otro");
+        return lista;
+
+    }
 }

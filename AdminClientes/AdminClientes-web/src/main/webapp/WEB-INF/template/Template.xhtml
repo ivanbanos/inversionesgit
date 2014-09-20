@@ -30,12 +30,29 @@
             <nav class="navbar navbar-primary navbar-static-top navbar-background" role="navigation">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
+                    <div class="navbar-header col-md-12 col-lg-12">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="fa fa-bars"></span>
                         </button>
-                        <h2 class="titulo">#{label['title.app']}</h2>
+                        <div class="col-lg-8">
+                            <h2 class="titulo">#{label['title.app']}</h2>
+                        </div>
+                        <div class="col-lg-4">
+                            <ul class="nav navbar-nav navbar-right">
+                                <div class="navbar-form navbar-right">
+
+                                    <div class="form-group">
+                                        <p class="navbar-text">Hola! #{sessionBean.usuario.nombreUsuario}</p>
+                                    </div>
+                                    <h:commandLink id="btnsearch"
+                                                   action="#{sessionBean.Desconectar()}"
+                                                   styleClass="btn btn-primary">
+                                        #{label['salir']}
+                                    </h:commandLink>
+                                </div> 
+                            </ul>
+                        </div>
 
                     </div>
 
@@ -142,12 +159,12 @@
 
                                 <c:if test="#{sessionBean.isActive(&quot;eventoshostess&quot;)}">
                                     <li>
-                                        <h:commandLink  action="#{sessionBean.go(&quot;eventoshostess&quot;)}" class="navbar-text-selected" value="#{label['eventos']}"/>
+                                        <h:commandLink  action="#{sessionBean.go(&quot;eventoshostess&quot;)}" class="navbar-text-selected" value="#{label['tareas']}"/>
                                     </li>
                                 </c:if>
                                 <c:if test="#{sessionBean.isNotActive(&quot;eventoshostess&quot;)}">
                                     <li>
-                                        <h:commandLink  action="#{sessionBean.go(&quot;eventoshostess&quot;)}" class="navbar-text" value="#{label['eventos']}"/>
+                                        <h:commandLink  action="#{sessionBean.go(&quot;eventoshostess&quot;)}" class="navbar-text" value="#{label['tareas']}"/>
                                     </li>
                                 </c:if>
                             </c:if>
@@ -174,19 +191,6 @@
                                     <h:commandLink  action="#{sessionBean.go(&quot;cuenta&quot;)}" class="navbar-text" value="#{label['cuentausuarios']}"/>
                                 </li>
                             </c:if>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <div class="navbar-form navbar-right">
-                                
-                                <div class="form-group">
-                                    <p class="navbar-text">Hola! #{sessionBean.usuario.nombreUsuario}</p>
-                                </div>
-                                <h:commandLink id="btnsearch"
-                                               action="#{sessionBean.Desconectar()}"
-                                               styleClass="btn btn-primary">
-                                    #{label['salir']}
-                                </h:commandLink>
-                            </div> 
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
@@ -233,8 +237,6 @@
                         </div>
 
                         <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 column">
-
-                            <p class="muted pull-right">Derechos reservados © 2014</p>
                             <h:graphicImage class="secondaryImage pull-right" value="#{resource['images/IBFLogo01.png']}" />
                         </div>
                     </div>
@@ -244,11 +246,11 @@
         <p:idleMonitor onactive="sessionTimeOutDialog.show()" 
                        timeout="#{session.maxInactiveInterval * 10000 }" />
 
-            <p:dialog header="#{label['tiempo.inactividad']}" 
-                      widgetVar="sessionTimeOutDialog"
-                      modal="true" closable="false" width="400">
-    <h:outputText value="#{label['leyenda.inactividad']}" />
-           </p:dialog>
+        <p:dialog header="#{label['tiempo.inactividad']}" 
+                  widgetVar="sessionTimeOutDialog"
+                  modal="true" closable="false" width="400">
+            <h:outputText value="#{label['leyenda.inactividad']}" />
+        </p:dialog>
     </h:body>
 
 </html>

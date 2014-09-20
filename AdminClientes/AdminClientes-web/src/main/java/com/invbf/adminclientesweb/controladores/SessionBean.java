@@ -106,31 +106,33 @@ public class SessionBean implements Serializable, Subject {
     }
 
     public boolean perfilViewMatch(String vista) {
-        if(usuario==null){
-            try {            
+        if (usuario == null || usuario.getIdPerfil() == null || usuario.getIdPerfil().getVistasList() == null) {
+            try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
             } catch (IOException ex) {
             }
-        }
-        List<Vista> vistasUsuario = usuario.getIdPerfil().getVistasList();
-        for (Vista v : vistasUsuario) {
-            if (v.getNombreVista().equals(vista)) {
-                return true;
+        } else {
+            List<Vista> vistasUsuario = usuario.getIdPerfil().getVistasList();
+            for (Vista v : vistasUsuario) {
+                if (v.getNombreVista().equals(vista)) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public boolean perfilFormMatch(String tabla, String accion) {
-        if(usuario==null){
-            try {            
+        if (usuario == null || usuario.getIdPerfil() == null || usuario.getIdPerfil().getFormulariosList() == null) {
+            try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
             } catch (IOException ex) {
             }
-        }
-        for (Formulario f : usuario.getIdPerfil().getFormulariosList()) {
-            if (f.es(tabla + accion)) {
-                return true;
+        } else {
+            for (Formulario f : usuario.getIdPerfil().getFormulariosList()) {
+                if (f.es(tabla + accion)) {
+                    return true;
+                }
             }
         }
         return false;

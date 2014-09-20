@@ -12,6 +12,7 @@ import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -42,6 +43,11 @@ public class ReportesClientesBean {
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private boolean editar;
+    private Casino casino;
+    private String pais;
+    private String ciudad;
+    private String bono;
+    private List<Casino> casinos;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -64,6 +70,10 @@ public class ReportesClientesBean {
 
     @PostConstruct
     public void init() {
+        casino = new Casino();
+        pais = "";
+        ciudad = "";
+        bono = "";
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("reportes");
         if (!sessionBean.perfilViewMatch("Reportes")) {
@@ -81,6 +91,7 @@ public class ReportesClientesBean {
         listacategorias = marketingUserFacade.findAllCategorias();
         listatiposjuegos = marketingUserFacade.findAllTiposjuegos();
         editar = false;
+        casinos = marketingUserFacade.findAllCasinos();
     }
 
     public List<Cliente> getLista() {
@@ -162,5 +173,74 @@ public class ReportesClientesBean {
 
     public void setEditar(boolean editar) {
         this.editar = editar;
+    }
+
+    public Casino getCasino() {
+        return casino;
+    }
+
+    public void setCasino(Casino casino) {
+        this.casino = casino;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getBono() {
+        return bono;
+    }
+
+    public void setBono(String bono) {
+        this.bono = bono;
+    }
+
+    public List<Casino> getCasinos() {
+        return casinos;
+    }
+
+    public void setCasinos(List<Casino> casinos) {
+        this.casinos = casinos;
+    }
+
+    public void busquedaAvanzada() {
+        lista = marketingUserFacade.findAllClientes();
+
+        for (Iterator<Cliente> it = lista.iterator(); it.hasNext();) {
+            Cliente cliente = it.next();
+            if (casino != null && casino.getIdCasino() != null && casino.getIdCasino() > 0) {
+                if (!cliente.getIdCasinoPreferencial().equals(casino)) {
+                    it.remove();
+                }
+            }
+            if (ciudad != null && !ciudad.equals("")) {
+                if (!cliente.getCiudad().contains(ciudad)) {
+                    it.remove();
+                }
+            }
+            if (pais != null && !pais.equals("")) {
+                if (!cliente.getPais().contains(pais)) {
+                    it.remove();
+                }
+            }
+            if (bono != null && !bono.equals("")) {
+                if (!cliente.getBonoFidelizacion().equals(bono)) {
+                    it.remove();
+                }
+            }
+
+        }
     }
 }
