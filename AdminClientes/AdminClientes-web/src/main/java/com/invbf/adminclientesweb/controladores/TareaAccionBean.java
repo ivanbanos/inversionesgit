@@ -56,6 +56,10 @@ public class TareaAccionBean {
     private List<CategoriaBoolean> categoriasBoolean;
     private List<TipoJuegoBoolean> tipoJuegosBoolean;
     private DualListModel<Usuario> todosusuarioses;
+    private boolean todoscat;
+    private boolean ningunocat;
+    private boolean todostip;
+    private boolean ningunotip;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -120,7 +124,7 @@ public class TareaAccionBean {
                     }
                 }
             }
-            if (elemento.getTiposdejuegos() == null||elemento.getTiposdejuegos().equals("")) {
+            if (elemento.getTiposdejuegos() == null || elemento.getTiposdejuegos().equals("")) {
                 elemento.setTiposdejuegos("");
             } else {
                 for (String s : elemento.getTiposdejuegos().split(" ")) {
@@ -275,7 +279,7 @@ public class TareaAccionBean {
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
 
             elemento = marketingUserFacade.guardarTarea(elemento);
-            if (evento!=null) {
+            if (evento != null) {
                 evento.getTareasList().add(elemento);
                 marketingUserFacade.guardarEventos(evento);
             }
@@ -326,5 +330,73 @@ public class TareaAccionBean {
 
     public void enviarCorreo() {
         systemFacade.enviarCorreo(elemento);
+    }
+
+    public boolean isTodoscat() {
+        return todoscat;
+    }
+
+    public void setTodoscat(boolean todoscat) {
+        this.todoscat = todoscat;
+    }
+
+    public boolean isNingunocat() {
+        return ningunocat;
+    }
+
+    public void setNingunocat(boolean ningunocat) {
+        this.ningunocat = ningunocat;
+    }
+
+    public boolean isTodostip() {
+        return todostip;
+    }
+
+    public void setTodostip(boolean todostip) {
+        this.todostip = todostip;
+    }
+
+    public boolean isNingunotip() {
+        return ningunotip;
+    }
+
+    public void setNingunotip(boolean ningunotip) {
+        this.ningunotip = ningunotip;
+    }
+
+    public void seltodoscat() {
+        if (todoscat) {
+            for (CategoriaBoolean cb : categoriasBoolean) {
+                cb.setSelected(true);
+            }
+            ningunocat = false;
+        }
+    }
+
+    public void selningunocat() {
+        if (ningunocat) {
+            for (CategoriaBoolean cb : categoriasBoolean) {
+                cb.setSelected(false);
+            }
+            todoscat = false;
+        }
+    }
+
+    public void seltodostip() {
+        if (todostip) {
+            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                tjb.setSelected(true);
+            }
+            ningunotip = false;
+        }
+    }
+
+    public void selningunotip() {
+        if (ningunotip) {
+            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                tjb.setSelected(false);
+            }
+            todostip = false;
+        }
     }
 }

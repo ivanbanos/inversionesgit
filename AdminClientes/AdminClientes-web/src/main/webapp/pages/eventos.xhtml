@@ -39,8 +39,20 @@
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
+                                        <p:column headerText="Nombre" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.fechaInicio}" >
+                                                <f:convertDateTime pattern="dd/MMM/yyyy " locale="es" />
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.fechaFinal}" filterBy="#{element.fechaFinal}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.fechaFinal}" >
+                                                <f:convertDateTime pattern="dd/MMM/yyyy " locale="es" />
+                                            </h:outputText>
+                                        </p:column>
+
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            
+
                                             <p:commandButton id="marketing" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
                                                              rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;) 
@@ -54,7 +66,7 @@
                                         </p:column>
 
                                         <f:facet name="footer">  
-                                            
+
                                             <p:commandButton id="addButton" icon="ui-icon-plusthick" value="#{label['lb_btn.agregar']}"
                                                              title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(0)}"
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}">
@@ -79,7 +91,7 @@
             </div>
         </h:form>
 
-        
+
         <h:form>
             <p:confirmDialog id="deleteDialogEventos" message="Quiere borrar el evento #{crudEventoBean.elemento.nombre}?"  
                              header="Borrar" severity="alert" widgetVar="deleteDialogEventos" closable="false">  

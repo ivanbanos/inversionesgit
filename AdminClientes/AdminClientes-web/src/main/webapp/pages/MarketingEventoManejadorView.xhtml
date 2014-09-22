@@ -15,61 +15,73 @@
                 <div class="panel-heading"><h4>Evento</h4></div>
                 <div class="panel-body">
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
-                        <div class="col-md-9">
-                            <p:inputText id="nombreEventos" value="#{marketingEventoManejadorBean.elemento.nombre}" required="true" />
+                    <div class="row clearfix">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-label" >#{label['nombre']}</label>
+                            <div class="col-md-6">
+                                <p:inputText style="width: 100%;" id="nombreEventos" value="#{marketingEventoManejadorBean.elemento.nombre}" required="true" />
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
-                        <div class="col-md-9">
-                            <p:calendar id="feciniEventos" value="#{marketingEventoManejadorBean.elemento.fechaInicio}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
+                    <div class="row clearfix">
+
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" >#{label['fechainicio']}</label>
+                            <div class="col-md-8">
+                                <p:calendar id="feciniEventos" value="#{marketingEventoManejadorBean.elemento.fechaInicio}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" >#{label['fechafinal']}</label>
+                            <div class="col-md-8">
+                                <p:calendar id="fecfinEventos" value="#{marketingEventoManejadorBean.elemento.fechaFinal}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-label" >#{label['descripcion']}</label>
+                            <div class="col-md-6">
+                                <p:inputTextarea style="width: 100%;" id="descripcionEventos" value="#{marketingEventoManejadorBean.elemento.decripcion}"/>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
-                        <div class="col-md-9">
-                            <p:calendar id="fecfinEventos" value="#{marketingEventoManejadorBean.elemento.fechaFinal}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
+                    <div class="row clearfix">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-label" >#{label['casino']}</label>
+                            <div class="col-md-6">
+                                <p:selectOneMenu id="casinoEventos" style="width: 100%;" value="#{marketingEventoManejadorBean.elemento.idCasino.idCasino}"  required="true">
+                                    <f:selectItem itemLabel="Select One" itemValue="" />
+                                    <f:selectItems value="#{marketingEventoManejadorBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
+                                </p:selectOneMenu>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['descripcion']}</label>
-                        <div class="col-md-9">
-                            <p:inputTextarea id="descripcionEventos" value="#{marketingEventoManejadorBean.elemento.decripcion}"/>
+                    <div class="row clearfix">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" >#{label['imagen']}</label>
+                            <div class="col-md-8">
+                                <p:fileUpload id="imagenEventos" fileUploadListener="#{marketingEventoManejadorBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
+                                              label="Escoger" update=":#{p:component('imagenact')} :#{p:component('messages')}" cancelLabel="Cancelar" uploadLabel="Cargar" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" >#{label['imagenactual']}</label>
+                            <div class="col-md-8">
+
+                                <h:graphicImage id="imagenact" value="/image/#{marketingEventoManejadorBean.elemento.imagen}" alt="No tiene imagen" />
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['casino']}</label>
-                        <div class="col-md-9">
-                            <p:selectOneMenu id="casinoEventos" value="#{marketingEventoManejadorBean.elemento.idCasino.idCasino}"  required="true">
-                                <f:selectItem itemLabel="Select One" itemValue="" />
-                                <f:selectItems value="#{marketingEventoManejadorBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
-                            </p:selectOneMenu>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['imagen']}</label>
-                        <div class="col-md-9">
-                            <p:fileUpload id="imagenEventos" fileUploadListener="#{marketingEventoManejadorBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
-                                          label="Escoger" update=":#{p:component('imagenact')} :#{p:component('messages')}" cancelLabel="Cancelar" uploadLabel="Cargar" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['imagenactual']}</label>
-                        <div class="col-md-9">
-
-                            <h:graphicImage id="imagenact" value="/image/#{marketingEventoManejadorBean.elemento.imagen}" alt="No tiene imagen" />
-                        </div>
-                    </div>
-
-                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
+                    <c:if test="#{marketingEventoManejadorBean.elemento.idEvento!=null and marketingEventoManejadorBean.elemento.idEvento>0 and sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
                                 <label class="col-md-12 control-label" >#{label['Tareas']}:</label>
@@ -131,7 +143,7 @@
                 </div>
             </div>
         </h:form>
-        <c:if test="#{sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
+        <c:if test="#{marketingEventoManejadorBean.elemento.idEvento!=null and marketingEventoManejadorBean.elemento.idEvento>0 and sessionBean.perfilViewMatch(&quot;Tareas&quot;)}">
             <h:form>
                 <p:confirmDialog id="deleteDialogTareas" message="Quiere borrar la tarea #{marketingEventoManejadorBean.tarea.nombre}?"  
                                  header="Borrar" severity="alert" widgetVar="deleteDialogTareas" closable="false">  
