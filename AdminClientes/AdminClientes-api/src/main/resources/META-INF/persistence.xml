@@ -20,6 +20,7 @@
     <class>com.invbf.adminclientesapi.entity.Tarea</class>
     <class>com.invbf.adminclientesapi.entity.Tipotarea</class>
     <class>com.invbf.adminclientesapi.entity.Permiso</class>
+    <class>com.invbf.adminclientesapi.entity.TipoDocumento</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

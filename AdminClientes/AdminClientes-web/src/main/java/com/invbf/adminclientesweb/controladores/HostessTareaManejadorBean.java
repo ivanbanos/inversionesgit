@@ -4,7 +4,6 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Listasclientestareas;
 import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
@@ -13,8 +12,8 @@ import com.invbf.adminclientesapi.facade.HostessFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -44,7 +43,6 @@ public class HostessTareaManejadorBean {
     private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private StreamedContent file;
     private List<Listasclientestareas> clientes;
 
     public void setSessionBean(SessionBean sessionBean) {
@@ -64,7 +62,9 @@ public class HostessTareaManejadorBean {
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
             try {
                 sessionBean.Desconectar();
+                FacesUtil.addErrorMessage("Session finalizada", "No tiene credenciales para ingresar a esa pantalla");
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
+                
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -78,7 +78,6 @@ public class HostessTareaManejadorBean {
             }
         }
         elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
-        file = new DefaultStreamedContent();
         try {
             clientes = hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
         } catch (EventoSinClientesPorRevisarException ex) {
@@ -99,14 +98,6 @@ public class HostessTareaManejadorBean {
 
     public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
         this.marketingUserFacade = marketingUserFacade;
-    }
-
-    public StreamedContent getFile() {
-        return file;
-    }
-
-    public void setFile(StreamedContent file) {
-        this.file = file;
     }
 
     public AdminFacade getAdminFacade() {
@@ -137,7 +128,7 @@ public class HostessTareaManejadorBean {
             
             l = clientes.remove(index);
             l.setUsuario(sessionBean.getUsuario());
-
+            
             
             hostessFacade.guardarLCE(l);
             try {

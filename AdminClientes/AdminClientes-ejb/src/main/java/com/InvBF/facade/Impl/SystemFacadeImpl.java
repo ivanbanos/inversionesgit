@@ -188,4 +188,9 @@ public class SystemFacadeImpl implements SystemFacade {
         }
         return null;
     }
+
+    @Override
+    public Usuario getUsuario(Integer idUsuario) {
+        return usuarioFacadeLocal.find(idUsuario);
+    }
 }

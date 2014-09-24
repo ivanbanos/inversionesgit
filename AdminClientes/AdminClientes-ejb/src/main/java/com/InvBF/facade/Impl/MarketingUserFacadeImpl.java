@@ -12,6 +12,7 @@ import com.InvBF.EntityFacade.ClienteFacadeLocal;
 import com.InvBF.EntityFacade.ClienteatributoFacadeLocal;
 import com.InvBF.EntityFacade.EventoFacadeLocal;
 import com.InvBF.EntityFacade.TareasFacadeLocal;
+import com.InvBF.EntityFacade.TipoDocumentoFacadeLocal;
 import com.InvBF.EntityFacade.TipoJuegoFacadeLocal;
 import com.InvBF.EntityFacade.TipostareasFacadeLocal;
 import com.InvBF.EntityFacade.UsuarioFacadeLocal;
@@ -23,6 +24,7 @@ import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Clienteatributo;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Tarea;
+import com.invbf.adminclientesapi.entity.TipoDocumento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.entity.Tipotarea;
 import com.invbf.adminclientesapi.entity.Usuario;
@@ -69,6 +71,8 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     EventoFacadeLocal eventoFacadeLocal;
     @EJB
     UsuarioFacadeLocal usuarioFacadeLocal;
+    @EJB
+    TipoDocumentoFacadeLocal tipoDocumentoFacadeLocal;
 
     @Override
     public List<Cliente> findAllClientes() {
@@ -369,5 +373,37 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @Override
     public Tarea findTarea(Integer integer) {
         return tareasFacadeLocal.find(integer);
+    }
+
+    @Override
+    public List<TipoDocumento> findAllTipoDocumentos() {
+        return tipoDocumentoFacadeLocal.findAll();
+    }
+
+    @Override
+    public boolean guardarTipoDocumentos(TipoDocumento elemento) {
+        if (elemento.getIdTipoDocumento() == null) {
+
+            tipoDocumentoFacadeLocal.create(elemento);
+            return false;
+        } else {
+            tipoDocumentoFacadeLocal.edit(elemento);
+            return true;
+        }
+    }
+
+    @Override
+    public void deleteTipoDocumentos(TipoDocumento elemento) {
+        tipoDocumentoFacadeLocal.remove(elemento);
+    }
+
+    @Override
+    public String findNombreAccion(Integer idAccion) {
+        Accion a = accionFacadeLocal.find(idAccion);
+        if (a == null) {
+            return "";
+        } else {
+            return a.getNombre();
+        }
     }
 }

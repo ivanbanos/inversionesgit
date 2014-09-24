@@ -59,7 +59,7 @@
                                         </p:column>
 
 
-                                        <p:column headerText="evento" sortBy="#{element.idEvento.nombre}" filterBy="#{element.idEvento.nombre}" filterMatchMode="contains" >
+                                        <p:column headerText="evento" sortBy="#{element.idEvento.nombre}"  filterBy="#{element.idEvento.nombre}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.idEvento.nombre}" />
                                         </p:column>
 
@@ -68,7 +68,7 @@
                                             <p:commandButton id="marketing" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.Go']}" action="#{crudTareasBean.goTareaMarketing(element.idTarea)}"
                                                              rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;) 
-                                                                         or sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;actualizar&quot;)}">  
+                                                                         or sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;actualizar&quot;)}">  
                                             </p:commandButton>
                                             <p:commandButton id="deleteButtonEventos" oncomplete="PF('deleteDialogEventos').show();" 
                                                              icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogEventos')}"
@@ -85,7 +85,6 @@
                                             </p:commandButton> 
                                         </f:facet>
                                     </p:dataTable>
-                                    <h:outputText value="#{crudEventoBean.contents}" />
                                 </h:form>
                             </div>
                         </div>

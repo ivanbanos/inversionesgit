@@ -198,6 +198,8 @@ public class MarketingEventoManejadorBean {
     public void goTareaMarketing(Integer idTarea) {
         try {
             sessionBean.getAttributes().put("idTarea", idTarea);
+            
+            sessionBean.getAttributes().put("from", "evento");
             FacesContext.getCurrentInstance().getExternalContext().redirect("tareaAccion.xhtml");
         } catch (IOException ex) {
             LOGGER.error(ex);

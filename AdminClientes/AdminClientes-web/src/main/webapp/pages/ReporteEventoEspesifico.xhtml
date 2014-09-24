@@ -29,7 +29,7 @@
                             <b><label class="col-md-6 control-label" >#{label['fechainicio']}:</label></b>
                             <div class="col-md-6">
                                 <h:outputText id="fecini" value="#{reporteEventoEspesificoBean.elemento.fechaInicio}" >
-                                    <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
                                 </h:outputText>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                             <b><label class="col-md-6 control-label" >#{label['fechafinal']}:</label></b>
                             <div class="col-md-6">
                                 <h:outputText id="fecfin" value="#{reporteEventoEspesificoBean.elemento.fechaFinal}"  >
-                                    <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
                                 </h:outputText>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
 
 
                                     <p:column headerText="" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                        <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                        <p:commandButton id="marketing" icon="ui-icon-search" 
                                                          title="#{label['lb_btn.Go']}" action="#{reporteEventoEspesificoBean.goTareaReporte(element.idTarea)}"
                                                                  >  
                                                 </p:commandButton>

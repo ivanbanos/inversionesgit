@@ -146,6 +146,15 @@
                                     </p:row>
                                     <p:row >
 
+                                        <p:column><label >#{label['tipoDocumento']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistatipoDocumento}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregartipoDocumento}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizartipoDocumento}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminartipoDocumento}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
                                         <p:column><label >#{label['eventos-marketing']}</label></p:column>
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvMarketing}"/></p:column>
 
@@ -166,6 +175,12 @@
 
                                         <p:column><label >#{label['configuraciones']}</label></p:column>
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaConfiguraciones}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
+                                        <p:column><label >#{label['cupofidelizacion']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.cupofidelizacion}"/></p:column>
 
                                     </p:row>
 

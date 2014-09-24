@@ -14,36 +14,87 @@
 
                 <div class="panel-heading"><h4>Tarea</h4></div>
                 <div class="panel-body">
-                    <div class="row clearfix">
-                        <c:choose>
-                            <c:when test="#{tareaAccionBean.evento!=null}">
-                                <div class="form-group col-md-6">
-                                    <label class="col-md-4 control-label" >#{label['evento']}</label>
-                                    <label class="col-md-8 control-label" >#{tareaAccionBean.evento.nombre}</label>
+                    <c:choose>
+                        <c:when test="#{tareaAccionBean.evento!=null}">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                                            <b><label class="col-md-3 control-label" >#{label['nombreevento']}:</label></b>
+                                            <div class="col-md-9">
+                                                <h:outputText id="nombre" value="#{tareaAccionBean.evento.nombre}" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
+                                            <b><label class="col-md-6 control-label" >#{label['fechainicio']}:</label></b>
+                                            <div class="col-md-6">
+                                                <h:outputText id="fecini" value="#{tareaAccionBean.evento.fechaInicio}" >
+                                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                                </h:outputText>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
+                                            <b><label class="col-md-6 control-label" >#{label['fechafinal']}:</label></b>
+                                            <div class="col-md-6">
+                                                <h:outputText id="fecfin" value="#{tareaAccionBean.evento.fechaFinal}"  >
+                                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                                </h:outputText>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                                            <b><label class="col-md-3 control-label" >#{label['descripcion']}:</label></b>
+                                            <div class="col-md-9">
+                                                <h:outputText id="descripcion" value="#{tareaAccionBean.evento.decripcion}" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                                            <b><label class="col-md-3 control-label" >#{label['casino']}:</label></b>
+                                            <div class="col-md-9">
+                                                <h:outputText id="casino" value="#{tareaAccionBean.evento.idCasino.nombre}" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="form-group col-md-6">
-                                    <label class="col-md-4 control-label" >#{label['evento']}</label>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+
+                            <div class="row clearfix">
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-2 control-label" >#{label['evento']}</label>
                                     <label class="col-md-8 control-label" >Ninguno</label>
                                 </div>
-                            </c:otherwise>
-                        </c:choose>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <div class="row clearfix">
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['tipo']}</label>
+                            <label class="col-md-4 control-label" >#{label['tipotarea']}</label>
                             <div class="col-md-8">
-                                <p:selectOneMenu id="tipo" value="#{tareaAccionBean.elemento.tipo.idTipotarea}">
+                                <p:selectOneMenu id="tipo" value="#{tareaAccionBean.elemento.tipo.idTipotarea}" required="true" requiredMessage="#{label['msj.req.tipotarea']}">
                                     <f:selectItem itemLabel="Select One" itemValue="" />
                                     <f:selectItems value="#{tareaAccionBean.tipotareas}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idTipotarea}"/> 
                                 </p:selectOneMenu>
                             </div>
                         </div>
                     </div>
+
                     <div class="row clearfix">
                         <div class="form-group col-md-12">
                             <label class="col-md-2 control-label" >#{label['nombre']}</label>
                             <div class="col-md-6">
-                                <p:inputText id="nombreEventos" style="width: 100%;" value="#{tareaAccionBean.elemento.nombre}" required="true" />
+                                <p:inputText id="nombreEventos" style="width: 100%;" value="#{tareaAccionBean.elemento.nombre}" required="true" requiredMessage="#{label['msj.req.nombres']}"/>
                             </div>
                         </div>
                     </div>
@@ -51,14 +102,14 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-4 control-label" >#{label['fechainicio']}</label>
                             <div class="col-md-8">
-                                <p:calendar id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
+                                <p:calendar pattern="dd/MMMM/yyyy HH:mm:ss" id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" locale="es" required="true"/>
                             </div>
                         </div>
-                        
+
                         <div class="form-group col-md-6">
                             <label class="col-md-4 control-label" >#{label['fechafinal']}</label>
                             <div class="col-md-8">
-                                <p:calendar id="fecfinEventos" value="#{tareaAccionBean.elemento.fechaFinalizacion}" pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                <p:calendar pattern="dd/MMMM/yyyy HH:mm:ss" id="fecfinEventos" value="#{tareaAccionBean.elemento.fechaFinalizacion}" locale="es" required="true"/>
                             </div>
                         </div>
                     </div>
@@ -80,7 +131,7 @@
                     </div>
                     <div id="clientes" class="row clearfix">
                         <div class="form-group col-md-12">
-                            <label class="col-md-2 control-label" >#{label['clientes']}</label>
+                            <label class="col-md-2 control-label" >#{label['clientes']}: cant #{tareaAccionBean.conteo}</label>
                             <div class="col-md-4">
                                 <div class="panel panel-primary">
 
@@ -91,15 +142,8 @@
                                         <ul>
                                             <li>
                                                 <p:selectBooleanCheckbox value="#{tareaAccionBean.todoscat}">
-                                                    <p:ajax update="@form" listener="#{tareaAccionBean.seltodoscat()}" />
                                                 </p:selectBooleanCheckbox>
                                                 <label>Todos</label>
-                                            </li>
-                                            <li>
-                                                <p:selectBooleanCheckbox value="#{tareaAccionBean.ningunocat}">
-                                                    <p:ajax update="@form" listener="#{tareaAccionBean.selningunocat()}" />
-                                                </p:selectBooleanCheckbox>
-                                                <label>Ninguno</label>
                                             </li>
 
                                             <c:forEach var="itemcat" items="#{tareaAccionBean.categoriasBoolean}">
@@ -117,21 +161,14 @@
 
                                     <div class="panel-heading">#{label['tipojuegos']}</div>
                                     <div class="panel-body">
-                                        
+
                                         <ul>
-                                            
-                                            
+
+
                                             <li>
                                                 <p:selectBooleanCheckbox value="#{tareaAccionBean.todostip}">
-                                                    <p:ajax update="@form" listener="#{tareaAccionBean.seltodostip()}" />
                                                 </p:selectBooleanCheckbox>
                                                 <label>Todos</label>
-                                            </li>
-                                            <li>
-                                                <p:selectBooleanCheckbox value="#{tareaAccionBean.ningunotip}">
-                                                    <p:ajax update="@form" listener="#{tareaAccionBean.selningunotip()}" />
-                                                </p:selectBooleanCheckbox>
-                                                <label>Ninguno</label>
                                             </li>
                                             <c:forEach var="itemtip" items="#{tareaAccionBean.tipoJuegosBoolean}">
                                                 <li>
@@ -155,8 +192,8 @@
                                                 itemValue="#{form2}" itemLabel="#{form2.nombreUsuario}"  showCheckbox="true"
                                                 showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="usercom" >
 
-                                        <f:facet name="sourceCaption">#{label['sinacceso']}</f:facet>
-                                        <f:facet name="targetCaption">#{label['conacceso']}</f:facet>
+                                        <f:facet name="sourceCaption">#{label['disponibles']}</f:facet>
+                                        <f:facet name="targetCaption">#{label['tareaasignadaa']}</f:facet>
 
                                         <p:column>
                                             <h:outputText value="#{form2.nombreUsuario}" />
@@ -180,10 +217,11 @@
                             #{label['EnviarCorreo']}
                         </h:commandLink>
                     </c:if>
-                    <h:link id="btnclose" outcome="/pages/tareas.xhtml" class="btn btn-primary"
-                            >
+                    <h:commandLink id="btnclose"
+                                   action="#{tareaAccionBean.goBack()}"
+                                   styleClass="btn btn-primary">
                         #{label['Volver']}
-                    </h:link>
+                    </h:commandLink> 
 
                 </div>
             </div>

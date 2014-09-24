@@ -11,6 +11,7 @@ import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Tarea;
+import com.invbf.adminclientesapi.entity.TipoDocumento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.entity.Tipotarea;
 import java.util.List;
@@ -86,5 +87,13 @@ public interface MarketingUserFacade {
     public List<Tarea> findAllTareas();
 
     public Tarea findTarea(Integer integer);
+
+    public List<TipoDocumento> findAllTipoDocumentos();
+    
+    public boolean guardarTipoDocumentos(TipoDocumento elemento);
+
+    public void deleteTipoDocumentos(TipoDocumento elemento);
+
+    public String findNombreAccion(Integer idAccion);
 
 }

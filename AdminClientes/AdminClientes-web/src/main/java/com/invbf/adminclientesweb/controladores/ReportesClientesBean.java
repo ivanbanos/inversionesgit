@@ -10,8 +10,12 @@ import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
+import com.invbf.adminclientesweb.util.CasinoBoolean;
+import com.invbf.adminclientesweb.util.CategoriaBoolean;
 import com.invbf.adminclientesweb.util.FacesUtil;
+import com.invbf.adminclientesweb.util.TipoJuegoBoolean;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,11 +47,12 @@ public class ReportesClientesBean {
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private boolean editar;
-    private Casino casino;
     private String pais;
     private String ciudad;
-    private String bono;
-    private List<Casino> casinos;
+    private List<CasinoBoolean> casinoBooleans;
+    private List<TipoJuegoBoolean> juegoBooleans;
+    private boolean todoscasinos;
+    private boolean todostip;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -70,10 +75,8 @@ public class ReportesClientesBean {
 
     @PostConstruct
     public void init() {
-        casino = new Casino();
         pais = "";
         ciudad = "";
-        bono = "";
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("reportes");
         if (!sessionBean.perfilViewMatch("Reportes")) {
@@ -91,7 +94,17 @@ public class ReportesClientesBean {
         listacategorias = marketingUserFacade.findAllCategorias();
         listatiposjuegos = marketingUserFacade.findAllTiposjuegos();
         editar = false;
-        casinos = marketingUserFacade.findAllCasinos();
+
+        List<Casino> casinos = marketingUserFacade.findAllCasinos();
+        List<TipoJuego> tipoJuegos = marketingUserFacade.findAllTiposjuegos();
+        juegoBooleans = new ArrayList<TipoJuegoBoolean>();
+        casinoBooleans = new ArrayList<CasinoBoolean>();
+        for (TipoJuego tipoJuego : tipoJuegos) {
+            juegoBooleans.add(new TipoJuegoBoolean(tipoJuego, false));
+        }
+        for (Casino casinob : casinos) {
+            casinoBooleans.add(new CasinoBoolean(casinob, false));
+        }
     }
 
     public List<Cliente> getLista() {
@@ -175,14 +188,6 @@ public class ReportesClientesBean {
         this.editar = editar;
     }
 
-    public Casino getCasino() {
-        return casino;
-    }
-
-    public void setCasino(Casino casino) {
-        this.casino = casino;
-    }
-
     public String getPais() {
         return pais;
     }
@@ -199,31 +204,69 @@ public class ReportesClientesBean {
         this.ciudad = ciudad;
     }
 
-    public String getBono() {
-        return bono;
-    }
-
-    public void setBono(String bono) {
-        this.bono = bono;
-    }
-
-    public List<Casino> getCasinos() {
-        return casinos;
-    }
-
-    public void setCasinos(List<Casino> casinos) {
-        this.casinos = casinos;
-    }
-
     public void busquedaAvanzada() {
         lista = marketingUserFacade.findAllClientes();
 
+        boolean noCatselected = true;
+        boolean noTipselected = true;
+        for (CasinoBoolean cb : casinoBooleans) {
+            if (todoscasinos) {
+                cb.setSelected(true);
+                continue;
+            }
+            if (cb.isSelected()) {
+                noCatselected = false;
+                break;
+            }
+        }
+        for (TipoJuegoBoolean tjb : juegoBooleans) {
+            if (todostip) {
+                tjb.setSelected(true);
+                continue;
+            }
+            if (tjb.isSelected()) {
+                noTipselected = false;
+                break;
+            }
+        }
+
         for (Iterator<Cliente> it = lista.iterator(); it.hasNext();) {
             Cliente cliente = it.next();
-            if (casino != null && casino.getIdCasino() != null && casino.getIdCasino() > 0) {
-                if (!cliente.getIdCasinoPreferencial().equals(casino)) {
-                    it.remove();
+
+            boolean siCategoria = false;
+            boolean siTipoJuego = false;
+            if (noCatselected) {
+                siCategoria = true;
+            } else {
+                for (CasinoBoolean cb : casinoBooleans) {
+                    if (cb.isSelected()) {
+                        if (cliente.getIdCasinoPreferencial().equals(cb.getCasino())) {
+                            siCategoria = true;
+                            break;
+                        }
+                    }
                 }
+            }
+            if (noTipselected) {
+                siTipoJuego = true;
+            } else {
+                for (TipoJuegoBoolean tjb : juegoBooleans) {
+                    if (tjb.isSelected()) {
+                        for (TipoJuego tj : cliente.getTiposjuegosList()) {
+                            if (tj.equals(tjb.getTipoJuego())) {
+                                siTipoJuego = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!siCategoria) {
+                it.remove();
+            }
+            if (!siTipoJuego) {
+                it.remove();
             }
             if (ciudad != null && !ciudad.equals("")) {
                 if (!cliente.getCiudad().contains(ciudad)) {
@@ -235,12 +278,40 @@ public class ReportesClientesBean {
                     it.remove();
                 }
             }
-            if (bono != null && !bono.equals("")) {
-                if (!cliente.getBonoFidelizacion().equals(bono)) {
-                    it.remove();
-                }
-            }
 
         }
+        FacesUtil.addInfoMessage("Clientes filtrados!");
+    }
+
+    public List<CasinoBoolean> getCasinoBooleans() {
+        return casinoBooleans;
+    }
+
+    public void setCasinoBooleans(List<CasinoBoolean> casinoBooleans) {
+        this.casinoBooleans = casinoBooleans;
+    }
+
+    public List<TipoJuegoBoolean> getJuegoBooleans() {
+        return juegoBooleans;
+    }
+
+    public void setJuegoBooleans(List<TipoJuegoBoolean> juegoBooleans) {
+        this.juegoBooleans = juegoBooleans;
+    }
+
+    public boolean isTodoscasinos() {
+        return todoscasinos;
+    }
+
+    public void setTodoscasinos(boolean todoscasinos) {
+        this.todoscasinos = todoscasinos;
+    }
+
+    public boolean isTodostip() {
+        return todostip;
+    }
+
+    public void setTodostip(boolean todostip) {
+        this.todostip = todostip;
     }
 }

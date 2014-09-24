@@ -216,6 +216,7 @@ public class SessionBean implements Serializable, Subject {
             try {
                 System.out.println("No lo coje");
                 Desconectar();
+                FacesUtil.addErrorMessage("Session finalizada", "No existe usuario conectado");
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
             } catch (IOException ex) {
                 LOGGER.error(ex);
@@ -293,5 +294,9 @@ public class SessionBean implements Serializable, Subject {
         if (fechafinal.before(nowDate)) {
             tarea.setEstado("VENCIDO");
         }
+    }
+
+    void obtenerUsuario(Integer idUsuario) {
+        usuario = sessionFacade.getUsuario(idUsuario);
     }
 }

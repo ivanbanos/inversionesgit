@@ -4,7 +4,6 @@
  */
 package com.InvBF.EntityFacade.install;
 
-
 import com.InvBF.EntityFacade.AccionFacadeLocal;
 import com.InvBF.EntityFacade.AtributoFacadeLocal;
 import com.InvBF.EntityFacade.CasinoFacadeLocal;
@@ -12,6 +11,7 @@ import com.InvBF.EntityFacade.CategoriaFacadeLocal;
 import com.InvBF.EntityFacade.ConfiguracionFacadeLocal;
 import com.InvBF.EntityFacade.FormularioFacadeLocal;
 import com.InvBF.EntityFacade.PerfilFacadeLocal;
+import com.InvBF.EntityFacade.TipoDocumentoFacadeLocal;
 import com.InvBF.EntityFacade.UsuarioFacadeLocal;
 import com.InvBF.EntityFacade.VistaFacadeLocal;
 import com.InvBF.util.EncryptUtil;
@@ -22,6 +22,7 @@ import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Configuracion;
 import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.TipoDocumento;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.entity.Vista;
 import java.security.NoSuchAlgorithmException;
@@ -40,7 +41,7 @@ import javax.ejb.Startup;
 @Singleton
 @Startup
 public class InitEntitysService {
-
+    
     private static final org.apache.log4j.Logger LOGGER =
             org.apache.log4j.Logger.getLogger(InitEntitysService.class);
     // @Inject @Config("status.proyect")
@@ -62,7 +63,8 @@ public class InitEntitysService {
     private AtributoFacadeLocal atributoFacadeLocal;
     @EJB
     private AccionFacadeLocal accionFacadeLocal;
-    
+    @EJB
+    private TipoDocumentoFacadeLocal tipoDocumentoFacadeLocal;
 
     /**
      * 1. dependiendo de un parametro de configuracion el sistema debe
@@ -87,11 +89,11 @@ public class InitEntitysService {
             crearPerfilGerente();
             congfiguracionesIniciales();
         }
-
-
-
+        
+        
+        
     }
-
+    
     private void crearPerfilAdmin() {
         try {
             Perfil perfil = new Perfil();
@@ -99,7 +101,7 @@ public class InitEntitysService {
             perfil.setFormulariosList(new ArrayList<Formulario>());
             perfil.setVistasList(new ArrayList<Vista>());
             perfilesFacadeLocal.create(perfil);
-
+            
             Formulario formulario;
             formulario = new Formulario(null, "Usuarios", "crear");
             formulariosFacadeLocal.create(formulario);
@@ -146,7 +148,16 @@ public class InitEntitysService {
             formulario = new Formulario(null, "Tipotareas", "eliminar");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-
+            formulario = new Formulario(null, "tipodocumento", "crear");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "tipodocumento", "actualizar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            formulario = new Formulario(null, "tipodocumento", "eliminar");
+            formulariosFacadeLocal.create(formulario);
+            perfil.getFormulariosList().add(formulario);
+            
             Vista vista;
             vista = new Vista(null, "Usuarios");
             vistasFacadeLocal.create(vista);
@@ -190,9 +201,12 @@ public class InitEntitysService {
             vista = new Vista(null, "ManejadorEventosMarketing");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-
+            vista = new Vista(null, "tipodocumento");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            
             perfilesFacadeLocal.edit(perfil);
-
+            
             Usuario usuario = new Usuario();
             usuario.setNombreUsuario("admin");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
@@ -202,14 +216,14 @@ public class InitEntitysService {
             Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void crearPerfilMarketing() {
         try {
             Perfil perfil = new Perfil();
             perfil.setNombre("Marketing");
             perfil.setFormulariosList(new ArrayList<Formulario>());
             perfil.setVistasList(new ArrayList<Vista>());
-
+            
             Formulario formulario;
             formulario = new Formulario(null, "Atributos", "crear");
             formulariosFacadeLocal.create(formulario);
@@ -286,7 +300,7 @@ public class InitEntitysService {
             formulario = new Formulario(null, "Eventos", "listaclientes");
             formulariosFacadeLocal.create(formulario);
             perfil.getFormulariosList().add(formulario);
-
+            
             Vista vista;
             vista = new Vista(null, "Clientes");
             vistasFacadeLocal.create(vista);
@@ -298,9 +312,9 @@ public class InitEntitysService {
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
             
-
+            
             perfilesFacadeLocal.create(perfil);
-
+            
             Usuario usuario = new Usuario();
             usuario.setNombreUsuario("marketing");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
@@ -310,21 +324,21 @@ public class InitEntitysService {
             Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void crearPerfilHostess() {
         try {
             Perfil perfil = new Perfil();
             perfil.setNombre("Hostess");
             perfil.setFormulariosList(new ArrayList<Formulario>());
             perfil.setVistasList(new ArrayList<Vista>());
-
+            
             Vista vista;
             vista = new Vista(null, "ManejadorEventosHostess");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-
+            
             perfilesFacadeLocal.create(perfil);
-
+            
             Usuario usuario = new Usuario();
             usuario.setNombreUsuario("hostess");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));
@@ -334,7 +348,7 @@ public class InitEntitysService {
             Logger.getLogger(InitEntitysService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void congfiguracionesIniciales() {
         Configuracion configuracion = new Configuracion();
         configuracion.setNombre("CantidadClientes");
@@ -400,23 +414,6 @@ public class InitEntitysService {
         cat.setNombre("INTERNACIONAL");
         categoriaFacadeLocal.create(cat);
         
-        Atributo a = new Atributo();
-        a.setNombre("Dirección");
-        a.setTipoDato("Text");
-        atributoFacadeLocal.create(a);
-        a = new Atributo();
-        a.setNombre("Ciudad");
-        a.setTipoDato("Text");
-        atributoFacadeLocal.create(a);
-        a = new Atributo();
-        a.setNombre("Pais");
-        a.setTipoDato("Text");
-        atributoFacadeLocal.create(a);
-        a = new Atributo();
-        a.setNombre("Cupo de Fidelización");
-        a.setTipoDato("Text");
-        atributoFacadeLocal.create(a);
-        
         Accion ac = new Accion();
         ac.setNombre("ASISTIRÁ");
         accionFacadeLocal.create(ac);
@@ -453,23 +450,37 @@ public class InitEntitysService {
         ac = new Accion();
         ac.setNombre("TALVEZ");
         accionFacadeLocal.create(ac);
-                
+        
+        TipoDocumento tipoDocumento;
+        tipoDocumento = new TipoDocumento();
+        tipoDocumento.setNombre("Cédula");
+        tipoDocumentoFacadeLocal.create(tipoDocumento);
+        tipoDocumento = new TipoDocumento();
+        tipoDocumento.setNombre("Pasaporte");
+        tipoDocumentoFacadeLocal.create(tipoDocumento);
+        tipoDocumento = new TipoDocumento();
+        tipoDocumento.setNombre("Cédula de estranjeria");
+        tipoDocumentoFacadeLocal.create(tipoDocumento);
+        
     }
-
+    
     private void crearPerfilGerente() {
         try {
             Perfil perfil = new Perfil();
             perfil.setNombre("Gerente");
             perfil.setFormulariosList(new ArrayList<Formulario>());
             perfil.setVistasList(new ArrayList<Vista>());
-
+            
             Vista vista;
             vista = new Vista(null, "Reportes");
             vistasFacadeLocal.create(vista);
             perfil.getVistasList().add(vista);
-
+            vista = new Vista(null, "cupofidelizacion");
+            vistasFacadeLocal.create(vista);
+            perfil.getVistasList().add(vista);
+            
             perfilesFacadeLocal.create(perfil);
-
+            
             Usuario usuario = new Usuario();
             usuario.setNombreUsuario("gerente");
             usuario.setContrasena(EncryptUtil.encryptPassword("123456"));

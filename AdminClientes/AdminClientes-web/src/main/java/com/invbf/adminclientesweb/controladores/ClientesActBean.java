@@ -10,6 +10,7 @@ import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Clienteatributo;
 import com.invbf.adminclientesapi.entity.ClientesatributosPK;
+import com.invbf.adminclientesapi.entity.TipoDocumento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
 import com.invbf.adminclientesweb.util.FacesUtil;
@@ -45,6 +46,7 @@ public class ClientesActBean {
     private DualListModel<TipoJuego> tiposJuegosTodos;
     private List<Casino> listacasinos;
     private List<Categoria> listacategorias;
+    private List<TipoDocumento> tipoDocumentos;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -89,6 +91,7 @@ public class ClientesActBean {
         } else {
             elemento = new Cliente();
             elemento.setIdCliente(0);
+            elemento.setIdTipoDocumento(new TipoDocumento(0));
             elemento.setIdCategorias(new Categoria(0));
             elemento.setIdCasinoPreferencial(new Casino(0));
             elemento.setTiposjuegosList(new ArrayList<TipoJuego>());
@@ -108,6 +111,7 @@ public class ClientesActBean {
         }
         listacasinos = marketingUserFacade.findAllCasinos();
         listacategorias = marketingUserFacade.findAllCategorias();
+        tipoDocumentos =  marketingUserFacade.findAllTipoDocumentos();
     }
 
     public Cliente getElemento() {
@@ -150,11 +154,11 @@ public class ClientesActBean {
                     elemento.setIdCliente(null);
                 }
                 if (elemento.getIdentificacion() == null || elemento.getIdentificacion().equals("")) {
-                    elemento.setTipoident("");
+                    elemento.setIdTipoDocumento(null);
                 }
-                if ((elemento.getTipoident() == null || elemento.getTipoident().equals(""))
-                        &&(elemento.getIdentificacion() != null && !elemento.getIdentificacion().equals(""))) {
-                    FacesUtil.addErrorMessage("No se puede guardar cliente","Si tiene identificación debe seleccionar un tipo");
+                if ((elemento.getIdTipoDocumento() == null)
+                        && (elemento.getIdentificacion() != null && !elemento.getIdentificacion().equals(""))) {
+                    FacesUtil.addErrorMessage("No se puede guardar cliente", "Si tiene identificación debe seleccionar un tipo");
                 }
                 elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
                 List<Clienteatributo> clienteatributos = elemento.getClientesatributosList();
@@ -189,5 +193,13 @@ public class ClientesActBean {
 
     public void setListacategorias(List<Categoria> listacategorias) {
         this.listacategorias = listacategorias;
+    }
+
+    public List<TipoDocumento> getTipoDocumentos() {
+        return tipoDocumentos;
+    }
+
+    public void setTipoDocumentos(List<TipoDocumento> tipoDocumentos) {
+        this.tipoDocumentos = tipoDocumentos;
     }
 }

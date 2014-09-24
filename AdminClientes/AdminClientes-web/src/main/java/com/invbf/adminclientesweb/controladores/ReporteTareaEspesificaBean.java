@@ -1,6 +1,7 @@
 
 package com.invbf.adminclientesweb.controladores;
 
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Evento;
 import com.invbf.adminclientesapi.entity.Listasclientestareas;
@@ -41,6 +42,7 @@ public class ReporteTareaEspesificaBean {
     private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
+    private List<String> acciones;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -73,6 +75,10 @@ public class ReporteTareaEspesificaBean {
             }
         }
         elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
+        acciones = new ArrayList<String>();
+        for(Accion a:elemento.getTipo().getAccionList()){
+            acciones.add(a.getNombre());
+        }
     }
 
     public MarketingUserFacade getMarketingUserFacade() {
@@ -97,6 +103,14 @@ public class ReporteTareaEspesificaBean {
 
     public void setElemento(Tarea elemento) {
         this.elemento = elemento;
+    }
+
+    public List<String> getAcciones() {
+        return acciones;
+    }
+
+    public void setAcciones(List<String> acciones) {
+        this.acciones = acciones;
     }
 
 }

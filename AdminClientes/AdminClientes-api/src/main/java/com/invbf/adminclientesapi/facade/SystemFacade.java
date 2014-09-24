@@ -41,4 +41,6 @@ public interface SystemFacade {
     public String getPathImage(byte[] imagen, String mime, String nombre)throws IOException ;
 
     public List<InfoCorreoCliente> enviarCorreo(Tarea elemento) ;
+
+    public Usuario getUsuario(Integer idUsuario);
 }

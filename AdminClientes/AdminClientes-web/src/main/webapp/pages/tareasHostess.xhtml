@@ -32,26 +32,12 @@
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  >
 
-                                        <f:facet name="header">
-                                            <p:outputPanel>
-                                                <h:outputText value="Search all fields:" />
-                                                <p:inputText id="globalFilterEventos" onkeyup="PF('detailsTableEventos').filter()" style="width:150px" placeholder="Enter keyword" />
-                                            </p:outputPanel>
-                                        </f:facet>
-
                                         <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
-
-                                        <p:column headerText="Estado" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="in" >
-                                            <f:facet name="filter">
-                                                <p:selectCheckboxMenu label="Estados" onchange="PF('detailsTableEventos').filter()" >
-                                                    <f:selectItems value="#{filtrosListas.estados}" />
-                                                </p:selectCheckboxMenu>
-                                            </f:facet>
-                                            <h:outputText value="#{element.estado}" />
+                                        <p:column headerText="Evento" sortBy="#{element.idEvento.nombre}" filterBy="#{element.idEvento.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            <h:outputText value="#{element.idEvento.nombre}" />
                                         </p:column>
-
 
                                         <p:column headerText="Tipo de tarea" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="in" >
                                             <f:facet name="filter">

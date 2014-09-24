@@ -4,7 +4,6 @@
  */
 package com.invbf.adminclientesweb.controladores;
 
-
 import com.invbf.adminclientesapi.entity.Formulario;
 import com.invbf.adminclientesapi.entity.Perfil;
 import com.invbf.adminclientesapi.entity.Vista;
@@ -91,6 +90,11 @@ public class PerfilActBean {
     private boolean vistaEvHostess = false;
     private boolean vistaReportes = false;
     private boolean vistaConfiguraciones = false;
+    private boolean cupofidelizacion = false;
+    private boolean vistatipoDocumento = false;
+    private boolean agregartipoDocumento = false;
+    private boolean actualizartipoDocumento = false;
+    private boolean eliminartipoDocumento = false;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -164,7 +168,10 @@ public class PerfilActBean {
         for (Formulario f : elemento.getFormulariosList()) {
 
             if (f.getAccion().equals("crear")) {
-                
+
+                if (f.getTabla().equals("tipodocumento")) {
+                    agregarTipoevento = true;
+                }
                 if (f.getTabla().equals("Tipotareas")) {
                     agregarTipoevento = true;
                 }
@@ -206,7 +213,10 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("actualizar")) {
-                
+
+                if (f.getTabla().equals("tipodocumento")) {
+                    actualizarTipoevento = true;
+                }
                 if (f.getTabla().equals("Tipotareas")) {
                     actualizarTipoevento = true;
                 }
@@ -248,6 +258,10 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("eliminar")) {
+
+                if (f.getTabla().equals("tipodocumento")) {
+                    eliminarTipoevento = true;
+                }
                 if (f.getTabla().equals("Tipotareas")) {
                     eliminarTipoevento = true;
                 }
@@ -342,6 +356,12 @@ public class PerfilActBean {
             if (v.getNombreVista().equals("ConfiguracionesGenerales")) {
                 vistaConfiguraciones = true;
             }
+            if (v.getNombreVista().equals("cupofidelizacion")) {
+                cupofidelizacion = true;
+            }
+            if (v.getNombreVista().equals("tipodocumento")) {
+                vistatipoDocumento = true;
+            }
         }
     }
 
@@ -411,8 +431,8 @@ public class PerfilActBean {
                 elemento.getVistasList().remove(v2);
             }
         }
-        
-         v = adminFacade.findVistasByNombre("Eventos");
+
+        v = adminFacade.findVistasByNombre("Eventos");
         if (vistaEventos == false) {
             if (elemento.getVistasList().contains(v)) {
                 elemento.getVistasList().remove(v);
@@ -422,7 +442,7 @@ public class PerfilActBean {
                 elemento.getVistasList().add(v);
             }
         }
-         v = adminFacade.findVistasByNombre("Tareas");
+        v = adminFacade.findVistasByNombre("Tareas");
         if (vistaTareas == false) {
             if (elemento.getVistasList().contains(v)) {
                 elemento.getVistasList().remove(v);
@@ -442,7 +462,7 @@ public class PerfilActBean {
                 elemento.getVistasList().add(v);
             }
         }
-        
+
         v = adminFacade.findVistasByNombre("Casinos");
         v2 = adminFacade.findVistasByNombre("AtributosMarketing");
         count = 0;
@@ -460,7 +480,7 @@ public class PerfilActBean {
                 elemento.getVistasList().add(v);
             }
         }
-       
+
         v = adminFacade.findVistasByNombre("Tipotareas");
         if (vistaAtributos == false) {
             count++;
@@ -537,8 +557,22 @@ public class PerfilActBean {
             }
         }
 
+        v = adminFacade.findVistasByNombre("tipodocumento");
+        if (vistatipoDocumento == false) {
+            count++;
+            if (elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().remove(v);
+            }
+        } else {
+            if (!elemento.getVistasList().contains(v2)) {
+                elemento.getVistasList().add(v2);
+            }
+            if (!elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().add(v);
+            }
+        }
 
-        if (count == 6) {
+        if (count == 7) {
             if (elemento.getVistasList().contains(v2)) {
                 elemento.getVistasList().remove(v2);
             }
@@ -585,8 +619,50 @@ public class PerfilActBean {
                 elemento.getVistasList().add(v);
             }
         }
+        v = adminFacade.findVistasByNombre("cupofidelizacion");
+        if (cupofidelizacion == false) {
+            if (elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().remove(v);
+            }
+        } else {
+            if (!elemento.getVistasList().contains(v)) {
+                elemento.getVistasList().add(v);
+            }
+        }
 
-        Formulario f = adminFacade.findFormularioByAccionAndTabla("crear", "Usuarios");
+        Formulario f = adminFacade.findFormularioByAccionAndTabla("crear", "tipodocumento");
+        if (agregarUsuario == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "tipodocumento");
+        if (actualizarUsuario == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "tipodocumento");
+        if (eliminarUsuario == false) {
+            if (elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().remove(f);
+            }
+        } else {
+            if (!elemento.getFormulariosList().contains(f)) {
+                elemento.getFormulariosList().add(f);
+            }
+        }
+
+
+        f = adminFacade.findFormularioByAccionAndTabla("crear", "Usuarios");
         if (agregarUsuario == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
@@ -616,8 +692,8 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        
-        
+
+
 
         f = adminFacade.findFormularioByAccionAndTabla("crear", "Tareas");
         if (agregarTareas == false) {
@@ -649,9 +725,9 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        
+
         f = adminFacade.findFormularioByAccionAndTabla("crear", "Perfiles");
-        if ( agregarPerfiles == false) {
+        if (agregarPerfiles == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
             }
@@ -740,7 +816,7 @@ public class PerfilActBean {
                 elemento.getFormulariosList().add(f);
             }
         }
-        
+
         f = adminFacade.findFormularioByAccionAndTabla("crear", "Tipotareas");
         if (agregarCasinos == false) {
             if (elemento.getFormulariosList().contains(f)) {
@@ -902,7 +978,7 @@ public class PerfilActBean {
             }
         }
         f = adminFacade.findFormularioByAccionAndTabla("actualizar", "TiposJuegos");
-        if (actualizarTipo== false) {
+        if (actualizarTipo == false) {
             if (elemento.getFormulariosList().contains(f)) {
                 elemento.getFormulariosList().remove(f);
             }
@@ -1463,5 +1539,44 @@ public class PerfilActBean {
     public void setEliminarTipoevento(boolean eliminarTipoevento) {
         this.eliminarTipoevento = eliminarTipoevento;
     }
-    
+
+    public boolean isCupofidelizacion() {
+        return cupofidelizacion;
+    }
+
+    public void setCupofidelizacion(boolean cupofidelizacion) {
+        this.cupofidelizacion = cupofidelizacion;
+    }
+
+    public boolean isVistatipoDocumento() {
+        return vistatipoDocumento;
+    }
+
+    public void setVistatipoDocumento(boolean vistatipoDocumento) {
+        this.vistatipoDocumento = vistatipoDocumento;
+    }
+
+    public boolean isAgregartipoDocumento() {
+        return agregartipoDocumento;
+    }
+
+    public void setAgregartipoDocumento(boolean agregartipoDocumento) {
+        this.agregartipoDocumento = agregartipoDocumento;
+    }
+
+    public boolean isActualizartipoDocumento() {
+        return actualizartipoDocumento;
+    }
+
+    public void setActualizartipoDocumento(boolean actualizartipoDocumento) {
+        this.actualizartipoDocumento = actualizartipoDocumento;
+    }
+
+    public boolean isEliminartipoDocumento() {
+        return eliminartipoDocumento;
+    }
+
+    public void setEliminartipoDocumento(boolean eliminartipoDocumento) {
+        this.eliminartipoDocumento = eliminartipoDocumento;
+    }
 }

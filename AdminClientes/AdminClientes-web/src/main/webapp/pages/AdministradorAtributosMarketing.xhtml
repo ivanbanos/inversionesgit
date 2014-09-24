@@ -17,9 +17,11 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Casinos&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Casinos</h3>
+                                <div class="clickable">
+                                    <h3 class="panel-title">Casinos</h3>
 
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                    <span class="pull-right "><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -164,9 +166,11 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Acciones&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Acciones</h3>
+                                <div class="clickable">
+                                    <h3 class="panel-title">Acciones</h3>
 
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                    <span class="pull-right"><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -289,9 +293,11 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Categorias&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Categorias</h3>
+                                <div class="clickable">
+                                    <h3 class="panel-title">Categorias</h3>
 
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                    <span class="pull-right "><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -416,9 +422,11 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;TipoJuego&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Tipos de Juegos</h3>
+                                <div class="clickable">
+                                    <h3 class="panel-title">Tipos de Juegos</h3>
 
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                    <span class="pull-right "><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -542,9 +550,11 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Atributos&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Datos de Cliente</h3>
+                                <div class="clickable">
+                                    <h3 class="panel-title">Datos de Cliente</h3>
 
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                    <span class="pull-right "><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -672,9 +682,11 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Tipotareas&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Tipos de Tarea</h3>
+                                <div class="clickable">
+                                    <h3 class="panel-title">Tipos de Tarea</h3>
 
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                    <span class="pull-right "><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -765,7 +777,7 @@
                                     </div>
                                 </div>
 
-                                
+
                             </p:dialog> 
                         </h:form>
 
@@ -808,7 +820,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="panel-footer text-right"> 
-                                         <p:commandButton value="Confirmar" action="#{crudTipotareaBean.guardar()}" 
+                                        <p:commandButton value="Confirmar" action="#{crudTipotareaBean.guardar()}" 
                                                          oncomplete="PF('editDialogTipoevento').hide()" icon="ui-icon-check"
                                                          update=":#{p:component('detailsTableTipoevento')} :#{p:component('messages')}" style="margin:0"/>    
                                         <p:commandButton value="Cerrar" oncomplete="PF('editDialogTipoevento').hide()" icon="ui-icon-closethick"/> 
@@ -834,6 +846,135 @@
 
                 </div>
 
+                
+                <div class="col-md-12 column">
+
+
+                    <!--tipodocumento-->
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;tipodocumento&quot;)}">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="clickable">
+                                    <h3 class="panel-title">Tipos de documento</h3>
+
+                                    <span class="pull-right "><i class="fa fa-minus"></i></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTabletipodocumento" var="element" value="#{crudTipoDocumentoBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTabletipodocumento" filteredValue="#{crudTipoDocumentoBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <f:facet name="header">
+
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombre}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:commandButton id="editButtonAtributos" update=":#{p:component('editDialogtipodocumento')}" 
+                                                             oncomplete="PF('editDialogtipodocumento').show()" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;tipodocumento&quot;, &quot;actualizar&quot;)}">  
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipoDocumentoBean.elemento}" />  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogtipodocumento').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogtipodocumento')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;tipodocumento&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudTipoDocumentoBean.elemento}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer">  
+                                            <p:commandButton id="addButton" oncomplete="PF('addDialogtipodocumento').show();" 
+                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;tipodocumento&quot;, &quot;crear&quot;)}"/>  
+                                        </f:facet>
+                                    </p:dataTable>
+
+                                </h:form>
+                            </div>
+                        </div>
+
+                        <h:form>
+                            <p:dialog id="addDialogtipodocumento" header="Agregar" widgetVar="addDialogtipodocumento" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudTipoDocumentoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                        <p:commandButton value="Confirmar" actionListener="#{crudTipoDocumentoBean.guardar()}" 
+                                                         oncomplete="PF('addDialogtipodocumento').hide()" icon="ui-icon-check" 
+                                                         update=":#{p:component('detailsTabletipodocumento')} :#{p:component('addDialogtipodocumento')} :#{p:component('messages')}" style="margin:0" />   
+                                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogtipodocumento').hide()" update=":#{p:component('addDialogtipodocumento')}" icon="ui-icon-closethick"/>  
+                                    </div>
+                                </div>
+
+                            </p:dialog> 
+                        </h:form>
+
+                        <h:form>
+                            <p:dialog id="editDialogtipodocumento" header="Editar" widgetVar="editDialogtipodocumento" modal="true" closable="false" resizable="false">  
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudTipoDocumentoBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                        <p:commandButton value="Confirmar" action="#{crudTipoDocumentoBean.guardar()}" 
+                                                         oncomplete="PF('editDialogtipodocumento').hide()" icon="ui-icon-check"
+                                                         update=":#{p:component('detailsTabletipodocumento')} :#{p:component('messages')}" style="margin:0"/>    
+                                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogtipodocumento').hide()" icon="ui-icon-closethick"/> 
+                                    </div>
+                                </div>
+
+                            </p:dialog>
+                        </h:form>
+                        <h:form>
+                            <p:confirmDialog id="deleteDialogtipodocumento" message="Quiere borrar el tipo de documento #{crudTipoDocumentoBean.elemento.nombre}?"  
+                                             header="Borrar" severity="alert" widgetVar="deleteDialogtipodocumento" closable="false">  
+
+                                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogtipodocumento').hide()"  
+                                                 action="#{crudTipoDocumentoBean.delete()}" update=":#{p:component('detailsTabletipodocumento')} :#{p:component('messages')}"/>  
+                                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogtipodocumento').hide()" type="button" />   
+
+                            </p:confirmDialog> 
+                        </h:form>
+
+                    </c:if>
+
+                    <!--Fin tipodocumento-->
+
+                </div>
             </div>
 
         </div>

@@ -65,12 +65,11 @@
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                                             
-                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                            <p:commandButton id="marketing" icon="ui-icon-search" 
                                                              title="#{label['lb_btn.Go']}" action="#{reporteTareasBean.goTareaReporte(element.idTarea)}">
                                             </p:commandButton>
                                         </p:column>
                                     </p:dataTable>
-                                    <h:outputText value="#{crudEventoBean.contents}" />
                                 </h:form>
                             </div>
                         </div>
@@ -86,18 +85,6 @@
 
                 </div>
             </div>
-        </h:form>
-
-        
-        <h:form>
-            <p:confirmDialog id="deleteDialogEventos" message="Quiere borrar la tarea #{crudTareasBean.elemento.nombre}?"  
-                             header="Borrar" severity="alert" widgetVar="deleteDialogEventos" closable="false">  
-
-                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogEventos').hide()"  
-                                 action="#{crudTareasBean.delete()}" update=":#{p:component('detailsTableEventos')} :#{p:component('messages')}"/>  
-                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogEventos').hide()" type="button" />   
-
-            </p:confirmDialog> 
         </h:form>
 
     </ui:define>            

@@ -19,7 +19,7 @@
 
                     <div class="row clearfix">
                         <c:choose>
-                            <c:when test="#{tareaAccionBean.evento!=null}">
+                            <c:when test="#{hostessTareaManejadorBean.elemento.idEvento!=null}">
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" >#{label['evento']}</label>
                                     <h:outputText class="col-md-9" id="evento" value="#{hostessTareaManejadorBean.elemento.idEvento.nombre}" />
@@ -48,7 +48,7 @@
                         <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
                         <div class="col-md-3">
                             <h:outputText id="fecini" value="#{hostessTareaManejadorBean.elemento.fechaInicio}" >
-                                <f:convertDateTime  pattern="dd/MMM/yyyy HH:mm:ss" locale="es"/>
+                                <f:convertDateTime  pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es"/>
                             </h:outputText>
                         </div>
 
@@ -56,7 +56,7 @@
                             <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
                             <div class="col-md-3">
                                 <h:outputText id="fecfin" value="#{hostessTareaManejadorBean.elemento.fechaFinalizacion}"  >
-                                    <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
                                 </h:outputText>
                             </div>
                         </div>
@@ -99,50 +99,51 @@
 
                 <div class="panel-body">
                     <c:forEach items="#{hostessTareaManejadorBean.clientes}" var="clientes">
-                        <div class="panel panel-primary">
+                        <div class="panel panel-primary col-md-5">
 
                             <div class="panel-body">
+                                
                                 <div class="row clearfix">
 
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
-                                        <h:outputText class="col-md-9" value="#{clientes.cliente.nombres} #{clientes.cliente.apellidos}"/>
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-2 control-label" >#{label['nombre']}</label>
+                                        <h:outputText class="col-md-10" value="#{clientes.cliente.nombres} #{clientes.cliente.apellidos}"/>
                                     </div>
 
                                 </div>
 
 
                                 <div class="row clearfix">
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" >#{label['tel1']}</label>
-                                        <h:outputText class="col-md-3" value="#{clientes.cliente.telefono1}"/>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4 control-label" >#{label['tel1']}</label>
+                                        <h:outputText class="col-md-8" value="#{clientes.cliente.telefono1}"/>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" >#{label['tel2']}</label>
-                                        <h:outputText class="col-md-3" value="#{clientes.cliente.telefono2}"/>
+                                    <div class="form-group col-md-6">
+                                        <label class="col-md-4 control-label" >#{label['tel2']}</label>
+                                        <h:outputText class="col-md-8" value="#{clientes.cliente.telefono2}"/>
                                     </div>
                                 </div>
 
                                 <div class="row clearfix">
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" >#{label['Observaciones']}</label>
-                                        <div class="col-md-9">
-                                            <h:inputTextarea  value="#{clientes.observaciones}"/>
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-2 control-label" >#{label['accionposible']}</label>
+                                        <div class="col-md-10">
+                                            <p:selectOneMenu style="width: 100%" value="#{clientes.idAccion.idAccion}" >
+                                                <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.accionList}" 
+                                                               var="var" 
+                                                               itemLabel="#{var.nombre}" 
+                                                               itemValue="#{var.idAccion}"/> 
+                                            </p:selectOneMenu>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row clearfix">
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label" >#{label['accionposible']}</label>
-                                        <div class="col-md-9">
-                                            <p:selectOneMenu  value="#{clientes.idAccion}">
-                                                <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.accionList}" 
-                                                               var="var" 
-                                                               itemLabel="#{var.nombre}" 
-                                                               itemValue="#{var.nombre}"/> 
-                                            </p:selectOneMenu>
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-2 control-label" >#{label['Observaciones']}</label>
+                                        <div class="col-md-10">
+                                            <p:inputTextarea style="width: 100%" value="#{clientes.observaciones}"/>
                                         </div>
                                     </div>
                                 </div>

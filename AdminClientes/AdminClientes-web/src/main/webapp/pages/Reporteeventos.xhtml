@@ -40,13 +40,13 @@
 
                                             <p:column headerText="Fecha de Inicio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.fechaInicio}" >
-                                                    <f:convertDateTime pattern="dd/MMM/yyyy " locale="es"/>
+                                                    <f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es"/>
                                                 </h:outputText>
                                             </p:column>
 
                                             <p:column headerText="Fecha finalizacion" sortBy="#{element.fechaFinal}" filterBy="#{element.fechaFinal}" filterMatchMode="contains" >
                                                 <h:outputText value="#{element.fechaFinal}" >
-                                                    <f:convertDateTime pattern="dd/MMM/yyyy " locale="es" />
+                                                    <f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" />
                                                 </h:outputText>
                                             </p:column>
 
@@ -56,7 +56,7 @@
 
                                             <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
                                                 
-                                                <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                                <p:commandButton id="marketing" icon="ui-icon-search" 
                                                                  title="#{label['lb_btn.Go']}" action="#{reportesEventosBean.goEventoReporte(element.idEvento)}"
                                                                  >  
                                                 </p:commandButton>

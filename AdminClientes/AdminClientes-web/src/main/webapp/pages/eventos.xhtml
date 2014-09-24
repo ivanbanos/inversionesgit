@@ -39,16 +39,20 @@
                                             <h:outputText value="#{element.nombre}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" >
+                                        <p:column headerText="Fecha inicio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.fechaInicio}" >
-                                                <f:convertDateTime pattern="dd/MMM/yyyy " locale="es" />
+                                                <f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" />
                                             </h:outputText>
                                         </p:column>
 
-                                        <p:column headerText="Nombre" sortBy="#{element.fechaFinal}" filterBy="#{element.fechaFinal}" filterMatchMode="contains" >
+                                        <p:column headerText="Fecha finalizaci&oacute;n" sortBy="#{element.fechaFinal}" filterBy="#{element.fechaFinal}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.fechaFinal}" >
-                                                <f:convertDateTime pattern="dd/MMM/yyyy " locale="es" />
+                                                <f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" />
                                             </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Casino" sortBy="#{element.idCasino.nombre}" filterBy="#{element.idCasino.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.idCasino.nombre}" />
                                         </p:column>
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">

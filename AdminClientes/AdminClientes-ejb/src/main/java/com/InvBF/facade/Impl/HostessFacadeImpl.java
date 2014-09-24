@@ -18,6 +18,7 @@ import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.HostessFacade;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -98,6 +99,7 @@ public class HostessFacadeImpl implements HostessFacade {
 
     @Override
     public void guardarLCE(Listasclientestareas l) {
+        l.setIdAccion(accionFacadeLocal.find(l.getIdAccion().getIdAccion()));
         listasclientestareasFacadeLocal.edit(l);
     }
 

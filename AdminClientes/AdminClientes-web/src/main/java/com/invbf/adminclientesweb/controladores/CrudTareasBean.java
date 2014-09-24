@@ -30,7 +30,7 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class CrudTareasBean {
-
+    
     private static final Logger LOGGER = Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
@@ -41,16 +41,16 @@ public class CrudTareasBean {
     private UploadedFile file;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-
+    
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
     private List<Tarea> flista;
-
+    
     public List<Tarea> getFlista() {
         return flista;
     }
-
+    
     public void setFlista(List<Tarea> flista) {
         this.flista = flista;
     }
@@ -60,7 +60,7 @@ public class CrudTareasBean {
      */
     public CrudTareasBean() {
     }
-
+    
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
@@ -75,37 +75,41 @@ public class CrudTareasBean {
         }
         elemento = new Tarea();
         lista = marketingUserFacade.findAllTareas();
-        for(Tarea t :lista){
-            if(!t.getEstado().equals("VENCIDO")) {
+        for (Tarea t : lista) {
+            if (t.getIdEvento() == null) {
+                t.setIdEvento(new Evento());
+                t.getIdEvento().setNombre("Generico");
+            }
+            if (!t.getEstado().equals("VENCIDO")) {
                 sessionBean.checkEstadoTarea(t);
             }
         }
     }
-
+    
     public List<Tarea> getLista() {
         return lista;
     }
-
+    
     public void setLista(List<Tarea> lista) {
         this.lista = lista;
     }
-
+    
     public MarketingUserFacade getMarketingUserFacade() {
         return marketingUserFacade;
     }
-
+    
     public UploadedFile getFile() {
         return file;
     }
-
+    
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-
+    
     public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
         this.marketingUserFacade = marketingUserFacade;
     }
-
+    
     public void delete() {
         marketingUserFacade.deleteTarea(elemento);
         sessionBean.registrarlog("eliminar", "Tareas", elemento.getNombre());
@@ -113,24 +117,25 @@ public class CrudTareasBean {
         elemento = new Tarea();
         lista = marketingUserFacade.findAllTareas();
     }
-
+    
     public void handleFileUpload(FileUploadEvent event) {
         if (event != null) {
             file = event.getFile();
             FacesUtil.addInfoMessage(event.getFile().getFileName());
         }
     }
-
+    
     public void goTareaMarketing(int id) {
         try {
             sessionBean.getAttributes().put("idTarea", id);
+            sessionBean.getAttributes().put("from", "tareasView");
             sessionBean.getAttributes().remove("idEvento");
             FacesContext.getCurrentInstance().getExternalContext().redirect("tareaAccion.xhtml");
         } catch (IOException ex) {
             LOGGER.error(ex);
         }
     }
-
+    
     public void goTareaReporte(int id) {
         try {
             sessionBean.getAttributes().put("idTarea", id);
@@ -139,13 +144,12 @@ public class CrudTareasBean {
             LOGGER.error(ex);
         }
     }
-
+    
     public Tarea getElemento() {
         return elemento;
     }
-
+    
     public void setElemento(Tarea elemento) {
         this.elemento = elemento;
     }
-
 }

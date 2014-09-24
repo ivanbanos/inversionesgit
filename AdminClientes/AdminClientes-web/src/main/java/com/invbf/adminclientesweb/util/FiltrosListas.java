@@ -7,6 +7,7 @@ package com.invbf.adminclientesweb.util;
 
 import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Perfil;
+import com.invbf.adminclientesapi.entity.TipoDocumento;
 import com.invbf.adminclientesapi.entity.Tipotarea;
 import com.invbf.adminclientesapi.facade.AdminFacade;
 import com.invbf.adminclientesapi.facade.MarketingUserFacade;
@@ -74,9 +75,10 @@ public class FiltrosListas {
 
     public List<String> getTipoident() {
         List<String> lista = new ArrayList<String>();
-        lista.add("CC");
-        lista.add("Pasaporte");
-        lista.add("Otro");
+        List<TipoDocumento> perfiles = marketingUserFacade.findAllTipoDocumentos();
+        for (TipoDocumento p : perfiles) {
+            lista.add(p.getNombre());
+        }
         return lista;
 
     }

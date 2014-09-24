@@ -27,7 +27,7 @@
                             <h:outputText id="estado" value="#{reporteTareaEspesificaBean.elemento.estado}" />
                         </div>
 
-                        <b><label class="col-md-3 control-label" >#{label['tipo']}:</label></b>
+                        <b><label class="col-md-3 control-label" >#{label['tipotarea']}:</label></b>
                         <div class="col-md-3">
                             <h:outputText id="tipo" value="#{reporteTareaEspesificaBean.elemento.tipo.nombre}" />
                         </div>
@@ -36,14 +36,14 @@
                         <b><label class="col-md-3 control-label" >#{label['fechainicio']}:</label></b>
                         <div class="col-md-3">
                             <h:outputText id="fecini" value="#{reporteTareaEspesificaBean.elemento.fechaInicio}" >
-                                <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
                             </h:outputText>
                         </div>
 
                         <b><label class="col-md-3 control-label" >#{label['fechafinal']}:</label></b>
                         <div class="col-md-3">
                             <h:outputText id="fecfin" value="#{reporteTareaEspesificaBean.elemento.fechaFinalizacion}"  >
-                                <f:convertDateTime pattern="dd/MMM/yyyy HH:mm:ss" locale="es" />
+                                <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
                             </h:outputText>
                         </div>
 
@@ -82,7 +82,12 @@
                                 <h:outputText value="#{element.cliente.apellidos}" />
                             </p:column>
 
-                            <p:column headerText="Accion tomada" sortBy="#{element.idAccion.nombre}" filterBy="#{element.idAccion.nombre}" filterMatchMode="contains" >
+                            <p:column headerText="Accion tomada" sortBy="#{element.idAccion.nombre}" filterBy="#{element.idAccion.nombre}" filterMatchMode="in" >
+                                        <f:facet name="filter">
+                                            <p:selectCheckboxMenu label="Acciones" onchange="PF('detailsTableClientes').filter()" >
+                                                <f:selectItems value="#{reporteTareaEspesificaBean.acciones}" />
+                                            </p:selectCheckboxMenu>
+                                        </f:facet>
                                 <h:outputText value="#{element.idAccion.nombre}" />
                             </p:column>
 
@@ -96,7 +101,7 @@
                                 <h:outputText value="#{element.usuario.nombreUsuario}" />
                             </p:column>
 
-                            <p:column headerText="observaciones" sortBy="#{element.observaciones}" filterBy="#{element.observaciones}" filterMatchMode="contains" >
+                            <p:column headerText="observaciones" sortBy="#{element.observaciones}" >
                                 <h:outputText value="#{element.observaciones}" />
                             </p:column>
 

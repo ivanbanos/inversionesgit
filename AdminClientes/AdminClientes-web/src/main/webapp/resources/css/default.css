@@ -149,3 +149,14 @@ a:focus{
 .ui-state-default .ui-icon {
     background-image: url(images/ui-icons_CE6B0F_256x240.png)!important;
 }
+
+.ui-messages-info-icon{
+    background: url('images/1411527736_accepted_48.png')no-repeat !important;
+    background-size: 100% !important;
+}
+
+.ui-messages-info{
+    color: #3c763d!important;
+    background-color: #dff0d8!important;
+    border-color: #d6e9c6!important;
+}

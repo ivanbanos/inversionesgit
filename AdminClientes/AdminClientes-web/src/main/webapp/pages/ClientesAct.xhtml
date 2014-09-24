@@ -10,16 +10,18 @@
 
     <ui:define name="content">
         <h:form >
-            <div class="panel panel-primary">
 
+            * #{label['mensaje.camporequerido']}
+            <div class="panel panel-primary">
                 <div class="panel-heading"><h4>Cliente</h4></div>
                 <div class="panel-body">
 
                     <div class="row clearfix">
                         <div class="form-group col-md-6">
-                            <label class="col-md-4  control-label" >#{label['categoria']}</label>
+                            <label class="col-md-4  control-label" >* #{label['categoria']}:</label>
                             <div class="col-md-8">
-                                <p:selectOneMenu id="categoria" value="#{clientesActBean.elemento.idCategorias.idCategorias}" required="true">
+                                <p:selectOneMenu id="categoria" value="#{clientesActBean.elemento.idCategorias.idCategorias}" required="true"
+                                                 requiredMessage="#{label['msj.req.categoria']}">
                                     <f:selectItem itemLabel="Select One" itemValue="" />
                                     <f:selectItems value="#{clientesActBean.listacategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idCategorias}"/> 
                                 </p:selectOneMenu>
@@ -29,9 +31,10 @@
 
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['casino']}</label>
+                            <label class="col-md-4 control-label" >* #{label['casino']}:</label>
                             <div class="col-md-8">
-                                <p:selectOneMenu id="casino" value="#{clientesActBean.elemento.idCasinoPreferencial.idCasino}"  required="true">
+                                <p:selectOneMenu id="casino" value="#{clientesActBean.elemento.idCasinoPreferencial.idCasino}"  required="true"
+                                                 requiredMessage="#{label['msj.req.casino']}">
                                     <f:selectItem itemLabel="Select One" itemValue="" />
                                     <f:selectItems value="#{clientesActBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                                 </p:selectOneMenu>
@@ -42,17 +45,17 @@
                     <div class="row clearfix">
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['tipoident']}</label>
+                            <label class="col-md-4 control-label" >#{label['tipoident']}:</label>
                             <div class="col-md-8">
-                                <p:selectOneMenu id="tipoident" value="#{clientesActBean.elemento.tipoident}"  required="true">
+                                <p:selectOneMenu id="tipoident" value="#{clientesActBean.elemento.idTipoDocumento.idTipoDocumento}" >
                                     <f:selectItem itemLabel="Select One" itemValue="" /> 
-                                    <f:selectItems value="#{filtrosListas.tipoident}" var="var" itemLabel="#{var}" itemValue="#{var}"/>  
+                                    <f:selectItems value="#{clientesActBean.tipoDocumentos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idTipoDocumento}"/>  
                                 </p:selectOneMenu>
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['identificacion']}</label>
+                            <label class="col-md-4 control-label" >#{label['identificacion']}:</label>
                             <div class="col-md-8">
                                 <p:inputText id="identificacion" value="#{clientesActBean.elemento.identificacion}"  />
                             </div>
@@ -63,16 +66,16 @@
                     <div class="row clearfix">
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['nombres']}</label>
+                            <label class="col-md-4 control-label" >* #{label['nombres']}:</label>
                             <div class="col-md-8">
-                                <p:inputText id="nombres" value="#{clientesActBean.elemento.nombres}" required="true" />
+                                <p:inputText id="nombres" value="#{clientesActBean.elemento.nombres}" required="true" requiredMessage="#{label['msj.req.nombres']}"/>
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['apellidos']}</label>
+                            <label class="col-md-4 control-label" >* #{label['apellidos']}:</label>
                             <div class="col-md-8">
-                                <p:inputText id="apellidos" value="#{clientesActBean.elemento.apellidos}" required="true" />
+                                <p:inputText id="apellidos" value="#{clientesActBean.elemento.apellidos}" required="true" requiredMessage="#{label['msj.req.apellidos']}"/>
                             </div>
                         </div>
 
@@ -81,14 +84,14 @@
                     <div class="row clearfix">
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['tel1']}</label>
+                            <label class="col-md-4 control-label" >#{label['tel1']}:</label>
                             <div class="col-md-8">
                                 <p:inputText id="tel1" value="#{clientesActBean.elemento.telefono1}"  />
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['tel2']}</label>
+                            <label class="col-md-4 control-label" >#{label['tel2']}:</label>
                             <div class="col-md-8">
                                 <p:inputText id="tel2" value="#{clientesActBean.elemento.telefono2}"  />
                             </div>
@@ -99,11 +102,11 @@
                     <div class="row clearfix">
 
                         <div class="form-group col-md-12">
-                            <label class="col-md-2 control-label" >#{label['correo']}</label>
+                            <label class="col-md-2 control-label" >#{label['correo']}:</label>
                             <div class="col-md-6">
                                 <p:inputText style="width: 100%;" id="correo" value="#{clientesActBean.elemento.correo}"  size="40"
                                              requiredMessage="Por favor introducir el correo electronico"
-                                             validatorMessage="Formato de email invalido">
+                                             validatorMessage="#{label['msj.invalid.correo']}">
                                     <f:validateRegex
                                         pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                 </p:inputText>
@@ -114,40 +117,51 @@
 
 
                     <div class="row clearfix">
-
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['cumpleanos']}</label>
+                            <label class="col-md-4 control-label" >#{label['cumpleanos']}:</label>
                             <div class="col-md-8">
-                                <p:calendar id="cumpleanos" value="#{clientesActBean.elemento.cumpleanos}" pattern="dd/MMM" locale="es"
-                                            requiredMessage="Por favor introducir una fecha"
+                                <p:calendar id="cumpleanos" value="#{clientesActBean.elemento.cumpleanos}" locale="es"
+                                            requiredMessage="Por favor introducir una fecha" mode="inline" 
                                             />
                             </div>
                         </div>
-
-
-
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['bonofidelizacion']}</label>
+                            <label class="col-md-4 control-label" >#{label['genero']}:</label>
                             <div class="col-md-8">
-                                <p:inputText id="cupo" value="#{clientesActBean.elemento.bonoFidelizacion}"  />
+                                <p:selectOneMenu id="genero" value="#{clientesActBean.elemento.genero}" >
+                                    <f:selectItem itemLabel="Select One" itemValue="" />  
+                                    <f:selectItem itemLabel="Masculino" itemValue="M" />  
+                                    <f:selectItem itemLabel="Femenino" itemValue="F" />  
+                                </p:selectOneMenu>
                             </div>
                         </div>
 
+
                     </div>
 
+                    <div class="row clearfix">
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;cupofidelizacion&quot;)}">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label" >#{label['bonofidelizacion']}:</label>
+                                <div class="col-md-6">
+                                    <p:inputText id="cupo" value="#{clientesActBean.elemento.bonoFidelizacion}"  />
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
 
                     <div class="row clearfix">
 
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['pais']}</label>
+                            <label class="col-md-4 control-label" >#{label['pais']}:</label>
                             <div class="col-md-8">
                                 <p:inputText id="pais" value="#{clientesActBean.elemento.pais}"  />
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['ciudad']}</label>
+                            <label class="col-md-4 control-label" >#{label['ciudad']}:</label>
                             <div class="col-md-8">
                                 <p:inputText id="ciudad" value="#{clientesActBean.elemento.ciudad}"  />
                             </div>
@@ -156,7 +170,7 @@
                     </div>
                     <div class="row clearfix">
                         <div class="form-group col-md-12">
-                            <label class="col-md-2 control-label" >#{label['direccion']}</label>
+                            <label class="col-md-2 control-label" >#{label['direccion']}:</label>
                             <div class="col-md-6">
                                 <p:inputTextarea style="width: 100%" id="direccion" value="#{clientesActBean.elemento.direccion}"  />
                             </div>
@@ -165,7 +179,7 @@
 
                     <div class="row clearfix">
                         <div class="form-group col-md-12">
-                            <label class="col-md-3 control-label" >#{label['preferenciasjuegos']}</label>
+                            <label class="col-md-3 control-label" >#{label['preferenciasjuegos']}:</label>
                             <div class="col-md-9">
                                 <p:pickList id="PojoPickList" value="#{clientesActBean.tiposJuegosTodos}" var="form" effect="bounce"
                                             itemValue="#{form}" itemLabel="#{form.nombre}"  showCheckbox="true"

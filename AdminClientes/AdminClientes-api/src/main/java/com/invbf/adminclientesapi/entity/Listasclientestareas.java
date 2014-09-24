@@ -5,6 +5,7 @@
 package com.invbf.adminclientesapi.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Listasclientestareas.findByObservaciones", query = "SELECT l FROM Listasclientestareas l WHERE l.observaciones = :observaciones"),
     @NamedQuery(name = "Listasclientestareas.findByFechaAtencion", query = "SELECT l FROM Listasclientestareas l WHERE l.fechaAtencion = :fechaAtencion")})
 public class Listasclientestareas implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ListasclientestareasPK listasclientestareasPK;
@@ -144,5 +148,4 @@ public class Listasclientestareas implements Serializable {
     public String toString() {
         return "com.invbf.adminclientesapi.entity.Listasclientestareas[ listasclientestareasPK=" + listasclientestareasPK + " ]";
     }
-    
 }

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -57,9 +58,8 @@ public class TareaAccionBean {
     private List<TipoJuegoBoolean> tipoJuegosBoolean;
     private DualListModel<Usuario> todosusuarioses;
     private boolean todoscat;
-    private boolean ningunocat;
     private boolean todostip;
-    private boolean ningunotip;
+    private long conteo;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -70,6 +70,7 @@ public class TareaAccionBean {
 
     @PostConstruct
     public void init() {
+        conteo = 0;
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("tareas");
         if (!sessionBean.perfilViewMatch("Tareas")) {
@@ -112,6 +113,7 @@ public class TareaAccionBean {
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
         } else {
             elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
+            conteo = elemento.getListasclientestareasList().size();
             evento = elemento.getIdEvento();
             if (elemento.getCategorias() == null || elemento.getCategorias().equals("")) {
                 elemento.setCategorias("");
@@ -143,6 +145,7 @@ public class TareaAccionBean {
             }
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
         }
+        
         tipotareas = marketingUserFacade.findAllTipotarea();
     }
 
@@ -197,21 +200,34 @@ public class TareaAccionBean {
             boolean noCatselected = true;
             boolean noTipselected = true;
             for (CategoriaBoolean cb : categoriasBoolean) {
+                if (todoscat) {
+                    cb.setSelected(true);
+                    continue;
+                }
                 if (cb.isSelected()) {
                     noCatselected = false;
                     break;
                 }
             }
             for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                if (todostip) {
+                    tjb.setSelected(true);
+                    continue;
+                }
                 if (tjb.isSelected()) {
                     noTipselected = false;
                     break;
                 }
             }
             for (Cliente c : todosclienteses) {
+
                 boolean siCategoria = false;
                 boolean siTipoJuego = false;
-
+                if (elemento.getIdEvento() != null) {
+                    if (!c.getIdCasinoPreferencial().equals(elemento.getIdEvento().getIdCasino())) {
+                        continue;
+                    }
+                }
                 if (noCatselected) {
                     siCategoria = true;
                 } else {
@@ -284,7 +300,7 @@ public class TareaAccionBean {
                 marketingUserFacade.guardarEventos(evento);
             }
             FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
-
+            goBack();
         }
     }
 
@@ -340,14 +356,6 @@ public class TareaAccionBean {
         this.todoscat = todoscat;
     }
 
-    public boolean isNingunocat() {
-        return ningunocat;
-    }
-
-    public void setNingunocat(boolean ningunocat) {
-        this.ningunocat = ningunocat;
-    }
-
     public boolean isTodostip() {
         return todostip;
     }
@@ -356,47 +364,25 @@ public class TareaAccionBean {
         this.todostip = todostip;
     }
 
-    public boolean isNingunotip() {
-        return ningunotip;
-    }
-
-    public void setNingunotip(boolean ningunotip) {
-        this.ningunotip = ningunotip;
-    }
-
-    public void seltodoscat() {
-        if (todoscat) {
-            for (CategoriaBoolean cb : categoriasBoolean) {
-                cb.setSelected(true);
+    public void goBack() {
+        try {
+            if (sessionBean.getAttributes().get("from").equals("evento")) {
+                sessionBean.getAttributes().put("idEvento", elemento.getIdEvento().getIdEvento());
+                FacesContext.getCurrentInstance().getExternalContext().redirect("MarketingEventoManejadorView.xhtml");
+            } else {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("tareas.xhtml");
             }
-            ningunocat = false;
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(TareaAccionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void selningunocat() {
-        if (ningunocat) {
-            for (CategoriaBoolean cb : categoriasBoolean) {
-                cb.setSelected(false);
-            }
-            todoscat = false;
-        }
+    public long getConteo() {
+        return conteo;
     }
 
-    public void seltodostip() {
-        if (todostip) {
-            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                tjb.setSelected(true);
-            }
-            ningunotip = false;
-        }
+    public void setConteo(long conteo) {
+        this.conteo = conteo;
     }
-
-    public void selningunotip() {
-        if (ningunotip) {
-            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                tjb.setSelected(false);
-            }
-            todostip = false;
-        }
-    }
+    
 }

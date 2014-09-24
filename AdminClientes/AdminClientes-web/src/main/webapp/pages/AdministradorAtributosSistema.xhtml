@@ -17,8 +17,10 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Usuarios</h3>
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+                                <div class="clickable">
+                                    <h3 class="panel-title">Usuarios</h3>
+                                    <span class="pull-right"><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -209,8 +211,11 @@
                     <c:if test="#{sessionBean.perfilViewMatch(&quot;Perfiles&quot;)}">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Perfiles</h3>
-                                <span class="pull-right clickable"><i class="fa fa-minus"></i></span>
+
+                                <div class="clickable">
+                                    <h3 class="panel-title">Perfiles</h3>
+                                    <span class="pull-right"><i class="fa fa-minus"></i></span>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">

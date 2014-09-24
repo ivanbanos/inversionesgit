@@ -60,6 +60,8 @@ public class Cliente implements Serializable {
     private String apellidos;
     @Column(name = "telefono1")
     private String telefono1;
+    @Column(name = "genero")
+    private String genero;
     @Column(name = "telefono2")
     private String telefono2;
     @Column(name = "pais")
@@ -77,8 +79,6 @@ public class Cliente implements Serializable {
     private String correo;
     @Column(name = "identificacion")
     private String identificacion;
-    @Column(name = "tipoident")
-    private String tipoident;
     @JoinTable(name = "clientestiposjuegos", joinColumns = {
         @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")}, inverseJoinColumns = {
         @JoinColumn(name = "idTipoJuego", referencedColumnName = "idTipoJuego")})
@@ -92,6 +92,9 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "idCasinoPreferencial", referencedColumnName = "idCasino")
     @ManyToOne
     private Casino idCasinoPreferencial;
+    @JoinColumn(name = "idTipoDocumento", referencedColumnName = "idTipoDocumento")
+    @ManyToOne
+    private TipoDocumento idTipoDocumento;
 
     public Cliente() {
     }
@@ -220,14 +223,6 @@ public class Cliente implements Serializable {
         this.idCasinoPreferencial = idCasinoPreferencial;
     }
 
-    public String getTipoident() {
-        return tipoident;
-    }
-
-    public void setTipoident(String tipoident) {
-        this.tipoident = tipoident;
-    }
-
     public String getCorreo() {
         return correo;
     }
@@ -276,6 +271,22 @@ public class Cliente implements Serializable {
 
     public void setCumpleanos(Date cumpleanos) {
         this.cumpleanos = cumpleanos;
+    }
+
+    public TipoDocumento getIdTipoDocumento() {
+        return idTipoDocumento;
+    }
+
+    public void setIdTipoDocumento(TipoDocumento idTipoDocumento) {
+        this.idTipoDocumento = idTipoDocumento;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
     
 }

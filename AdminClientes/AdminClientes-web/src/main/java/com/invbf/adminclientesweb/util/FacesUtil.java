@@ -1,7 +1,8 @@
 package com.invbf.adminclientesweb.util;
 
-import static javax.faces.application.FacesMessage.*;
 import javax.faces.application.FacesMessage;
+import static javax.faces.application.FacesMessage.*;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
 /**
