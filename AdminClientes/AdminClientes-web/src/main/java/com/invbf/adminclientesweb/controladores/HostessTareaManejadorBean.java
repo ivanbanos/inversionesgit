@@ -32,8 +32,8 @@ import org.primefaces.model.StreamedContent;
 @ViewScoped
 public class HostessTareaManejadorBean {
 
-    private static final Logger LOGGER =
-            Logger.getLogger(SessionBean.class);
+    private static final Logger LOGGER
+            = Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
     @EJB
@@ -64,7 +64,7 @@ public class HostessTareaManejadorBean {
                 sessionBean.Desconectar();
                 FacesUtil.addErrorMessage("Session finalizada", "No tiene credenciales para ingresar a esa pantalla");
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
-                
+
             } catch (IOException ex) {
                 LOGGER.error(ex);
             }
@@ -125,18 +125,20 @@ public class HostessTareaManejadorBean {
                 FacesUtil.addErrorMessage("No se puede guardar accion de cliente", "Debe seleccionar una Accion");
                 break guardar;
             }
-            
+
             l = clientes.remove(index);
             l.setUsuario(sessionBean.getUsuario());
-            
-            
+            l.setFechaAtencion(new java.sql.Date(new Date().getTime()));
+
             hostessFacade.guardarLCE(l);
             try {
                 Listasclientestareas nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idTarea"), clientes, l);
                 clientes.add(nuevo);
             } catch (EventoSinClientesPorRevisarException ex) {
                 LOGGER.info(ex);
-                FacesUtil.addInfoMessage("No hay mas clientes por revisar", "");
+                if (clientes.isEmpty()) {
+                    FacesUtil.addInfoMessage("Tarea Finalizada", "");
+                }
             }
         }
     }

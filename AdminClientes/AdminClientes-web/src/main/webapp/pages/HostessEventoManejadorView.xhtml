@@ -129,7 +129,8 @@
                                     <div class="form-group col-md-12">
                                         <label class="col-md-2 control-label" >#{label['accionposible']}</label>
                                         <div class="col-md-10">
-                                            <p:selectOneMenu style="width: 100%" value="#{clientes.idAccion.idAccion}" >
+                                            <p:selectOneMenu style="width: 100%" value="#{clientes.idAccion.idAccion}" required="true" requiredMessage="#{label['msj.req.accion']}">
+                                                <f:selectItem itemLabel="Seleccione uno" itemValue=""/>
                                                 <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.accionList}" 
                                                                var="var" 
                                                                itemLabel="#{var.nombre}" 
