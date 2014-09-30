@@ -139,17 +139,17 @@
                                     <div class="panel-heading">
                                         #{label['categorias']}
                                     </div>
-                                    <div id="categoriasList" class="panel-body">
-                                        <ul >
+                                    <div class="panel-body">
+                                        <ul id="categoriasList">
                                             <li>
-                                                <h:selectBooleanCheckbox value="#{tareaAccionBean.todoscat}">
+                                                <h:selectBooleanCheckbox value="#{tareaAccionBean.todoscat}" onclick="toggle('categoriasList')">
                                                 </h:selectBooleanCheckbox>
                                                 <label>Todos</label>
                                             </li>
 
                                             <c:forEach var="itemcat" items="#{tareaAccionBean.categoriasBoolean}">
                                                 <li>
-                                                    <h:selectBooleanCheckbox  class="checkbox" value="#{itemcat.selected}" />&nbsp;
+                                                    <h:selectBooleanCheckbox value="#{itemcat.selected}" onclick="deselecttodo('categoriasList')"/>&nbsp;
                                                     <label>#{itemcat.categoria.nombre}</label>
                                                 </li>
                                             </c:forEach>
@@ -163,17 +163,17 @@
                                     <div class="panel-heading">#{label['tipojuegos']}</div>
                                     <div class="panel-body">
 
-                                        <ul>
+                                        <ul id="tipojuegoList">
 
 
                                             <li>
-                                                <p:selectBooleanCheckbox value="#{tareaAccionBean.todostip}">
-                                                </p:selectBooleanCheckbox>
+                                                <h:selectBooleanCheckbox value="#{tareaAccionBean.todostip}" onclick="toggle('tipojuegoList')">
+                                                </h:selectBooleanCheckbox>
                                                 <label>Todos</label>
                                             </li>
                                             <c:forEach var="itemtip" items="#{tareaAccionBean.tipoJuegosBoolean}">
                                                 <li>
-                                                    <p:selectBooleanCheckbox value="#{itemtip.selected}"/>&nbsp;
+                                                    <h:selectBooleanCheckbox value="#{itemtip.selected}" onclick="deselecttodo('tipojuegoList')"/>&nbsp;
                                                     <label >#{itemtip.tipoJuego.nombre}</label>
                                                 </li>
                                             </c:forEach>

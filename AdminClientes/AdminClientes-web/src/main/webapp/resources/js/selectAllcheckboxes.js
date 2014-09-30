@@ -5,8 +5,33 @@
 
 
 function toggle(source) {
-  checkboxes = document.getElementsByName('foo');
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
-  }
+    var divWithCheckbox = $('#' + source);
+    var lielements = divWithCheckbox.children();
+    var litodo = $(lielements[0]);
+    var inputchechboxtodo = $(litodo.children()[0]);
+
+    if (inputchechboxtodo.is(':checked')) {
+        for (var i = 1; i < lielements.size(); i++) {
+            var lielement = $(lielements[i]);
+            var inputchechbox = $(lielement.children()[0]);
+            inputchechbox.prop('checked', true);
+
+        }
+    } else {
+        for (var i = 1; i < lielements.size(); i++) {
+            var lielement = $(lielements[i]);
+            var inputchechbox = $(lielement.children()[0]);
+            inputchechbox.prop('checked', false);
+
+        }
+        
+    }
+}
+function deselecttodo(source) {
+    var divWithCheckbox = $('#' + source);
+    var lielements = divWithCheckbox.children();
+    var litodo = $(lielements[0]);
+    var inputchechboxtodo = $(litodo.children()[0]);
+    inputchechboxtodo.prop('checked', false);
+    
 }

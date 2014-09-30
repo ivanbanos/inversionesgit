@@ -45,16 +45,16 @@
                                                     #{label['categorias']}
                                                 </div>
                                                 <div class="panel-body">
-                                                    <ul>
+                                                    <ul id="categoriaslist">
                                                         <li>
-                                                            <p:selectBooleanCheckbox value="#{reportesClientesBean.todosCat}">
-                                                            </p:selectBooleanCheckbox>
+                                                            <h:selectBooleanCheckbox value="#{reportesClientesBean.todosCat}" onclick="toggle('categoriaslist')">
+                                                            </h:selectBooleanCheckbox>
                                                             <label>Todos</label>
                                                         </li>
 
                                                         <c:forEach var="itemcat" items="#{reportesClientesBean.categoriaBooleans}">
                                                             <li>
-                                                                <p:selectBooleanCheckbox value="#{itemcat.selected}"/>&nbsp;
+                                                                <h:selectBooleanCheckbox value="#{itemcat.selected}" onclick="deselecttodo('categoriaslist')"/>&nbsp;
                                                                 <label>#{itemcat.categoria.nombre}</label>
                                                             </li>
                                                         </c:forEach>
@@ -69,16 +69,16 @@
                                                     #{label['casinos']}
                                                 </div>
                                                 <div class="panel-body">
-                                                    <ul>
+                                                    <ul id="casinosList">
                                                         <li>
-                                                            <p:selectBooleanCheckbox value="#{reportesClientesBean.todoscasinos}">
-                                                            </p:selectBooleanCheckbox>
+                                                            <h:selectBooleanCheckbox value="#{reportesClientesBean.todoscasinos}" onclick="toggle('casinosList')">
+                                                            </h:selectBooleanCheckbox>
                                                             <label>Todos</label>
                                                         </li>
 
                                                         <c:forEach var="itemcas" items="#{reportesClientesBean.casinoBooleans}">
                                                             <li>
-                                                                <p:selectBooleanCheckbox value="#{itemcas.selected}"/>&nbsp;
+                                                                <h:selectBooleanCheckbox value="#{itemcas.selected}" onclick="deselecttodo('casinosList')"/>&nbsp;
                                                                 <label>#{itemcas.casino.nombre}</label>
                                                             </li>
                                                         </c:forEach>
@@ -91,18 +91,15 @@
 
                                                 <div class="panel-heading">#{label['tipojuegos']}</div>
                                                 <div class="panel-body">
-
-                                                    <ul>
-
-
+                                                    <ul id="tipojuegosList">
                                                         <li>
-                                                            <p:selectBooleanCheckbox value="#{reportesClientesBean.todostip}">
-                                                            </p:selectBooleanCheckbox>
+                                                            <h:selectBooleanCheckbox value="#{reportesClientesBean.todostip}" onclick="toggle('tipojuegosList')">
+                                                            </h:selectBooleanCheckbox>
                                                             <label>Todos</label>
                                                         </li>
                                                         <c:forEach var="itemtip" items="#{reportesClientesBean.juegoBooleans}">
                                                             <li>
-                                                                <p:selectBooleanCheckbox value="#{itemtip.selected}"/>&nbsp;
+                                                                <h:selectBooleanCheckbox value="#{itemtip.selected}" onclick="deselecttodo('tipojuegosList')"/>&nbsp;
                                                                 <label >#{itemtip.tipoJuego.nombre}</label>
                                                             </li>
                                                         </c:forEach>
