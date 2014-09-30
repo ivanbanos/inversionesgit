@@ -34,5 +34,10 @@ public class FormularioFacade extends AbstractFacade<Formulario> implements Form
             .setParameter("tabla", tabla)
             .getResultList().get(0);
     }
+
+    @Override
+    public void refresh(Formulario formulario) {
+        em.refresh(formulario);
+    }
     
 }

@@ -26,5 +26,10 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
     public ClienteFacade() {
         super(Cliente.class);
     }
+
+    @Override
+    public void refresh(Cliente cliente) {
+        em.refresh(cliente);
+    }
     
 }

@@ -26,5 +26,10 @@ public class EventoFacade extends AbstractFacade<Evento> implements EventoFacade
     public EventoFacade() {
         super(Evento.class);
     }
+
+    @Override
+    public void refresh(Evento evento) {
+        em.refresh(evento);
+    }
     
 }

@@ -40,5 +40,10 @@ public class VistaFacade extends AbstractFacade<Vista> implements VistaFacadeLoc
             return vistas.get(0);
         }
     }
+
+    @Override
+    public void refresh(Vista vista) {
+        em.refresh(vista);
+    }
     
 }

@@ -28,5 +28,10 @@ public class TareasFacade extends AbstractFacade<Tarea> implements TareasFacadeL
     public TareasFacade() {
         super(Tarea.class);
     }
+
+    @Override
+    public void refresh(Tarea tareas) {
+        em.refresh(tareas);
+    }
     
 }

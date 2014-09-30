@@ -17,6 +17,8 @@ public interface FormularioFacadeLocal {
 
     void create(Formulario formulario);
 
+    void refresh(Formulario formulario);
+
     void edit(Formulario formulario);
 
     void remove(Formulario formulario);

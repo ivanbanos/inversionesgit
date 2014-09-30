@@ -31,5 +31,10 @@ public class PermisosFacade extends AbstractFacade<Permiso> implements PermisosF
     public Object findByNombre(String nombre) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void refresh(Permiso perfil) {
+        em.refresh(perfil);
+    }
     
 }

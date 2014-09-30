@@ -11,6 +11,10 @@
     <ui:define name="content">
         <h:form>
 
+            <ul>
+                <li>Para ver un cliente en detalle de click en el boton <span class="ui-icon ui-icon-circle-triangle-e" style="display:inline-block;"></span>.</li>
+                <li>Para crear una busqueda avanzada de click en el boton <span class="ui-icon ui-icon-search" style="display:inline-block;"></span>.</li>
+            </ul>
             <div class="col-md-12 ">
                 <!--Clientes-->
                 <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
@@ -103,112 +107,112 @@
 
 
 
-                                <p:dataTable id="detailsTableClientes" var="element" value="#{reportesClientesBean.lista}"  
-                                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" rows="#{sessionBean.paginacion}"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             >
+                            <p:dataTable id="detailsTableClientes" var="element" value="#{reportesClientesBean.lista}"  
+                                         emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" rows="#{sessionBean.paginacion}"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         >
 
-                                    <p:column style="width:5%">
-                                        <p:rowToggler />
-                                    </p:column>
+                                <p:column style="width:5%">
+                                    <p:rowToggler />
+                                </p:column>
 
-                                    <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
-                                        <h:outputText value="#{element.identificacion}" />
-                                    </p:column>
-                                    <p:column headerText="Tipo de identificaci&oacute;n" sortBy="#{element.idTipoDocumento.nombre}" filterBy="#{element.idTipoDocumento.nombre}" filterMatchMode="in" >
-                                        <f:facet name="filter">
-                                            <p:selectCheckboxMenu label="Tipo" onchange="PF('detailsTableClientes').filter()" >
-                                                <f:selectItems value="#{filtrosListas.tipoident}" />
-                                            </p:selectCheckboxMenu>
-                                        </f:facet>
-                                        <h:outputText value="#{element.idTipoDocumento.nombre}" />
-                                    </p:column>
+                                <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
+                                    <h:outputText value="#{element.identificacion}" />
+                                </p:column>
+                                <p:column headerText="Tipo de identificaci&oacute;n" sortBy="#{element.idTipoDocumento.nombre}" filterBy="#{element.idTipoDocumento.nombre}" filterMatchMode="in" >
+                                    <f:facet name="filter">
+                                        <p:selectCheckboxMenu label="Tipo" onchange="PF('detailsTableClientes').filter()" >
+                                            <f:selectItems value="#{filtrosListas.tipoident}" />
+                                        </p:selectCheckboxMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{element.idTipoDocumento.nombre}" />
+                                </p:column>
 
-                                    <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
-                                        <h:outputText value="#{element.nombres}" />
-                                    </p:column>
+                                <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
+                                    <h:outputText value="#{element.nombres}" />
+                                </p:column>
 
-                                    <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
-                                        <h:outputText value="#{element.apellidos}" />
-                                    </p:column>
+                                <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
+                                    <h:outputText value="#{element.apellidos}" />
+                                </p:column>
 
-                                    <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="in" >
-                                        <f:facet name="filter">
-                                            <p:selectCheckboxMenu label="Categorias" onchange="PF('detailsTableClientes').filter()" >
-                                                <f:selectItems value="#{filtrosListas.categorias}" />
-                                            </p:selectCheckboxMenu>
-                                        </f:facet>
-                                        <h:outputText value="#{element.idCategorias.nombre}" />
-                                    </p:column>
+                                <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="in" >
+                                    <f:facet name="filter">
+                                        <p:selectCheckboxMenu label="Categorias" onchange="PF('detailsTableClientes').filter()" >
+                                            <f:selectItems value="#{filtrosListas.categorias}" />
+                                        </p:selectCheckboxMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{element.idCategorias.nombre}" />
+                                </p:column>
 
-                                    <p:rowExpansion>
-                                        <div class="row clearfix">
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Telefono 1:" />
-                                                <h:outputText class="col-md-6" value="#{element.telefono1}" />
-                                            </div>
-
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Telefono 2:" />
-                                                <h:outputText class="col-md-6" value="#{element.telefono2}" />
-                                            </div>
-
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Correo:" />
-                                                <h:outputText class="col-md-6" value="#{element.correo}" />
-                                            </div>
-
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Cumplea&ntilde;os:" />
-                                                <h:outputText class="col-md-6" value="#{element.cumpleanos}" >
-                                                    <f:convertDateTime pattern="dd/MMMMM" locale="es" />
-                                                </h:outputText>
-                                            </div>
-
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Casino:" />
-                                                <h:outputText class="col-md-6" value="#{element.idCasinoPreferencial.nombre}" />
-                                            </div>
-
-
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Pais:" />
-                                                <h:outputText class="col-md-6" value="#{element.pais}" />
-                                            </div>
-
-
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Ciudad:" />
-                                                <h:outputText class="col-md-6" value="#{element.ciudad}" />
-                                            </div>
-
-
-                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                                <h:outputLabel class="col-md-6 control-label" value="Cupo de fidelizaci&oacute;n:" />
-                                                <h:outputText class="col-md-6" value="#{element.bonoFidelizacion}" />
-                                            </div>
-
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <h:outputLabel class="col-md-12 control-label" value="Preferencias de Juegos:" />
-                                                <p:dataList value="#{element.tiposjuegosList}" var="tipo" emptyMessage="No tiene juegos favoritos">
-                                                    #{tipo.nombre}
-                                                </p:dataList>
-                                            </div>
-
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-                                                <h:outputLabel class="col-md-12 control-label" value="Atributos adicionales:" />
-                                                <p:dataList value="#{element.clientesatributosList}" var="attr" >
-                                                    <b>#{attr.atributos.nombre}</b>:&nbsp;#{attr.valor} 
-                                                </p:dataList>
-                                            </div>
-
-
+                                <p:rowExpansion>
+                                    <div class="row clearfix">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Telefono 1:" />
+                                            <h:outputText class="col-md-6" value="#{element.telefono1}" />
                                         </div>
-                                    </p:rowExpansion>
 
-                                </p:dataTable>
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Telefono 2:" />
+                                            <h:outputText class="col-md-6" value="#{element.telefono2}" />
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Correo:" />
+                                            <h:outputText class="col-md-6" value="#{element.correo}" />
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Cumplea&ntilde;os:" />
+                                            <h:outputText class="col-md-6" value="#{element.cumpleanos}" >
+                                                <f:convertDateTime pattern="dd/MMMMM" locale="es" />
+                                            </h:outputText>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Casino:" />
+                                            <h:outputText class="col-md-6" value="#{element.idCasinoPreferencial.nombre}" />
+                                        </div>
+
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Pais:" />
+                                            <h:outputText class="col-md-6" value="#{element.pais}" />
+                                        </div>
+
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Ciudad:" />
+                                            <h:outputText class="col-md-6" value="#{element.ciudad}" />
+                                        </div>
+
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Cupo de fidelizaci&oacute;n:" />
+                                            <h:outputText class="col-md-6" value="#{element.bonoFidelizacion}" />
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h:outputLabel class="col-md-12 control-label" value="Preferencias de Juegos:" />
+                                            <p:dataList value="#{element.tiposjuegosList}" var="tipo" emptyMessage="No tiene juegos favoritos">
+                                                #{tipo.nombre}
+                                            </p:dataList>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                            <h:outputLabel class="col-md-12 control-label" value="Atributos adicionales:" />
+                                            <p:dataList value="#{element.clientesatributosList}" var="attr" >
+                                                <b>#{attr.atributos.nombre}</b>:&nbsp;#{attr.valor} 
+                                            </p:dataList>
+                                        </div>
+
+
+                                    </div>
+                                </p:rowExpansion>
+
+                            </p:dataTable>
 
                         </div>
                     </div>

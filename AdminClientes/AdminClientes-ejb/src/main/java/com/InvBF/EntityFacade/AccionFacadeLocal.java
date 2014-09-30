@@ -17,6 +17,8 @@ public interface AccionFacadeLocal {
 
     void create(Accion accion);
 
+    void refresh(Accion accion);
+
     void edit(Accion accion);
 
     void remove(Accion accion);

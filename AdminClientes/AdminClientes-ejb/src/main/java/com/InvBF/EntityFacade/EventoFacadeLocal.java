@@ -17,6 +17,8 @@ public interface EventoFacadeLocal {
 
     void create(Evento evento);
 
+    void refresh(Evento evento);
+
     void edit(Evento evento);
 
     void remove(Evento evento);

@@ -39,5 +39,10 @@ public class AccionFacade extends AbstractFacade<Accion> implements AccionFacade
             return acciones.get(0);
         }
     }
+
+    @Override
+    public void refresh(Accion accion) {
+        em.refresh(accion);
+    }
     
 }

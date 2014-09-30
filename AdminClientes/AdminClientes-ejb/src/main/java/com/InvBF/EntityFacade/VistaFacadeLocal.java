@@ -17,6 +17,8 @@ public interface VistaFacadeLocal {
 
     void create(Vista vista);
 
+    void refresh(Vista vista);
+
     void edit(Vista vista);
 
     void remove(Vista vista);

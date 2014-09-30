@@ -9,7 +9,7 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:define name="content">
-        <h:form >
+        <h:form id="formEvento">
             
                 * #{label['mensaje.camporequerido']}
             <div class="panel panel-primary">
@@ -58,7 +58,7 @@
                             <label class="col-md-2 control-label" >* #{label['casino']}:</label>
                             <div class="col-md-6">
                                 <p:selectOneMenu id="casinoEventos" style="width: 100%;" value="#{marketingEventoManejadorBean.elemento.idCasino.idCasino}"  required="true" requiredMessage="#{label['msj.req.casino']}">
-                                    <f:selectItem itemLabel="Select One" itemValue="" />
+                                    <f:selectItem itemLabel="Seleccionar uno" itemValue="" />
                                     <f:selectItems value="#{marketingEventoManejadorBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                                 </p:selectOneMenu>
                             </div>
@@ -66,17 +66,17 @@
                     </div>
 
                     <div class="row clearfix">
-                        <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['imagen']}:</label>
-                            <div class="col-md-8">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-label" >#{label['imagen']}:</label>
+                            <div class="col-md-5">
                                 <p:fileUpload id="imagenEventos" fileUploadListener="#{marketingEventoManejadorBean.handleFileUpload}" mode="advanced" dragDropSupport="true"
                                               label="Escoger" update=":#{p:component('imagenact')} :#{p:component('messages')}" cancelLabel="Cancelar" uploadLabel="Cargar" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
                             </div>
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['imagenactual']}:</label>
-                            <div class="col-md-8">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-2 control-label" >#{label['imagenactual']}:</label>
+                            <div class="col-md-10">
 
                                 <h:graphicImage id="imagenact" value="/image/#{marketingEventoManejadorBean.elemento.imagen}" alt="No tiene imagen" />
                             </div>
@@ -101,6 +101,10 @@
 
                                         <p:column headerText="Tipo" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="contains">
                                             <h:outputText value="#{element.tipo.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Estado" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="contains">
+                                            <h:outputText value="#{element.estado}" />
                                         </p:column>
 
 

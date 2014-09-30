@@ -17,6 +17,8 @@ public interface ConfiguracionFacadeLocal {
 
     void create(Configuracion configuracion);
 
+    void refresh(Configuracion configuracion);
+
     void edit(Configuracion configuracion);
 
     void remove(Configuracion configuracion);

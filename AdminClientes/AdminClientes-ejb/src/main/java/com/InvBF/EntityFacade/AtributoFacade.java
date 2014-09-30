@@ -26,5 +26,10 @@ public class AtributoFacade extends AbstractFacade<Atributo> implements Atributo
     public AtributoFacade() {
         super(Atributo.class);
     }
+
+    @Override
+    public void refresh(Atributo atributo) {
+        em.refresh(atributo);
+    }
     
 }

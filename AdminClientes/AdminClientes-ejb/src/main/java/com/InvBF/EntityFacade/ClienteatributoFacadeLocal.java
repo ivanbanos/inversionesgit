@@ -19,6 +19,8 @@ public interface ClienteatributoFacadeLocal {
 
     void create(Clienteatributo clienteatributo);
 
+    void refresh(Clienteatributo clienteatributo);
+
     void edit(Clienteatributo clienteatributo);
 
     void remove(Clienteatributo clienteatributo);

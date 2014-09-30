@@ -39,5 +39,10 @@ public class TipostareasFacade extends AbstractFacade<Tipotarea> implements Tipo
             return tipotareas.get(0);
         }
     }
+
+    @Override
+    public void refresh(Tipotarea tipostareas) {
+        em.refresh(tipostareas);
+    }
     
 }

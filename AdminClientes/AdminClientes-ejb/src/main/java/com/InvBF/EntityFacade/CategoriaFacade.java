@@ -26,5 +26,10 @@ public class CategoriaFacade extends AbstractFacade<Categoria> implements Catego
     public CategoriaFacade() {
         super(Categoria.class);
     }
+
+    @Override
+    public void refresh(Categoria categoria) {
+        em.refresh(categoria);
+    }
     
 }

@@ -26,5 +26,10 @@ public class TipoDocumentoFacade extends AbstractFacade<TipoDocumento> implement
     public TipoDocumentoFacade() {
         super(TipoDocumento.class);
     }
+
+    @Override
+    public void refresh(TipoDocumento tipoDocumento) {
+        em.refresh(tipoDocumento);
+    }
     
 }

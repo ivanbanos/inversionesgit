@@ -17,6 +17,8 @@ public interface TipoDocumentoFacadeLocal {
 
     void create(TipoDocumento tipoDocumento);
 
+    void refresh(TipoDocumento tipoDocumento);
+
     void edit(TipoDocumento tipoDocumento);
 
     void remove(TipoDocumento tipoDocumento);

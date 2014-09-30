@@ -17,6 +17,8 @@ public interface TipoJuegoFacadeLocal {
 
     void create(TipoJuego tipoJuego);
 
+    void refresh(TipoJuego tipoJuego);
+
     void edit(TipoJuego tipoJuego);
 
     void remove(TipoJuego tipoJuego);

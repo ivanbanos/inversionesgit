@@ -39,5 +39,10 @@ public class ConfiguracionFacade extends AbstractFacade<Configuracion> implement
             return configuraciones.get(0);
         }
     }
+
+    @Override
+    public void refresh(Configuracion configuracion) {
+        em.refresh(configuracion);
+    }
     
 }

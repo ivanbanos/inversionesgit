@@ -46,5 +46,10 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
                 .setParameter("nombrePerfil", "Hostess")
                 .getResultList();
     }
+
+    @Override
+    public void refresh(Usuario usuario) {
+        em.refresh(usuario);
+    }
     
 }

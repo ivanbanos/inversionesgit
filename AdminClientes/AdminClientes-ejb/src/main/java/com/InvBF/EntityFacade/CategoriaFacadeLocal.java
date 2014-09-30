@@ -17,6 +17,8 @@ public interface CategoriaFacadeLocal {
 
     void create(Categoria categoria);
 
+    void refresh(Categoria categoria);
+
     void edit(Categoria categoria);
 
     void remove(Categoria categoria);

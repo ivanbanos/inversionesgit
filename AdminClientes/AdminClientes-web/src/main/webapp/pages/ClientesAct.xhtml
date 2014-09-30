@@ -35,7 +35,7 @@
                             <div class="col-md-8">
                                 <p:selectOneMenu id="casino" value="#{clientesActBean.elemento.idCasinoPreferencial.idCasino}"  required="true"
                                                  requiredMessage="#{label['msj.req.casino']}">
-                                    <f:selectItem itemLabel="Select One" itemValue="" />
+                                    <f:selectItem itemLabel="Seleccionar uno" itemValue="" />
                                     <f:selectItems value="#{clientesActBean.listacasinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                                 </p:selectOneMenu>
                             </div>
@@ -48,7 +48,7 @@
                             <label class="col-md-4 control-label" >#{label['tipoident']}:</label>
                             <div class="col-md-8">
                                 <p:selectOneMenu id="tipoident" value="#{clientesActBean.elemento.idTipoDocumento.idTipoDocumento}" >
-                                    <f:selectItem itemLabel="Select One" itemValue="" /> 
+                                    <f:selectItem itemLabel="Seleccionar uno" itemValue="" /> 
                                     <f:selectItems value="#{clientesActBean.tipoDocumentos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idTipoDocumento}"/>  
                                 </p:selectOneMenu>
                             </div>
@@ -105,7 +105,6 @@
                             <label class="col-md-2 control-label" >#{label['correo']}:</label>
                             <div class="col-md-6">
                                 <p:inputText style="width: 100%;" id="correo" value="#{clientesActBean.elemento.correo}"  size="40"
-                                             requiredMessage="Por favor introducir el correo electronico"
                                              validatorMessage="#{label['msj.invalid.correo']}">
                                     <f:validateRegex
                                         pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -129,7 +128,7 @@
                             <label class="col-md-4 control-label" >#{label['genero']}:</label>
                             <div class="col-md-8">
                                 <p:selectOneMenu id="genero" value="#{clientesActBean.elemento.genero}" >
-                                    <f:selectItem itemLabel="Select One" itemValue="" />  
+                                    <f:selectItem itemLabel="Seleccionar uno" itemValue="" />  
                                     <f:selectItem itemLabel="Masculino" itemValue="M" />  
                                     <f:selectItem itemLabel="Femenino" itemValue="F" />  
                                 </p:selectOneMenu>

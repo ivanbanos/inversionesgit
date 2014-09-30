@@ -26,5 +26,10 @@ public class ListasclientestareasFacade extends AbstractFacade<Listasclientestar
     public ListasclientestareasFacade() {
         super(Listasclientestareas.class);
     }
+
+    @Override
+    public void refresh(Listasclientestareas listasclientestareas) {
+        em.refresh(listasclientestareas);
+    }
     
 }

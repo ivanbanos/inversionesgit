@@ -17,6 +17,8 @@ public interface PerfilFacadeLocal {
 
     void create(Perfil perfil);
 
+    void refresh(Perfil perfil);
+
     void edit(Perfil perfil);
 
     void remove(Perfil perfil);

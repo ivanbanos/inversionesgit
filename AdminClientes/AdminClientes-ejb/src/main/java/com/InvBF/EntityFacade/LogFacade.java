@@ -26,5 +26,10 @@ public class LogFacade extends AbstractFacade<Log> implements LogFacadeLocal {
     public LogFacade() {
         super(Log.class);
     }
+
+    @Override
+    public void refresh(Log log) {
+        em.refresh(log);
+    }
     
 }

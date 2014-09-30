@@ -17,6 +17,8 @@ public interface UsuarioFacadeLocal {
 
     void create(Usuario usuario);
 
+    void refresh(Usuario usuario);
+
     void edit(Usuario usuario);
 
     void remove(Usuario usuario);

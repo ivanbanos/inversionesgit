@@ -14,55 +14,101 @@
 
                 <div class="panel-heading"><h4>Tarea</h4></div>
                 <div class="panel-body">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
+                        <div class="col-md-12">
 
-                        <b><label class="col-md-3 control-label" >#{label['nombre']}:</label></b>
-                        <div class="col-md-9">
-                            <h:outputText id="nombre" value="#{reporteTareaEspesificaBean.elemento.nombre}" />
+                            <b><label class="col-md-3 control-label" >#{label['nombre']}:</label></b>
+                            <div class="col-md-9">
+                                <h:outputText id="nombre" value="#{reporteTareaEspesificaBean.elemento.nombre}" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="col-md-3 control-label" >#{label['estado']}:</label>
+                            <div class="col-md-3">
+                                <h:outputText id="estado" value="#{reporteTareaEspesificaBean.elemento.estado}" />
+                            </div>
+
+                            <b><label class="col-md-3 control-label" >#{label['tipotarea']}:</label></b>
+                            <div class="col-md-3">
+                                <h:outputText id="tipo" value="#{reporteTareaEspesificaBean.elemento.tipo.nombre}" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <b><label class="col-md-3 control-label" >#{label['fechainicio']}:</label></b>
+                            <div class="col-md-3">
+                                <h:outputText id="fecini" value="#{reporteTareaEspesificaBean.elemento.fechaInicio}" >
+                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                </h:outputText>
+                            </div>
+
+                            <b><label class="col-md-3 control-label" >#{label['fechafinal']}:</label></b>
+                            <div class="col-md-3">
+                                <h:outputText id="fecfin" value="#{reporteTareaEspesificaBean.elemento.fechaFinalizacion}"  >
+                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                </h:outputText>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <b><label class="col-md-3 control-label" >#{label['descripcion']}:</label></b>
+                            <div class="col-md-9">
+                                <h:outputText id="descripcion" value="#{reporteTareaEspesificaBean.elemento.descripcion}" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <b><label class="col-md-3 control-label" >#{label['speech']}:</label></b>
+                            <div class="col-md-9">
+                                <h:outputText id="speech" value="#{reporteTareaEspesificaBean.elemento.speech}" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <label class="col-md-3 control-label" >#{label['estado']}:</label>
-                        <div class="col-md-3">
-                            <h:outputText id="estado" value="#{reporteTareaEspesificaBean.elemento.estado}" />
-                        </div>
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">#{label['ResultadosdelaTarea']}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row clearfix">
+                                        <b><label class="col-md-3 control-label" >#{label['totalclientes']}:</label></b>
+                                        <div class="col-md-9">
+                                            <h:outputText id="totalclientes" value="#{reporteTareaEspesificaBean.totalClientes}" />
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <b><label class="col-md-3 control-label" >#{label['totalrevisados']}:</label></b>
+                                        <div class="col-md-9">
+                                            <h:outputText id="totalrevisados" value="#{reporteTareaEspesificaBean.totalRevisados}" />
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <b><label class="col-md-12 control-label" >#{label['hostesstabla']}:</label></b>
+                                        <div class="col-md-12">
+                                            <p:dataList value="#{reporteTareaEspesificaBean.hostessConteo}" var="hostess" emptyMessage="Aun no se ha trabajado en la tarea">
+                                                <b>#{hostess.nombre}</b>:&nbsp;#{hostess.cantidad} 
+                                            </p:dataList>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <b><label class="col-md-12 control-label" >#{label['accionestabla']}:</label></b>
+                                        <div class="col-md-12">
+                                            <p:dataList value="#{reporteTareaEspesificaBean.accionesConteo}" var="accion" emptyMessage="Aun no se ha trabajado en la tarea">
+                                                <b>#{accion.nombre}</b>:&nbsp;#{accion.cantidad} 
+                                            </p:dataList>
+                                        </div>
+                                    </div>
 
-                        <b><label class="col-md-3 control-label" >#{label['tipotarea']}:</label></b>
-                        <div class="col-md-3">
-                            <h:outputText id="tipo" value="#{reporteTareaEspesificaBean.elemento.tipo.nombre}" />
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <b><label class="col-md-3 control-label" >#{label['fechainicio']}:</label></b>
-                        <div class="col-md-3">
-                            <h:outputText id="fecini" value="#{reporteTareaEspesificaBean.elemento.fechaInicio}" >
-                                <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
-                            </h:outputText>
-                        </div>
 
-                        <b><label class="col-md-3 control-label" >#{label['fechafinal']}:</label></b>
-                        <div class="col-md-3">
-                            <h:outputText id="fecfin" value="#{reporteTareaEspesificaBean.elemento.fechaFinalizacion}"  >
-                                <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
-                            </h:outputText>
-                        </div>
 
-                    </div>
-                    <div class="col-md-12">
-                        <b><label class="col-md-3 control-label" >#{label['descripcion']}:</label></b>
-                        <div class="col-md-9">
-                            <h:outputText id="descripcion" value="#{reporteTareaEspesificaBean.elemento.descripcion}" />
-                        </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <b><label class="col-md-3 control-label" >#{label['speech']}:</label></b>
-                        <div class="col-md-9">
-                            <h:outputText id="speech" value="#{reporteTareaEspesificaBean.elemento.speech}" />
-                        </div>
-                    </div>
 
-                    <b><label class="col-md-12 control-label" >#{label['clientes']}</label></b>
+                    <b><label class="col-md-12 control-label" >#{label['clientes']}:</label></b>
                     <div class="col-md-12">
                         <p:dataTable id="detailsTableClientes" var="element" value="#{reporteTareaEspesificaBean.elemento.listasclientestareasList}"  
                                      emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" 
@@ -83,11 +129,11 @@
                             </p:column>
 
                             <p:column headerText="Accion tomada" sortBy="#{element.idAccion.nombre}" filterBy="#{element.idAccion.nombre}" filterMatchMode="in" >
-                                        <f:facet name="filter">
-                                            <p:selectCheckboxMenu label="Acciones" onchange="PF('detailsTableClientes').filter()" >
-                                                <f:selectItems value="#{reporteTareaEspesificaBean.acciones}" />
-                                            </p:selectCheckboxMenu>
-                                        </f:facet>
+                                <f:facet name="filter">
+                                    <p:selectCheckboxMenu label="Acciones" onchange="PF('detailsTableClientes').filter()" >
+                                        <f:selectItems value="#{reporteTareaEspesificaBean.acciones}" />
+                                    </p:selectCheckboxMenu>
+                                </f:facet>
                                 <h:outputText value="#{element.idAccion.nombre}" />
                             </p:column>
 

@@ -26,5 +26,10 @@ public class TipoJuegoFacade extends AbstractFacade<TipoJuego> implements TipoJu
     public TipoJuegoFacade() {
         super(TipoJuego.class);
     }
+
+    @Override
+    public void refresh(TipoJuego tipoJuego) {
+        em.refresh(tipoJuego);
+    }
     
 }

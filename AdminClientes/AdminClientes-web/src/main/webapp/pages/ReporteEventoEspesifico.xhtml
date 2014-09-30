@@ -10,6 +10,10 @@
 
     <ui:define name="content">
         <h:form>
+            
+            <ul>
+                <li>Para ver una tarea en detalle de click en el boton <span class="ui-icon ui-icon-search" style="display:inline-block;"></span>.</li>
+            </ul>
             <div class="panel panel-primary">
 
                 <div class="panel-heading"><h4>Evento</h4></div>
@@ -17,26 +21,26 @@
 
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
-                            <b><label class="col-md-3 control-label" >#{label['nombre']}:</label></b>
-                            <div class="col-md-9">
+                            <b><label class="col-md-1 control-label" >#{label['nombre']}:</label></b>
+                            <div class="col-md-11">
                                 <h:outputText id="nombre" value="#{reporteEventoEspesificoBean.elemento.nombre}" />
                             </div>
                         </div>
                     </div>
 
                     <div class="row clearfix">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
-                            <b><label class="col-md-6 control-label" >#{label['fechainicio']}:</label></b>
-                            <div class="col-md-6">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-4 control-label" >#{label['fechainicio']}:</label></b>
+                            <div class="col-md-8">
                                 <h:outputText id="fecini" value="#{reporteEventoEspesificoBean.elemento.fechaInicio}" >
                                     <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
                                 </h:outputText>
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
-                            <b><label class="col-md-6 control-label" >#{label['fechafinal']}:</label></b>
-                            <div class="col-md-6">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-4 control-label" >#{label['fechafinal']}:</label></b>
+                            <div class="col-md-8">
                                 <h:outputText id="fecfin" value="#{reporteEventoEspesificoBean.elemento.fechaFinal}"  >
                                     <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
                                 </h:outputText>
@@ -46,8 +50,8 @@
 
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
-                            <b><label class="col-md-3 control-label" >#{label['descripcion']}:</label></b>
-                            <div class="col-md-9">
+                            <b><label class="col-md-1 control-label" >#{label['descripcion']}:</label></b>
+                            <div class="col-md-11">
                                 <h:outputText id="descripcion" value="#{reporteEventoEspesificoBean.elemento.decripcion}" />
                             </div>
                         </div>
@@ -55,8 +59,8 @@
 
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
-                            <b><label class="col-md-3 control-label" >#{label['casino']}:</label></b>
-                            <div class="col-md-9">
+                            <b><label class="col-md-1 control-label" >#{label['casino']}:</label></b>
+                            <div class="col-md-11">
                                 <h:outputText id="casino" value="#{reporteEventoEspesificoBean.elemento.idCasino.nombre}" />
                             </div>
                         </div>
@@ -64,7 +68,7 @@
 
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
-                            <b><label class="col-md-12 control-label" >#{label['Tareas']}:</label></b>
+                            <b><label class="col-md-12 control-label" >#{label['Tareasevento']}:</label></b>
                             <div class="col-md-12">
                                 <p:dataTable id="detailsTableCasinos" var="element" value="#{reporteEventoEspesificoBean.elemento.tareasList}"  
                                              emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableCasinos"
@@ -75,6 +79,12 @@
 
                                     <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
                                         <h:outputText value="#{element.nombre}" />
+                                    </p:column>
+                                    <p:column headerText="Fecha de incio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains">
+                                        <h:outputText value="#{element.fechaInicio}" ><f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" /></h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Fecha de finalizaci&oacute;n" sortBy="#{element.fechaFinalizacion}" filterBy="#{element.fechaFinalizacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{element.fechaFinalizacion}" ><f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" /></h:outputText>
                                     </p:column>
 
 

@@ -10,6 +10,11 @@
 
     <ui:define name="content">
         <h:form>
+            <ul>
+                <li>Para crear tarea de click en el boton crear debajo de la tabla.</li>
+                <li>Para editar una tarea de click en el boton <span class="ui-icon ui-icon-pencil" style="display:inline-block;"></span>.</li>
+                <li>Para eliminar una tarea de click en el boton <span class="ui-icon ui-icon-trash" style="display:inline-block;"></span>.</li>
+            </ul>
             <div class="container">
 
 
@@ -77,7 +82,7 @@
                                             </p:commandButton> 
                                         </p:column>
 
-                                        <f:facet name="footer">  
+                                        <f:facet name="footer"> 
                                             
                                             <p:commandButton id="addButton" icon="ui-icon-plusthick" value="#{label['lb_btn.agregar']}"
                                                              title="#{label['lb_btn.Go']}" action="#{crudTareasBean.goTareaMarketing(0)}"

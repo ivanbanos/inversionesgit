@@ -53,5 +53,10 @@ public class ClienteatributoFacade extends AbstractFacade<Clienteatributo> imple
             return clientesatributos;
         }
     }
+
+    @Override
+    public void refresh(Clienteatributo clienteatributo) {
+        em.refresh(clienteatributo);
+    }
     
 }

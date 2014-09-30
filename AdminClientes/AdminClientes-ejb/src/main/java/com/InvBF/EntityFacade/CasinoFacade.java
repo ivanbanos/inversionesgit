@@ -26,5 +26,10 @@ public class CasinoFacade extends AbstractFacade<Casino> implements CasinoFacade
     public CasinoFacade() {
         super(Casino.class);
     }
+
+    @Override
+    public void refresh(Casino casino) {
+        em.refresh(casino);
+    }
     
 }

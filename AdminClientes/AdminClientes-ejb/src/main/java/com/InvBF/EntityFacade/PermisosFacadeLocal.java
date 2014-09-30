@@ -18,6 +18,8 @@ public interface PermisosFacadeLocal {
 
     void create(Permiso perfil);
 
+    void refresh(Permiso perfil);
+
     void edit(Permiso perfil);
 
     void remove(Permiso perfil);

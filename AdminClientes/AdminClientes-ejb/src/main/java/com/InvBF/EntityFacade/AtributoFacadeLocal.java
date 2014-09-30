@@ -4,6 +4,7 @@
  */
 package com.InvBF.EntityFacade;
 
+import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Atributo;
 import java.util.List;
 import javax.ejb.Local;
@@ -16,7 +17,9 @@ import javax.ejb.Local;
 public interface AtributoFacadeLocal {
 
     void create(Atributo atributo);
-
+    
+    void refresh(Atributo atributo);
+    
     void edit(Atributo atributo);
 
     void remove(Atributo atributo);

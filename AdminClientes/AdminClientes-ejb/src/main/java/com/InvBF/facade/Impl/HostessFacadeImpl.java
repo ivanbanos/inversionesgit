@@ -10,6 +10,7 @@ import com.InvBF.EntityFacade.EventoFacadeLocal;
 import com.InvBF.EntityFacade.ListasclientestareasFacadeLocal;
 import com.InvBF.EntityFacade.TareasFacadeLocal;
 import com.InvBF.EntityFacade.TipostareasFacadeLocal;
+import com.InvBF.util.DBConnection;
 import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Listasclientestareas;
 import com.invbf.adminclientesapi.entity.Tarea;
@@ -17,10 +18,14 @@ import com.invbf.adminclientesapi.entity.Tipotarea;
 import com.invbf.adminclientesapi.entity.Usuario;
 import com.invbf.adminclientesapi.exceptions.EventoSinClientesPorRevisarException;
 import com.invbf.adminclientesapi.facade.HostessFacade;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -43,6 +48,8 @@ public class HostessFacadeImpl implements HostessFacade {
     TipostareasFacadeLocal tipostareasFacadeLocal;
     @EJB
     ListasclientestareasFacadeLocal listasclientestareasFacadeLocal;
+    @EJB
+    private DBConnection dbConnection;
 
     @Override
     public int findCantidadClientes() {
@@ -66,7 +73,7 @@ public class HostessFacadeImpl implements HostessFacade {
     }
 
     @Override
-    public List<Listasclientestareas> findClienteTareaHostess(Integer integer)throws EventoSinClientesPorRevisarException {
+    public List<Listasclientestareas> findClienteTareaHostess(Integer integer) throws EventoSinClientesPorRevisarException {
         Tarea evento = tareasFacadeLocal.find(integer);
         List<Listasclientestareas> clientes = evento.getListasclientestareasList();
         List<Listasclientestareas> clientesAEnviar = new ArrayList<>();
@@ -101,6 +108,32 @@ public class HostessFacadeImpl implements HostessFacade {
     public void guardarLCE(Listasclientestareas l) {
         l.setIdAccion(accionFacadeLocal.find(l.getIdAccion().getIdAccion()));
         listasclientestareasFacadeLocal.edit(l);
+        PreparedStatement st = null;
+        try {
+            Connection connection = dbConnection.getConnection();
+            if (connection != null) {
+                String query = "UPDATE listasclientestareas SET fechaAtencion=NOW() WHERE idCliente=? AND idTarea=?;";
+                st = dbConnection.getConnection().prepareStatement(query);
+                st.setInt(1, l.getListasclientestareasPK().getIdCliente());
+                st.setInt(2, l.getListasclientestareasPK().getIdTarea());
+                st.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HostessFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                dbConnection.shutdown();
+                if (st != null) {
+                    st.close();
+                }
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+       
+        
+        listasclientestareasFacadeLocal.refresh(l);
+        listasclientestareasFacadeLocal.edit(l);
     }
 
     @Override
@@ -125,7 +158,7 @@ public class HostessFacadeImpl implements HostessFacade {
 
     @Override
     public Tipotarea findByNombreTipoTarea(String emaiL) {
-        
+
         return tipostareasFacadeLocal.findBynombre("EMAIL");
     }
 }

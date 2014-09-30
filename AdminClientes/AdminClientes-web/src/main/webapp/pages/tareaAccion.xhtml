@@ -10,6 +10,7 @@
 
     <ui:define name="content">
         <h:form>
+            * #{label['mensaje.camporequerido']}
             <div class="panel panel-primary">
 
                 <div class="panel-heading"><h4>Tarea</h4></div>
@@ -80,10 +81,10 @@
 
                     <div class="row clearfix">
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['tipotarea']}</label>
+                            <label class="col-md-4 control-label" >* #{label['tipotarea']}:</label>
                             <div class="col-md-8">
                                 <p:selectOneMenu id="tipo" value="#{tareaAccionBean.elemento.tipo.idTipotarea}" required="true" requiredMessage="#{label['msj.req.tipotarea']}">
-                                    <f:selectItem itemLabel="Select One" itemValue="" />
+                                    <f:selectItem itemLabel="Seleccionar uno" itemValue="" />
                                     <f:selectItems value="#{tareaAccionBean.tipotareas}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idTipotarea}"/> 
                                 </p:selectOneMenu>
                             </div>
@@ -92,7 +93,7 @@
 
                     <div class="row clearfix">
                         <div class="form-group col-md-12">
-                            <label class="col-md-2 control-label" >#{label['nombre']}</label>
+                            <label class="col-md-2 control-label" >* #{label['nombre']}:</label>
                             <div class="col-md-6">
                                 <p:inputText id="nombreEventos" style="width: 100%;" value="#{tareaAccionBean.elemento.nombre}" required="true" requiredMessage="#{label['msj.req.nombres']}"/>
                             </div>
@@ -100,14 +101,14 @@
                     </div>
                     <div class="row clearfix">
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['fechainicio']}</label>
+                            <label class="col-md-4 control-label" >* #{label['fechainicio']}:</label>
                             <div class="col-md-8">
                                 <p:calendar pattern="dd/MMMM/yyyy HH:mm:ss" id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" locale="es" required="true"/>
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label class="col-md-4 control-label" >#{label['fechafinal']}</label>
+                            <label class="col-md-4 control-label" >* #{label['fechafinal']}:</label>
                             <div class="col-md-8">
                                 <p:calendar pattern="dd/MMMM/yyyy HH:mm:ss" id="fecfinEventos" value="#{tareaAccionBean.elemento.fechaFinalizacion}" locale="es" required="true"/>
                             </div>
@@ -115,7 +116,7 @@
                     </div>
                     <div class="row clearfix">
                         <div class="form-group col-md-12">
-                            <label class="col-md-2 control-label" >#{label['descripcion']}</label>
+                            <label class="col-md-2 control-label" >#{label['descripcion']}:</label>
                             <div class="col-md-6">
                                 <p:inputTextarea id="descripcionEventos" style="width: 100%;" value="#{tareaAccionBean.elemento.descripcion}"/>
                             </div>
@@ -123,7 +124,7 @@
                     </div>
                     <div class="row clearfix">
                         <div class="form-group col-md-12">
-                            <label class="col-md-2 control-label" >#{label['speech']}</label>
+                            <label class="col-md-2 control-label" >#{label['speech']}:</label>
                             <div class="col-md-6">
                                 <p:inputTextarea id="speechTarea" style="width: 100%;" value="#{tareaAccionBean.elemento.speech}"/>
                             </div>
@@ -138,17 +139,17 @@
                                     <div class="panel-heading">
                                         #{label['categorias']}
                                     </div>
-                                    <div class="panel-body">
-                                        <ul>
+                                    <div id="categoriasList" class="panel-body">
+                                        <ul >
                                             <li>
-                                                <p:selectBooleanCheckbox value="#{tareaAccionBean.todoscat}">
-                                                </p:selectBooleanCheckbox>
+                                                <h:selectBooleanCheckbox value="#{tareaAccionBean.todoscat}">
+                                                </h:selectBooleanCheckbox>
                                                 <label>Todos</label>
                                             </li>
 
                                             <c:forEach var="itemcat" items="#{tareaAccionBean.categoriasBoolean}">
                                                 <li>
-                                                    <p:selectBooleanCheckbox value="#{itemcat.selected}"/>&nbsp;
+                                                    <h:selectBooleanCheckbox  class="checkbox" value="#{itemcat.selected}" />&nbsp;
                                                     <label>#{itemcat.categoria.nombre}</label>
                                                 </li>
                                             </c:forEach>
@@ -186,7 +187,7 @@
                     <c:if test="#{tareaAccionBean.elemento.tipo.nombre ne 'EMAIL'}">
                         <div class="row clearfix">
                             <div class="form-group col-md-12">
-                                <label class="col-md-2 control-label" >#{label['usuarios']}</label>
+                                <label class="col-md-2 control-label" >#{label['usuarios']}:</label>
                                 <div class="col-md-10">
                                     <p:pickList id="PojoPickList2" value="#{tareaAccionBean.todosusuarioses}" var="form2" effect="bounce"
                                                 itemValue="#{form2}" itemLabel="#{form2.nombreUsuario}"  showCheckbox="true"

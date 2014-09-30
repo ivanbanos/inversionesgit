@@ -10,10 +10,12 @@ import com.invbf.adminclientesapi.entity.Casino;
 import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Listasclientestareas;
 import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.TipoDocumento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
 import com.invbf.adminclientesapi.entity.Tipotarea;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -95,5 +97,9 @@ public interface MarketingUserFacade {
     public void deleteTipoDocumentos(TipoDocumento elemento);
 
     public String findNombreAccion(Integer idAccion);
+
+    public Accion findAccion(Integer accion);
+
+    public Date getLCTFecha(Listasclientestareas lct);
 
 }

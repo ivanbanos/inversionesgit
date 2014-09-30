@@ -17,6 +17,8 @@ public interface ClienteFacadeLocal {
 
     void create(Cliente cliente);
 
+    void refresh(Cliente cliente);
+
     void edit(Cliente cliente);
 
     void remove(Cliente cliente);

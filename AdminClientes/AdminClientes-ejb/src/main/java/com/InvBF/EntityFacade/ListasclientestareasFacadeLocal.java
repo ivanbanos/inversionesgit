@@ -16,6 +16,8 @@ import javax.ejb.Local;
 public interface ListasclientestareasFacadeLocal {
 
     void create(Listasclientestareas listasclientestareas);
+    
+    void refresh(Listasclientestareas listasclientestareas);
 
     void edit(Listasclientestareas listasclientestareas);
 

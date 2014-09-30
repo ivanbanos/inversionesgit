@@ -16,6 +16,7 @@ import com.InvBF.EntityFacade.TipoDocumentoFacadeLocal;
 import com.InvBF.EntityFacade.TipoJuegoFacadeLocal;
 import com.InvBF.EntityFacade.TipostareasFacadeLocal;
 import com.InvBF.EntityFacade.UsuarioFacadeLocal;
+import com.InvBF.util.DBConnection;
 import com.invbf.adminclientesapi.entity.Accion;
 import com.invbf.adminclientesapi.entity.Atributo;
 import com.invbf.adminclientesapi.entity.Casino;
@@ -23,6 +24,7 @@ import com.invbf.adminclientesapi.entity.Categoria;
 import com.invbf.adminclientesapi.entity.Cliente;
 import com.invbf.adminclientesapi.entity.Clienteatributo;
 import com.invbf.adminclientesapi.entity.Evento;
+import com.invbf.adminclientesapi.entity.Listasclientestareas;
 import com.invbf.adminclientesapi.entity.Tarea;
 import com.invbf.adminclientesapi.entity.TipoDocumento;
 import com.invbf.adminclientesapi.entity.TipoJuego;
@@ -34,7 +36,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -73,6 +81,8 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     UsuarioFacadeLocal usuarioFacadeLocal;
     @EJB
     TipoDocumentoFacadeLocal tipoDocumentoFacadeLocal;
+    @EJB
+    private DBConnection dbConnection;
 
     @Override
     public List<Cliente> findAllClientes() {
@@ -372,7 +382,8 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
 
     @Override
     public Tarea findTarea(Integer integer) {
-        return tareasFacadeLocal.find(integer);
+        Tarea tarea = tareasFacadeLocal.find(integer);
+        return tarea;
     }
 
     @Override
@@ -405,5 +416,45 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         } else {
             return a.getNombre();
         }
+    }
+
+    @Override
+    public Accion findAccion(Integer accion) {
+        return accionFacadeLocal.find(accion);
+    }
+
+    @Override
+    public Date getLCTFecha(Listasclientestareas lct) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Date fechaAtencion = null;
+        try {
+            Connection connection = dbConnection.getConnection();
+            if (connection != null) {
+                String query = "SELECT fechaAtencion FROM listasclientestareas WHERE idCliente=? AND idTarea=?;";
+                st = dbConnection.getConnection().prepareStatement(query);
+                st.setInt(1, lct.getListasclientestareasPK().getIdCliente());
+                st.setInt(2, lct.getListasclientestareasPK().getIdTarea());
+                rs = st.executeQuery();
+                if (rs.next()) {
+                    Calendar cal1 = Calendar.getInstance();
+                    cal1.setTime(rs.getTimestamp("fechaAtencion"));
+                    cal1.set(Calendar.HOUR, cal1.get(Calendar.HOUR)-5);
+                    fechaAtencion = cal1.getTime();
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HostessFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                dbConnection.shutdown();
+                if (st != null) {
+                    st.close();
+                }
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return fechaAtencion;
     }
 }

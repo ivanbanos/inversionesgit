@@ -17,6 +17,8 @@ public interface TipostareasFacadeLocal {
 
     void create(Tipotarea tipostareas);
 
+    void refresh(Tipotarea tipostareas);
+
     void edit(Tipotarea tipostareas);
 
     void remove(Tipotarea tipostareas);

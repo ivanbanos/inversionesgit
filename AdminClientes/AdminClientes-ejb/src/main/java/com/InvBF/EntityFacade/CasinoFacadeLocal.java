@@ -17,6 +17,8 @@ public interface CasinoFacadeLocal {
 
     void create(Casino casino);
 
+    void refresh(Casino casino);
+
     void edit(Casino casino);
 
     void remove(Casino casino);

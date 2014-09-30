@@ -18,6 +18,8 @@ public interface TareasFacadeLocal {
 
     void create(Tarea tareas);
 
+    void refresh(Tarea tareas);
+
     void edit(Tarea tareas);
 
     void remove(Tarea tareas);

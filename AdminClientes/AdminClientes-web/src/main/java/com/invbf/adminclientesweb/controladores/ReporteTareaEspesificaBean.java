@@ -31,8 +31,7 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class ReporteTareaEspesificaBean {
 
-    private static final Logger LOGGER
-            = Logger.getLogger(SessionBean.class);
+    private static final Logger LOGGER = Logger.getLogger(SessionBean.class);
     @EJB
     MarketingUserFacade marketingUserFacade;
     @EJB
@@ -87,21 +86,28 @@ public class ReporteTareaEspesificaBean {
         hostessConteo = new ArrayList<AccionConteo>();
         totalClientes = 0;
         totalRevisados = 0;
+        for (Usuario u : elemento.getUsuarioList()) {
+            hostessConteo.add(new AccionConteo(u.getNombreUsuario(), 0));
+        }
+        for (Accion a : elemento.getTipo().getAccionList()) {
+            accionesConteo.add(new AccionConteo(a.getNombre(), 0));
+        }
         for (Listasclientestareas lct : elemento.getListasclientestareasList()) {
+            lct.setFechaAtencion(marketingUserFacade.getLCTFecha(lct));
             totalClientes++;
             if (!lct.getIdAccion().getNombre().equals("INICIAL")) {
                 totalRevisados++;
-                if(accionesConteo.contains(new AccionConteo(lct.getIdAccion().getNombre(),0))){
-                    AccionConteo ac = accionesConteo.get(accionesConteo.indexOf(new AccionConteo(lct.getIdAccion().getNombre(),0)));
-                    ac.setCantidad(ac.getCantidad()+1);
+                if (accionesConteo.contains(new AccionConteo(lct.getIdAccion().getNombre(), 0))) {
+                    AccionConteo ac = accionesConteo.get(accionesConteo.indexOf(new AccionConteo(lct.getIdAccion().getNombre(), 0)));
+                    ac.setCantidad(ac.getCantidad() + 1);
                 } else {
                     accionesConteo.add(new AccionConteo(lct.getIdAccion().getNombre(), 1));
                 }
-                if(accionesConteo.contains(new AccionConteo(lct.getUsuario().getNombreUsuario(),0))){
-                    AccionConteo ac = accionesConteo.get(accionesConteo.indexOf(new AccionConteo(lct.getUsuario().getNombreUsuario(),0)));
-                    ac.setCantidad(ac.getCantidad()+1);
+                if (hostessConteo.contains(new AccionConteo(lct.getUsuario().getNombreUsuario(), 0))) {
+                    AccionConteo ac = hostessConteo.get(hostessConteo.indexOf(new AccionConteo(lct.getUsuario().getNombreUsuario(), 0)));
+                    ac.setCantidad(ac.getCantidad() + 1);
                 } else {
-                    accionesConteo.add(new AccionConteo(lct.getUsuario().getNombreUsuario(), 1));
+                    hostessConteo.add(new AccionConteo(lct.getUsuario().getNombreUsuario(), 1));
                 }
             }
         }
@@ -170,5 +176,4 @@ public class ReporteTareaEspesificaBean {
     public void setTotalRevisados(long totalRevisados) {
         this.totalRevisados = totalRevisados;
     }
-
 }

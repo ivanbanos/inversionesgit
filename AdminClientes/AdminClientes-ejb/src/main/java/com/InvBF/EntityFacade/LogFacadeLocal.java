@@ -17,6 +17,8 @@ public interface LogFacadeLocal {
 
     void create(Log log);
 
+    void refresh(Log log);
+
     void edit(Log log);
 
     void remove(Log log);

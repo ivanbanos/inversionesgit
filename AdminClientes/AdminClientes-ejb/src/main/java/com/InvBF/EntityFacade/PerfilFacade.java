@@ -39,5 +39,10 @@ public class PerfilFacade extends AbstractFacade<Perfil> implements PerfilFacade
             return perfiles.get(0);
         }
     }
+
+    @Override
+    public void refresh(Perfil perfil) {
+        em.refresh(perfil);
+    }
     
 }
