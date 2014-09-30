@@ -51,7 +51,9 @@ public class ReportesClientesBean {
     private String ciudad;
     private List<CasinoBoolean> casinoBooleans;
     private List<TipoJuegoBoolean> juegoBooleans;
+    private List<CategoriaBoolean> categoriaBooleans;
     private boolean todoscasinos;
+    private boolean todosCat;
     private boolean todostip;
 
     public void setSessionBean(SessionBean sessionBean) {
@@ -97,13 +99,18 @@ public class ReportesClientesBean {
 
         List<Casino> casinos = marketingUserFacade.findAllCasinos();
         List<TipoJuego> tipoJuegos = marketingUserFacade.findAllTiposjuegos();
+        List<Categoria> categorias = marketingUserFacade.findAllCategorias();
         juegoBooleans = new ArrayList<TipoJuegoBoolean>();
         casinoBooleans = new ArrayList<CasinoBoolean>();
+        categoriaBooleans = new ArrayList<CategoriaBoolean>();
         for (TipoJuego tipoJuego : tipoJuegos) {
             juegoBooleans.add(new TipoJuegoBoolean(tipoJuego, false));
         }
         for (Casino casinob : casinos) {
             casinoBooleans.add(new CasinoBoolean(casinob, false));
+        }
+        for (Categoria categoria : categorias) {
+            categoriaBooleans.add(new CategoriaBoolean(categoria, false));
         }
     }
 
@@ -209,8 +216,19 @@ public class ReportesClientesBean {
 
         boolean noCatselected = true;
         boolean noTipselected = true;
+        boolean noCasselected = true;
         for (CasinoBoolean cb : casinoBooleans) {
             if (todoscasinos) {
+                cb.setSelected(true);
+                continue;
+            }
+            if (cb.isSelected()) {
+                noCasselected = false;
+                break;
+            }
+        }
+        for (CategoriaBoolean cb : categoriaBooleans) {
+            if (todosCat) {
                 cb.setSelected(true);
                 continue;
             }
@@ -235,12 +253,25 @@ public class ReportesClientesBean {
 
             boolean siCategoria = false;
             boolean siTipoJuego = false;
-            if (noCatselected) {
-                siCategoria = true;
+            boolean siCasino = false;
+            if (noCasselected) {
+                siCasino = true;
             } else {
                 for (CasinoBoolean cb : casinoBooleans) {
                     if (cb.isSelected()) {
                         if (cliente.getIdCasinoPreferencial().equals(cb.getCasino())) {
+                            siCasino = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (noCatselected) {
+                siCategoria = true;
+            } else {
+                for (CategoriaBoolean cb : categoriaBooleans) {
+                    if (cb.isSelected()) {
+                        if (cliente.getIdCategorias().equals(cb.getCategoria())) {
                             siCategoria = true;
                             break;
                         }
@@ -266,6 +297,9 @@ public class ReportesClientesBean {
                 it.remove();
             }
             if (!siTipoJuego) {
+                it.remove();
+            }
+            if (!siCasino) {
                 it.remove();
             }
             if (ciudad != null && !ciudad.equals("")) {
@@ -313,5 +347,21 @@ public class ReportesClientesBean {
 
     public void setTodostip(boolean todostip) {
         this.todostip = todostip;
+    }
+
+    public List<CategoriaBoolean> getCategoriaBooleans() {
+        return categoriaBooleans;
+    }
+
+    public void setCategoriaBooleans(List<CategoriaBoolean> categoriaBooleans) {
+        this.categoriaBooleans = categoriaBooleans;
+    }
+
+    public boolean isTodosCat() {
+        return todosCat;
+    }
+
+    public void setTodosCat(boolean todosCat) {
+        this.todosCat = todosCat;
     }
 }

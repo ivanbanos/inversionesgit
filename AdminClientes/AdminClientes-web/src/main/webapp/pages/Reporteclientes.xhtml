@@ -38,7 +38,31 @@
                                 </div>
                                 <div id="clientes" class="row clearfix">
                                     <div class="form-group col-md-12">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-primary">
+
+                                                <div class="panel-heading">
+                                                    #{label['categorias']}
+                                                </div>
+                                                <div class="panel-body">
+                                                    <ul>
+                                                        <li>
+                                                            <p:selectBooleanCheckbox value="#{reportesClientesBean.todosCat}">
+                                                            </p:selectBooleanCheckbox>
+                                                            <label>Todos</label>
+                                                        </li>
+
+                                                        <c:forEach var="itemcat" items="#{reportesClientesBean.categoriaBooleans}">
+                                                            <li>
+                                                                <p:selectBooleanCheckbox value="#{itemcat.selected}"/>&nbsp;
+                                                                <label>#{itemcat.categoria.nombre}</label>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="panel panel-primary">
 
                                                 <div class="panel-heading">
@@ -52,17 +76,17 @@
                                                             <label>Todos</label>
                                                         </li>
 
-                                                        <c:forEach var="itemcat" items="#{reportesClientesBean.casinoBooleans}">
+                                                        <c:forEach var="itemcas" items="#{reportesClientesBean.casinoBooleans}">
                                                             <li>
-                                                                <p:selectBooleanCheckbox value="#{itemcat.selected}"/>&nbsp;
-                                                                <label>#{itemcat.casino.nombre}</label>
+                                                                <p:selectBooleanCheckbox value="#{itemcas.selected}"/>&nbsp;
+                                                                <label>#{itemcas.casino.nombre}</label>
                                                             </li>
                                                         </c:forEach>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="panel panel-primary">
 
                                                 <div class="panel-heading">#{label['tipojuegos']}</div>
