@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+
+                    <!--Usuarios-->
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="clickable">
+                                    <h3 class="panel-title">Usuarios</h3>
+                                    <span class="pull-right"><i class="fa fa-minus"></i></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableUsuarios" var="element" value="#{crudUsuariosBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableUsuarios" filteredValue="#{crudUsuariosBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <f:facet name="header">
+
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombreUsuario}" filterBy="#{element.nombreUsuario}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombreUsuario}" />
+                                        </p:column>
+
+                                        <p:column headerText="Perfil" sortBy="#{element.idPerfil.nombre}" filterBy="#{element.idPerfil.nombre}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Perfiles" onchange="PF('detailsTableUsuarios').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.perfiles}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{element.idPerfil.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombreUsuario}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:commandButton id="editButton" update=":#{p:component('editDialogUsuarios')}" 
+                                                             oncomplete="PF('editDialogUsuarios').show()" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Usuarios&quot;, &quot;actualizar&quot;)}">  
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudUsuariosBean.elemento}" />  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogUsuarios').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogUsuarios')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Usuarios&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudUsuariosBean.elemento}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer">  
+                                            <p:commandButton id="addButton" oncomplete="PF('addDialogUsuarios').show();" 
+                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregarUsuarios']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Usuarios&quot;, &quot;crear&quot;)}"/>  
+                                        </f:facet>
+                                    </p:dataTable>
+
+                                </h:form>
+                            </div>
+                        </div>
+                        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                            <p:dialog id="addDialogUsuarios" header="Agregar" widgetVar="addDialogUsuarios" modal="true" closable="false" resizable="false" >
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="nombreusuario" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['contrasena']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputSecret id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['repetir']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputSecret id="pwd2Usuarios" value="#{crudUsuariosBean.contrasena}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['perfil']}</label>
+                                                    <div class="col-md-9">
+                                                        <p:selectOneMenu id="perfilUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
+                                                            <f:selectItem itemLabel="Select One" itemValue="" />
+                                                            <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                        <p:commandButton value="Confirmar" actionListener="#{crudUsuariosBean.guardar()}" 
+                                                         oncomplete="PF('addDialogUsuarios').hide()" icon="ui-icon-check" 
+                                                         update=":#{p:component('detailsTableUsuarios')} :#{p:component('addDialogUsuarios')} :#{p:component('messages')}" style="margin:0" />   
+                                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogUsuarios').hide()" update=":#{p:component('addDialogUsuarios')}" icon="ui-icon-closethick"/>  
+                                    </div>
+                                </div>
+                            </p:dialog> 
+                        </h:form>
+
+                        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                            <p:dialog id="editDialogUsuarios" header="Editar" widgetVar="editDialogUsuarios" modal="true" closable="false" resizable="false"> 
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="nombreusuario" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['contrasena']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputSecret id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['repetir']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputSecret id="pwd2Usuarios" value="#{crudUsuariosBean.contrasena}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['perfil']}</label>
+                                                    <div class="col-md-9">
+                                                        <p:selectOneMenu id="perfilUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
+                                                            <f:selectItem itemLabel="Select One" itemValue="" />
+                                                            <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                        <p:commandButton value="Confirmar" action="#{crudUsuariosBean.guardar()}" 
+                                                         oncomplete="PF('editDialogUsuarios').hide()" icon="ui-icon-check"
+                                                         update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}" style="margin:0"/>    
+                                        <p:commandButton value="Cerrar" oncomplete="PF('editDialogUsuarios').hide()" icon="ui-icon-closethick"/> 
+                                    </div>
+                                </div>
+                            </p:dialog>
+                        </h:form>
+                        <h:form rendered="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                            <p:confirmDialog id="deleteDialogUsuarios" message="Quiere borrar el Usuario #{crudUsuariosBean.elemento.nombreUsuario}?"  
+                                             header="Borrar" severity="alert" widgetVar="deleteDialogUsuarios" closable="false">  
+
+                                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogUsuarios').hide()"  
+                                                 action="#{crudUsuariosBean.delete()}" update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}"/>  
+                                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogUsuarios').hide()" type="button" />   
+
+                            </p:confirmDialog> 
+                        </h:form>
+                    </c:if>
+
+                    <!--Fin Usuarios-->
+
+
+
+                </div>
+
+                <div class="col-md-12 column">
+                    <!--Perfiles-->
+
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Perfiles&quot;)}">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+
+                                <div class="clickable">
+                                    <h3 class="panel-title">Perfiles</h3>
+                                    <span class="pull-right"><i class="fa fa-minus"></i></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTablePerfiles" var="element" value="#{crudPerfilesBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTablePerfiles" filteredValue="#{crudPerfilesBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <f:facet name="header">
+
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:commandButton id="editButtonPerfiles" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editarPerfiles']}" action="#{crudPerfilesBean.goPerfil(element.idPerfil)}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Perfiles&quot; , &quot;actualizar&quot;)}">   
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButtonPerfiles" oncomplete="PF('deleteDialogPerfiles').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogPerfiles')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Perfiles&quot; , &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudPerfilesBean.elemento}"  /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer">  
+                                            <p:commandButton id="addButton" oncomplete="PF('addDialogPerfiles').show();" 
+                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Perfiles&quot; , &quot;crear&quot;)}"/>  
+                                        </f:facet>
+                                    </p:dataTable>
+
+                                </h:form>
+                            </div>
+                        </div>
+                        <h:form>
+                            <p:dialog id="addDialogPerfiles" header="Agregar" widgetVar="addDialogPerfiles" modal="true" closable="false" resizable="false">
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="control-group">
+                                                <!-- Username -->
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                    <div class="col-md-9">
+                                                        <h:inputText id="codigo" value="#{crudPerfilesBean.elemento.nombre}" required="true" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                        <p:commandButton value="Confirmar" actionListener="#{crudPerfilesBean.guardar()}" 
+                                                         oncomplete="PF('addDialogPerfiles').hide()" icon="ui-icon-check" 
+                                                         update=":#{p:component('detailsTablePerfiles')} :#{p:component('addDialogPerfiles')} :#{p:component('messages')}" style="margin:0" />   
+                                        <p:commandButton value="Cerrar" oncomplete="PF('addDialogPerfiles').hide()" update=":#{p:component('addDialogPerfiles')}" icon="ui-icon-closethick"/>  
+                                    </div>
+                                </div>
+                            </p:dialog> 
+                        </h:form>
+
+                        <h:form>
+                            <p:confirmDialog id="deleteDialogPerfiles" message="Quiere borrar el perfil #{crudPerfilesBean.elemento.nombre}?"  
+                                             header="Borrar" severity="alert" widgetVar="deleteDialogPerfiles" closable="false">  
+
+                                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogPerfiles').hide()"  
+                                                 action="#{crudPerfilesBean.delete()}" update=":#{p:component('detailsTablePerfiles')} :#{p:component('messages')}"/>  
+                                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogPerfiles').hide()" type="button" />   
+
+                            </p:confirmDialog> 
+                        </h:form>
+                    </c:if>
+
+                    <!--Fin Perfiles-->
+                </div>
+            </div>
+
+
+        </div>
+    </ui:define>            
+</ui:composition>

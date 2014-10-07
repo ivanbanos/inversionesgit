@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+             <ul>
+                <li>Para crear evento de click en el boton crear debajo de la tabla.</li>
+                <li>Para editar un evento de click en el boton <span class="ui-icon ui-icon-pencil" style="display:inline-block;"></span>.</li>
+                <li>Para eliminar un evento de click en el boton <span class="ui-icon ui-icon-trash" style="display:inline-block;"></span>.</li>
+                <li>Para agregar una tarea a un evento especifico de click en el boton <span class="ui-icon ui-icon-pencil" style="display:inline-block;"></span>.</li>
+            </ul>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-12">
+
+                        <!--Eventos-->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Eventos</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableEventos" var="element" value="#{crudEventoBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{crudEventoBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <f:facet name="header">
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Fecha inicio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.fechaInicio}" >
+                                                <f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" />
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Fecha finalizaci&oacute;n" sortBy="#{element.fechaFinal}" filterBy="#{element.fechaFinal}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.fechaFinal}" >
+                                                <f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" />
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Casino" sortBy="#{element.idCasino.nombre}" filterBy="#{element.idCasino.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.idCasino.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+
+                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(element.idEvento)}"
+                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;) 
+                                                                         or sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;actualizar&quot;)}">  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButtonEventos" oncomplete="PF('deleteDialogEventos').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogEventos')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudEventoBean.elemento}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer">  
+
+                                            <p:commandButton id="addButton" icon="ui-icon-plusthick" value="#{label['lb_btn.agregar']}"
+                                                             title="#{label['lb_btn.Go']}" action="#{crudEventoBean.goEventoMarketing(0)}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Eventos&quot;, &quot;crear&quot;)}">
+                                            </p:commandButton> 
+                                        </f:facet>
+                                    </p:dataTable>
+                                    <h:outputText value="#{crudEventoBean.contents}" />
+                                </h:form>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <!--Fin Eventos-->
+
+
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+
+        <h:form>
+            <p:confirmDialog id="deleteDialogEventos" message="Quiere borrar el evento #{crudEventoBean.elemento.nombre}?"  
+                             header="Borrar" severity="alert" widgetVar="deleteDialogEventos" closable="false">  
+
+                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogEventos').hide()"  
+                                 action="#{crudEventoBean.delete()}" update=":#{p:component('detailsTableEventos')} :#{p:component('messages')}"/>  
+                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogEventos').hide()" type="button" />   
+
+            </p:confirmDialog> 
+        </h:form>
+
+    </ui:define>            
+</ui:composition>

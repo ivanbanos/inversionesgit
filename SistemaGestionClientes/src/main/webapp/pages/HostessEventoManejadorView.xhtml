@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6">
+
+                        <div class="row">
+                            <div class="panel panel-primary">
+
+                                <div class="panel-heading"><h4>Evento</h4></div>
+                                <div class="panel-body">
+
+                                    <div class="row clearfix">
+                                        <c:choose>
+                                            <c:when test="#{hostessTareaManejadorBean.elemento.idEvento!=null}">
+                                                <div class="panel panel-primary">
+                                                    <div class="panel-body">
+                                                        <div class="row clearfix">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                                                                <b><label class="col-md-3 control-label" >#{label['nombreevento']}:</label></b>
+                                                                <div class="col-md-9">
+                                                                    <h:outputText id="nombreeve" value="#{hostessTareaManejadorBean.elemento.idEvento.nombre}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row clearfix">
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
+                                                                <b><label class="col-md-6 control-label" >#{label['fechainicio']}:</label></b>
+                                                                <div class="col-md-6">
+                                                                    <h:outputText id="fecinieve" value="#{hostessTareaManejadorBean.elemento.idEvento.fechaInicio}" >
+                                                                        <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                                                    </h:outputText>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 column">
+                                                                <b><label class="col-md-6 control-label" >#{label['fechafinal']}:</label></b>
+                                                                <div class="col-md-6">
+                                                                    <h:outputText id="fecfineve" value="#{hostessTareaManejadorBean.elemento.idEvento.fechaFinal}"  >
+                                                                        <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                                                    </h:outputText>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row clearfix">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                                                                <b><label class="col-md-3 control-label" >#{label['descripcion']}:</label></b>
+                                                                <div class="col-md-9">
+                                                                    <h:outputText id="descripcioneve" value="#{hostessTareaManejadorBean.elemento.idEvento.decripcion}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row clearfix">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                                                                <b><label class="col-md-3 control-label" >#{label['casino']}:</label></b>
+                                                                <div class="col-md-9">
+                                                                    <h:outputText id="casinoeve" value="#{hostessTareaManejadorBean.elemento.idEvento.idCasino.nombre}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" >#{label['evento']}</label>
+                                                    <h:outputText class="col-md-9" id="evento" value="Ninguno" />
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"> 
+                            <div class="panel panel-primary">
+
+                                <div class="panel-heading"><h4>Tarea</h4></div>
+                                <div class="panel-body">
+                                    <div class="row clearfix">
+
+
+                                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                        <h:outputText class="col-md-9" id="nombre" value="#{hostessTareaManejadorBean.elemento.nombre}" />
+
+                                    </div>
+
+                                    <div class="row clearfix">
+
+                                        <label class="col-md-3 control-label" >#{label['fechainicio']}</label>
+                                        <div class="col-md-3">
+                                            <h:outputText id="fecini" value="#{hostessTareaManejadorBean.elemento.fechaInicio}" >
+                                                <f:convertDateTime  pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es"/>
+                                            </h:outputText>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" >#{label['fechafinal']}</label>
+                                            <div class="col-md-3">
+                                                <h:outputText id="fecfin" value="#{hostessTareaManejadorBean.elemento.fechaFinalizacion}"  >
+                                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                                </h:outputText>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" >#{label['speech']}</label>
+                                            <h:outputText class="col-md-9" id="casino" value="#{hostessTareaManejadorBean.elemento.speech}" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" >#{label['banner']}</label>
+                                        <div class="col-md-9">
+
+                                            <h:graphicImage value="/image/#{hostessTareaManejadorBean.elemento.idEvento.imagen}" />
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                </div>
+                                <div class="panel-footer text-right"> 
+                                    <h:link id="btnclose" outcome="/pages/tareasHostess.xhtml" class="btn btn-primary"
+                                            >
+                                        #{label['Volver']}
+                                    </h:link>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="panel panel-primary">
+
+                            <div class="panel-heading"><h4>Clientes</h4></div>
+
+                            <div class="panel-body">
+                                <c:forEach items="#{hostessTareaManejadorBean.clientesPojo}" var="clientes" >
+                                    <div class="panel panel-primary col-md-12">
+
+                                        <div class="panel-body">
+
+                                            <div class="row clearfix">
+
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-md-2 control-label" >#{label['nombre']}</label>
+                                                    <h:outputText class="col-md-10" value="#{clientes.cliente.nombres} #{clientes.cliente.apellidos}"/>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                                <div class="form-group col-md-6">
+                                                    <label class="col-md-4 control-label" >#{label['tel1']}</label>
+                                                    <h:outputText class="col-md-8" value="#{clientes.cliente.telefono1}"/>
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label class="col-md-4 control-label" >#{label['tel2']}</label>
+                                                    <h:outputText class="col-md-8" value="#{clientes.cliente.telefono2}"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row clearfix">
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-md-2 control-label" >#{label['accionposible']}</label>
+                                                    <div class="col-md-10">
+                                                        <p:selectOneMenu style="width: 100%" value="#{clientes.accion}">
+                                                            <f:selectItem itemLabel="Seleccione uno" itemValue=""/>
+                                                            <f:selectItems value="#{hostessTareaManejadorBean.elemento.tipo.accionList}" 
+                                                                           var="var" 
+                                                                           itemLabel="#{var.nombre}" 
+                                                                           itemValue="#{var.idAccion}"/> 
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row clearfix">
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-md-2 control-label" >#{label['Observaciones']}</label>
+                                                    <div class="col-md-10">
+                                                        <p:inputTextarea style="width: 100%" value="#{clientes.observaciones}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="panel-footer text-right"> 
+                                            <h:commandLink action="#{hostessTareaManejadorBean.guardar(clientes.cliente.idCliente)}" 
+                                                           class="btn btn-primary">
+                                                <i class="icon-search"></i> #{label['guardar']}
+                                            </h:commandLink> 
+                                            <h:commandLink action="#{hostessTareaManejadorBean.nuevo(clientes.cliente.idCliente)}" 
+                                                           class="btn btn-primary">
+                                                <i class="icon-search"></i> #{label['nuevo']}
+                                            </h:commandLink> 
+
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

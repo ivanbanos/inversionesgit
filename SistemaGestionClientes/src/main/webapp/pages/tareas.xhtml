@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            <ul>
+                <li>Para crear tarea de click en el boton crear debajo de la tabla.</li>
+                <li>Para editar una tarea de click en el boton <span class="ui-icon ui-icon-pencil" style="display:inline-block;"></span>.</li>
+                <li>Para eliminar una tarea de click en el boton <span class="ui-icon ui-icon-trash" style="display:inline-block;"></span>.</li>
+            </ul>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-12">
+
+                        <!--Eventos-->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Tareas</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableEventos" var="element" value="#{crudTareasBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{crudTareasBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <f:facet name="header">
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Estado" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Estados" onchange="PF('detailsTableEventos').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.estados}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{element.estado}" />
+                                        </p:column>
+
+
+                                        <p:column headerText="Tipo de tarea" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Tipos" onchange="PF('detailsTableEventos').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.tipostareas}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{element.tipo.nombre}" />
+                                        </p:column>
+
+
+                                        <p:column headerText="evento" sortBy="#{element.idEvento.nombre}"  filterBy="#{element.idEvento.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.idEvento.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            
+                                            <p:commandButton id="marketing" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.Go']}" action="#{crudTareasBean.goTareaMarketing(element.idTarea)}"
+                                                             rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;) 
+                                                                         or sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;actualizar&quot;)}">  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButtonEventos" oncomplete="PF('deleteDialogEventos').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogEventos')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudTareasBean.elemento}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer"> 
+                                            
+                                            <p:commandButton id="addButton" icon="ui-icon-plusthick" value="#{label['lb_btn.agregar']}"
+                                                             title="#{label['lb_btn.Go']}" action="#{crudTareasBean.goTareaMarketing(0)}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;crear&quot;)}">
+                                            </p:commandButton> 
+                                        </f:facet>
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <!--Fin Eventos-->
+
+
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+        
+        <h:form>
+            <p:confirmDialog id="deleteDialogEventos" message="Quiere borrar la tarea #{crudTareasBean.elemento.nombre}?"  
+                             header="Borrar" severity="alert" widgetVar="deleteDialogEventos" closable="false">  
+
+                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogEventos').hide()"  
+                                 action="#{crudTareasBean.delete()}" update=":#{p:component('detailsTableEventos')} :#{p:component('messages')}"/>  
+                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogEventos').hide()" type="button" />   
+
+            </p:confirmDialog> 
+        </h:form>
+
+    </ui:define>            
+</ui:composition>

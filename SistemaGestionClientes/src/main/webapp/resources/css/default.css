@@ -1,0 +1,170 @@
+/* 
+    Document   : default
+    Created on : 21/08/2014, 12:49:14 AM
+    Author     : ideacentre
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body{
+    font-size: 17px!important;
+    line-height: 1.42857!important;
+    font-family: "News Cycle","Arial Narrow Bold",sans-serif!important;
+}
+
+#menuslide { 
+    border: 1px solid #e3a1a1;
+    background: #BE2C2C!important;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.ui-widget-header{
+    border: 1px solid #CE6B0F;
+    background: #CE6B0F!important;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.ui-widget-header .ui-state-active{
+
+    color: #CE6B0F!important;
+
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "News Cycle","Arial Narrow Bold",sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #FFF!important;
+}
+
+.navbar-background{
+    background-color: #444343;
+    background-repeat: no-repeat;
+    background-size: 50% 100%;
+}
+
+.navbar-text{
+    color: #DEDEDE;
+}
+
+label{padding-left:20px;}
+
+.btn{margin:10px;}
+
+.panel-bodyindex .btn:not(.btn-block) { width:250px; }
+
+.panel-primary {
+    border-color: #DEDEDE!important;
+}
+
+.panel-primary .panel-heading {
+    color: #DEDEDE!important;
+    background-color: #444343!important;
+    border-color: #DEDEDE!important;
+}
+
+.panel-primary .panel-footer{
+    color: #DEDEDE!important;
+    background-color: #444343!important;
+    border-color: #DEDEDE!important;
+
+}
+
+.btn-primary {
+    color: #FFF;
+    background-color: #CE6B0F!important;
+    border-color: #CE6B0F!important;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    color: #FFF;
+    background-color: #8F4A09!important;
+    border-color: #8F4A09!important;
+}
+
+.clickable
+{
+    cursor: pointer;
+}
+
+.clickable .glyphicon
+{
+    background: rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px
+}
+
+.panel-heading span
+{
+    margin-top: -23px;
+    font-size: 15px;
+    margin-right: -9px;
+}
+a.clickable { color: inherit; }
+a.clickable:hover { text-decoration:none; }
+
+.navbar-text:hover {
+
+    color: #CE6B0F!important;
+}
+a:focus{
+
+    color: #CE6B0F!important;
+}
+.navbar-text-selected {
+    color: #CE6B0F!important;
+    text-decoration: none;
+    background-color: #EEE;
+    margin-top: 19.5px;
+    margin-bottom: 19.5px;
+}
+.dropdown-selected {
+    text-decoration: none;
+    background-color: #EEE;
+    color: #E22620;
+}
+.form-control {
+    margin-bottom: 10px;
+}
+
+.control-label {
+    margin-bottom: 10px;
+}
+
+.secondaryImage {
+    width: 150px;
+}
+
+.LogoImage{
+    width: 100%;
+}
+
+.titulo{
+    color: #CE6B0F!important;
+}
+
+.ui-state-default .ui-icon {
+    background-image: url(images/ui-icons_CE6B0F_256x240.png)!important;
+}
+
+.ui-icon{
+    background-image: url(images/ui-icons_CE6B0F_256x240.png)!important;
+}
+
+.ui-messages-info-icon{
+    background: url('images/1411527736_accepted_48.png')no-repeat !important;
+    background-size: 100% !important;
+}
+
+.ui-messages-info{
+    color: #3c763d!important;
+    background-color: #dff0d8!important;
+    border-color: #d6e9c6!important;
+}
+
+.hasDatepicker{
+    width: 100%!important;
+}

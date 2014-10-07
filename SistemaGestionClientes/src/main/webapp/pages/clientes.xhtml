@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            <ul>
+                <li>Para crear cliente de click en el boton crear debajo de la tabla.</li>
+                <li>Para editar un cliente de click en el boton <span class="ui-icon ui-icon-pencil" style="display:inline-block;"></span>.</li>
+                <li>Para eliminar un cliente de click en el boton <span class="ui-icon ui-icon-trash" style="display:inline-block;"></span>.</li>
+            </ul>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-12 column">
+
+                        <!--Clientes-->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Clientes</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableClientes" var="element" value="#{crudClientesBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" filteredValue="#{crudClientesBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.identificacion}" />
+                                        </p:column>
+
+                                        <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombres}" />
+                                        </p:column>
+
+                                        <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.apellidos}" />
+                                        </p:column>
+
+                                        <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Categorias" onchange="PF('detailsTableClientes').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.categorias}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{element.idCategorias.nombre}" />
+                                        </p:column>
+
+
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
+                                            <p:commandButton id="editButtonClientes" action="#{crudClientesBean.goCliente(element.idCliente)}" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editar']}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;actualizar&quot;)}"/>    
+                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialogClientes').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialogClientes')}"
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;eliminar&quot;)}">
+                                                <f:setPropertyActionListener value="#{element}" target="#{crudClientesBean.elemento}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+
+                                        <f:facet name="footer"> 
+                                            <p:commandButton id="addButton" action="#{crudClientesBean.goCliente(0)}"
+                                                             value="#{label['lb_btn.agregar']}" icon="ui-icon-plusthick" title="#{label['lb_btn.agregar']}" 
+                                                             rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;crear&quot;)}"/>   
+                                        </f:facet>
+
+                                    </p:dataTable>
+
+                                </h:form>
+                            </div>
+                        </div>
+
+
+
+
+                        <!--Fin Clientes-->
+
+
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+        <h:form>
+            <p:confirmDialog id="deleteDialogClientes" message="Quiere borrar el cliente #{crudClientesBean.elemento.nombres} #{crudClientesBean.elemento.apellidos}?"  
+                             header="Borrar" severity="alert" widgetVar="deleteDialogClientes" closable="false">  
+
+                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogClientes').hide()"  
+                                 action="#{crudClientesBean.delete()}" update=":#{p:component('detailsTableClientes')} :#{p:component('messages')}"/>  
+                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogClientes').hide()" type="button" />   
+
+            </p:confirmDialog> 
+        </h:form>
+
+    </ui:define>            
+</ui:composition>

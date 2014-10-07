@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+
+            <ul>
+                <li>Para ver un cliente en detalle de click en el boton <span class="ui-icon ui-icon-circle-triangle-e" style="display:inline-block;"></span>.</li>
+                <li>Para crear una busqueda avanzada de click en el boton <span class="ui-icon ui-icon-search" style="display:inline-block;"></span>.</li>
+            </ul>
+            <div class="col-md-12 ">
+                <!--Clientes-->
+                <c:if test="#{sessionBean.perfilViewMatch(&quot;Reportes&quot;)}">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="clickable">
+                                <h3 class="panel-title">Busqueda avanzada</h3>
+
+                                <span class="pull-right "><i class="fa fa-minus"></i></span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row clearfix">
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    <h:outputLabel class="col-md-6 control-label" value="Pais:" />
+                                    <h:inputText class="col-md-6" value="#{reportesClientesBean.pais}" />
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    <h:outputLabel class="col-md-6 control-label" value="Ciudad:" />
+                                    <h:inputText class="col-md-6" value="#{reportesClientesBean.ciudad}" />
+                                </div>
+                                <div id="clientes" class="row clearfix">
+                                    <div class="form-group col-md-12">
+                                        <div class="col-md-4">
+                                            <div class="panel panel-primary">
+
+                                                <div class="panel-heading">
+                                                    #{label['categorias']}
+                                                </div>
+                                                <div class="panel-body">
+                                                    <ul id="categoriaslist">
+                                                        <li>
+                                                            <h:selectBooleanCheckbox value="#{reportesClientesBean.todosCat}" onclick="toggle('categoriaslist')">
+                                                            </h:selectBooleanCheckbox>
+                                                            <label>Todos</label>
+                                                        </li>
+
+                                                        <c:forEach var="itemcat" items="#{reportesClientesBean.categoriaBooleans}">
+                                                            <li>
+                                                                <h:selectBooleanCheckbox value="#{itemcat.selected}" onclick="deselecttodo('categoriaslist')"/>&nbsp;
+                                                                <label>#{itemcat.categoria.nombre}</label>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-primary">
+
+                                                <div class="panel-heading">
+                                                    #{label['casinos']}
+                                                </div>
+                                                <div class="panel-body">
+                                                    <ul id="casinosList">
+                                                        <li>
+                                                            <h:selectBooleanCheckbox value="#{reportesClientesBean.todoscasinos}" onclick="toggle('casinosList')">
+                                                            </h:selectBooleanCheckbox>
+                                                            <label>Todos</label>
+                                                        </li>
+
+                                                        <c:forEach var="itemcas" items="#{reportesClientesBean.casinoBooleans}">
+                                                            <li>
+                                                                <h:selectBooleanCheckbox value="#{itemcas.selected}" onclick="deselecttodo('casinosList')"/>&nbsp;
+                                                                <label>#{itemcas.casino.nombre}</label>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="panel panel-primary">
+
+                                                <div class="panel-heading">#{label['tipojuegos']}</div>
+                                                <div class="panel-body">
+                                                    <ul id="tipojuegosList">
+                                                        <li>
+                                                            <h:selectBooleanCheckbox value="#{reportesClientesBean.todostip}" onclick="toggle('tipojuegosList')">
+                                                            </h:selectBooleanCheckbox>
+                                                            <label>Todos</label>
+                                                        </li>
+                                                        <c:forEach var="itemtip" items="#{reportesClientesBean.juegoBooleans}">
+                                                            <li>
+                                                                <h:selectBooleanCheckbox value="#{itemtip.selected}" onclick="deselecttodo('tipojuegosList')"/>&nbsp;
+                                                                <label >#{itemtip.tipoJuego.nombre}</label>
+                                                            </li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <p:commandButton id="addButton" icon="ui-icon-search" value="#{label['lb_btn.Buscar']}"
+                                                     title="#{label['lb_btn.Go']}" action="#{reportesClientesBean.busquedaAvanzada()}"
+                                                     update=":#{p:component('detailsTableClientes')}">
+                                    </p:commandButton> 
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Clientes</h3>
+                        </div>
+                        <div class="panel-body">
+
+
+
+                            <p:dataTable id="detailsTableClientes" var="element" value="#{reportesClientesBean.lista}"  
+                                         emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableClientes" rows="#{sessionBean.paginacion}"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         >
+
+                                <p:column style="width:5%">
+                                    <p:rowToggler />
+                                </p:column>
+
+                                <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
+                                    <h:outputText value="#{element.identificacion}" />
+                                </p:column>
+                                <p:column headerText="Tipo de identificaci&oacute;n" sortBy="#{element.idTipoDocumento.nombre}" filterBy="#{element.idTipoDocumento.nombre}" filterMatchMode="in" >
+                                    <f:facet name="filter">
+                                        <p:selectCheckboxMenu label="Tipo" onchange="PF('detailsTableClientes').filter()" >
+                                            <f:selectItems value="#{filtrosListas.tipoident}" />
+                                        </p:selectCheckboxMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{element.idTipoDocumento.nombre}" />
+                                </p:column>
+
+                                <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
+                                    <h:outputText value="#{element.nombres}" />
+                                </p:column>
+
+                                <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
+                                    <h:outputText value="#{element.apellidos}" />
+                                </p:column>
+
+                                <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="in" >
+                                    <f:facet name="filter">
+                                        <p:selectCheckboxMenu label="Categorias" onchange="PF('detailsTableClientes').filter()" >
+                                            <f:selectItems value="#{filtrosListas.categorias}" />
+                                        </p:selectCheckboxMenu>
+                                    </f:facet>
+                                    <h:outputText value="#{element.idCategorias.nombre}" />
+                                </p:column>
+
+                                <p:rowExpansion>
+                                    <div class="row clearfix">
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Telefono 1:" />
+                                            <h:outputText class="col-md-6" value="#{element.telefono1}" />
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Telefono 2:" />
+                                            <h:outputText class="col-md-6" value="#{element.telefono2}" />
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Correo:" />
+                                            <h:outputText class="col-md-6" value="#{element.correo}" />
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Cumplea&ntilde;os:" />
+                                            <h:outputText class="col-md-6" value="#{element.cumpleanos}" >
+                                                <f:convertDateTime pattern="dd/MMMMM" locale="es" />
+                                            </h:outputText>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Casino:" />
+                                            <h:outputText class="col-md-6" value="#{element.idCasinoPreferencial.nombre}" />
+                                        </div>
+
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Pais:" />
+                                            <h:outputText class="col-md-6" value="#{element.pais}" />
+                                        </div>
+
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Ciudad:" />
+                                            <h:outputText class="col-md-6" value="#{element.ciudad}" />
+                                        </div>
+
+
+                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                            <h:outputLabel class="col-md-6 control-label" value="Cupo de fidelizaci&oacute;n:" />
+                                            <h:outputText class="col-md-6" value="#{element.bonoFidelizacion}" />
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h:outputLabel class="col-md-12 control-label" value="Preferencias de Juegos:" />
+                                            <p:dataList value="#{element.tiposjuegosList}" var="tipo" emptyMessage="No tiene juegos favoritos">
+                                                #{tipo.nombre}
+                                            </p:dataList>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                            <h:outputLabel class="col-md-12 control-label" value="Atributos adicionales:" />
+                                            <p:dataList value="#{element.clientesatributosList}" var="attr" >
+                                                <b>#{attr.atributos.nombre}</b>:&nbsp;#{attr.valor} 
+                                            </p:dataList>
+                                        </div>
+
+
+                                    </div>
+                                </p:rowExpansion>
+
+                            </p:dataTable>
+
+                        </div>
+                    </div>
+                </c:if>
+            </div>
+
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-8 col-md-offset-2">
+                        <h:form id="formCambio" class="form-horizontal" >
+                            
+                                
+                                
+                                <div class="panel panel-primary">
+
+                                    <div class="panel-heading"><h4>Cambiar Contrase&ntilde;a</h4></div>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="contra" >Contrase&ntilde;a</label>
+                                                    <div class="col-md-8">
+                                                        <p:password id="contra" value="#{cuentaUsuarioBean.contrasena}" required="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="pwd1Usuarios" >Nueva Contrase&ntilde;a</label>
+                                                    <div class="col-md-8">
+                                                        <p:password id="pwd1Usuarios" value="#{cuentaUsuarioBean.nueva}" match="pwd2Usuarios" required="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="pwd2Usuarios" >Repetir Contrase&ntilde;a</label>
+                                                    <div class="col-md-8">
+                                                        <p:password id="pwd2Usuarios" value="#{cuentaUsuarioBean.nueva}" required="true" />
+                                                    </div>
+                                                </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="panel-footer text-right"> 
+                                        <h:commandButton styleClass="btn btn-primary" value="#{label['Confirmar']}" action="#{cuentaUsuarioBean.cambioContrasena()}"/>
+                                    </div>
+                                </div>
+                                
+
+                        </h:form>
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

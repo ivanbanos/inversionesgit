@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            
+            <ul>
+                <li>Para ver una tarea en detalle de click en el boton <span class="ui-icon ui-icon-search" style="display:inline-block;"></span>.</li>
+            </ul>
+            <div class="panel panel-primary">
+
+                <div class="panel-heading"><h4>Evento</h4></div>
+                <div class="panel-body">
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-1 control-label" >#{label['nombre']}:</label></b>
+                            <div class="col-md-11">
+                                <h:outputText id="nombre" value="#{reporteEventoEspesificoBean.elemento.nombre}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-4 control-label" >#{label['fechainicio']}:</label></b>
+                            <div class="col-md-8">
+                                <h:outputText id="fecini" value="#{reporteEventoEspesificoBean.elemento.fechaInicio}" >
+                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                </h:outputText>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-4 control-label" >#{label['fechafinal']}:</label></b>
+                            <div class="col-md-8">
+                                <h:outputText id="fecfin" value="#{reporteEventoEspesificoBean.elemento.fechaFinal}"  >
+                                    <f:convertDateTime pattern="dd/MMMMM/yyyy HH:mm:ss" locale="es" />
+                                </h:outputText>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-1 control-label" >#{label['descripcion']}:</label></b>
+                            <div class="col-md-11">
+                                <h:outputText id="descripcion" value="#{reporteEventoEspesificoBean.elemento.decripcion}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-1 control-label" >#{label['casino']}:</label></b>
+                            <div class="col-md-11">
+                                <h:outputText id="casino" value="#{reporteEventoEspesificoBean.elemento.idCasino.nombre}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                            <b><label class="col-md-12 control-label" >#{label['Tareasevento']}:</label></b>
+                            <div class="col-md-12">
+                                <p:dataTable id="detailsTableCasinos" var="element" value="#{reporteEventoEspesificoBean.elemento.tareasList}"  
+                                             emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableCasinos"
+                                             rows="#{sessionBean.paginacion}"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             >
+
+                                    <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains">
+                                        <h:outputText value="#{element.nombre}" />
+                                    </p:column>
+                                    <p:column headerText="Fecha de incio" sortBy="#{element.fechaInicio}" filterBy="#{element.fechaInicio}" filterMatchMode="contains">
+                                        <h:outputText value="#{element.fechaInicio}" ><f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" /></h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Fecha de finalizaci&oacute;n" sortBy="#{element.fechaFinalizacion}" filterBy="#{element.fechaFinalizacion}" filterMatchMode="contains">
+                                        <h:outputText value="#{element.fechaFinalizacion}" ><f:convertDateTime pattern="dd/MMMMM/yyyy " locale="es" /></h:outputText>
+                                    </p:column>
+
+
+                                    <p:column headerText="" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:commandButton id="marketing" icon="ui-icon-search" 
+                                                         title="#{label['lb_btn.Go']}" action="#{reporteEventoEspesificoBean.goTareaReporte(element.idTarea)}"
+                                                                 >  
+                                                </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-footer text-right"> 
+                    <h:link id="btnclose" outcome="/pages/Reporteeventos.xhtml" class="btn btn-primary"
+                            >
+                        #{label['Volver']}
+                    </h:link>
+
+                </div>
+            </div>
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

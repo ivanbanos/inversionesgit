@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+
+                        <div class="col-xs-12 col-md-9 col-md-offset-1 panel-body panel-bodyindex">
+                            <h:link outcome="/pages/Reporteclientes.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-user fa-5x"></i> 
+                                <br/>#{label['clientes']}</h:link>
+                            <h:link outcome="/pages/Reporteeventos.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-calendar fa-5x"></i> 
+                                <br/>#{label['eventos']}</h:link>
+                            <h:link outcome="/pages/ReporteTareas.xhtml" class="btn btn-primary btn-lg"><i class="fa fa-pencil-square-o fa-5x"></i> 
+                                <br/>#{label['tareas']}</h:link>
+                        </div>
+                    </div>
+            </div>
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

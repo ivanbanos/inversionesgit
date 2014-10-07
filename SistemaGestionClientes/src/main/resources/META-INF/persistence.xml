@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="AdminClientesPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.invbf.sistemagestionclientes.entity.Accion</class>
+    <class>com.invbf.sistemagestionclientes.entity.Atributo</class>
+    <class>com.invbf.sistemagestionclientes.entity.Casino</class>
+    <class>com.invbf.sistemagestionclientes.entity.Categoria</class>
+    <class>com.invbf.sistemagestionclientes.entity.Cliente</class>
+    <class>com.invbf.sistemagestionclientes.entity.Clienteatributo</class>
+    <class>com.invbf.sistemagestionclientes.entity.Configuracion</class>
+    <class>com.invbf.sistemagestionclientes.entity.Evento</class>
+    <class>com.invbf.sistemagestionclientes.entity.Formulario</class>
+    <class>com.invbf.sistemagestionclientes.entity.Listasclientestareas</class>
+    <class>com.invbf.sistemagestionclientes.entity.Log</class>
+    <class>com.invbf.sistemagestionclientes.entity.Perfil</class>
+    <class>com.invbf.sistemagestionclientes.entity.Permiso</class>
+    <class>com.invbf.sistemagestionclientes.entity.Tarea</class>
+    <class>com.invbf.sistemagestionclientes.entity.TipoDocumento</class>
+    <class>com.invbf.sistemagestionclientes.entity.TipoJuego</class>
+    <class>com.invbf.sistemagestionclientes.entity.Tipotarea</class>
+    <class>com.invbf.sistemagestionclientes.entity.Usuario</class>
+    <class>com.invbf.sistemagestionclientes.entity.Vista</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ibfcolom_inversiones"/>
+      <property name="javax.persistence.jdbc.password" value="colombia1305$$#"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="ibfcolom_root"/>
+    </properties>
+  </persistence-unit>
+</persistence>

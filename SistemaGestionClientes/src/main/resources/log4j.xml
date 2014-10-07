@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="true">
+
+    <appender name="console-out"
+		class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+				value="%d{yyyy/MMM/dd HH:mm:ss.SSS} [%t] %-5p %c{1} - %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="file-out"
+		class="org.apache.log4j.RollingFileAppender">
+        <param name="MaxBackupIndex" value="10" />
+        <param name="MaxFileSize" value="4096KB" />
+        <param name="File" value="C:/logs/certificados_digitales.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+				value="%d{yyyy/MMM/dd HH:mm:ss.SSS} - %5p - %c{1}:%L - %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="com">
+        <level value="debug" />
+    </logger>
+    <logger name="net">
+        <level value="error" />
+    </logger>
+    <logger name="org">
+        <level value="error" />
+    </logger>
+    <logger name="co">
+        <level value="info" />
+    </logger>
+    <logger name="java">
+        <level value="info" />
+    </logger>
+    <logger name="corg.springframework">
+        <level value="info" />
+    </logger>
+    <root>
+        <level value="debug" />
+        <appender-ref ref="console-out" />
+        <appender-ref ref="file-out" />
+    </root>
+</log4j:configuration>

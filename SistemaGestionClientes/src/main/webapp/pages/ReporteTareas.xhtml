@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            
+            <ul>
+                <li>Para ver una tarea en detalle de click en el boton <span class="ui-icon ui-icon-search" style="display:inline-block;"></span>.</li>
+            </ul>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-12">
+
+                        <!--Eventos-->
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><h4>Tareas</h4></h3>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableEventos" var="element" value="#{reporteTareasBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEventos" filteredValue="#{reporteTareasBean.flista}"
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <f:facet name="header">
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" sortBy="#{element.nombre}" filterBy="#{element.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Estado" sortBy="#{element.estado}" filterBy="#{element.estado}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Estados" onchange="PF('detailsTableEventos').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.estados}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{element.estado}" />
+                                        </p:column>
+
+
+                                        <p:column headerText="Tipo de tarea" sortBy="#{element.tipo.nombre}" filterBy="#{element.tipo.nombre}" filterMatchMode="in" >
+                                            <f:facet name="filter">
+                                                <p:selectCheckboxMenu label="Tipos" onchange="PF('detailsTableEventos').filter()" >
+                                                    <f:selectItems value="#{filtrosListas.tipostareas}" />
+                                                </p:selectCheckboxMenu>
+                                            </f:facet>
+                                            <h:outputText value="#{element.tipo.nombre}" />
+                                        </p:column>
+
+
+                                        <p:column headerText="evento" sortBy="#{element.idEvento.nombre}" filterBy="#{element.idEvento.nombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.idEvento.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
+                                            
+                                            <p:commandButton id="marketing" icon="ui-icon-search" 
+                                                             title="#{label['lb_btn.Go']}" action="#{reporteTareasBean.goTareaReporte(element.idTarea)}">
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <!--Fin Eventos-->
+
+
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>            
+</ui:composition>
