@@ -28,8 +28,6 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class CrudEventoBean {
-    MarketingUserFacade marketingUserFacade;
-    SystemFacade systemFacade;
     private List<Evento> lista;
     private Evento elemento;
     private List<Casino> listacasinos;
@@ -59,8 +57,6 @@ public class CrudEventoBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
-        systemFacade = new SystemFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("eventos");
         if (!sessionBean.perfilViewMatch("Eventos")) {
@@ -71,8 +67,8 @@ public class CrudEventoBean {
             }
         }
         elemento = new Evento();
-        lista = marketingUserFacade.findAllEventos();
-        listacasinos = marketingUserFacade.findAllCasinos();
+        lista = sessionBean.marketingUserFacade.findAllEventos();
+        listacasinos = sessionBean.marketingUserFacade.findAllCasinos();
         editar = false;
     }
 
@@ -99,11 +95,6 @@ public class CrudEventoBean {
     public void setListacasinos(List<Casino> listacasinos) {
         this.listacasinos = listacasinos;
     }
-
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
     public UploadedFile getFile() {
         return file;
     }
@@ -112,13 +103,10 @@ public class CrudEventoBean {
         this.file = file;
     }
 
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
 
     public void delete() {
-        marketingUserFacade.deleteEventos(elemento);
-        lista = marketingUserFacade.findAllEventos();
+        sessionBean.marketingUserFacade.deleteEventos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllEventos();
         sessionBean.registrarlog("eliminar", "Eventos", elemento.getNombre());
         FacesUtil.addInfoMessage("Evento eliminado", elemento.getNombre());
         elemento = new Evento();

@@ -21,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudFormulariosBean {
-    AdminFacade adminFacade;
     private List<Formulario> lista;
     private Formulario elemento;
     @ManagedProperty("#{sessionBean}")
@@ -48,11 +47,10 @@ public class CrudFormulariosBean {
 
     @PostConstruct
     public void init() {
-        adminFacade = new  AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Formulario();
-        lista = adminFacade.findAllFormularios();
+        lista = sessionBean.adminFacade.findAllFormularios();
     }
 
     public List<Formulario> getLista() {
@@ -71,28 +69,18 @@ public class CrudFormulariosBean {
         this.elemento = elemento;
     }
 
-
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
-    }
-
     
     public void delete(){
-        adminFacade.deleteFormularios(elemento);
-        lista = adminFacade.findAllFormularios();
+        sessionBean.adminFacade.deleteFormularios(elemento);
+        lista = sessionBean.adminFacade.findAllFormularios();
         sessionBean.registrarlog("eliminar", "Formularios", elemento.toString());
             FacesUtil.addInfoMessage("Formulario eliminado", elemento.getAccion()+" "+elemento.getTabla());
         elemento = new Formulario();
     }
     
     public void guardar(){
-        boolean opcion = adminFacade.guardarFormularios(elemento);
-        lista = adminFacade.findAllFormularios();
+        boolean opcion = sessionBean.adminFacade.guardarFormularios(elemento);
+        lista = sessionBean.adminFacade.findAllFormularios();
         if (opcion) {
             sessionBean.registrarlog("actualizar", "Formularios", elemento.toString());
             FacesUtil.addInfoMessage("Formulario actualizado", elemento.getAccion()+" "+elemento.getTabla());

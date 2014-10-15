@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ideacentre
  */
 @Entity
-@Table(name = "perfiles", schema="inversiones")
+@Table(name = "Perfiles")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Perfiles.findAll", query = "SELECT p FROM Perfil p"),
@@ -46,12 +46,12 @@ public class Perfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @JoinTable(name = "perfilesformularios", joinColumns = {
+    @JoinTable(name = "PerfilesFormularios", joinColumns = {
         @JoinColumn(name = "idPerfil", referencedColumnName = "idPerfil")}, inverseJoinColumns = {
         @JoinColumn(name = "idFormulario", referencedColumnName = "idFormulario")})
     @ManyToMany
     private List<Formulario> formulariosList;
-    @JoinTable(name = "perfilesvistas", joinColumns = {
+    @JoinTable(name = "PerfilesVistas", joinColumns = {
         @JoinColumn(name = "idPerfil", referencedColumnName = "idPerfil")}, inverseJoinColumns = {
         @JoinColumn(name = "idVista", referencedColumnName = "idVista")})
     @ManyToMany

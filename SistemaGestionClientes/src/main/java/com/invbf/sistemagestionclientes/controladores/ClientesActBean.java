@@ -32,8 +32,7 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class ClientesActBean {
-
-    MarketingUserFacade marketingUserFacade;
+    
     private List<TipoJuego> tiposjuegos;
     private List<Atributo> atributos;
     private Cliente elemento;
@@ -56,7 +55,6 @@ public class ClientesActBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("clientes");
         if (!sessionBean.perfilViewMatch("Clientes")) {
@@ -75,11 +73,11 @@ public class ClientesActBean {
             }
         }
         if ((Integer) sessionBean.getAttributes().get("idCliente") != 0) {
-            elemento = marketingUserFacade.findCliente((Integer) sessionBean.getAttributes().get("idCliente"));
+            elemento = sessionBean.marketingUserFacade.findCliente((Integer) sessionBean.getAttributes().get("idCliente"));
             if (elemento.getIdTipoDocumento() == null) {
                 elemento.setIdTipoDocumento(new TipoDocumento(0));
             }
-            tiposjuegos = marketingUserFacade.findAllTiposjuegos();
+            tiposjuegos = sessionBean.marketingUserFacade.findAllTiposjuegos();
             for (TipoJuego tj : elemento.getTiposjuegosList()) {
                 if (tiposjuegos.contains(tj)) {
                     tiposjuegos.remove(tj);
@@ -94,10 +92,10 @@ public class ClientesActBean {
             elemento.setIdCasinoPreferencial(new Casino(0));
             elemento.setTiposjuegosList(new ArrayList<TipoJuego>());
             elemento.setClientesatributosList(new ArrayList<Clienteatributo>());
-            tiposjuegos = marketingUserFacade.findAllTiposjuegos();
+            tiposjuegos = sessionBean.marketingUserFacade.findAllTiposjuegos();
             tiposJuegosTodos = new DualListModel<TipoJuego>(tiposjuegos, elemento.getTiposjuegosList());
         }
-        atributos = marketingUserFacade.findAllAtributos();
+        atributos = sessionBean.marketingUserFacade.findAllAtributos();
         for (Atributo a : atributos) {
             Clienteatributo clientesatributos = new Clienteatributo(elemento.getIdCliente(), a.getIdAtributo());
             if (!elemento.getClientesatributosList().contains(clientesatributos)) {
@@ -107,9 +105,9 @@ public class ClientesActBean {
                 elemento.getClientesatributosList().add(clientesatributos);
             }
         }
-        listacasinos = marketingUserFacade.findAllCasinos();
-        listacategorias = marketingUserFacade.findAllCategorias();
-        tipoDocumentos = marketingUserFacade.findAllTipoDocumentos();
+        listacasinos = sessionBean.marketingUserFacade.findAllCasinos();
+        listacategorias = sessionBean.marketingUserFacade.findAllCategorias();
+        tipoDocumentos = sessionBean.marketingUserFacade.findAllTipoDocumentos();
     }
 
     public Cliente getElemento() {
@@ -119,15 +117,7 @@ public class ClientesActBean {
     public void setElemento(Cliente elemento) {
         this.elemento = elemento;
     }
-
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
+    
     public List<Atributo> getAtributos() {
         return atributos;
     }
@@ -161,13 +151,13 @@ public class ClientesActBean {
                 elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
                 List<Clienteatributo> clienteatributos = elemento.getClientesatributosList();
                 elemento.setClientesatributosList(new ArrayList<Clienteatributo>());
-                elemento = marketingUserFacade.guardarClientes(elemento);
+                elemento = sessionBean.marketingUserFacade.guardarClientes(elemento);
                 for (Clienteatributo clienteatributo : clienteatributos) {
                     clienteatributo.getClientesatributosPK().setIdCliente(elemento.getIdCliente());
                     clienteatributo.setClientes(elemento);
                     elemento.getClientesatributosList().add(clienteatributo);
                 }
-                elemento = marketingUserFacade.guardarClientes(elemento);
+                elemento = sessionBean.marketingUserFacade.guardarClientes(elemento);
                 FacesUtil.addInfoMessage("Cliente actualizado", elemento.toString());
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
                 sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());

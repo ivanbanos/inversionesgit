@@ -32,7 +32,6 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class ReportesClientesBean {
-    MarketingUserFacade marketingUserFacade;
     private List<Cliente> lista;
     private Cliente elemento;
     private List<Casino> listacasinos;
@@ -72,7 +71,6 @@ public class ReportesClientesBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         pais = "";
         ciudad = "";
         sessionBean.checkUsuarioConectado();
@@ -85,16 +83,16 @@ public class ReportesClientesBean {
             }
         }
         elemento = new Cliente();
-        lista = marketingUserFacade.findAllClientes();
-        listacasinos = marketingUserFacade.findAllCasinos();
-        listaatributos = marketingUserFacade.findAllAtributos();
-        listacategorias = marketingUserFacade.findAllCategorias();
-        listatiposjuegos = marketingUserFacade.findAllTiposjuegos();
+        lista = sessionBean.marketingUserFacade.findAllClientes();
+        listacasinos = sessionBean.marketingUserFacade.findAllCasinos();
+        listaatributos = sessionBean.marketingUserFacade.findAllAtributos();
+        listacategorias = sessionBean.marketingUserFacade.findAllCategorias();
+        listatiposjuegos = sessionBean.marketingUserFacade.findAllTiposjuegos();
         editar = false;
 
-        List<Casino> casinos = marketingUserFacade.findAllCasinos();
-        List<TipoJuego> tipoJuegos = marketingUserFacade.findAllTiposjuegos();
-        List<Categoria> categorias = marketingUserFacade.findAllCategorias();
+        List<Casino> casinos = sessionBean.marketingUserFacade.findAllCasinos();
+        List<TipoJuego> tipoJuegos = sessionBean.marketingUserFacade.findAllTiposjuegos();
+        List<Categoria> categorias = sessionBean.marketingUserFacade.findAllCategorias();
         juegoBooleans = new ArrayList<TipoJuegoBoolean>();
         casinoBooleans = new ArrayList<CasinoBoolean>();
         categoriaBooleans = new ArrayList<CategoriaBoolean>();
@@ -133,10 +131,6 @@ public class ReportesClientesBean {
         this.listacasinos = listacasinos;
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
     public List<Atributo> getListaatributos() {
         return listaatributos;
     }
@@ -161,13 +155,9 @@ public class ReportesClientesBean {
         this.listatiposjuegos = listatiposjuegos;
     }
 
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
     public void delete() {
-        marketingUserFacade.deleteClientes(elemento);
-        lista = marketingUserFacade.findAllClientes();
+        sessionBean.marketingUserFacade.deleteClientes(elemento);
+        lista = sessionBean.marketingUserFacade.findAllClientes();
         sessionBean.registrarlog("eliminar", "Clientes", elemento.toString());
         FacesUtil.addInfoMessage("Cliente eliminado", elemento.toString());
         elemento = new Cliente();
@@ -206,7 +196,7 @@ public class ReportesClientesBean {
     }
 
     public void busquedaAvanzada() {
-        lista = marketingUserFacade.findAllClientes();
+        lista = sessionBean.marketingUserFacade.findAllClientes();
 
         boolean noCatselected = true;
         boolean noTipselected = true;

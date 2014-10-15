@@ -21,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudTipoDocumentoBean {
-    MarketingUserFacade marketingUserFacade;
     private List<TipoDocumento> lista;
     private TipoDocumento elemento;
     @ManagedProperty("#{sessionBean}")
@@ -49,11 +48,10 @@ public class CrudTipoDocumentoBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new TipoDocumento();
-        lista = marketingUserFacade.findAllTipoDocumentos();
+        lista = sessionBean.marketingUserFacade.findAllTipoDocumentos();
     }
 
     public List<TipoDocumento> getLista() {
@@ -72,26 +70,18 @@ public class CrudTipoDocumentoBean {
         this.elemento = elemento;
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
     
     public void delete(){
-        marketingUserFacade.deleteTipoDocumentos(elemento);
-        lista = marketingUserFacade.findAllTipoDocumentos();
+        sessionBean.marketingUserFacade.deleteTipoDocumentos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllTipoDocumentos();
         sessionBean.registrarlog("eliminar", "tipodocumento", elemento.getNombre());
             FacesUtil.addInfoMessage("Tipo documento eliminado", elemento.getNombre());
         elemento = new TipoDocumento();
     }
     
     public void guardar(){
-        boolean opcion = marketingUserFacade.guardarTipoDocumentos(elemento);
-        lista = marketingUserFacade.findAllTipoDocumentos();
+        boolean opcion = sessionBean.marketingUserFacade.guardarTipoDocumentos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllTipoDocumentos();
         if (opcion) {
             sessionBean.registrarlog("actualizar", "tipodocumento", elemento.getNombre());
             FacesUtil.addInfoMessage("Tipo documento actualizado", elemento.getNombre());

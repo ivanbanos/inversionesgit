@@ -22,8 +22,6 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class CuentaUsuarioBean {
     
-    SystemFacade systemFacade;
-    
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     
@@ -39,17 +37,8 @@ public class CuentaUsuarioBean {
 
     @PostConstruct
     public void init() {
-        systemFacade = new SystemFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("cuenta");
-    }
-
-    public SystemFacade getSystemFacade() {
-        return systemFacade;
-    }
-
-    public void setSystemFacade(SystemFacade systemFacade) {
-        this.systemFacade = systemFacade;
     }
 
     public String getContrasena() {
@@ -70,7 +59,7 @@ public class CuentaUsuarioBean {
     
     public void cambioContrasena(){
         try {
-            systemFacade.cambiarContrasena(contrasena, nueva, sessionBean.getUsuario());
+            sessionBean.sessionFacade.cambiarContrasena(contrasena, nueva, sessionBean.getUsuario());
             FacesUtil.addInfoMessage("Contraseña cambiada con exito!");
         } catch (ClavesNoConcuerdanException ex) {
             FacesUtil.addErrorMessage("Claves no concuerdan");

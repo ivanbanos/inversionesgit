@@ -25,8 +25,6 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class TareasHostessBean {
-    HostessFacade hostessFacade;
-    MarketingUserFacade marketingFadace;
     private List<Tarea> lista;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -52,8 +50,6 @@ public class TareasHostessBean {
 
     @PostConstruct
     public void init() {
-        hostessFacade = new HostessFacadeImpl();
-        marketingFadace = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("eventoshostess");
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
@@ -86,14 +82,6 @@ public class TareasHostessBean {
 
     public void setLista(List<Tarea> lista) {
         this.lista = lista;
-    }
-
-    public HostessFacade getHostessFacade() {
-        return hostessFacade;
-    }
-
-    public void setHostessFacade(HostessFacade hostessFacade) {
-        this.hostessFacade = hostessFacade;
     }
 
     public void goEvento(int id) {

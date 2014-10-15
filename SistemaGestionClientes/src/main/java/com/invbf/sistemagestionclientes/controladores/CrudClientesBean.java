@@ -27,7 +27,6 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class CrudClientesBean {
-    MarketingUserFacade marketingUserFacade;
     private List<Cliente> lista;
     private Cliente elemento;
     private List<Casino> listacasinos;
@@ -59,7 +58,6 @@ public class CrudClientesBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("clientes");
         if (!sessionBean.perfilViewMatch("Clientes")) {
@@ -70,11 +68,11 @@ public class CrudClientesBean {
             }
         }
         elemento = new Cliente();
-        lista = marketingUserFacade.findAllClientes();
-        listacasinos = marketingUserFacade.findAllCasinos();
-        listaatributos = marketingUserFacade.findAllAtributos();
-        listacategorias = marketingUserFacade.findAllCategorias();
-        listatiposjuegos = marketingUserFacade.findAllTiposjuegos();
+        lista = sessionBean.marketingUserFacade.findAllClientes();
+        listacasinos = sessionBean.marketingUserFacade.findAllCasinos();
+        listaatributos = sessionBean.marketingUserFacade.findAllAtributos();
+        listacategorias = sessionBean.marketingUserFacade.findAllCategorias();
+        listatiposjuegos = sessionBean.marketingUserFacade.findAllTiposjuegos();
         editar = false;
     }
 
@@ -102,9 +100,6 @@ public class CrudClientesBean {
         this.listacasinos = listacasinos;
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
 
     public List<Atributo> getListaatributos() {
         return listaatributos;
@@ -130,13 +125,10 @@ public class CrudClientesBean {
         this.listatiposjuegos = listatiposjuegos;
     }
 
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
 
     public void delete() {
-        marketingUserFacade.deleteClientes(elemento);
-        lista = marketingUserFacade.findAllClientes();
+        sessionBean.marketingUserFacade.deleteClientes(elemento);
+        lista = sessionBean.marketingUserFacade.findAllClientes();
         sessionBean.registrarlog("eliminar", "Clientes", elemento.toString());
         FacesUtil.addInfoMessage("Cliente eliminado", elemento.toString());
         elemento = new Cliente();

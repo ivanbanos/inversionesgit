@@ -26,7 +26,6 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class CrudTipotareaBean {
-    MarketingUserFacade marketingUserFacade;
     private List<Tipotarea> lista;
     private Tipotarea elemento;
     @ManagedProperty("#{sessionBean}")
@@ -55,13 +54,12 @@ public class CrudTipotareaBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Tipotarea();
-        lista = marketingUserFacade.findAllTipotarea();
+        lista = sessionBean.marketingUserFacade.findAllTipotarea();
         elemento.setAccionList(new ArrayList<Accion>());
-        acciones = marketingUserFacade.findAllAcciones();
+        acciones = sessionBean.marketingUserFacade.findAllAcciones();
         for (Accion tj : elemento.getAccionList()) {
             if (acciones.contains(tj)) {
                 acciones.remove(tj);
@@ -84,7 +82,7 @@ public class CrudTipotareaBean {
 
     public void setElemento(Tipotarea elemento) {
         this.elemento = elemento;
-        acciones = marketingUserFacade.findAllAcciones();
+        acciones = sessionBean.marketingUserFacade.findAllAcciones();
         for (Accion tj : elemento.getAccionList()) {
             if (acciones.contains(tj)) {
                 acciones.remove(tj);
@@ -93,22 +91,14 @@ public class CrudTipotareaBean {
         AccionesTodos = new DualListModel<Accion>(acciones, elemento.getAccionList());
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
     public void delete() {
-        marketingUserFacade.deleteTipotarea(elemento);
-        lista = marketingUserFacade.findAllTipotarea();
+        sessionBean.marketingUserFacade.deleteTipotarea(elemento);
+        lista = sessionBean.marketingUserFacade.findAllTipotarea();
         sessionBean.registrarlog("eliminar", "Tipotareas", elemento.getNombre());
         FacesUtil.addInfoMessage("Tipo de evento eliminado", elemento.getNombre());
         elemento = new Tipotarea();
         elemento.setAccionList(new ArrayList<Accion>());
-        acciones = marketingUserFacade.findAllAcciones();
+        acciones = sessionBean.marketingUserFacade.findAllAcciones();
         for (Accion tj : elemento.getAccionList()) {
             if (acciones.contains(tj)) {
                 acciones.remove(tj);
@@ -119,9 +109,9 @@ public class CrudTipotareaBean {
 
     public void guardar() {
         elemento.setAccionList(AccionesTodos.getTarget());
-        boolean opcion = marketingUserFacade.guardarTipotarea(elemento);
+        boolean opcion = sessionBean.marketingUserFacade.guardarTipotarea(elemento);
 
-        lista = marketingUserFacade.findAllTipotarea();
+        lista = sessionBean.marketingUserFacade.findAllTipotarea();
         if (opcion) {
             sessionBean.registrarlog("actualizar", "Tipotareas", elemento.getNombre());
             FacesUtil.addInfoMessage("Tipo de tarea actualizado", elemento.getNombre());
@@ -131,7 +121,7 @@ public class CrudTipotareaBean {
         }
         elemento = new Tipotarea();
         elemento.setAccionList(new ArrayList<Accion>());
-        acciones = marketingUserFacade.findAllAcciones();
+        acciones = sessionBean.marketingUserFacade.findAllAcciones();
         for (Accion tj : elemento.getAccionList()) {
             if (acciones.contains(tj)) {
                 acciones.remove(tj);

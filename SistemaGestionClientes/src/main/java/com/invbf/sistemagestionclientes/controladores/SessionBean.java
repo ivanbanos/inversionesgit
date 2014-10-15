@@ -12,7 +12,13 @@ import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.exceptions.ClavesNoConcuerdanException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoConectadoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoExisteException;
+import com.invbf.sistemagestionclientes.facade.AdminFacade;
+import com.invbf.sistemagestionclientes.facade.HostessFacade;
+import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
 import com.invbf.sistemagestionclientes.facade.SystemFacade;
+import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
+import com.invbf.sistemagestionclientes.facade.impl.HostessFacadeImpl;
+import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.observer.Observer;
 import com.invbf.sistemagestionclientes.observer.Subject;
@@ -39,6 +45,9 @@ import javax.faces.context.FacesContext;
 public class SessionBean implements Serializable, Subject {
 
     SystemFacade sessionFacade;
+    AdminFacade adminFacade;
+    MarketingUserFacade marketingUserFacade;
+    HostessFacade hostessFacade;
     private Usuario usuario;//Almacena el objeto usuario de la session
     private HashMap<String, Object> Attributes;
     private List<Observer> observers;
@@ -54,6 +63,9 @@ public class SessionBean implements Serializable, Subject {
     @PostConstruct
     public void init() {
         sessionFacade = new SystemFacadeImpl();
+        adminFacade = new AdminFacadeImpl();
+        marketingUserFacade = new MarketingUserFacadeImpl();
+        hostessFacade = new HostessFacadeImpl();
         usuario = new Usuario();
         Attributes = new HashMap<String, Object>();
         observers = new ArrayList<Observer>();
@@ -284,4 +296,37 @@ public class SessionBean implements Serializable, Subject {
     void obtenerUsuario(Integer idUsuario) {
         usuario = sessionFacade.getUsuario(idUsuario);
     }
+
+    public SystemFacade getSessionFacade() {
+        return sessionFacade;
+    }
+
+    public void setSessionFacade(SystemFacade sessionFacade) {
+        this.sessionFacade = sessionFacade;
+    }
+
+    public AdminFacade getAdminFacade() {
+        return adminFacade;
+    }
+
+    public void setAdminFacade(AdminFacade adminFacade) {
+        this.adminFacade = adminFacade;
+    }
+
+    public MarketingUserFacade getMarketingUserFacade() {
+        return marketingUserFacade;
+    }
+
+    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
+        this.marketingUserFacade = marketingUserFacade;
+    }
+
+    public HostessFacade getHostessFacade() {
+        return hostessFacade;
+    }
+
+    public void setHostessFacade(HostessFacade hostessFacade) {
+        this.hostessFacade = hostessFacade;
+    }
+    
 }

@@ -28,7 +28,6 @@ public class ConfiguracionesGeneralesBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    SystemFacade systemFacade;
     private List<Configuracion> configuraciones;
     
     public ConfiguracionesGeneralesBean() {
@@ -36,18 +35,9 @@ public class ConfiguracionesGeneralesBean {
 
     @PostConstruct
     public void init() {
-        systemFacade = new SystemFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
-        configuraciones = systemFacade.getAllConfiguraciones();
-    }
-
-    public SystemFacade getSystemFacade() {
-        return systemFacade;
-    }
-
-    public void setSystemFacade(SystemFacade systemFacade) {
-        this.systemFacade = systemFacade;
+        configuraciones = sessionBean.sessionFacade.getAllConfiguraciones();
     }
 
     public List<Configuracion> getConfiguraciones() {
@@ -59,7 +49,7 @@ public class ConfiguracionesGeneralesBean {
     }
     
     public void guardar(){
-        systemFacade.setAllConfiguraciones(configuraciones);
+        sessionBean.sessionFacade.setAllConfiguraciones(configuraciones);
         FacesUtil.addInfoMessage("Configuraciones guardadas con exito!");
     }
 }

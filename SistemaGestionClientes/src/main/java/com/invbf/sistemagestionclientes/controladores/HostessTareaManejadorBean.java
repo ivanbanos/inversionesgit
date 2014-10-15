@@ -33,9 +33,6 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class HostessTareaManejadorBean {
-    MarketingUserFacade marketingUserFacade;
-    AdminFacade adminFacade;
-    HostessFacade hostessFacade;
     private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -53,9 +50,6 @@ public class HostessTareaManejadorBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
-        adminFacade = new AdminFacadeImpl();
-        hostessFacade = new HostessFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("eventoshostess");
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
@@ -74,9 +68,9 @@ public class HostessTareaManejadorBean {
             } catch (IOException ex) {
             }
         }
-        elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
+        elemento = sessionBean.marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
         try {
-            List<Listasclientestareas> clientes = hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
+            List<Listasclientestareas> clientes = sessionBean.hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
             clientesPojo = new ArrayList<LCTPojo>();
             for (Iterator<Listasclientestareas> it = clientes.iterator(); it.hasNext();) {
                 Listasclientestareas listasclientestareas = it.next();
@@ -92,30 +86,6 @@ public class HostessTareaManejadorBean {
 
     public void setElemento(Tarea elemento) {
         this.elemento = elemento;
-    }
-
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
-    }
-
-    public HostessFacade getHostessFacade() {
-        return hostessFacade;
-    }
-
-    public void setHostessFacade(HostessFacade hostessFacade) {
-        this.hostessFacade = hostessFacade;
     }
 
     public void guardar(Integer idCliente) {
@@ -137,17 +107,17 @@ public class HostessTareaManejadorBean {
             }
 
             l = clientesPojo.remove(index);
-            Accion a = marketingUserFacade.findAccion(l.getAccion());
+            Accion a = sessionBean.marketingUserFacade.findAccion(l.getAccion());
 
 
-            hostessFacade.guardarLCE(l.getListaclientetareas(sessionBean.getUsuario(), a),a.getIdAccion());
+            sessionBean.hostessFacade.guardarLCE(l.getListaclientetareas(sessionBean.getUsuario(), a),a.getIdAccion());
             List<Listasclientestareas> clientes = new ArrayList<Listasclientestareas>();
             for (Iterator<LCTPojo> it = clientesPojo.iterator(); it.hasNext();) {
                 LCTPojo lct = it.next();
                 clientes.add(lct.getListaclientetareas(null, a));
             }
             try {
-                Listasclientestareas nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idTarea"), clientes, l.getListaclientetareas(sessionBean.getUsuario(), a));
+                Listasclientestareas nuevo = sessionBean.hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idTarea"), clientes, l.getListaclientetareas(sessionBean.getUsuario(), a));
                 clientesPojo.add(new LCTPojo(nuevo));
             } catch (EventoSinClientesPorRevisarException ex) {
                 if (clientesPojo.isEmpty()) {
@@ -162,7 +132,7 @@ public class HostessTareaManejadorBean {
         {
             int index = clientesPojo.indexOf(new LCTPojo((Integer) sessionBean.getAttributes().get("idTarea"), idCliente));
             LCTPojo l = clientesPojo.remove(index);
-            Accion a = marketingUserFacade.findByNombreAccion("INICIAL");
+            Accion a = sessionBean.marketingUserFacade.findByNombreAccion("INICIAL");
 
             List<Listasclientestareas> clientes = new ArrayList<Listasclientestareas>();
             for (Iterator<LCTPojo> it = clientesPojo.iterator(); it.hasNext();) {
@@ -170,7 +140,7 @@ public class HostessTareaManejadorBean {
                 clientes.add(lct.getListaclientetareas(null, a));
             }
             try {
-                Listasclientestareas nuevo = hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idTarea"), clientes, l.getListaclientetareas(sessionBean.getUsuario(), a));
+                Listasclientestareas nuevo = sessionBean.hostessFacade.nuevoLCE((Integer) sessionBean.getAttributes().get("idTarea"), clientes, l.getListaclientetareas(sessionBean.getUsuario(), a));
                 clientesPojo.add(new LCTPojo(nuevo));
             } catch (EventoSinClientesPorRevisarException ex) {
                 if (clientesPojo.isEmpty()) {

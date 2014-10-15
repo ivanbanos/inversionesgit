@@ -27,10 +27,6 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class ReporteTareaEspesificaBean {
-
-    MarketingUserFacade marketingUserFacade;
-    SystemFacade systemFacade;
-    AdminFacade adminFacade;
     private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -52,9 +48,6 @@ public class ReporteTareaEspesificaBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
-        systemFacade = new SystemFacadeImpl();
-        adminFacade = new AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("reportes");
         if (!sessionBean.perfilViewMatch("Reportes")) {
@@ -71,7 +64,7 @@ public class ReporteTareaEspesificaBean {
             } catch (IOException ex) {
             }
         }
-        elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
+        elemento = sessionBean.marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
         acciones = new ArrayList<String>();
         for (Accion a : elemento.getTipo().getAccionList()) {
             acciones.add(a.getNombre());
@@ -87,7 +80,7 @@ public class ReporteTareaEspesificaBean {
             accionesConteo.add(new AccionConteo(a.getNombre(), 0));
         }
         for (Listasclientestareas lct : elemento.getListasclientestareasList()) {
-            lct.setFechaAtencion(marketingUserFacade.getLCTFecha(lct));
+            lct.setFechaAtencion(sessionBean.marketingUserFacade.getLCTFecha(lct));
             totalClientes++;
             if (!lct.getIdAccion().getNombre().equals("INICIAL")) {
                 totalRevisados++;
@@ -105,22 +98,6 @@ public class ReporteTareaEspesificaBean {
                 }
             }
         }
-    }
-
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
     }
 
     public Tarea getElemento() {

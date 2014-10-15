@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ideacentre
  */
 @Entity
-@Table(name = "clientes", schema="inversiones")
+@Table(name = "Clientes")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Clientes.findAll", query = "SELECT c FROM Cliente c"),
@@ -79,7 +79,7 @@ public class Cliente implements Serializable {
     private String correo;
     @Column(name = "identificacion")
     private String identificacion;
-    @JoinTable(name = "clientestiposjuegos", joinColumns = {
+    @JoinTable(name = "ClientesTiposJuegos", joinColumns = {
         @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")}, inverseJoinColumns = {
         @JoinColumn(name = "idTipoJuego", referencedColumnName = "idTipoJuego")})
     @ManyToMany

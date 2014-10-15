@@ -32,9 +32,6 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class MarketingEventoManejadorBean {
-    MarketingUserFacade marketingUserFacade;
-    SystemFacade systemFacade;
-    AdminFacade adminFacade;
     private Evento elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -54,9 +51,6 @@ public class MarketingEventoManejadorBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
-        systemFacade = new SystemFacadeImpl();
-        adminFacade = new AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("eventos");
         if (!sessionBean.perfilViewMatch("ManejadorEventosMarketing")
@@ -76,12 +70,12 @@ public class MarketingEventoManejadorBean {
             }
         }
         if ((Integer) sessionBean.getAttributes().get("idEvento") != 0) {
-            elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
+            elemento = sessionBean.marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
         } else {
             elemento = new Evento();
             elemento.setIdCasino(new Casino(0));
         }
-        listacasinos = marketingUserFacade.findAllCasinos();
+        listacasinos = sessionBean.marketingUserFacade.findAllCasinos();
     }
 
     public Evento getElemento() {
@@ -90,14 +84,6 @@ public class MarketingEventoManejadorBean {
 
     public void setElemento(Evento elemento) {
         this.elemento = elemento;
-    }
-
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
     }
 
     public String guardar() {
@@ -117,32 +103,24 @@ public class MarketingEventoManejadorBean {
                     break guardar;
                 }
             }
-            elemento = marketingUserFacade.guardarEventos(elemento);
+            elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
             if (file != null && file.getContents() != null) {
-                marketingUserFacade.guardarImagen(file.getContents(),
+                sessionBean.marketingUserFacade.guardarImagen(file.getContents(),
                         elemento.getIdEvento(),
                         file.getFileName().substring(file.getFileName().lastIndexOf("."),
                         file.getFileName().length()));
                 elemento.setImagen(elemento.getIdEvento() + file.getFileName().substring(file.getFileName().lastIndexOf("."),
                         file.getFileName().length()));
             }
-            marketingUserFacade.guardarEventos(elemento);
+            sessionBean.marketingUserFacade.guardarEventos(elemento);
             sessionBean.actualizarUsuario();
-            elemento = marketingUserFacade.guardarEventos(elemento);
+            elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
             FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
 
             return "/pages/eventos.xhtml";
         }
         return "";
-    }
-
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
     }
 
     public List<Casino> getListacasinos() {
@@ -163,7 +141,7 @@ public class MarketingEventoManejadorBean {
 
     public void deleteTarea() {
         elemento.getTareasList().remove(tarea);
-        marketingUserFacade.deleteTarea(tarea);
+        sessionBean.marketingUserFacade.deleteTarea(tarea);
         sessionBean.registrarlog("eliminar", "Tareas", elemento.toString());
         FacesUtil.addInfoMessage("Tarea eliminada", tarea.getNombre());
         tarea = new Tarea();
@@ -181,7 +159,7 @@ public class MarketingEventoManejadorBean {
         if (event != null) {
             file = event.getFile();
             if (elemento.getIdEvento() != null) {
-                marketingUserFacade.guardarImagen(file.getContents(),
+                sessionBean.marketingUserFacade.guardarImagen(file.getContents(),
                         elemento.getIdEvento(),
                         file.getFileName().substring(file.getFileName().lastIndexOf("."),
                         file.getFileName().length()));

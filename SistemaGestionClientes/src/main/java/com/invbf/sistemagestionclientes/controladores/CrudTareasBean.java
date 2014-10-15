@@ -28,8 +28,6 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class CrudTareasBean {
-    MarketingUserFacade marketingUserFacade;
-    SystemFacade systemFacade;
     private List<Tarea> lista;
     private Tarea elemento;
     private UploadedFile file;
@@ -57,8 +55,6 @@ public class CrudTareasBean {
     
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
-        systemFacade = new  SystemFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("tareas");
         if (!sessionBean.perfilViewMatch("Tareas")) {
@@ -69,7 +65,7 @@ public class CrudTareasBean {
             }
         }
         elemento = new Tarea();
-        lista = marketingUserFacade.findAllTareas();
+        lista = sessionBean.marketingUserFacade.findAllTareas();
         for (Tarea t : lista) {
             if (t.getIdEvento() == null) {
                 t.setIdEvento(new Evento());
@@ -89,10 +85,6 @@ public class CrudTareasBean {
         this.lista = lista;
     }
     
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-    
     public UploadedFile getFile() {
         return file;
     }
@@ -101,16 +93,12 @@ public class CrudTareasBean {
         this.file = file;
     }
     
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-    
     public void delete() {
-        marketingUserFacade.deleteTarea(elemento);
+        sessionBean.marketingUserFacade.deleteTarea(elemento);
         sessionBean.registrarlog("eliminar", "Tareas", elemento.getNombre());
         FacesUtil.addInfoMessage("Tarea eliminada", elemento.getNombre());
         elemento = new Tarea();
-        lista = marketingUserFacade.findAllTareas();
+        lista = sessionBean.marketingUserFacade.findAllTareas();
     }
     
     public void handleFileUpload(FileUploadEvent event) {

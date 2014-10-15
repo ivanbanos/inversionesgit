@@ -32,10 +32,6 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class ReporteEventoEspesificoBean {
-    
-    MarketingUserFacade marketingUserFacade;
-    SystemFacade systemFacade;
-    AdminFacade adminFacade;
     private Evento elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -66,9 +62,6 @@ public class ReporteEventoEspesificoBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
-        systemFacade = new SystemFacadeImpl();
-        adminFacade = new AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("reportes");
         if (!sessionBean.perfilViewMatch("Reportes")) {
@@ -85,14 +78,14 @@ public class ReporteEventoEspesificoBean {
             } catch (IOException ex) {
             }
         }
-        elemento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
+        elemento = sessionBean.marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
         for (Tarea t : elemento.getTareasList()) {
             if (!t.getEstado().equals("VENCIDO")) {
                 sessionBean.checkEstadoTarea(t);
             }
         }
-        clienteses = marketingUserFacade.findAllClientes();
-        usuarioses = adminFacade.findAllUsuariosHostess();
+        clienteses = sessionBean.marketingUserFacade.findAllClientes();
+        usuarioses = sessionBean.adminFacade.findAllUsuariosHostess();
         clientesesEvento = new ArrayList<Cliente>();
         todosclienteses = new DualListModel<Cliente>(clienteses, clientesesEvento);
     }
@@ -103,22 +96,6 @@ public class ReporteEventoEspesificoBean {
 
     public void setElemento(Evento elemento) {
         this.elemento = elemento;
-    }
-
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
     }
 
     public DualListModel<Cliente> getTodosclienteses() {

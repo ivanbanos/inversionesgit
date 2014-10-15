@@ -21,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudCasinosBean {
-    MarketingUserFacade marketingUserFacade;
     private List<Casino> lista;
     private Casino elemento;
     @ManagedProperty("#{sessionBean}")
@@ -49,11 +48,11 @@ public class CrudCasinosBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
+        sessionBean.marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Casino();
-        lista = marketingUserFacade.findAllCasinos();
+        lista = sessionBean.marketingUserFacade.findAllCasinos();
     }
 
     public List<Casino> getLista() {
@@ -72,26 +71,18 @@ public class CrudCasinosBean {
         this.elemento = elemento;
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
     
     public void delete(){
-        marketingUserFacade.deleteCasinos(elemento);
-        lista = marketingUserFacade.findAllCasinos();
+        sessionBean.marketingUserFacade.deleteCasinos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllCasinos();
         sessionBean.registrarlog("eliminar", "Casinos", elemento.getNombre());
             FacesUtil.addInfoMessage("Casino eliminado", elemento.getNombre());
         elemento = new Casino();
     }
     
     public void guardar(){
-        boolean opcion = marketingUserFacade.guardarCasinos(elemento);
-        lista = marketingUserFacade.findAllCasinos();
+        boolean opcion = sessionBean.marketingUserFacade.guardarCasinos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllCasinos();
         if (opcion) {
             sessionBean.registrarlog("actualizar", "Casinos", elemento.getNombre());
             FacesUtil.addInfoMessage("Casino actualizado", elemento.getNombre());

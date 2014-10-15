@@ -8,10 +8,9 @@ import com.invbf.sistemagestionclientes.entity.Formulario;
 import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
-import com.invbf.sistemagestionclientes.facade.AdminFacade;
-import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -25,7 +24,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class PerfilActBean {
-    AdminFacade adminFacade;
+
     private Perfil elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -103,7 +102,6 @@ public class PerfilActBean {
 
     @PostConstruct
     public void init() {
-        adminFacade = new AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         if (!sessionBean.perfilViewMatch("Perfiles")) {
@@ -120,7 +118,7 @@ public class PerfilActBean {
             } catch (IOException ex) {
             }
         }
-        elemento = adminFacade.findPerfil((Integer) sessionBean.getAttributes().get("idPerfil"));
+        elemento = sessionBean.adminFacade.findPerfil((Integer) sessionBean.getAttributes().get("idPerfil"));
         acomodaropciones();
 
 
@@ -134,18 +132,10 @@ public class PerfilActBean {
         this.elemento = elemento;
     }
 
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
-    }
-
     public void guardar() {
         try {
             acomodaropcionesdevuelta();
-            adminFacade.guardarPerfiles(elemento);
+            sessionBean.adminFacade.guardarPerfiles(elemento);
             sessionBean.actualizarUsuario();
             sessionBean.getAttributes().remove("idPerfil");
             sessionBean.registrarlog("actualizar", "Perfiles", elemento.getNombre());
@@ -358,696 +348,288 @@ public class PerfilActBean {
     }
 
     private void acomodaropcionesdevuelta() {
-        Vista v = adminFacade.findVistasByNombre("Usuarios");
-        Vista v2 = adminFacade.findVistasByNombre("AtributosSistema");
+        Vista v;
         int count = 0;
+        elemento.getVistasList().clear();
         if (vistaUsuario == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Usuarios");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Perfiles");
         if (vistaPerfiles == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Perfiles");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Vistas");
         if (vistaVistas == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Vistas");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Formularios");
         if (vistaForm == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Formularios");
+            elemento.getVistasList().add(v);
         }
-        if (count == 4) {
-            if (elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().remove(v2);
-            }
+        if (count < 4) {
+            v = sessionBean.adminFacade.findVistasByNombre("AtributosSistema");
+            elemento.getVistasList().add(v);
         }
-
-        v = adminFacade.findVistasByNombre("Eventos");
-        if (vistaEventos == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+        if (vistaEventos == true) {
+            v = sessionBean.adminFacade.findVistasByNombre("Eventos");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Tareas");
-        if (vistaTareas == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+        if (vistaTareas == true) {
+            v = sessionBean.adminFacade.findVistasByNombre("Tareas");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Clientes");
-        if (vistaClientes == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+        if (vistaClientes == true) {
+            v = sessionBean.adminFacade.findVistasByNombre("Clientes");
+            elemento.getVistasList().add(v);
         }
-
-        v = adminFacade.findVistasByNombre("Casinos");
-        v2 = adminFacade.findVistasByNombre("AtributosMarketing");
         count = 0;
         if (vistaCasinos == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Casinos");
+            elemento.getVistasList().add(v);
         }
-
-        v = adminFacade.findVistasByNombre("Tipotareas");
         if (vistaAtributos == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Tipotareas");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Atributos");
         if (vistaAtributos == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Atributos");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("TipoJuego");
         if (vistaTipo == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("TipoJuego");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Categorias");
         if (vistaCat == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Categorias");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Acciones");
         if (vistaAcciones == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Acciones");
+            elemento.getVistasList().add(v);
         }
-
-        v = adminFacade.findVistasByNombre("tipodocumento");
         if (vistatipoDocumento == false) {
             count++;
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
         } else {
-            if (!elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().add(v2);
-            }
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("tipodocumento");
+            elemento.getVistasList().add(v);
         }
 
-        if (count == 7) {
-            if (elemento.getVistasList().contains(v2)) {
-                elemento.getVistasList().remove(v2);
-            }
+        if (count < 7) {
+            v = sessionBean.adminFacade.findVistasByNombre("AtributosMarketing");
+            elemento.getVistasList().add(v);
         }
 
-        v = adminFacade.findVistasByNombre("ManejadorEventosMarketing");
-        if (vistaEvMarketing == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+        if (vistaEvMarketing == true) {
+            v = sessionBean.adminFacade.findVistasByNombre("ManejadorEventosMarketing");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("ManejadorEventosHostess");
-        if (vistaEvHostess == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+        if (vistaEvHostess == true) {
+            v = sessionBean.adminFacade.findVistasByNombre("ManejadorEventosHostess");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("Reportes");
         if (vistaReportes == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("Reportes");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("ConfiguracionesGenerales");
         if (vistaConfiguraciones == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("ConfiguracionesGenerales");
+            elemento.getVistasList().add(v);
         }
-        v = adminFacade.findVistasByNombre("cupofidelizacion");
         if (cupofidelizacion == false) {
-            if (elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().remove(v);
-            }
-        } else {
-            if (!elemento.getVistasList().contains(v)) {
-                elemento.getVistasList().add(v);
-            }
+            v = sessionBean.adminFacade.findVistasByNombre("cupofidelizacion");
+            elemento.getVistasList().add(v);
         }
 
-        Formulario f = adminFacade.findFormularioByAccionAndTabla("crear", "tipodocumento");
-        if (agregarUsuario == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        elemento.getFormulariosList().clear();
+        Formulario f;
+        if (agregarUsuario == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "tipodocumento");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "tipodocumento");
-        if (actualizarUsuario == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarUsuario == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "tipodocumento");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "tipodocumento");
-        if (eliminarUsuario == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarUsuario == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "tipodocumento");
+            elemento.getFormulariosList().add(f);
         }
-
-
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Usuarios");
-        if (agregarUsuario == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarUsuario == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Usuarios");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Usuarios");
-        if (actualizarUsuario == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarUsuario == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Usuarios");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Usuarios");
-        if (eliminarUsuario == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarUsuario == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Usuarios");
+            elemento.getFormulariosList().add(f);
         }
-
-
-
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Tareas");
-        if (agregarTareas == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarTareas == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Tareas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Tareas");
-        if (actualizarTareas == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarTareas == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Tareas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Tareas");
-        if (eliminarTareas == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarTareas == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Tareas");
+            elemento.getFormulariosList().add(f);
         }
-
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Perfiles");
-        if (agregarPerfiles == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarPerfiles == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Perfiles");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Perfiles");
-        if (actualizarPerfiles == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarPerfiles == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Perfiles");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Perfiles");
-        if (eliminarPerfiles == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarPerfiles == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Perfiles");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Vistas");
-        if (agregarVistas == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarVistas == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Vistas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Vistas");
-        if (actualizarVistas == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarVistas == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Vistas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Vistas");
-        if (eliminarVistas == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarVistas == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Vistas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Formularios");
-        if (agregarForm == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarForm == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Formularios");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Formularios");
-        if (actualizarForm == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarForm == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Formularios");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Formularios");
-        if (eliminarForm == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarForm == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Formularios");
+            elemento.getFormulariosList().add(f);
         }
-
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Tipotareas");
-        if (agregarCasinos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarCasinos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Tipotareas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Tipotareas");
-        if (actualizarCasinos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarCasinos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Tipotareas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Tipotareas");
-        if (eliminarCasinos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarCasinos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Tipotareas");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Casinos");
-        if (agregarCasinos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarCasinos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Casinos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Casinos");
-        if (actualizarCasinos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarCasinos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Casinos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Casinos");
-        if (eliminarCasinos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarCasinos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Casinos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Eventos");
-        if (agregarEventos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarEventos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Eventos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Eventos");
-        if (actualizarEventos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarEventos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Eventos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Eventos");
-        if (eliminarEventos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarEventos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Eventos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Clientes");
-        if (agregarClientes == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarClientes == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Clientes");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Clientes");
-        if (actualizarClientes == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarClientes == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Clientes");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Clientes");
-        if (eliminarClientes == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarClientes == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Clientes");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Atributos");
-        if (agregarAtributos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarAtributos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Atributos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Atributos");
-        if (actualizarAtributos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarAtributos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Atributos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Atributos");
-        if (eliminarAtributos == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarAtributos == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Atributos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "TiposJuegos");
-        if (agregarTipo == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarTipo == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "TiposJuegos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "TiposJuegos");
-        if (actualizarTipo == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarTipo == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "TiposJuegos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "TiposJuegos");
-        if (eliminarTipo == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarTipo == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "TiposJuegos");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Categorias");
-        if (agregarCat == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarCat == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Categorias");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Categorias");
-        if (actualizarCat == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarCat == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Categorias");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Categorias");
-        if (eliminarCat == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarCat == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Categorias");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("crear", "Acciones");
-        if (agregarAcciones == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (agregarAcciones == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Acciones");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("actualizar", "Acciones");
-        if (actualizarAcciones == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (actualizarAcciones == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Acciones");
+            elemento.getFormulariosList().add(f);
         }
-        f = adminFacade.findFormularioByAccionAndTabla("eliminar", "Acciones");
-        if (eliminarAcciones == false) {
-            if (elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().remove(f);
-            }
-        } else {
-            if (!elemento.getFormulariosList().contains(f)) {
-                elemento.getFormulariosList().add(f);
-            }
+        if (eliminarAcciones == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Acciones");
+            elemento.getFormulariosList().add(f);
         }
 
     }

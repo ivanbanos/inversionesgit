@@ -21,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudTipoJuegoBean {
-    MarketingUserFacade marketingUserFacade;
     private List<TipoJuego> lista;
     private TipoJuego elemento;
     @ManagedProperty("#{sessionBean}")
@@ -49,11 +48,10 @@ public class CrudTipoJuegoBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new TipoJuego();
-        lista = marketingUserFacade.findAllTiposjuegos();
+        lista = sessionBean.marketingUserFacade.findAllTiposjuegos();
     }
 
     public List<TipoJuego> getLista() {
@@ -72,26 +70,18 @@ public class CrudTipoJuegoBean {
         this.elemento = elemento;
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
     
     public void delete(){
-        marketingUserFacade.deleteTiposjuegos(elemento);
-        lista = marketingUserFacade.findAllTiposjuegos();
+        sessionBean.marketingUserFacade.deleteTiposjuegos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllTiposjuegos();
         sessionBean.registrarlog("eliminar", "TiposJuegos", elemento.toString());
             FacesUtil.addInfoMessage("Tipo de juegos eliminado", elemento.getNombre());
         elemento = new TipoJuego();
     }
     
     public void guardar(){
-        boolean opcion = marketingUserFacade.guardarTiposjuegos(elemento);
-        lista = marketingUserFacade.findAllTiposjuegos();
+        boolean opcion = sessionBean.marketingUserFacade.guardarTiposjuegos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllTiposjuegos();
         
         if (opcion) {
             sessionBean.registrarlog("actualizar", "TiposJuegos", elemento.toString());

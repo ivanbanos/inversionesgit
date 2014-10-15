@@ -28,7 +28,6 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class CrudPerfilesBean {
-    AdminFacade adminFacade;
     private List<Perfil> lista;
     private List<Formulario> listaformularios;
     private List<Vista> listavistas;
@@ -59,11 +58,10 @@ public class CrudPerfilesBean {
 
     @PostConstruct
     public void init() {
-        adminFacade = new AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Perfil();
-        lista = adminFacade.findAllPerfiles();
+        lista = sessionBean.adminFacade.findAllPerfiles();
         listaformularios = new ArrayList<Formulario>();
         listavistas = new ArrayList<Vista>();
         todasVistas = new DualListModel<Vista>(listavistas, elemento.getVistasList());
@@ -86,14 +84,6 @@ public class CrudPerfilesBean {
         this.elemento = elemento;
     }
 
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
-    }
-
     public List<Formulario> getListaformularios() {
         return listaformularios;
     }
@@ -111,8 +101,8 @@ public class CrudPerfilesBean {
     }
 
     public void delete() {
-        adminFacade.deletePerfiles(elemento);
-        lista = adminFacade.findAllPerfiles();
+        sessionBean.adminFacade.deletePerfiles(elemento);
+        lista = sessionBean.adminFacade.findAllPerfiles();
         sessionBean.registrarlog("eliminar", "Perfiles", elemento.getNombre());
         FacesUtil.addInfoMessage("Perfil eliminado", elemento.getNombre());
         elemento = new Perfil();
@@ -122,8 +112,8 @@ public class CrudPerfilesBean {
 
     public void guardar() {
         try {
-            boolean opcion = adminFacade.guardarPerfiles(elemento);
-            lista = adminFacade.findAllPerfiles();
+            boolean opcion = sessionBean.adminFacade.guardarPerfiles(elemento);
+            lista = sessionBean.adminFacade.findAllPerfiles();
             sessionBean.notifyObserver("Perfiles");
             if (opcion) {
                 sessionBean.registrarlog("actualizar", "Perfiles", elemento.getNombre());

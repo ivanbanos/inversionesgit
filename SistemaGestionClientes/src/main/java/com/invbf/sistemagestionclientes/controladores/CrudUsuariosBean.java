@@ -26,7 +26,6 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class CrudUsuariosBean implements Observer {
     
-    AdminFacade adminFacade;
     private List<Usuario> lista;
     private Usuario elemento;
     private List<Perfil> listaperfiles;
@@ -55,13 +54,13 @@ public class CrudUsuariosBean implements Observer {
 
     @PostConstruct
     public void init() {
-        adminFacade = new AdminFacadeImpl();
+        sessionBean.adminFacade = new AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
 
         setNuevoUsuario();
-        lista = adminFacade.findAllUsuarios();
-        listaperfiles = adminFacade.findAllPerfiles();
+        lista = sessionBean.adminFacade.findAllUsuarios();
+        listaperfiles = sessionBean.adminFacade.findAllPerfiles();
         sessionBean.registerObserver(this);
     }
 
@@ -86,14 +85,6 @@ public class CrudUsuariosBean implements Observer {
         this.elemento = elemento;
     }
 
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
-    }
-
     public List<Perfil> getListaperfiles() {
         return listaperfiles;
     }
@@ -103,8 +94,8 @@ public class CrudUsuariosBean implements Observer {
     }
 
     public void delete() {
-        adminFacade.deleteUsuarios(elemento);
-        lista = adminFacade.findAllUsuarios();
+        sessionBean.adminFacade.deleteUsuarios(elemento);
+        lista = sessionBean.adminFacade.findAllUsuarios();
         sessionBean.registrarlog("eliminar", "Usuarios", elemento.toString());
 
         FacesUtil.addInfoMessage("Usuario eliminado", elemento.getNombreUsuario());
@@ -116,8 +107,8 @@ public class CrudUsuariosBean implements Observer {
     public void guardar() {
         if(contrasena.equals(elemento.getContrasena())){
         try {
-            boolean opcion = adminFacade.guardarUsuarios(elemento);
-            lista = adminFacade.findAllUsuarios();
+            boolean opcion = sessionBean.adminFacade.guardarUsuarios(elemento);
+            lista = sessionBean.adminFacade.findAllUsuarios();
             if (opcion) {
                 sessionBean.registrarlog("actualizar", "Usuarios", elemento.toString());
                 FacesUtil.addInfoMessage("Usuario actualizado", elemento.getNombreUsuario());
@@ -135,7 +126,7 @@ public class CrudUsuariosBean implements Observer {
 
     @Override
     public void update() {
-        listaperfiles = adminFacade.findAllPerfiles();
+        listaperfiles = sessionBean.adminFacade.findAllPerfiles();
     }
 
     private void setNuevoUsuario() {

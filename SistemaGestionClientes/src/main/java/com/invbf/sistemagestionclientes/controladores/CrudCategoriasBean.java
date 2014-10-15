@@ -21,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudCategoriasBean {
-    MarketingUserFacade marketingUserFacade;
     private List<Categoria> lista;
     private Categoria elemento;
     @ManagedProperty("#{sessionBean}")
@@ -49,11 +48,10 @@ public class CrudCategoriasBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Categoria();
-        lista = marketingUserFacade.findAllCategorias();
+        lista = sessionBean.marketingUserFacade.findAllCategorias();
     }
 
     public List<Categoria> getLista() {
@@ -72,17 +70,9 @@ public class CrudCategoriasBean {
         this.elemento = elemento;
     }
 
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
     public void delete() {
-        marketingUserFacade.deleteCategorias(elemento);
-        lista = marketingUserFacade.findAllCategorias();
+        sessionBean.marketingUserFacade.deleteCategorias(elemento);
+        lista = sessionBean.marketingUserFacade.findAllCategorias();
         sessionBean.registrarlog("eliminar", "Categorias", elemento.getNombre());
         
             FacesUtil.addInfoMessage("Categoria eliminada", elemento.getNombre());
@@ -90,8 +80,8 @@ public class CrudCategoriasBean {
     }
 
     public void guardar() {
-        boolean opcion = marketingUserFacade.guardarCategorias(elemento);
-        lista = marketingUserFacade.findAllCategorias();
+        boolean opcion = sessionBean.marketingUserFacade.guardarCategorias(elemento);
+        lista = sessionBean.marketingUserFacade.findAllCategorias();
         if (opcion) {
             sessionBean.registrarlog("actualizar", "Categorias", elemento.getNombre());
             FacesUtil.addInfoMessage("Categoria actualizada", elemento.getNombre());

@@ -21,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudVistasBean {
-    AdminFacade adminFacade;
     private List<Vista> lista;
     private Vista elemento;
     @ManagedProperty("#{sessionBean}")
@@ -48,11 +47,10 @@ public class CrudVistasBean {
 
     @PostConstruct
     public void init() {
-        adminFacade = new AdminFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Vista();
-        lista = adminFacade.findAllVistas();
+        lista = sessionBean.adminFacade.findAllVistas();
     }
 
     public List<Vista> getLista() {
@@ -71,17 +69,9 @@ public class CrudVistasBean {
         this.elemento = elemento;
     }
 
-    public AdminFacade getAdminFacade() {
-        return adminFacade;
-    }
-
-    public void setAdminFacade(AdminFacade adminFacade) {
-        this.adminFacade = adminFacade;
-    }
-
     public void delete() {
-        adminFacade.deleteVistas(elemento);
-        lista = adminFacade.findAllVistas();
+        sessionBean.adminFacade.deleteVistas(elemento);
+        lista = sessionBean.adminFacade.findAllVistas();
 
         sessionBean.registrarlog("eliminar", "Vistas", elemento.toString());
         FacesUtil.addInfoMessage("Vista borrada", elemento.getNombreVista());
@@ -90,8 +80,8 @@ public class CrudVistasBean {
     }
 
     public void guardar() {
-        boolean opcion = adminFacade.guardarVistas(elemento);
-        lista = adminFacade.findAllVistas();
+        boolean opcion = sessionBean.adminFacade.guardarVistas(elemento);
+        lista = sessionBean.adminFacade.findAllVistas();
 
         if (opcion) {
             sessionBean.registrarlog("actualizar", "Vistas", elemento.toString());

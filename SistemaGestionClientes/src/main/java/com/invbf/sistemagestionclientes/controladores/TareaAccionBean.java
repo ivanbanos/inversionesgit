@@ -43,9 +43,6 @@ import org.primefaces.model.DualListModel;
 @ViewScoped
 public class TareaAccionBean {
     private Tarea elemento;
-    MarketingUserFacade marketingUserFacade;
-    AdminFacade adminFacade;
-    SystemFacade systemFacade;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private List<Tipotarea> tipotareas;
@@ -67,9 +64,6 @@ public class TareaAccionBean {
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
-        adminFacade = new AdminFacadeImpl();
-        systemFacade = new SystemFacadeImpl();
         conteo = 0;
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("tareas");
@@ -87,8 +81,8 @@ public class TareaAccionBean {
             } catch (IOException ex) {
             }
         }
-        List<Categoria> categorias = marketingUserFacade.findAllCategorias();
-        List<TipoJuego> tipoJuegos = marketingUserFacade.findAllTiposjuegos();
+        List<Categoria> categorias = sessionBean.marketingUserFacade.findAllCategorias();
+        List<TipoJuego> tipoJuegos = sessionBean.marketingUserFacade.findAllTiposjuegos();
         categoriasBoolean = new ArrayList<CategoriaBoolean>();
         tipoJuegosBoolean = new ArrayList<TipoJuegoBoolean>();
         for (TipoJuego tipoJuego : tipoJuegos) {
@@ -100,17 +94,17 @@ public class TareaAccionBean {
         if (((Integer) sessionBean.getAttributes().get("idTarea")) == 0) {
             elemento = new Tarea();
             if (sessionBean.getAttributes().containsKey("idEvento")) {
-                evento = marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
+                evento = sessionBean.marketingUserFacade.findEvento((Integer) sessionBean.getAttributes().get("idEvento"));
                 elemento.setIdEvento(evento);
             }
             elemento.setEstado("Ninguno");
             elemento.setTipo(new Tipotarea(0));
-            usuarioses = adminFacade.findAllUsuariosHostess();
+            usuarioses = sessionBean.adminFacade.findAllUsuariosHostess();
             elemento.setListasclientestareasList(new ArrayList<Listasclientestareas>());
             elemento.setUsuarioList(new ArrayList<Usuario>());
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
         } else {
-            elemento = marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
+            elemento = sessionBean.marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
             conteo = elemento.getListasclientestareasList().size();
             evento = elemento.getIdEvento();
             if (elemento.getCategorias() == null || elemento.getCategorias().equals("")) {
@@ -135,7 +129,7 @@ public class TareaAccionBean {
                     }
                 }
             }
-            usuarioses = adminFacade.findAllUsuariosHostess();
+            usuarioses = sessionBean.adminFacade.findAllUsuariosHostess();
             for (Usuario u : elemento.getUsuarioList()) {
                 if (usuarioses.contains(u)) {
                     usuarioses.remove(u);
@@ -144,7 +138,7 @@ public class TareaAccionBean {
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
         }
         
-        tipotareas = marketingUserFacade.findAllTipotarea();
+        tipotareas = sessionBean.marketingUserFacade.findAllTipotarea();
     }
 
     public Tarea getElemento() {
@@ -176,7 +170,7 @@ public class TareaAccionBean {
                     break guardar;
                 }
             }
-            elemento = marketingUserFacade.guardarTarea(elemento);
+            elemento = sessionBean.marketingUserFacade.guardarTarea(elemento);
             elemento.setEstado("POR INICIAR");
             if (fechainicio.before(nowDate)) {
                 elemento.setEstado("ACTIVO");
@@ -185,16 +179,16 @@ public class TareaAccionBean {
                 elemento.setEstado("VENCIDO");
             }
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
-            marketingUserFacade.guardarTarea(elemento);
+            sessionBean.marketingUserFacade.guardarTarea(elemento);
 
-            Accion estadoscliente = marketingUserFacade.findByNombreAccion("INICIAL");
+            Accion estadoscliente = sessionBean.marketingUserFacade.findByNombreAccion("INICIAL");
             elemento.setUsuarioList(todosusuarioses.getTarget());
             for (Usuario s : todosusuarioses.getTarget()) {
-                adminFacade.agregarTareaUsuarios(s, elemento);
+                sessionBean.adminFacade.agregarTareaUsuarios(s, elemento);
             }
             ArrayList<Listasclientestareas> al = new ArrayList<Listasclientestareas>(elemento.getListasclientestareasList());
             elemento.getListasclientestareasList().clear();
-            List<Cliente> todosclienteses = marketingUserFacade.findAllClientes();
+            List<Cliente> todosclienteses = sessionBean.marketingUserFacade.findAllClientes();
             boolean noCatselected = true;
             boolean noTipselected = true;
             for (CategoriaBoolean cb : categoriasBoolean) {
@@ -284,7 +278,7 @@ public class TareaAccionBean {
             }
             sessionBean.actualizarUsuario();
 
-            usuarioses = adminFacade.findAllUsuariosHostess();
+            usuarioses = sessionBean.adminFacade.findAllUsuariosHostess();
             for (Usuario u : elemento.getUsuarioList()) {
                 if (usuarioses.contains(u)) {
                     usuarioses.remove(u);
@@ -292,10 +286,10 @@ public class TareaAccionBean {
             }
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
 
-            elemento = marketingUserFacade.guardarTarea(elemento);
+            elemento = sessionBean.marketingUserFacade.guardarTarea(elemento);
             if (evento != null) {
                 evento.getTareasList().add(elemento);
-                marketingUserFacade.guardarEventos(evento);
+                sessionBean.marketingUserFacade.guardarEventos(evento);
             }
             FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
             goBack();
@@ -343,7 +337,7 @@ public class TareaAccionBean {
     }
 
     public void enviarCorreo() {
-        systemFacade.enviarCorreo(elemento);
+        sessionBean.sessionFacade.enviarCorreo(elemento);
     }
 
     public boolean isTodoscat() {

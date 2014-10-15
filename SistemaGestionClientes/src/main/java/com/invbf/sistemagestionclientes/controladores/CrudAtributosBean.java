@@ -21,7 +21,6 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudAtributosBean {
-    MarketingUserFacade marketingUserFacade;
     private List<Atributo> lista;
     private Atributo elemento;
     @ManagedProperty("#{sessionBean}")
@@ -48,11 +47,10 @@ private List<Atributo> flista;
 
     @PostConstruct
     public void init() {
-        marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Atributo();
-        lista = marketingUserFacade.findAllAtributos();
+        lista = sessionBean.marketingUserFacade.findAllAtributos();
         
     }
 
@@ -71,19 +69,10 @@ private List<Atributo> flista;
     public void setElemento(Atributo elemento) {
         this.elemento = elemento;
     }
-
-    public MarketingUserFacade getMarketingUserFacade() {
-        return marketingUserFacade;
-    }
-
-    public void setMarketingUserFacade(MarketingUserFacade marketingUserFacade) {
-        this.marketingUserFacade = marketingUserFacade;
-    }
-
     
     public void delete(){
-        marketingUserFacade.deleteAtributos(elemento);
-        lista = marketingUserFacade.findAllAtributos();
+        sessionBean.marketingUserFacade.deleteAtributos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllAtributos();
         sessionBean.registrarlog("eliminar", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo eliminado", elemento.getNombre());
         elemento = new Atributo();
@@ -91,8 +80,8 @@ private List<Atributo> flista;
     
     public void guardar(){
         elemento.setTipoDato("Text");
-        boolean opcion = marketingUserFacade.guardarAtributos(elemento);
-        lista = marketingUserFacade.findAllAtributos();
+        boolean opcion = sessionBean.marketingUserFacade.guardarAtributos(elemento);
+        lista = sessionBean.marketingUserFacade.findAllAtributos();
         if (opcion) {
             sessionBean.registrarlog("actualizar", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo actualizado", elemento.getNombre());
