@@ -22,6 +22,8 @@ public class AccionDao {
     }
 
     public static void create(Accion accion) {
+        
+        accion.setNombre(accion.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +42,8 @@ public class AccionDao {
     }
 
     public static void edit(Accion accion) {
+        
+        accion.setNombre(accion.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

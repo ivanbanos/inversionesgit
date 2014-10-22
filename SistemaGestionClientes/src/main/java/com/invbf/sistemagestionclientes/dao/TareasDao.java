@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -20,8 +21,11 @@ public class TareasDao {
 
     public TareasDao() {
     }
-    
-     public static void create(Tarea tarea) {
+
+    public static void create(Tarea tarea) {
+        tarea.setNombre(tarea.getNombre().toUpperCase());
+        tarea.setDescripcion(tarea.getDescripcion().toUpperCase());
+        tarea.setSpeech(tarea.getSpeech().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +44,9 @@ public class TareasDao {
     }
 
     public static void edit(Tarea tarea) {
+        tarea.setNombre(tarea.getNombre().toUpperCase());
+        tarea.setDescripcion(tarea.getDescripcion().toUpperCase());
+        tarea.setSpeech(tarea.getSpeech().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -105,7 +112,9 @@ public class TareasDao {
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Tarea.class));
+            Root<Tarea> c = cq.from(Tarea.class);
+            cq.select(c);
+            cq.orderBy(em.getCriteriaBuilder().desc(c.get("fechaFinalizacion")));
             lista = em.createQuery(cq).getResultList();
             tx.commit();
         } catch (Exception e) {
@@ -164,8 +173,7 @@ public class TareasDao {
         em.close();
         emf.close();
         return count;
-        
-        
+
+
     }
-    
 }

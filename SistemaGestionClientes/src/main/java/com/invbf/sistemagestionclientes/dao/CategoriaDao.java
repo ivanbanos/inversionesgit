@@ -22,6 +22,7 @@ public class CategoriaDao {
     }
 
     public static void create(Categoria categoria) {
+        categoria.setNombre(categoria.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +41,7 @@ public class CategoriaDao {
     }
 
     public static void edit(Categoria categoria) {
+        categoria.setNombre(categoria.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

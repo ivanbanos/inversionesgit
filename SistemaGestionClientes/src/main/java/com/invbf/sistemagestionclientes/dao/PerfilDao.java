@@ -22,6 +22,7 @@ public class PerfilDao {
     }
     
      public static void create(Perfil perfil) {
+        perfil.setNombre(perfil.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +41,7 @@ public class PerfilDao {
     }
 
     public static void edit(Perfil perfil) {
+        perfil.setNombre(perfil.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

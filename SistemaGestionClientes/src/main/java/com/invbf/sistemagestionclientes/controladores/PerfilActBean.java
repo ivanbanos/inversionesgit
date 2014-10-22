@@ -10,7 +10,6 @@ import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -152,7 +151,7 @@ public class PerfilActBean {
             if (f.getAccion().equals("crear")) {
 
                 if (f.getTabla().equals("tipodocumento")) {
-                    agregarTipoevento = true;
+                    agregartipoDocumento = true;
                 }
                 if (f.getTabla().equals("Tipotareas")) {
                     agregarTipoevento = true;
@@ -197,7 +196,7 @@ public class PerfilActBean {
             if (f.getAccion().equals("actualizar")) {
 
                 if (f.getTabla().equals("tipodocumento")) {
-                    actualizarTipoevento = true;
+                    actualizartipoDocumento = true;
                 }
                 if (f.getTabla().equals("Tipotareas")) {
                     actualizarTipoevento = true;
@@ -242,7 +241,7 @@ public class PerfilActBean {
             if (f.getAccion().equals("eliminar")) {
 
                 if (f.getTabla().equals("tipodocumento")) {
-                    eliminarTipoevento = true;
+                    eliminartipoDocumento = true;
                 }
                 if (f.getTabla().equals("Tipotareas")) {
                     eliminarTipoevento = true;
@@ -448,30 +447,30 @@ public class PerfilActBean {
             v = sessionBean.adminFacade.findVistasByNombre("ManejadorEventosHostess");
             elemento.getVistasList().add(v);
         }
-        if (vistaReportes == false) {
+        if (vistaReportes == true) {
             v = sessionBean.adminFacade.findVistasByNombre("Reportes");
             elemento.getVistasList().add(v);
         }
-        if (vistaConfiguraciones == false) {
+        if (vistaConfiguraciones == true) {
             v = sessionBean.adminFacade.findVistasByNombre("ConfiguracionesGenerales");
             elemento.getVistasList().add(v);
         }
-        if (cupofidelizacion == false) {
+        if (cupofidelizacion == true) {
             v = sessionBean.adminFacade.findVistasByNombre("cupofidelizacion");
             elemento.getVistasList().add(v);
         }
 
         elemento.getFormulariosList().clear();
         Formulario f;
-        if (agregarUsuario == true) {
+        if (agregartipoDocumento == true) {
             f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "tipodocumento");
             elemento.getFormulariosList().add(f);
         }
-        if (actualizarUsuario == true) {
+        if (actualizartipoDocumento == true) {
             f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "tipodocumento");
             elemento.getFormulariosList().add(f);
         }
-        if (eliminarUsuario == true) {
+        if (eliminartipoDocumento == true) {
             f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "tipodocumento");
             elemento.getFormulariosList().add(f);
         }

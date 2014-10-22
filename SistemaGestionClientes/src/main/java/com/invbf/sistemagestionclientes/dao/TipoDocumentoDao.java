@@ -21,6 +21,7 @@ public class TipoDocumentoDao {
     public TipoDocumentoDao() {
     }
      public static void create(TipoDocumento tipoDocumento) {
+        tipoDocumento.setNombre(tipoDocumento.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -39,6 +40,7 @@ public class TipoDocumentoDao {
     }
 
     public static void edit(TipoDocumento tipoDocumento) {
+        tipoDocumento.setNombre(tipoDocumento.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

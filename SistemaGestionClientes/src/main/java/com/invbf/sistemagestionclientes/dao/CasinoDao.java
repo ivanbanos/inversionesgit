@@ -22,6 +22,9 @@ public class CasinoDao {
     }
     
     public static void create(Casino casino) {
+        
+        casino.setNombre(casino.getNombre().toUpperCase());
+        casino.setDireccion(casino.getDireccion().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +43,8 @@ public class CasinoDao {
     }
 
     public static void edit(Casino casino) {
+        casino.setNombre(casino.getNombre().toUpperCase());
+        casino.setDireccion(casino.getDireccion().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

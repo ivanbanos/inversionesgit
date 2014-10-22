@@ -22,6 +22,10 @@ public class ClienteDao{
     }
     
      public static void create(Cliente cliente) {
+        cliente.setNombres(cliente.getNombres().toUpperCase());
+        cliente.setApellidos(cliente.getApellidos().toUpperCase());
+        cliente.setCiudad(cliente.getCiudad().toUpperCase());
+        cliente.setPais(cliente.getPais().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +44,10 @@ public class ClienteDao{
     }
 
     public static void edit(Cliente cliente) {
+        cliente.setNombres(cliente.getNombres().toUpperCase());
+        cliente.setApellidos(cliente.getApellidos().toUpperCase());
+        cliente.setCiudad(cliente.getCiudad().toUpperCase());
+        cliente.setPais(cliente.getPais().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

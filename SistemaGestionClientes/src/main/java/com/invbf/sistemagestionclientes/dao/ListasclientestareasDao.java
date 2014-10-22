@@ -21,6 +21,7 @@ public class ListasclientestareasDao {
     public ListasclientestareasDao() {
     }
     public static void create(Listasclientestareas listasclientestareas) {
+        listasclientestareas.setObservaciones(listasclientestareas.getObservaciones().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -39,6 +40,7 @@ public class ListasclientestareasDao {
     }
 
     public static void edit(Listasclientestareas listasclientestareas) {
+        listasclientestareas.setObservaciones(listasclientestareas.getObservaciones().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -21,6 +22,8 @@ public class EventoDao{
     public EventoDao() {
     }
     public static void create(Evento evento) {
+        evento.setNombre(evento.getNombre().toUpperCase());
+        evento.setDecripcion(evento.getDecripcion().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -39,6 +42,8 @@ public class EventoDao{
     }
 
     public static void edit(Evento evento) {
+        evento.setNombre(evento.getNombre().toUpperCase());
+        evento.setDecripcion(evento.getDecripcion().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -104,7 +109,9 @@ public class EventoDao{
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Evento.class));
+            Root<Evento> c = cq.from(Evento.class);
+            cq.select(c);
+            cq.orderBy(em.getCriteriaBuilder().desc(c.get("fechaFinal")));
             lista = em.createQuery(cq).getResultList();
             tx.commit();
         } catch (Exception e) {

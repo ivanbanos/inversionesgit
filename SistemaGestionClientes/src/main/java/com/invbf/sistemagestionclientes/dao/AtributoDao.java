@@ -22,6 +22,8 @@ public class AtributoDao{
     }
     
     public static void create(Atributo atributo) {
+        
+        atributo.setNombre(atributo.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +42,7 @@ public class AtributoDao{
     }
 
     public static void edit(Atributo atributo) {
+        atributo.setNombre(atributo.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

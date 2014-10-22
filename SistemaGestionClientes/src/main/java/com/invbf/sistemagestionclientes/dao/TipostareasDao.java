@@ -22,6 +22,7 @@ public class TipostareasDao {
     }
 
     public static void create(Tipotarea tipotarea) {
+        tipotarea.setNombre(tipotarea.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -40,6 +41,7 @@ public class TipostareasDao {
     }
 
     public static void edit(Tipotarea tipotarea) {
+        tipotarea.setNombre(tipotarea.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

@@ -23,6 +23,7 @@ public class TipoJuegoDao {
     
     
      public static void create(TipoJuego tipoJuego) {
+        tipoJuego.setNombre(tipoJuego.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
@@ -41,6 +42,7 @@ public class TipoJuegoDao {
     }
 
     public static void edit(TipoJuego tipoJuego) {
+        tipoJuego.setNombre(tipoJuego.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
