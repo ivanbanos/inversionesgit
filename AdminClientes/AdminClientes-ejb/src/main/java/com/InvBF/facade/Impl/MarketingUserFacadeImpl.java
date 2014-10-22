@@ -334,9 +334,25 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         if (elemento.getIdTipotarea() == null) {
 
             tipostareasFacadeLocal.create(elemento);
+            for (Accion a : elemento.getAccionList()) {
+                a = accionFacadeLocal.find(a.getIdAccion());
+                if (a.getTipostareasList() == null) {
+                    a.setTipostareasList(new ArrayList<Tipotarea>());
+                }
+                a.getTipostareasList().add(elemento);
+                accionFacadeLocal.edit(a);
+            }
             return false;
         } else {
             tipostareasFacadeLocal.edit(elemento);
+            for (Accion a : elemento.getAccionList()) {
+                a = accionFacadeLocal.find(a.getIdAccion());
+                if (a.getTipostareasList() == null) {
+                    a.setTipostareasList(new ArrayList<Tipotarea>());
+                }
+                a.getTipostareasList().add(elemento);
+                accionFacadeLocal.edit(a);
+            }
             return true;
         }
     }
@@ -361,10 +377,29 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @Override
     public Tarea guardarTarea(Tarea elemento) {
         if (elemento.getIdTarea() == null) {
-
+            for (Usuario u : elemento.getUsuarioList()) {
+                u = usuarioFacadeLocal.find(u.getIdUsuario());
+                elemento.getUsuarioList().remove(u);
+                if (u.getTareasList() == null) {
+                    u.setTareasList(new ArrayList<Tarea>());
+                }
+                u.getTareasList().add(elemento);
+                elemento.getUsuarioList().add(u);
+                usuarioFacadeLocal.edit(u);
+            }
             tareasFacadeLocal.create(elemento);
             return elemento;
         } else {
+            for (Usuario u : elemento.getUsuarioList()) {
+                u = usuarioFacadeLocal.find(u.getIdUsuario());
+                elemento.getUsuarioList().remove(u);
+                if (u.getTareasList() == null) {
+                    u.setTareasList(new ArrayList<Tarea>());
+                }
+                u.getTareasList().add(elemento);
+                elemento.getUsuarioList().add(u);
+                usuarioFacadeLocal.edit(u);
+            }
             tareasFacadeLocal.edit(elemento);
             return elemento;
         }
@@ -439,7 +474,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
                 if (rs.next()) {
                     Calendar cal1 = Calendar.getInstance();
                     cal1.setTime(rs.getTimestamp("fechaAtencion"));
-                    cal1.set(Calendar.HOUR, cal1.get(Calendar.HOUR)-5);
+                    cal1.set(Calendar.HOUR, cal1.get(Calendar.HOUR) - 5);
                     fechaAtencion = cal1.getTime();
                 }
             }
