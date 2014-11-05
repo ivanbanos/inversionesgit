@@ -66,7 +66,7 @@ public interface MarketingUserFacade {
 
     public Evento findEvento(Integer integer);
 
-    public void guardarImagen(byte[] contents, Integer idEvento, String fileName);
+    public void guardarImagen(byte[] contents, String fileName);
 
     public List<Accion> findAllAcciones();
 

@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class TareasHostessBean {
+
     private List<Tarea> lista;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -61,8 +62,8 @@ public class TareasHostessBean {
         }
 
         lista = sessionBean.getUsuario().getTareasList();
-        for(Tarea t :lista){
-            if(!t.getEstado().equals("VENCIDO")) {
+        for (Tarea t : lista) {
+            if (!t.getEstado().equals("VENCIDO")) {
                 sessionBean.checkEstadoTarea(t);
             }
         }
@@ -73,7 +74,7 @@ public class TareasHostessBean {
                 iterator.remove();
             }
         }
-        
+
     }
 
     public List<Tarea> getLista() {
@@ -87,6 +88,10 @@ public class TareasHostessBean {
     public void goEvento(int id) {
         try {
             sessionBean.getAttributes().put("idTarea", new Integer(id));
+            Tarea t = sessionBean.marketingUserFacade.findTarea(id);
+            if (t.getIdEvento() != null) {
+                sessionBean.getAttributes().put("imagen", sessionBean.getImage(new Integer(id)));
+            }
             FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
         } catch (IOException ex) {
         }

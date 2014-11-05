@@ -33,6 +33,8 @@ import com.invbf.sistemagestionclientes.entity.Tipotarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
 import com.invbf.sistemagestionclientes.util.DBConnection;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -51,6 +53,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 
 /**
  *
@@ -58,22 +63,22 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class MarketingUserFacadeImpl implements MarketingUserFacade {
-    
+
     @Override
     public List<Cliente> findAllClientes() {
         return ClienteDao.findAll();
     }
-    
+
     @Override
     public List<Categoria> findAllCategorias() {
         return CategoriaDao.findAll();
     }
-    
+
     @Override
     public void deleteCategorias(Categoria elemento) {
         CategoriaDao.remove(elemento);
     }
-    
+
     @Override
     public boolean guardarCategorias(Categoria elemento) {
         if (elemento.getIdCategorias() == null) {
@@ -83,14 +88,14 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             CategoriaDao.edit(elemento);
             return true;
         }
-        
+
     }
-    
+
     @Override
     public List<Atributo> findAllAtributos() {
         return AtributoDao.findAll();
     }
-    
+
     @Override
     public void deleteAtributos(Atributo elemento) {
         List<Clienteatributo> listaca = ClienteatributoDao.findByAtributo(elemento);
@@ -98,16 +103,16 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         for (Cliente c : clientes) {
             c.getClientesatributosList().remove(new Clienteatributo(c.getIdCliente(), elemento.getIdAtributo()));
         }
-        
+
         if (listaca != null) {
             for (Clienteatributo ca : listaca) {
-                
+
                 ClienteatributoDao.remove(ca);
             }
         }
         AtributoDao.remove(elemento);
     }
-    
+
     @Override
     public boolean guardarAtributos(Atributo elemento) {
         if (elemento.getIdAtributo() == null) {
@@ -129,17 +134,17 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return true;
         }
     }
-    
+
     @Override
     public void deleteTiposjuegos(TipoJuego elemento) {
         TipoJuegoDao.remove(elemento);
     }
-    
+
     @Override
     public List<TipoJuego> findAllTiposjuegos() {
         return TipoJuegoDao.findAll();
     }
-    
+
     @Override
     public boolean guardarTiposjuegos(TipoJuego elemento) {
         if (elemento.getIdTipoJuego() == null) {
@@ -149,14 +154,14 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             TipoJuegoDao.edit(elemento);
             return true;
         }
-        
+
     }
-    
+
     @Override
     public void deleteCasinos(Casino elemento) {
         CasinoDao.remove(elemento);
     }
-    
+
     @Override
     public boolean guardarCasinos(Casino elemento) {
         if (elemento.getIdCasino() == null) {
@@ -167,23 +172,23 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return true;
         }
     }
-    
+
     @Override
     public List<Casino> findAllCasinos() {
         return CasinoDao.findAll();
     }
-    
+
     @Override
     public List<Evento> findAllEventos() {
         return EventoDao.findAll();
     }
-    
+
     @Override
     public void deleteEventos(Evento elemento) {
         File imagen = null;
         StringBuilder sb = new StringBuilder();
-            Configuracion urlImages = ConfiguracionDao.findByNombre("urlImages");
-            sb.append(urlImages.getValor()).append(System.getProperty("file.separator"))
+        Configuracion urlImages = ConfiguracionDao.findByNombre("urlImages");
+        sb.append(urlImages.getValor()).append(System.getProperty("file.separator"))
                 .append("images").append(System.getProperty("file.separator"))
                 .append("inversiones").append(System.getProperty("file.separator")).append(elemento.getImagen());
         imagen = new File(sb.toString());
@@ -192,7 +197,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         }
         EventoDao.remove(elemento);
     }
-    
+
     @Override
     public void deleteClientes(Cliente elemento) {
         List<Clienteatributo> listaca = ClienteatributoDao.findByCliente(elemento);
@@ -203,7 +208,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         }
         ClienteDao.remove(elemento);
     }
-    
+
     @Override
     public Cliente guardarClientes(Cliente elemento) {
         if (elemento.getIdCliente() == null) {
@@ -214,7 +219,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return elemento;
         }
     }
-    
+
     @Override
     public List<TipoJuego> getTiposJuegosNoClientes(Integer idCliente) {
         Cliente cliente = ClienteDao.find(idCliente);
@@ -227,21 +232,21 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         }
         return tiposjuego;
     }
-    
+
     @Override
     public Cliente findCliente(Integer integer) {
         return ClienteDao.find(integer);
     }
-    
+
     @Override
     public Evento findEvento(Integer integer) {
         return EventoDao.find(integer);
     }
-    
+
     @Override
     public Evento guardarEventos(Evento elemento) {
         if (elemento.getIdEvento() == null) {
-            
+
             EventoDao.create(elemento);
             return elemento;
         } else {
@@ -249,49 +254,69 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return elemento;
         }
     }
-    
+
     @Override
-    public void guardarImagen(byte[] contents, Integer idEvento, String fileName) {
+    public void guardarImagen(byte[] contents, String fileName) {
+        FTPClient client = new FTPClient();
         try {
+             System.out.println("entra");
+            String sFTP = ConfiguracionDao.findByNombre("FTP").getValor();
+            String sUser = ConfiguracionDao.findByNombre("FTPuser").getValor();
+            String sPassword = ConfiguracionDao.findByNombre("FTPpassword").getValor();
+
+            client.connect(sFTP);
+            boolean login = client.login(sUser, sPassword);
+
+            int reply = client.getReplyCode();
+
+            System.out.println("Respuesta recibida de conexión FTP:" + reply);
+
+            if (FTPReply.isPositiveCompletion(reply)) {
+                System.out.println("Conectado Satisfactoriamente");
+            } else {
+                System.out.println("Imposible conectarse al servidor");
+            }
+            System.out.println(client.printWorkingDirectory());
+            client.changeWorkingDirectory("/home/easl4284/public_html/imagenes");
+            System.out.println(client.printWorkingDirectory());
+            client.setFileType(FTP.BINARY_FILE_TYPE);
             
-            File imagen = null;
-            StringBuilder sb = new StringBuilder();
-            Configuracion urlImages = ConfiguracionDao.findByNombre("urlImages");
-            sb.append(urlImages.getValor())
-                    .append(System.getProperty("file.separator"))
-                    .append("images").append(System.getProperty("file.separator"))
-                    .append("inversiones").append(System.getProperty("file.separator")).append(idEvento).append(fileName);
-            imagen = new File(sb.toString());
-            if (imagen.exists()) {
-                imagen.delete();
-            }
-            OutputStream stream = null;
-            stream = new FileOutputStream(sb.toString());
-            if (contents != null) {
-                stream.write(contents);
-            }
-            stream.close();
+            client.deleteFile(fileName);
+            
+            BufferedInputStream buffIn = null;
+            buffIn = new BufferedInputStream(new ByteArrayInputStream(contents));//Ruta del archivo para enviar
+            client.enterLocalPassiveMode();
+            client.storeFile(fileName , buffIn);//Ruta completa de alojamiento en el FTP
+
+            buffIn.close(); //Cerrar envio de arcivos al FTP
+
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MarketingUserFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("filenotfound");
         } catch (IOException ex) {
-            Logger.getLogger(MarketingUserFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        } finally {
+            try {
+                client.logout();
+                client.disconnect();
+            } catch (IOException ex) {
+            }
         }
     }
-    
+
     @Override
     public List<Accion> findAllAcciones() {
         return AccionDao.findAll();
     }
-    
+
     @Override
     public void deleteAccion(Accion elemento) {
         AccionDao.remove(elemento);
     }
-    
+
     @Override
     public boolean guardarAccion(Accion elemento) {
         if (elemento.getIdAccion() == null) {
-            
+
             AccionDao.create(elemento);
             return false;
         } else {
@@ -299,16 +324,16 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return true;
         }
     }
-    
+
     @Override
     public List<Tipotarea> findAllTipotarea() {
         return TipostareasDao.findAll();
     }
-    
+
     @Override
     public boolean guardarTipotarea(Tipotarea elemento) {
         if (elemento.getIdTipotarea() == null) {
-            
+
             TipostareasDao.create(elemento);
             for (Accion a : elemento.getAccionList()) {
                 a = AccionDao.find(a.getIdAccion());
@@ -332,12 +357,12 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return true;
         }
     }
-    
+
     @Override
     public void deleteTipotarea(Tipotarea elemento) {
         TipostareasDao.remove(elemento);
     }
-    
+
     @Override
     public void deleteTarea(Tarea tarea) {
         List<Usuario> usuarios = UsuarioDao.findAll();
@@ -349,7 +374,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
         }
         TareasDao.remove(tarea);
     }
-    
+
     @Override
     public Tarea guardarTarea(Tarea elemento) {
         if (elemento.getIdTarea() == null) {
@@ -380,32 +405,32 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return elemento;
         }
     }
-    
+
     @Override
     public Accion findByNombreAccion(String nombre) {
         return AccionDao.findByNombreAccion(nombre);
     }
-    
+
     @Override
     public List<Tarea> findAllTareas() {
         return TareasDao.findAll();
     }
-    
+
     @Override
     public Tarea findTarea(Integer integer) {
         Tarea tarea = TareasDao.find(integer);
         return tarea;
     }
-    
+
     @Override
     public List<TipoDocumento> findAllTipoDocumentos() {
         return TipoDocumentoDao.findAll();
     }
-    
+
     @Override
     public boolean guardarTipoDocumentos(TipoDocumento elemento) {
         if (elemento.getIdTipoDocumento() == null) {
-            
+
             TipoDocumentoDao.create(elemento);
             return false;
         } else {
@@ -413,12 +438,12 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return true;
         }
     }
-    
+
     @Override
     public void deleteTipoDocumentos(TipoDocumento elemento) {
         TipoDocumentoDao.remove(elemento);
     }
-    
+
     @Override
     public String findNombreAccion(Integer idAccion) {
         Accion a = AccionDao.find(idAccion);
@@ -428,12 +453,12 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             return a.getNombre();
         }
     }
-    
+
     @Override
     public Accion findAccion(Integer accion) {
         return AccionDao.find(accion);
     }
-    
+
     @Override
     public Date getLCTFecha(Listasclientestareas lct) {
         PreparedStatement st = null;

@@ -106,12 +106,8 @@ public class MarketingEventoManejadorBean {
             elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
             if (file != null && file.getContents() != null) {
-                sessionBean.marketingUserFacade.guardarImagen(file.getContents(),
-                        elemento.getIdEvento(),
-                        file.getFileName().substring(file.getFileName().lastIndexOf("."),
-                        file.getFileName().length()));
-                elemento.setImagen(elemento.getIdEvento() + file.getFileName().substring(file.getFileName().lastIndexOf("."),
-                        file.getFileName().length()));
+                sessionBean.marketingUserFacade.guardarImagen(file.getContents(), file.getFileName());
+                elemento.setImagen(file.getFileName());
             }
             sessionBean.marketingUserFacade.guardarEventos(elemento);
             sessionBean.actualizarUsuario();
@@ -159,14 +155,9 @@ public class MarketingEventoManejadorBean {
         if (event != null) {
             file = event.getFile();
             if (elemento.getIdEvento() != null) {
-                sessionBean.marketingUserFacade.guardarImagen(file.getContents(),
-                        elemento.getIdEvento(),
-                        file.getFileName().substring(file.getFileName().lastIndexOf("."),
-                        file.getFileName().length()));
-                elemento.setImagen(elemento.getIdEvento() + file.getFileName().substring(file.getFileName().lastIndexOf("."),
-                        file.getFileName().length()));
+                sessionBean.marketingUserFacade.guardarImagen(file.getContents(), file.getFileName());
+                elemento.setImagen(file.getFileName());
             }
-            FacesUtil.addInfoMessage(event.getFile().getFileName());
         }
     }
 

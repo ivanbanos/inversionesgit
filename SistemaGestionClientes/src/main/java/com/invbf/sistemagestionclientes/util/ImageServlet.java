@@ -4,11 +4,15 @@
  */
 package com.invbf.sistemagestionclientes.util;
 
+import com.invbf.sistemagestionclientes.controladores.SessionBean;
 import com.invbf.sistemagestionclientes.dao.ConfiguracionDao;
-import com.invbf.sistemagestionclientes.entity.Configuracion;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import javax.servlet.ServletException;
@@ -16,6 +20,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 
 /**
  *
@@ -25,19 +32,9 @@ import javax.servlet.http.HttpServletResponse;
 public class ImageServlet extends HttpServlet {
 
     // Properties ---------------------------------------------------------------------------------
-    private String imagePath;
-
     // Init ---------------------------------------------------------------------------------------
     public void init() throws ServletException {
-
         // Define base path somehow. You can define it as init-param of the servlet.
-
-        StringBuilder sb = new StringBuilder();
-        Configuracion urlImages = ConfiguracionDao.findByNombre("urlImages");
-        sb.append(urlImages.getValor()).append(System.getProperty("file.separator")).append("images").append(System.getProperty("file.separator")).append("inversiones");
-
-        this.imagePath = sb.toString();
-
         // In a Windows environment with the Applicationserver running on the
         // c: volume, the above path is exactly the same as "c:\var\webapp\images".
         // In Linux/Mac/UNIX, it is just straightforward "/var/webapp/images".
@@ -57,11 +54,14 @@ public class ImageServlet extends HttpServlet {
             return;
         }
 
-        // Decode the file name (might contain spaces and on) and prepare file object.
-        File image = new File(imagePath, URLDecoder.decode(requestedImage, "UTF-8"));
 
+        byte[] bytesArray = null;
+        SessionBean sessionBean = (SessionBean) request.getSession().getAttribute("sessionBean");
+        String remoteFile2 = URLDecoder.decode(requestedImage, "UTF-8");
+        bytesArray = (byte[]) sessionBean.getAttributes().get("imagen");
+        System.out.println(new String(bytesArray));
         // Check if file actually exists in filesystem.
-        if (!image.exists()) {
+        if (bytesArray == null) {
             // Do your thing if the file appears to be non-existing.
             // Throw an exception, or send 404, or show default/warning image, or just ignore it.
             response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
@@ -69,8 +69,9 @@ public class ImageServlet extends HttpServlet {
         }
 
         // Get content type by filename.
-        String contentType = getServletContext().getMimeType(image.getName());
+        String contentType = getServletContext().getMimeType(remoteFile2);
 
+        System.out.println(contentType);
         // Check if file is actually an image (avoid download of other files by hackers!).
         // For all content types, see: http://www.w3schools.com/media/media_mimeref.asp
         if (contentType == null || !contentType.startsWith("image")) {
@@ -83,9 +84,9 @@ public class ImageServlet extends HttpServlet {
         // Init servlet response.
         response.reset();
         response.setContentType(contentType);
-        response.setHeader("Content-Length", String.valueOf(image.length()));
+        response.setHeader("Content-Length", String.valueOf(bytesArray.length));
 
         // Write image content to response.
-        Files.copy(image.toPath(), response.getOutputStream());
+        response.getOutputStream().write(bytesArray);
     }
 }

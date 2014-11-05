@@ -122,6 +122,7 @@ public class CrudEventoBean {
     public void goEventoMarketing(int id) {
         try {
             sessionBean.getAttributes().put("idEvento", new Integer(id));
+            sessionBean.getAttributes().put("imagen",sessionBean.getImage(new Integer(id)));
             FacesContext.getCurrentInstance().getExternalContext().redirect("MarketingEventoManejadorView.xhtml");
         } catch (IOException ex) {
         }

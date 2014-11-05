@@ -13,9 +13,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-     <session-config>
-      <!-- Session idle timeout in min. -->
-      <session-timeout>10</session-timeout>
+    <session-config>
+        <!-- Session idle timeout in min. -->
+        <session-timeout>10</session-timeout>
     </session-config>
     
     <welcome-file-list>

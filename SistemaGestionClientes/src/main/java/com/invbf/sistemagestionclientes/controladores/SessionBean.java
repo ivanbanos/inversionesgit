@@ -4,7 +4,10 @@
  */
 package com.invbf.sistemagestionclientes.controladores;
 
+import com.invbf.sistemagestionclientes.dao.ConfiguracionDao;
+import com.invbf.sistemagestionclientes.dao.EventoDao;
 import com.invbf.sistemagestionclientes.entity.Configuracion;
+import com.invbf.sistemagestionclientes.entity.Evento;
 import com.invbf.sistemagestionclientes.entity.Formulario;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
@@ -23,8 +26,11 @@ import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.observer.Observer;
 import com.invbf.sistemagestionclientes.observer.Subject;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -35,6 +41,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
 
 /**
  *
@@ -328,5 +339,57 @@ public class SessionBean implements Serializable, Subject {
     public void setHostessFacade(HostessFacade hostessFacade) {
         this.hostessFacade = hostessFacade;
     }
-    
+
+    byte[] getImage(Integer integer) {
+        FTPClient client = new FTPClient();
+        byte[] bytesArray = null;
+        Evento ev = marketingUserFacade.findEvento(integer);
+
+        String remoteFile2 = ev.getImagen();
+        try {
+            String sFTP = ConfiguracionDao.findByNombre("FTP").getValor();
+            String sUser = ConfiguracionDao.findByNombre("FTPuser").getValor();
+            String sPassword = ConfiguracionDao.findByNombre("FTPpassword").getValor();
+
+            client.connect(sFTP);
+            boolean login = client.login(sUser, sPassword);
+
+            int reply = client.getReplyCode();
+
+            System.out.println("Respuesta recibida de conexión FTP:" + reply);
+
+            if (FTPReply.isPositiveCompletion(reply)) {
+                System.out.println("Conectado Satisfactoriamente");
+            } else {
+                System.out.println("Imposible conectarse al servidor");
+            }
+            client.changeWorkingDirectory("/home/easl4284/public_html/imagenes");
+            client.setFileType(FTP.BINARY_FILE_TYPE);
+
+            InputStream inputStream = client.retrieveFileStream(remoteFile2);
+            bytesArray = IOUtils.toByteArray(inputStream);
+
+            boolean success = client.completePendingCommand();
+            if (success) {
+                System.out.println("File has been downloaded successfully.");
+            }
+            inputStream.close();
+
+
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex);
+        } catch (IOException ex) {
+
+            System.out.println(ex);
+        } finally {
+            try {
+                client.logout();
+                client.disconnect();
+            } catch (IOException ex) {
+
+                System.out.println(ex);
+            }
+        }
+        return bytesArray;
+    }
 }
