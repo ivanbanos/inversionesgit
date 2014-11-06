@@ -40,7 +40,7 @@ public interface SystemFacade {
     
     public String getPathImage(byte[] imagen, String mime, String nombre)throws IOException ;
 
-    public List<InfoCorreoCliente> enviarCorreo(Tarea elemento) ;
+    public List<InfoCorreoCliente> enviarCorreo(Tarea elemento, String asunto, String cuerpo, boolean enviarimagen) ;
 
     public Usuario getUsuario(Integer idUsuario);
 }

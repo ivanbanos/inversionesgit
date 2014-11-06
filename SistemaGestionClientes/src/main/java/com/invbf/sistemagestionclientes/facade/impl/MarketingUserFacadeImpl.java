@@ -12,6 +12,7 @@ import com.invbf.sistemagestionclientes.dao.ClienteDao;
 import com.invbf.sistemagestionclientes.dao.ClienteatributoDao;
 import com.invbf.sistemagestionclientes.dao.ConfiguracionDao;
 import com.invbf.sistemagestionclientes.dao.EventoDao;
+import com.invbf.sistemagestionclientes.dao.ListasclientestareasDao;
 import com.invbf.sistemagestionclientes.dao.TareasDao;
 import com.invbf.sistemagestionclientes.dao.TipoDocumentoDao;
 import com.invbf.sistemagestionclientes.dao.TipoJuegoDao;
@@ -51,8 +52,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -61,7 +60,6 @@ import org.apache.commons.net.ftp.FTPReply;
  *
  * @author ideacentre
  */
-@Stateless
 public class MarketingUserFacadeImpl implements MarketingUserFacade {
 
     @Override

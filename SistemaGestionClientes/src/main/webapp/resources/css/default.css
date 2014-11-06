@@ -168,3 +168,8 @@ a:focus{
 .hasDatepicker{
     width: 100%!important;
 }
+
+.ui-picklist-item td{
+    text-align: left;
+    
+}

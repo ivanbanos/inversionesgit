@@ -344,51 +344,53 @@ public class SessionBean implements Serializable, Subject {
         FTPClient client = new FTPClient();
         byte[] bytesArray = null;
         Evento ev = marketingUserFacade.findEvento(integer);
-
-        String remoteFile2 = ev.getImagen();
-        try {
-            String sFTP = ConfiguracionDao.findByNombre("FTP").getValor();
-            String sUser = ConfiguracionDao.findByNombre("FTPuser").getValor();
-            String sPassword = ConfiguracionDao.findByNombre("FTPpassword").getValor();
-
-            client.connect(sFTP);
-            boolean login = client.login(sUser, sPassword);
-
-            int reply = client.getReplyCode();
-
-            System.out.println("Respuesta recibida de conexión FTP:" + reply);
-
-            if (FTPReply.isPositiveCompletion(reply)) {
-                System.out.println("Conectado Satisfactoriamente");
-            } else {
-                System.out.println("Imposible conectarse al servidor");
-            }
-            client.changeWorkingDirectory("/home/easl4284/public_html/imagenes");
-            client.setFileType(FTP.BINARY_FILE_TYPE);
-
-            InputStream inputStream = client.retrieveFileStream(remoteFile2);
-            bytesArray = IOUtils.toByteArray(inputStream);
-
-            boolean success = client.completePendingCommand();
-            if (success) {
-                System.out.println("File has been downloaded successfully.");
-            }
-            inputStream.close();
-
-
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex);
-        } catch (IOException ex) {
-
-            System.out.println(ex);
-        } finally {
+        if (ev != null && ev.getImagen() != null && !ev.getImagen().equals("")) {
+            String remoteFile2 = ev.getImagen();
             try {
-                client.logout();
-                client.disconnect();
+                String sFTP = ConfiguracionDao.findByNombre("FTP").getValor();
+                String sUser = ConfiguracionDao.findByNombre("FTPuser").getValor();
+                String sPassword = ConfiguracionDao.findByNombre("FTPpassword").getValor();
+
+                client.connect(sFTP);
+                boolean login = client.login(sUser, sPassword);
+
+                int reply = client.getReplyCode();
+
+                System.out.println("Respuesta recibida de conexión FTP:" + reply);
+
+                if (FTPReply.isPositiveCompletion(reply)) {
+                    System.out.println("Conectado Satisfactoriamente");
+                } else {
+                    System.out.println("Imposible conectarse al servidor");
+                }
+                client.changeWorkingDirectory("/home/easl4284/public_html/imagenes");
+                client.setFileType(FTP.BINARY_FILE_TYPE);
+
+                InputStream inputStream = client.retrieveFileStream(remoteFile2);
+                bytesArray = IOUtils.toByteArray(inputStream);
+
+                boolean success = client.completePendingCommand();
+                if (success) {
+                    System.out.println("File has been downloaded successfully.");
+                }
+                inputStream.close();
+
+
+            } catch (FileNotFoundException ex) {
+                System.out.println(ex);
             } catch (IOException ex) {
 
                 System.out.println(ex);
+            } finally {
+                try {
+                    client.logout();
+                    client.disconnect();
+                } catch (IOException ex) {
+
+                    System.out.println(ex);
+                }
             }
+
         }
         return bytesArray;
     }

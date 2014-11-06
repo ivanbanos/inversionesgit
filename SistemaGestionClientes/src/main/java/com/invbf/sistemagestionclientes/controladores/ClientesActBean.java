@@ -12,8 +12,6 @@ import com.invbf.sistemagestionclientes.entity.Clienteatributo;
 import com.invbf.sistemagestionclientes.entity.ClientesatributosPK;
 import com.invbf.sistemagestionclientes.entity.TipoDocumento;
 import com.invbf.sistemagestionclientes.entity.TipoJuego;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class ClientesActBean {
-    
+
     private List<TipoJuego> tiposjuegos;
     private List<Atributo> atributos;
     private Cliente elemento;
@@ -117,7 +115,7 @@ public class ClientesActBean {
     public void setElemento(Cliente elemento) {
         this.elemento = elemento;
     }
-    
+
     public List<Atributo> getAtributos() {
         return atributos;
     }

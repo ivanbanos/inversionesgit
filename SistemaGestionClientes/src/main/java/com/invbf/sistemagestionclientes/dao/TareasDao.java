@@ -57,6 +57,7 @@ public class TareasDao {
             em.merge(tarea);
             tx.commit();
         } catch (Exception e) {
+            System.out.println(e);
             tx.rollback();
         }
 

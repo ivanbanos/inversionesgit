@@ -32,6 +32,7 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class MarketingEventoManejadorBean {
+
     private Evento elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -105,10 +106,6 @@ public class MarketingEventoManejadorBean {
             }
             elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
             sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
-            if (file != null && file.getContents() != null) {
-                sessionBean.marketingUserFacade.guardarImagen(file.getContents(), file.getFileName());
-                elemento.setImagen(file.getFileName());
-            }
             sessionBean.marketingUserFacade.guardarEventos(elemento);
             sessionBean.actualizarUsuario();
             elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
@@ -154,17 +151,16 @@ public class MarketingEventoManejadorBean {
     public void handleFileUpload(FileUploadEvent event) {
         if (event != null) {
             file = event.getFile();
-            if (elemento.getIdEvento() != null) {
-                sessionBean.marketingUserFacade.guardarImagen(file.getContents(), file.getFileName());
-                elemento.setImagen(file.getFileName());
-            }
+            sessionBean.marketingUserFacade.guardarImagen(file.getContents(), file.getFileName());
+            sessionBean.getAttributes().put("imagen", file.getContents());
+            elemento.setImagen(file.getFileName());
         }
     }
 
     public void goTareaMarketing(Integer idTarea) {
         try {
             sessionBean.getAttributes().put("idTarea", idTarea);
-            
+
             sessionBean.getAttributes().put("from", "evento");
             FacesContext.getCurrentInstance().getExternalContext().redirect("tareaAccion.xhtml");
         } catch (IOException ex) {

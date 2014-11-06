@@ -25,14 +25,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 
 /**
  *
  * @author ideacentre
  */
-@Stateless
 public class HostessFacadeImpl implements HostessFacade {
 
     @Override

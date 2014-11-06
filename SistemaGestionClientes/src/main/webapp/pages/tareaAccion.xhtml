@@ -211,21 +211,61 @@
                                    styleClass="btn btn-primary">
                         #{label['Confirmar']}
                     </h:commandLink> 
-                    <c:if test="#{tareaAccionBean.elemento.tipo.nombre eq 'EMAIL'}">
-                        <h:commandLink id="btncorreo"
-                                       action="#{tareaAccionBean.enviarCorreo()}"
-                                       styleClass="btn btn-primary">
-                            #{label['EnviarCorreo']}
-                        </h:commandLink>
-                    </c:if>
                     <h:commandLink id="btnclose"
                                    action="#{tareaAccionBean.goBack()}"
                                    styleClass="btn btn-primary">
                         #{label['Volver']}
                     </h:commandLink> 
 
+                    <c:if test="#{tareaAccionBean.elemento.tipo.nombre eq 'EMAIL'}">
+                        <p:commandButton id="btncorreo" oncomplete="PF('email').show();" 
+                                         value="#{label['EnviarCorreo']}" icon="ui-icon-plusthick" title="#{label['EnviarCorreo']}" /> 
+                    </c:if>
                 </div>
             </div>
+        </h:form>
+        <h:form>
+            <p:dialog id="email" header="email" height="80%" width="80%" widgetVar="email" modal="true" closable="false" resizable="false">
+                <div class="panel panel-primary">
+
+                    <div class="panel-body">
+                        <fieldset>
+                            <div class="control-group">
+                                <!-- Username -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" >#{label['asunto']}</label>
+                                    <div class="col-md-9">
+                                        <h:inputText id="asunto" value="#{tareaAccionBean.asunto}" required="true" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <!-- Username -->
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                                <h:selectBooleanCheckbox id="envioimagen" value="#{tareaAccionBean.enviarcorreo}" />
+                                                <label>#{label['enviarimagen']}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <!-- Username -->
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h:inputTextarea id="cuerpo" value="#{tareaAccionBean.cuerpo}" required="true" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                    <div class="panel-footer text-right"> 
+                        <p:commandButton value="Confirmar" actionListener="#{tareaAccionBean.enviarCorreo()}" 
+                                         oncomplete="PF('email').hide()" icon="ui-icon-check" style="margin:0" />   
+                        <p:commandButton value="Cerrar" oncomplete="PF('email').hide()" icon="ui-icon-closethick"/>  
+                    </div>
+                </div>
+            </p:dialog> 
         </h:form>
     </ui:define>            
 </ui:composition>

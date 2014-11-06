@@ -33,7 +33,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.imageio.ImageIO;
 
 /**
@@ -131,7 +130,7 @@ public class SystemFacadeImpl implements SystemFacade {
     }
 
     @Override
-    public List<InfoCorreoCliente> enviarCorreo(Tarea elemento) {
+    public List<InfoCorreoCliente> enviarCorreo(Tarea elemento, String asunto, String cuerpo, boolean enviarimagen) {
         EmailSender es = new EmailSender();
         es.setAuth(true);
         es.setDebug(true);
@@ -151,7 +150,11 @@ public class SystemFacadeImpl implements SystemFacade {
                     lce.setIdAccion(noenviado);
                     lce.setObservaciones("Correo vacio");
                 }
-                es.sendEmail(correoString, elemento.getNombre(), elemento.getDescripcion(), elemento.getIdEvento() + elemento.getIdEvento().getImagen());
+                if (elemento.getIdEvento() != null && elemento.getIdEvento().getImagen() != null && !elemento.getIdEvento().getImagen().equals("") && enviarimagen) {
+                    es.sendEmail(correoString, asunto, cuerpo, elemento.getIdEvento().getImagen());
+                } else {
+                    es.sendEmail(correoString, asunto, cuerpo, "noimage");
+                }
 
                 lce.setIdAccion(enviado);
             } catch (Exception ex) {

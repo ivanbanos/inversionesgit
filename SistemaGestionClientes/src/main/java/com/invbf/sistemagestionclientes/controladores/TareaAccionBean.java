@@ -14,12 +14,6 @@ import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.TipoJuego;
 import com.invbf.sistemagestionclientes.entity.Tipotarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
-import com.invbf.sistemagestionclientes.facade.AdminFacade;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.SystemFacade;
-import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.util.CategoriaBoolean;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import com.invbf.sistemagestionclientes.util.TipoJuegoBoolean;
@@ -54,6 +48,9 @@ public class TareaAccionBean {
     private boolean todoscat;
     private boolean todostip;
     private long conteo;
+    private String asunto;
+    private String cuerpo;
+    private boolean enviarcorreo;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -337,7 +334,7 @@ public class TareaAccionBean {
     }
 
     public void enviarCorreo() {
-        sessionBean.sessionFacade.enviarCorreo(elemento);
+        sessionBean.sessionFacade.enviarCorreo(elemento, asunto, cuerpo, enviarcorreo);
     }
 
     public boolean isTodoscat() {
@@ -375,6 +372,30 @@ public class TareaAccionBean {
 
     public void setConteo(long conteo) {
         this.conteo = conteo;
+    }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    public String getCuerpo() {
+        return cuerpo;
+    }
+
+    public void setCuerpo(String cuerpo) {
+        this.cuerpo = cuerpo;
+    }
+
+    public boolean isEnviarcorreo() {
+        return enviarcorreo;
+    }
+
+    public void setEnviarcorreo(boolean enviarcorreo) {
+        this.enviarcorreo = enviarcorreo;
     }
     
 }
