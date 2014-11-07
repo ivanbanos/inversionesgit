@@ -6,10 +6,6 @@ package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Evento;
 import com.invbf.sistemagestionclientes.entity.Tarea;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.SystemFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;

@@ -4,7 +4,6 @@
  */
 package com.invbf.sistemagestionclientes.controladores;
 
-
 import com.invbf.sistemagestionclientes.entity.Accion;
 import com.invbf.sistemagestionclientes.entity.Categoria;
 import com.invbf.sistemagestionclientes.entity.Cliente;
@@ -21,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -36,6 +36,7 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class TareaAccionBean {
+
     private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -134,7 +135,7 @@ public class TareaAccionBean {
             }
             todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
         }
-        
+
         tipotareas = sessionBean.marketingUserFacade.findAllTipotarea();
     }
 
@@ -156,6 +157,8 @@ public class TareaAccionBean {
             Calendar fechainicio = Calendar.getInstance();
             Calendar fechafinal = Calendar.getInstance();
             Calendar nowDate = Calendar.getInstance();
+            TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+            nowDate.setTimeZone(timeZone);
             fechainicio.setTime(elemento.getFechaInicio());
             fechafinal.setTime(elemento.getFechaFinalizacion());
             if (elemento.getIdTarea() == null || elemento.getIdTarea() == 0) {
@@ -397,5 +400,4 @@ public class TareaAccionBean {
     public void setEnviarcorreo(boolean enviarcorreo) {
         this.enviarcorreo = enviarcorreo;
     }
-    
 }

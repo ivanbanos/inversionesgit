@@ -18,6 +18,26 @@ import javax.persistence.Persistence;
  */
 public class ListasclientestareasDao {
 
+    public static void refresh(Listasclientestareas l) {
+        EntityManagerFactory emf =
+                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        Listasclientestareas listasclientestareas = null;
+
+        tx.begin();
+        try {
+            listasclientestareas = em.find(Listasclientestareas.class, l.getListasclientestareasPK());
+            em.refresh(listasclientestareas);
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        }
+
+        em.close();
+        emf.close();
+    }
+
     public ListasclientestareasDao() {
     }
     public static void create(Listasclientestareas listasclientestareas) {

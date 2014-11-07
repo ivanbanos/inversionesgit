@@ -36,6 +36,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -293,6 +294,8 @@ public class SessionBean implements Serializable, Subject {
         Calendar fechainicio = Calendar.getInstance();
         Calendar fechafinal = Calendar.getInstance();
         Calendar nowDate = Calendar.getInstance();
+        TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+        nowDate.setTimeZone(timeZone);
         fechainicio.setTime(tarea.getFechaInicio());
         fechafinal.setTime(tarea.getFechaFinalizacion());
         tarea.setEstado("POR INICIAR");

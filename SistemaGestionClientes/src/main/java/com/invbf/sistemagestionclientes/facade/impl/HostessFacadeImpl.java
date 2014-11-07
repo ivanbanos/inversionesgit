@@ -21,8 +21,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -93,10 +95,14 @@ public class HostessFacadeImpl implements HostessFacade {
         DBConnection dBConnection = new DBConnection();
         try {
             if (dBConnection.getConnection() != null) {
-                String query = "UPDATE listasclientestareas SET fechaAtencion=NOW() WHERE idCliente=? AND idTarea=?;";
+                Calendar nowDate = Calendar.getInstance();
+                TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+                nowDate.setTimeZone(timeZone);
+                String query = "UPDATE listasclientestareas SET fechaAtencion=? WHERE idCliente=? AND idTarea=?;";
                 st = dBConnection.getConnection().prepareStatement(query);
-                st.setInt(1, l.getListasclientestareasPK().getIdCliente());
-                st.setInt(2, l.getListasclientestareasPK().getIdTarea());
+                st.setTimestamp(1, new java.sql.Timestamp(nowDate.getTime().getTime()));
+                st.setInt(2, l.getListasclientestareasPK().getIdCliente());
+                st.setInt(3, l.getListasclientestareasPK().getIdTarea());
                 st.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -111,7 +117,7 @@ public class HostessFacadeImpl implements HostessFacade {
                 System.out.println(ex);
             }
         }
-        ListasclientestareasDao.edit(l);
+        ListasclientestareasDao.refresh(l);
     }
 
     @Override

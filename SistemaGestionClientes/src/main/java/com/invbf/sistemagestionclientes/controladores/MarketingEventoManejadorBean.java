@@ -7,16 +7,11 @@ package com.invbf.sistemagestionclientes.controladores;
 import com.invbf.sistemagestionclientes.entity.Casino;
 import com.invbf.sistemagestionclientes.entity.Evento;
 import com.invbf.sistemagestionclientes.entity.Tarea;
-import com.invbf.sistemagestionclientes.facade.AdminFacade;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.SystemFacade;
-import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -93,6 +88,8 @@ public class MarketingEventoManejadorBean {
             Calendar fechainicio = Calendar.getInstance();
             Calendar fechafinal = Calendar.getInstance();
             Calendar nowDate = Calendar.getInstance();
+            TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+            nowDate.setTimeZone(timeZone);
             fechainicio.setTime(elemento.getFechaInicio());
             fechafinal.setTime(elemento.getFechaFinal());
             if (elemento.getIdEvento() == null || elemento.getIdEvento() == 0) {
