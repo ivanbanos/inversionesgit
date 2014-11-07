@@ -15,7 +15,7 @@
     </servlet-mapping>
     <session-config>
         <!-- Session idle timeout in min. -->
-        <session-timeout>10</session-timeout>
+        <session-timeout>7</session-timeout>
     </session-config>
     
     <welcome-file-list>

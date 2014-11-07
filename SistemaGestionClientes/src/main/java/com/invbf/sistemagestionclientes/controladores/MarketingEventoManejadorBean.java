@@ -109,7 +109,7 @@ public class MarketingEventoManejadorBean {
             sessionBean.marketingUserFacade.guardarEventos(elemento);
             sessionBean.actualizarUsuario();
             elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
-            FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
+            FacesUtil.addInfoMessage("Evento guardado con éxito", elemento.getNombre());
 
             return "/pages/eventos.xhtml";
         }

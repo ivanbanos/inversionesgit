@@ -69,7 +69,7 @@ public class CrudTareasBean {
         for (Tarea t : lista) {
             if (t.getIdEvento() == null) {
                 t.setIdEvento(new Evento());
-                t.getIdEvento().setNombre("Generico");
+                t.getIdEvento().setNombre("GENÉRICO");
             }
             if (!t.getEstado().equals("VENCIDO")) {
                 sessionBean.checkEstadoTarea(t);

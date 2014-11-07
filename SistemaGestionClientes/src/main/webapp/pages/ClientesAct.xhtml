@@ -207,15 +207,8 @@
                     </c:forEach>
                 </div>
                 <div class="panel-footer text-right"> 
-                    <h:commandLink id="btnconfirm"
-                                   action="#{clientesActBean.guardar()}"
-                                   styleClass="btn btn-primary">
-                        #{label['Confirmar']}
-                    </h:commandLink> 
-                    <h:link id="btnclose" outcome="/pages/clientes.xhtml" class="btn btn-primary"
-                            >
-                        #{label['Volver']}
-                    </h:link>
+                    <p:commandButton id="btnconfirm" value="#{label['Confirmar']}" actionListener="#{clientesActBean.guardar()}" style="margin:0" />
+                    <p:button id="btnclose" value="#{label['Volver']}" outcome="/pages/clientes.xhtml" />
 
                 </div>
             </div>

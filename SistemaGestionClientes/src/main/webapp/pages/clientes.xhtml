@@ -26,7 +26,7 @@
                         <!--Clientes-->
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Clientes</h3>
+                                <h3 class="panel-title">#{label['clientes']}</h3>
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
@@ -37,21 +37,21 @@
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  >
 
-                                        <p:column headerText="Identificaci&oacute;n" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
+                                        <p:column headerText="#{label['identificacion']}" sortBy="#{element.identificacion}" filterBy="#{element.identificacion}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.identificacion}" />
                                         </p:column>
 
-                                        <p:column headerText="Nombres" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
+                                        <p:column headerText="#{label['nombres']}" sortBy="#{element.nombres}" filterBy="#{element.nombres}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.nombres}" />
                                         </p:column>
 
-                                        <p:column headerText="Apellidos" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
+                                        <p:column headerText="#{label['apellidos']}" sortBy="#{element.apellidos}" filterBy="#{element.apellidos}" filterMatchMode="contains" >
                                             <h:outputText value="#{element.apellidos}" />
                                         </p:column>
 
-                                        <p:column headerText="Categoria" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="in" >
+                                        <p:column headerText="#{label['categoria']}" sortBy="#{element.idCategorias.nombre}" filterBy="#{element.idCategorias.nombre}" filterMatchMode="in" >
                                             <f:facet name="filter">
-                                                <p:selectCheckboxMenu label="Categorias" onchange="PF('detailsTableClientes').filter()" >
+                                                <p:selectCheckboxMenu label="#{label['categorias']}" onchange="PF('detailsTableClientes').filter()" >
                                                     <f:selectItems value="#{filtrosListas.categorias}" />
                                                 </p:selectCheckboxMenu>
                                             </f:facet>
@@ -60,7 +60,7 @@
 
 
 
-                                        <p:column headerText="Acciones" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
+                                        <p:column headerText="#{label['acciones']}" filterBy="#{element.nombres}" filterMatchMode="contains" filterStyle="display:none">
                                             <p:commandButton id="editButtonClientes" action="#{crudClientesBean.goCliente(element.idCliente)}" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.editar']}"
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Clientes&quot;, &quot;actualizar&quot;)}"/>    
@@ -96,12 +96,12 @@
         </h:form>
 
         <h:form>
-            <p:confirmDialog id="deleteDialogClientes" message="Quiere borrar el cliente #{crudClientesBean.elemento.nombres} #{crudClientesBean.elemento.apellidos}?"  
+            <p:confirmDialog id="deleteDialogClientes" message="#{label['quiereborrarel']} #{label['cliente']} #{crudClientesBean.elemento.nombres} #{crudClientesBean.elemento.apellidos}#{label['cierrepregunta']}"  
                              header="Borrar" severity="alert" widgetVar="deleteDialogClientes" closable="false">  
 
-                <p:commandButton id="confirm" value="Aceptar" oncomplete="PF('deleteDialogClientes').hide()"  
+                <p:commandButton id="confirm" value="#{label['aceptar']}" oncomplete="PF('deleteDialogClientes').hide()"  
                                  action="#{crudClientesBean.delete()}" update=":#{p:component('detailsTableClientes')} :#{p:component('messages')}"/>  
-                <p:commandButton id="decline" value="Cancelar" onclick="PF('deleteDialogClientes').hide()" type="button" />   
+                <p:commandButton id="decline" value="#{label['cancelar']}" onclick="PF('deleteDialogClientes').hide()" type="button" />   
 
             </p:confirmDialog> 
         </h:form>

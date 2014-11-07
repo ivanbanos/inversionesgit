@@ -206,17 +206,10 @@
                     </c:if>
                 </div>
                 <div class="panel-footer text-right"> 
-                    <h:commandLink id="btnconfirm"
-                                   action="#{tareaAccionBean.guardar()}"
-                                   styleClass="btn btn-primary">
-                        #{label['Confirmar']}
-                    </h:commandLink> 
-                    <h:commandLink id="btnclose"
-                                   action="#{tareaAccionBean.goBack()}"
-                                   styleClass="btn btn-primary">
-                        #{label['Volver']}
-                    </h:commandLink> 
-
+                    
+                    <p:commandButton id="btnconfirm" value="#{label['Confirmar']}" actionListener="#{tareaAccionBean.guardar()}" style="margin:0" />
+                    <p:commandButton id="btnclose" value="#{label['Volver']}" actionListener="#{tareaAccionBean.goBack()}" style="margin:0" />
+                    
                     <c:if test="#{tareaAccionBean.elemento.tipo.nombre eq 'EMAIL'}">
                         <p:commandButton id="btncorreo" oncomplete="PF('email').show();" 
                                          value="#{label['EnviarCorreo']}" icon="ui-icon-plusthick" title="#{label['EnviarCorreo']}" /> 
