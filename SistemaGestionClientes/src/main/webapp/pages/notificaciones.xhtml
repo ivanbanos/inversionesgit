@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+
+                    <!--Usuarios-->
+                    <c:if test="#{sessionBean.perfilViewMatch(&quot;Usuarios&quot;)}">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div>
+                                    <h3 class="panel-title">Notificaciones</h3>
+                                    
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <h:form class="form-horizontal">
+                                    <p:dataTable id="detailsTableUsuarios" var="element" value="#{notificaciones.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableUsuarios" 
+                                                 rows="#{sessionBean.paginacion}"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 >
+
+                                        <p:column headerText="Tipo" sortBy="#{element.permiso.tipo}" filterBy="#{element.permiso.tipo}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.permiso.tipo}" />
+                                        </p:column>
+                                        <p:column headerText="Nombre Cliente" sortBy="#{element.cliente.nombres}" filterBy="#{element.cliente.nombres}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.cliente.nombres}" />
+                                        </p:column>
+                                        <p:column headerText="Apellido Cliente" sortBy="#{element.cliente.apellidos}" filterBy="#{element.cliente.apellidos}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.cliente.apellidos}" />
+                                        </p:column>
+                                        <p:column headerText="Campo" sortBy="#{element.permiso.campo}" filterBy="#{element.permiso.campo}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.permiso.campo}" />
+                                        </p:column>
+                                        <p:column headerText="Nuevo Valor" sortBy="#{element.permiso.nuevoValor}" filterBy="#{element.permiso.nuevoValor}" filterMatchMode="contains" >
+                                            <h:outputText value="#{element.permiso.nuevoValor}" />
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" >
+                                            <p:commandButton id="editButton" update=":#{p:component('editDialog')}" 
+                                                             oncomplete="PF('editDialog').show()" icon="ui-icon-pencil" 
+                                                             title="#{label['lb_btn.editar']}" >  
+                                                <f:setPropertyActionListener value="#{element.permiso}" target="#{notificaciones.permiso}" />  
+                                            </p:commandButton>
+                                            <p:commandButton id="deleteButton" oncomplete="PF('deleteDialog').show();" 
+                                                             icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialog')}">
+                                                <f:setPropertyActionListener value="#{element.permiso}" target="#{notificaciones.permiso}" /> 
+                                            </p:commandButton> 
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <p:confirmDialog id="deleteDialog" message="Quiere borrar la acción #{notificaciones.permiso.tipo}?"  
+                                                     header="Borrar" severity="alert" widgetVar="deleteDialog" closable="false">  
+
+                                        <p:commandButton  value="Aceptar" oncomplete="PF('deleteDialog').hide()"  
+                                                          action="#{notificaciones.eliminarPermiso()}" update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}"/>  
+                                        <p:commandButton  value="Cancelar" onclick="PF('deleteDialog').hide()" type="button" />   
+
+                                    </p:confirmDialog> 
+                                    <p:confirmDialog id="editDialog" message="Quiere ejecutar la acción #{notificaciones.permiso.tipo}?"  
+                                                     header="Borrar" severity="alert" widgetVar="editDialog" closable="false">  
+
+                                        <p:commandButton  value="Aceptar" oncomplete="PF('editDialog').hide()"  
+                                                          action="#{notificaciones.ejecutarPermiso()}" update=":#{p:component('detailsTableUsuarios')} :#{p:component('messages')}"/>  
+                                        <p:commandButton  value="Cancelar" onclick="PF('editDialog').hide()" type="button" />   
+
+                                    </p:confirmDialog> 
+                                </h:form>
+                            </div>
+                        </div>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>            
+</ui:composition>

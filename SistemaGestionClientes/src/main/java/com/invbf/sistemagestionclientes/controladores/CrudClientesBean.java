@@ -8,6 +8,7 @@ import com.invbf.sistemagestionclientes.entity.Atributo;
 import com.invbf.sistemagestionclientes.entity.Casino;
 import com.invbf.sistemagestionclientes.entity.Categoria;
 import com.invbf.sistemagestionclientes.entity.Cliente;
+import com.invbf.sistemagestionclientes.entity.Permiso;
 import com.invbf.sistemagestionclientes.entity.TipoJuego;
 import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
 import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
@@ -127,10 +128,10 @@ public class CrudClientesBean {
 
 
     public void delete() {
-        sessionBean.marketingUserFacade.deleteClientes(elemento);
+        sessionBean.managerUserFacade.addPermiso(new Permiso("ELIMINAR", elemento.getIdCliente().toString(), "CLIENTE", "", ""));
         lista = sessionBean.marketingUserFacade.findAllClientes();
         sessionBean.registrarlog("eliminar", "Clientes", elemento.toString());
-        FacesUtil.addInfoMessage("Cliente eliminado", elemento.toString());
+                FacesUtil.addInfoMessage("Eliminación enviada", "Pendiente de autorización");
         elemento = new Cliente();
     }
 

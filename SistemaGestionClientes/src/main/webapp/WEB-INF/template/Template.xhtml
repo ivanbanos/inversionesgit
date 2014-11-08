@@ -181,6 +181,18 @@
                                     </li> 
                                 </c:if>
                             </c:if>
+                            <c:if test="#{sessionBean.perfilViewMatch(&quot;notificaciones&quot;)}">
+                                <c:if test="#{sessionBean.isActive(&quot;notificaciones&quot;)}">
+                                    <li>
+                                        <h:commandLink  action="#{sessionBean.go(&quot;notificaciones&quot;)}" class="navbar-text-selected" value="#{label['notificaciones']}"/>
+                                    </li> 
+                                </c:if>
+                                <c:if test="#{sessionBean.isNotActive(&quot;notificaciones&quot;)}">
+                                    <li>
+                                        <h:commandLink  action="#{sessionBean.go(&quot;notificaciones&quot;)}" class="navbar-text" value="#{label['notificaciones']}"/>
+                                    </li> 
+                                </c:if>
+                            </c:if>
 
                             <c:if test="#{sessionBean.isActive(&quot;cuenta&quot;)}">
                                 <li>

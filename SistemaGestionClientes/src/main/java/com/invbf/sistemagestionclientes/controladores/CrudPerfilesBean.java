@@ -8,8 +8,6 @@ import com.invbf.sistemagestionclientes.entity.Formulario;
 import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
-import com.invbf.sistemagestionclientes.facade.AdminFacade;
-import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
 import java.util.ArrayList;

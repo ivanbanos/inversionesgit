@@ -83,6 +83,7 @@ public class PerfilActBean {
     private boolean vistaEvHostess = false;
     private boolean vistaReportes = false;
     private boolean vistaConfiguraciones = false;
+    private boolean vistaNotificacion = false;
     private boolean cupofidelizacion = false;
     private boolean vistatipoDocumento = false;
     private boolean agregartipoDocumento = false;
@@ -343,6 +344,9 @@ public class PerfilActBean {
             if (v.getNombreVista().equals("tipodocumento")) {
                 vistatipoDocumento = true;
             }
+            if (v.getNombreVista().equals("notificaciones")) {
+                vistaNotificacion = true;
+            }
         }
     }
 
@@ -457,6 +461,10 @@ public class PerfilActBean {
         }
         if (cupofidelizacion == true) {
             v = sessionBean.adminFacade.findVistasByNombre("cupofidelizacion");
+            elemento.getVistasList().add(v);
+        }
+        if (vistaNotificacion == true) {
+            v = sessionBean.adminFacade.findVistasByNombre("notificaciones");
             elemento.getVistasList().add(v);
         }
 
@@ -1151,5 +1159,13 @@ public class PerfilActBean {
 
     public void setEliminartipoDocumento(boolean eliminartipoDocumento) {
         this.eliminartipoDocumento = eliminartipoDocumento;
+    }
+
+    public boolean isVistaNotificacion() {
+        return vistaNotificacion;
+    }
+
+    public void setVistaNotificacion(boolean vistaNotificacion) {
+        this.vistaNotificacion = vistaNotificacion;
     }
 }

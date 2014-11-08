@@ -17,10 +17,12 @@ import com.invbf.sistemagestionclientes.exceptions.UsuarioNoConectadoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoExisteException;
 import com.invbf.sistemagestionclientes.facade.AdminFacade;
 import com.invbf.sistemagestionclientes.facade.HostessFacade;
+import com.invbf.sistemagestionclientes.facade.ManagerUserFacade;
 import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
 import com.invbf.sistemagestionclientes.facade.SystemFacade;
 import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
 import com.invbf.sistemagestionclientes.facade.impl.HostessFacadeImpl;
+import com.invbf.sistemagestionclientes.facade.impl.ManagerUserFacadeImpl;
 import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.observer.Observer;
@@ -60,6 +62,7 @@ public class SessionBean implements Serializable, Subject {
     AdminFacade adminFacade;
     MarketingUserFacade marketingUserFacade;
     HostessFacade hostessFacade;
+    ManagerUserFacade managerUserFacade;
     private Usuario usuario;//Almacena el objeto usuario de la session
     private HashMap<String, Object> Attributes;
     private List<Observer> observers;
@@ -78,6 +81,7 @@ public class SessionBean implements Serializable, Subject {
         adminFacade = new AdminFacadeImpl();
         marketingUserFacade = new MarketingUserFacadeImpl();
         hostessFacade = new HostessFacadeImpl();
+        managerUserFacade = new ManagerUserFacadeImpl();
         usuario = new Usuario();
         Attributes = new HashMap<String, Object>();
         observers = new ArrayList<Observer>();
@@ -286,6 +290,9 @@ public class SessionBean implements Serializable, Subject {
         } else if (page.equals("tareas")) {
             active = "tareas";
             return "/pages/tareas.xhtml";
+        }else if (page.equals("notificaciones")) {
+            active = "notificaciones";
+            return "/pages/notificaciones.xhtml";
         }
         return "/pages/InicioSession.xhtml";
     }
@@ -325,6 +332,14 @@ public class SessionBean implements Serializable, Subject {
 
     public void setAdminFacade(AdminFacade adminFacade) {
         this.adminFacade = adminFacade;
+    }
+
+    public ManagerUserFacade getManagerUserFacade() {
+        return managerUserFacade;
+    }
+
+    public void setManagerUserFacade(ManagerUserFacade managerUserFacade) {
+        this.managerUserFacade = managerUserFacade;
     }
 
     public MarketingUserFacade getMarketingUserFacade() {
