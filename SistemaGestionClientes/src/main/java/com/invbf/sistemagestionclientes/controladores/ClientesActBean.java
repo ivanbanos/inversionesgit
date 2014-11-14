@@ -139,9 +139,7 @@ public class ClientesActBean {
 
     public void guardar() {
         try {
-            if (elemento.getIdCliente() == 0) {
-                elemento.setIdCliente(null);
-            }
+            
             if (elemento.getIdentificacion() == null || elemento.getIdentificacion().equals("")) {
                 elemento.setIdTipoDocumento(null);
             }
@@ -149,11 +147,21 @@ public class ClientesActBean {
                     && (elemento.getIdentificacion() != null && !elemento.getIdentificacion().equals(""))) {
                 FacesUtil.addErrorMessage("No se puede guardar cliente", "Si tiene identificación debe seleccionar un tipo");
             }
+            
             elemento.setTiposjuegosList(tiposJuegosTodos.getTarget());
             List<Clienteatributo> clienteatributos = elemento.getClientesatributosList();
             elemento.setClientesatributosList(new ArrayList<Clienteatributo>());
-
-            if (!elemento.getNombres().equals(viejo.getNombres())) {
+            
+            if (elemento.getIdCliente() == 0) {
+                elemento.setIdCliente(null);
+                sessionBean.marketingUserFacade.guardarClientes(elemento);
+                FacesUtil.addInfoMessage("Cliente creado con exito!", "");
+            sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
+            } else {
+                
+                
+                if (!elemento.getNombres().equals(viejo.getNombres())) {
                 sessionBean.managerUserFacade.addPermiso(new Permiso("EDITAR", elemento.getIdCliente().toString(), "CLIENTE", "nombres", elemento.getNombres()));
             }
             if (!elemento.getApellidos().equals(viejo.getApellidos())) {
@@ -200,8 +208,14 @@ public class ClientesActBean {
             }
 
             FacesUtil.addInfoMessage("Actualización enviada", "Pendiente de autorización");
-            FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             sessionBean.registrarlog("actualizar", "Clientes", elemento.toString());
+            FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
+                
+            }
+            
+            
+
+            
         } catch (IOException ex) {
         }
     }
