@@ -23,10 +23,10 @@
     <class>com.invbf.sistemagestionclientes.entity.Vista</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://198.38.82.101:3306/easl4284_inversiones"/>
-      <property name="javax.persistence.jdbc.password" value="ibf130001"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/easl4284_inversiones"/>
+      <property name="javax.persistence.jdbc.password" value="Luff1.kun"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="easl4284_root"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
     </properties>
   </persistence-unit>
 </persistence>

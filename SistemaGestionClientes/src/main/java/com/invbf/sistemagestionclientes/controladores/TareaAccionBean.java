@@ -17,11 +17,15 @@ import com.invbf.sistemagestionclientes.util.CategoriaBoolean;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import com.invbf.sistemagestionclientes.util.TipoJuegoBoolean;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -150,149 +154,159 @@ public class TareaAccionBean {
     public void guardar() {
         guardar:
         {
-            if (elemento.getTipo() == null || elemento.getTipo().getIdTipotarea() == 0) {
-                FacesUtil.addErrorMessage("Elemento no creado", "Debe seleccionar un tipo de tarea");
-                break guardar;
-            }
-            Calendar fechainicio = Calendar.getInstance();
-            Calendar fechafinal = Calendar.getInstance();
-            Calendar nowDate = Calendar.getInstance();
-            TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
-            nowDate.setTimeZone(timeZone);
-            fechainicio.setTime(elemento.getFechaInicio());
-            fechafinal.setTime(elemento.getFechaFinalizacion());
-            if (elemento.getIdTarea() == null || elemento.getIdTarea() == 0) {
+            try {
+                if (elemento.getTipo() == null || elemento.getTipo().getIdTipotarea() == 0) {
+                    FacesUtil.addErrorMessage("Elemento no creado", "Debe seleccionar un tipo de tarea");
+                    break guardar;
+                }
+                Calendar fechainicio = Calendar.getInstance();
+                Calendar fechafinal = Calendar.getInstance();
+                
+                DateFormat df = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+                DateFormat df2 = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+                TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+                df.setTimeZone(timeZone);
+                Calendar nowDate = Calendar.getInstance();
+                nowDate.setTime(df2.parse(df.format(nowDate.getTime())));
+                fechainicio.setTime(elemento.getFechaInicio());
+                fechafinal.setTime(elemento.getFechaFinalizacion());
+                
+                System.out.println(nowDate.getTime());
+                if (elemento.getIdTarea() == null || elemento.getIdTarea() == 0) {
+                    if (fechainicio.before(nowDate)) {
+                        FacesUtil.addErrorMessage("Fechas incorrectas", "Fecha inicial antes de la fecha actual");
+                        break guardar;
+                    } else if (fechafinal.before(fechainicio)) {
+                        FacesUtil.addErrorMessage("Fechas incorrectas", "Fecha final antes de la fecha inicial");
+                        break guardar;
+                    }
+                }
+                elemento = sessionBean.marketingUserFacade.guardarTarea(elemento);
+                elemento.setEstado("POR INICIAR");
                 if (fechainicio.before(nowDate)) {
-                    FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha inicial antes de la fecha actual");
-                    break guardar;
-                } else if (fechafinal.before(fechainicio)) {
-                    FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha final antes de la fecha inicial");
-                    break guardar;
+                    elemento.setEstado("ACTIVO");
                 }
-            }
-            elemento = sessionBean.marketingUserFacade.guardarTarea(elemento);
-            elemento.setEstado("POR INICIAR");
-            if (fechainicio.before(nowDate)) {
-                elemento.setEstado("ACTIVO");
-            }
-            if (fechafinal.before(nowDate)) {
-                elemento.setEstado("VENCIDO");
-            }
-            sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
-            sessionBean.marketingUserFacade.guardarTarea(elemento);
-
-            Accion estadoscliente = sessionBean.marketingUserFacade.findByNombreAccion("INICIAL");
-            elemento.setUsuarioList(todosusuarioses.getTarget());
-            for (Usuario s : todosusuarioses.getTarget()) {
-                sessionBean.adminFacade.agregarTareaUsuarios(s, elemento);
-            }
-            ArrayList<Listasclientestareas> al = new ArrayList<Listasclientestareas>(elemento.getListasclientestareasList());
-            elemento.getListasclientestareasList().clear();
-            List<Cliente> todosclienteses = sessionBean.marketingUserFacade.findAllClientes();
-            boolean noCatselected = true;
-            boolean noTipselected = true;
-            for (CategoriaBoolean cb : categoriasBoolean) {
-                if (todoscat) {
-                    cb.setSelected(true);
-                    continue;
+                if (fechafinal.before(nowDate)) {
+                    elemento.setEstado("VENCIDO");
                 }
-                if (cb.isSelected()) {
-                    noCatselected = false;
-                    break;
+                sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
+                sessionBean.marketingUserFacade.guardarTarea(elemento);
+                
+                Accion estadoscliente = sessionBean.marketingUserFacade.findByNombreAccion("INICIAL");
+                elemento.setUsuarioList(todosusuarioses.getTarget());
+                for (Usuario s : todosusuarioses.getTarget()) {
+                    sessionBean.adminFacade.agregarTareaUsuarios(s, elemento);
                 }
-            }
-            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                if (todostip) {
-                    tjb.setSelected(true);
-                    continue;
-                }
-                if (tjb.isSelected()) {
-                    noTipselected = false;
-                    break;
-                }
-            }
-            for (Cliente c : todosclienteses) {
-
-                boolean siCategoria = false;
-                boolean siTipoJuego = false;
-                if (elemento.getIdEvento() != null) {
-                    if (!c.getIdCasinoPreferencial().equals(elemento.getIdEvento().getIdCasino())) {
+                ArrayList<Listasclientestareas> al = new ArrayList<Listasclientestareas>(elemento.getListasclientestareasList());
+                elemento.getListasclientestareasList().clear();
+                List<Cliente> todosclienteses = sessionBean.marketingUserFacade.findAllClientes();
+                boolean noCatselected = true;
+                boolean noTipselected = true;
+                for (CategoriaBoolean cb : categoriasBoolean) {
+                    if (todoscat) {
+                        cb.setSelected(true);
                         continue;
                     }
-                }
-                if (noCatselected) {
-                    siCategoria = true;
-                } else {
-                    for (CategoriaBoolean cb : categoriasBoolean) {
-                        if (cb.isSelected()) {
-                            if (c.getIdCategorias().equals(cb.getCategoria())) {
-                                siCategoria = true;
-                                break;
-                            }
-                        }
+                    if (cb.isSelected()) {
+                        noCatselected = false;
+                        break;
                     }
                 }
-                if (noTipselected) {
-                    siTipoJuego = true;
-                } else {
-                    for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                        if (tjb.isSelected()) {
-                            for (TipoJuego tj : c.getTiposjuegosList()) {
-                                if (tj.equals(tjb.getTipoJuego())) {
-                                    siTipoJuego = true;
+                for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                    if (todostip) {
+                        tjb.setSelected(true);
+                        continue;
+                    }
+                    if (tjb.isSelected()) {
+                        noTipselected = false;
+                        break;
+                    }
+                }
+                for (Cliente c : todosclienteses) {
+                    
+                    boolean siCategoria = false;
+                    boolean siTipoJuego = false;
+                    if (elemento.getIdEvento() != null) {
+                        if (!c.getIdCasinoPreferencial().equals(elemento.getIdEvento().getIdCasino())) {
+                            continue;
+                        }
+                    }
+                    if (noCatselected) {
+                        siCategoria = true;
+                    } else {
+                        for (CategoriaBoolean cb : categoriasBoolean) {
+                            if (cb.isSelected()) {
+                                if (c.getIdCategorias().equals(cb.getCategoria())) {
+                                    siCategoria = true;
                                     break;
                                 }
                             }
                         }
                     }
-                }
-                if (siCategoria && siTipoJuego) {
-                    Listasclientestareas listasclientesevento = new Listasclientestareas(elemento.getIdTarea(), c.getIdCliente());
-                    if (al.contains(listasclientesevento)) {
-                        elemento.getListasclientestareasList().add(al.get(al.indexOf(listasclientesevento)));
+                    if (noTipselected) {
+                        siTipoJuego = true;
                     } else {
-                        listasclientesevento.setIdAccion(estadoscliente);
-                        listasclientesevento.setTareas(elemento);
-                        listasclientesevento.setCliente(c);
-                        elemento.getListasclientestareasList().add(listasclientesevento);
+                        for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                            if (tjb.isSelected()) {
+                                for (TipoJuego tj : c.getTiposjuegosList()) {
+                                    if (tj.equals(tjb.getTipoJuego())) {
+                                        siTipoJuego = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
-                } else {
-                    Listasclientestareas listasclientesevento = new Listasclientestareas(elemento.getIdTarea(), c.getIdCliente());
-                    if (al.contains(listasclientesevento)) {
-                        elemento.getListasclientestareasList().remove(al.get(al.indexOf(listasclientesevento)));
+                    if (siCategoria && siTipoJuego) {
+                        Listasclientestareas listasclientesevento = new Listasclientestareas(elemento.getIdTarea(), c.getIdCliente());
+                        if (al.contains(listasclientesevento)) {
+                            elemento.getListasclientestareasList().add(al.get(al.indexOf(listasclientesevento)));
+                        } else {
+                            listasclientesevento.setIdAccion(estadoscliente);
+                            listasclientesevento.setTareas(elemento);
+                            listasclientesevento.setCliente(c);
+                            elemento.getListasclientestareasList().add(listasclientesevento);
+                        }
+                    } else {
+                        Listasclientestareas listasclientesevento = new Listasclientestareas(elemento.getIdTarea(), c.getIdCliente());
+                        if (al.contains(listasclientesevento)) {
+                            elemento.getListasclientestareasList().remove(al.get(al.indexOf(listasclientesevento)));
+                        }
                     }
                 }
-            }
-            elemento.setCategorias("");
-            for (CategoriaBoolean cb : categoriasBoolean) {
-                if (cb.isSelected()) {
-                    elemento.setCategorias(elemento.getCategorias() + cb.getCategoria().getIdCategorias() + " ");
+                elemento.setCategorias("");
+                for (CategoriaBoolean cb : categoriasBoolean) {
+                    if (cb.isSelected()) {
+                        elemento.setCategorias(elemento.getCategorias() + cb.getCategoria().getIdCategorias() + " ");
+                    }
                 }
-            }
-
-            elemento.setTiposdejuegos("");
-            for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
-                if (tjb.isSelected()) {
-                    elemento.setTiposdejuegos(elemento.getTiposdejuegos() + tjb.getTipoJuego().getIdTipoJuego() + " ");
+                
+                elemento.setTiposdejuegos("");
+                for (TipoJuegoBoolean tjb : tipoJuegosBoolean) {
+                    if (tjb.isSelected()) {
+                        elemento.setTiposdejuegos(elemento.getTiposdejuegos() + tjb.getTipoJuego().getIdTipoJuego() + " ");
+                    }
                 }
-            }
-            sessionBean.actualizarUsuario();
-
-            usuarioses = sessionBean.adminFacade.findAllUsuariosHostess();
-            for (Usuario u : elemento.getUsuarioList()) {
-                if (usuarioses.contains(u)) {
-                    usuarioses.remove(u);
+                sessionBean.actualizarUsuario();
+                
+                usuarioses = sessionBean.adminFacade.findAllUsuariosHostess();
+                for (Usuario u : elemento.getUsuarioList()) {
+                    if (usuarioses.contains(u)) {
+                        usuarioses.remove(u);
+                    }
                 }
+                todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
+                
+                elemento = sessionBean.marketingUserFacade.guardarTarea(elemento);
+                if (evento != null) {
+                    evento.getTareasList().add(elemento);
+                    sessionBean.marketingUserFacade.guardarEventos(evento);
+                }
+                FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
+                goBack();
+            } catch (ParseException ex) {
+                Logger.getLogger(TareaAccionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-            todosusuarioses = new DualListModel<Usuario>(usuarioses, elemento.getUsuarioList());
-
-            elemento = sessionBean.marketingUserFacade.guardarTarea(elemento);
-            if (evento != null) {
-                evento.getTareasList().add(elemento);
-                sessionBean.marketingUserFacade.guardarEventos(evento);
-            }
-            FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
-            goBack();
         }
     }
 

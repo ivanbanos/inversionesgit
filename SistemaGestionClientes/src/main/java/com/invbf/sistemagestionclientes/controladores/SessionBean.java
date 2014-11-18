@@ -33,6 +33,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URLDecoder;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -40,6 +43,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -290,7 +294,7 @@ public class SessionBean implements Serializable, Subject {
         } else if (page.equals("tareas")) {
             active = "tareas";
             return "/pages/tareas.xhtml";
-        }else if (page.equals("notificaciones")) {
+        } else if (page.equals("notificaciones")) {
             active = "notificaciones";
             return "/pages/notificaciones.xhtml";
         }
@@ -298,19 +302,27 @@ public class SessionBean implements Serializable, Subject {
     }
 
     public void checkEstadoTarea(Tarea tarea) {
-        Calendar fechainicio = Calendar.getInstance();
-        Calendar fechafinal = Calendar.getInstance();
-        Calendar nowDate = Calendar.getInstance();
-        TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
-        nowDate.setTimeZone(timeZone);
-        fechainicio.setTime(tarea.getFechaInicio());
-        fechafinal.setTime(tarea.getFechaFinalizacion());
-        tarea.setEstado("POR INICIAR");
-        if (fechainicio.before(nowDate)) {
-            tarea.setEstado("ACTIVO");
-        }
-        if (fechafinal.before(nowDate)) {
-            tarea.setEstado("VENCIDO");
+        try {
+            Calendar fechainicio = Calendar.getInstance();
+            Calendar fechafinal = Calendar.getInstance();
+            
+            DateFormat df = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+            DateFormat df2 = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+            TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+            df.setTimeZone(timeZone);
+            Calendar nowDate = Calendar.getInstance();
+            nowDate.setTime(df2.parse(df.format(nowDate.getTime())));
+            fechainicio.setTime(tarea.getFechaInicio());
+            fechafinal.setTime(tarea.getFechaFinalizacion());
+            tarea.setEstado("POR INICIAR");
+            if (fechainicio.before(nowDate)) {
+                tarea.setEstado("ACTIVO");
+            }
+            if (fechafinal.before(nowDate)) {
+                tarea.setEstado("VENCIDO");
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(SessionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -392,7 +404,6 @@ public class SessionBean implements Serializable, Subject {
                     System.out.println("File has been downloaded successfully.");
                 }
                 inputStream.close();
-
 
             } catch (FileNotFoundException ex) {
                 System.out.println(ex);

@@ -20,6 +20,9 @@ import com.invbf.sistemagestionclientes.util.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -89,35 +92,20 @@ public class HostessFacadeImpl implements HostessFacade {
 
     @Override
     public void guardarLCE(Listasclientestareas l, Integer idAccion) {
-        l.setIdAccion(AccionDao.find(idAccion));
-        ListasclientestareasDao.edit(l);
-        PreparedStatement st = null;
-        DBConnection dBConnection = new DBConnection();
         try {
-            if (dBConnection.getConnection() != null) {
-                Calendar nowDate = Calendar.getInstance();
-                TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
-                nowDate.setTimeZone(timeZone);
-                String query = "UPDATE listasclientestareas SET fechaAtencion=? WHERE idCliente=? AND idTarea=?;";
-                st = dBConnection.getConnection().prepareStatement(query);
-                st.setTimestamp(1, new java.sql.Timestamp(nowDate.getTime().getTime()));
-                st.setInt(2, l.getListasclientestareasPK().getIdCliente());
-                st.setInt(3, l.getListasclientestareasPK().getIdTarea());
-                st.executeUpdate();
-            }
-        } catch (SQLException ex) {
+            l.setIdAccion(AccionDao.find(idAccion));
+
+            DateFormat df = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+            DateFormat df2 = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+            TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+            df.setTimeZone(timeZone);
+            Calendar nowDate = Calendar.getInstance();
+            nowDate.setTime(df2.parse(df.format(nowDate.getTime())));
+            l.setFechaAtencion(nowDate.getTime());
+            ListasclientestareasDao.edit(l);
+        } catch (ParseException ex) {
             Logger.getLogger(HostessFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                dBConnection.shutdown();
-                if (st != null) {
-                    st.close();
-                }
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
         }
-        ListasclientestareasDao.refresh(l);
     }
 
     @Override

@@ -113,7 +113,7 @@ public class ReporteTareasBean {
 
     public void goTareaReporte(int id) {
         try {
-            sessionBean.getAttributes().put("idTarea", new Integer(id));
+            sessionBean.getAttributes().put("idTarea", id);
             FacesContext.getCurrentInstance().getExternalContext().redirect("ReporteTareaEspesifica.xhtml");
         } catch (IOException ex) {
         }

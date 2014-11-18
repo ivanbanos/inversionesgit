@@ -4,12 +4,6 @@ import com.invbf.sistemagestionclientes.entity.Accion;
 import com.invbf.sistemagestionclientes.entity.Listasclientestareas;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
-import com.invbf.sistemagestionclientes.facade.AdminFacade;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.SystemFacade;
-import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.util.AccionConteo;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +74,6 @@ public class ReporteTareaEspesificaBean {
             accionesConteo.add(new AccionConteo(a.getNombre(), 0));
         }
         for (Listasclientestareas lct : elemento.getListasclientestareasList()) {
-            lct.setFechaAtencion(sessionBean.marketingUserFacade.getLCTFecha(lct));
             totalClientes++;
             if (!lct.getIdAccion().getNombre().equals("INICIAL")) {
                 totalRevisados++;

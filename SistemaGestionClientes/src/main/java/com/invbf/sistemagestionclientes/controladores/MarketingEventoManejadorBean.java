@@ -9,9 +9,14 @@ import com.invbf.sistemagestionclientes.entity.Evento;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -85,30 +90,38 @@ public class MarketingEventoManejadorBean {
     public String guardar() {
         guardar:
         {
-            Calendar fechainicio = Calendar.getInstance();
-            Calendar fechafinal = Calendar.getInstance();
-            Calendar nowDate = Calendar.getInstance();
-            TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
-            nowDate.setTimeZone(timeZone);
-            fechainicio.setTime(elemento.getFechaInicio());
-            fechafinal.setTime(elemento.getFechaFinal());
-            if (elemento.getIdEvento() == null || elemento.getIdEvento() == 0) {
-                if (fechainicio.before(nowDate)) {
-                    FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha inicial antes de la fecha actual");
-                    break guardar;
-                } else if (fechafinal.before(fechainicio)) {
-                    FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha final antes de la fecha inicial");
-                    break guardar;
+            try {
+                Calendar fechainicio = Calendar.getInstance();
+                Calendar fechafinal = Calendar.getInstance();
+                
+                DateFormat df = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+                DateFormat df2 = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+                TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+                df.setTimeZone(timeZone);
+                Calendar nowDate = Calendar.getInstance();
+                nowDate.setTime(df2.parse(df.format(nowDate.getTime())));
+                fechainicio.setTime(elemento.getFechaInicio());
+                fechafinal.setTime(elemento.getFechaFinal());
+                if (elemento.getIdEvento() == null || elemento.getIdEvento() == 0) {
+                    if (fechainicio.before(nowDate)) {
+                        FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha inicial antes de la fecha actual");
+                        break guardar;
+                    } else if (fechafinal.before(fechainicio)) {
+                        FacesUtil.addErrorMessage("Fehas incorrectas", "Fecha final antes de la fecha inicial");
+                        break guardar;
+                    }
                 }
+                elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
+                sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
+                sessionBean.marketingUserFacade.guardarEventos(elemento);
+                sessionBean.actualizarUsuario();
+                elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
+                FacesUtil.addInfoMessage("Evento guardado con éxito", elemento.getNombre());
+                
+                return "/pages/eventos.xhtml";
+            } catch (ParseException ex) {
+                Logger.getLogger(MarketingEventoManejadorBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-            elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
-            sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
-            sessionBean.marketingUserFacade.guardarEventos(elemento);
-            sessionBean.actualizarUsuario();
-            elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
-            FacesUtil.addInfoMessage("Evento guardado con éxito", elemento.getNombre());
-
-            return "/pages/eventos.xhtml";
         }
         return "";
     }
