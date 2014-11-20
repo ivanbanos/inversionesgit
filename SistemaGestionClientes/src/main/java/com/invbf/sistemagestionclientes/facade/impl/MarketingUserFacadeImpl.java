@@ -12,7 +12,6 @@ import com.invbf.sistemagestionclientes.dao.ClienteDao;
 import com.invbf.sistemagestionclientes.dao.ClienteatributoDao;
 import com.invbf.sistemagestionclientes.dao.ConfiguracionDao;
 import com.invbf.sistemagestionclientes.dao.EventoDao;
-import com.invbf.sistemagestionclientes.dao.ListasclientestareasDao;
 import com.invbf.sistemagestionclientes.dao.TareasDao;
 import com.invbf.sistemagestionclientes.dao.TipoDocumentoDao;
 import com.invbf.sistemagestionclientes.dao.TipoJuegoDao;
@@ -24,7 +23,6 @@ import com.invbf.sistemagestionclientes.entity.Casino;
 import com.invbf.sistemagestionclientes.entity.Categoria;
 import com.invbf.sistemagestionclientes.entity.Cliente;
 import com.invbf.sistemagestionclientes.entity.Clienteatributo;
-import com.invbf.sistemagestionclientes.entity.Configuracion;
 import com.invbf.sistemagestionclientes.entity.Evento;
 import com.invbf.sistemagestionclientes.entity.Listasclientestareas;
 import com.invbf.sistemagestionclientes.entity.Tarea;
@@ -36,12 +34,8 @@ import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
 import com.invbf.sistemagestionclientes.util.DBConnection;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -183,15 +177,40 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
 
     @Override
     public void deleteEventos(Evento elemento) {
-        File imagen = null;
-        StringBuilder sb = new StringBuilder();
-        Configuracion urlImages = ConfiguracionDao.findByNombre("urlImages");
-        sb.append(urlImages.getValor()).append(System.getProperty("file.separator"))
-                .append("images").append(System.getProperty("file.separator"))
-                .append("inversiones").append(System.getProperty("file.separator")).append(elemento.getImagen());
-        imagen = new File(sb.toString());
-        if (imagen.exists()) {
-            imagen.delete();
+        if (elemento.getImagen() != null && !elemento.getImagen().equals("")) {
+            FTPClient client = new FTPClient();
+            try {
+                System.out.println("entra");
+                String sFTP = ConfiguracionDao.findByNombre("FTP").getValor();
+                String sUser = ConfiguracionDao.findByNombre("FTPuser").getValor();
+                String sPassword = ConfiguracionDao.findByNombre("FTPpassword").getValor();
+
+                client.connect(sFTP);
+                boolean login = client.login(sUser, sPassword);
+
+                int reply = client.getReplyCode();
+
+                System.out.println("Respuesta recibida de conexión FTP:" + reply);
+
+                if (FTPReply.isPositiveCompletion(reply)) {
+                    System.out.println("Conectado Satisfactoriamente");
+                } else {
+                    System.out.println("Imposible conectarse al servidor");
+                }
+                System.out.println(client.printWorkingDirectory());
+                client.changeWorkingDirectory("/home/easl4284/public_html/imagenes");
+                System.out.println(client.printWorkingDirectory());
+                client.setFileType(FTP.BINARY_FILE_TYPE);
+
+                client.deleteFile(elemento.getImagen());
+            } catch (IOException ex) {
+            } finally {
+                try {
+                    client.logout();
+                    client.disconnect();
+                } catch (IOException ex) {
+                }
+            }
         }
         EventoDao.remove(elemento);
     }
@@ -257,7 +276,7 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     public void guardarImagen(byte[] contents, String fileName) {
         FTPClient client = new FTPClient();
         try {
-             System.out.println("entra");
+            System.out.println("entra");
             String sFTP = ConfiguracionDao.findByNombre("FTP").getValor();
             String sUser = ConfiguracionDao.findByNombre("FTPuser").getValor();
             String sPassword = ConfiguracionDao.findByNombre("FTPpassword").getValor();
@@ -278,13 +297,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             client.changeWorkingDirectory("/home/easl4284/public_html/imagenes");
             System.out.println(client.printWorkingDirectory());
             client.setFileType(FTP.BINARY_FILE_TYPE);
-            
+
             client.deleteFile(fileName);
-            
+
             BufferedInputStream buffIn = null;
             buffIn = new BufferedInputStream(new ByteArrayInputStream(contents));//Ruta del archivo para enviar
             client.enterLocalPassiveMode();
-            client.storeFile(fileName , buffIn);//Ruta completa de alojamiento en el FTP
+            client.storeFile(fileName, buffIn);//Ruta completa de alojamiento en el FTP
 
             buffIn.close(); //Cerrar envio de arcivos al FTP
 
@@ -492,5 +511,20 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
             }
         }
         return fechaAtencion;
+    }
+
+    @Override
+    public Casino findCasino(Integer idCasino) {
+        return CasinoDao.find(idCasino);
+    }
+
+    @Override
+    public Categoria findCategoria(Integer idCategorias) {
+        return CategoriaDao.find(idCategorias);
+    }
+
+    @Override
+    public TipoDocumento findTipoDocumento(Integer idTipoDocumento) {
+        return TipoDocumentoDao.find(idTipoDocumento);
     }
 }

@@ -10,8 +10,6 @@ import com.invbf.sistemagestionclientes.entity.Categoria;
 import com.invbf.sistemagestionclientes.entity.Cliente;
 import com.invbf.sistemagestionclientes.entity.Permiso;
 import com.invbf.sistemagestionclientes.entity.TipoJuego;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +26,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class CrudClientesBean {
+
     private List<Cliente> lista;
     private Cliente elemento;
     private List<Casino> listacasinos;
@@ -101,7 +100,6 @@ public class CrudClientesBean {
         this.listacasinos = listacasinos;
     }
 
-
     public List<Atributo> getListaatributos() {
         return listaatributos;
     }
@@ -126,12 +124,11 @@ public class CrudClientesBean {
         this.listatiposjuegos = listatiposjuegos;
     }
 
-
     public void delete() {
-        sessionBean.managerUserFacade.addPermiso(new Permiso("ELIMINAR", elemento.getIdCliente().toString(), "CLIENTE", "", ""));
+        sessionBean.managerUserFacade.addPermiso(new Permiso("ELIMINAR", elemento.getIdCliente().toString(), "CLIENTE", "", "", "", "", "", ""));
         lista = sessionBean.marketingUserFacade.findAllClientes();
-        sessionBean.registrarlog("eliminar", "Clientes", elemento.toString());
-                FacesUtil.addInfoMessage("Eliminación enviada", "Pendiente de autorización");
+        sessionBean.registrarlog("eliminar", "Clientes", "Cleinte enviado a eliminar:"+elemento.toString());
+        FacesUtil.addInfoMessage("Eliminación enviada", "Pendiente de autorización");
         elemento = new Cliente();
     }
 

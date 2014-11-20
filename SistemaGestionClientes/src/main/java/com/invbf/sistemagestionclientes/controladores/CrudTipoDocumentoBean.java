@@ -5,8 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.TipoDocumento;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -21,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudTipoDocumentoBean {
+
     private List<TipoDocumento> lista;
     private TipoDocumento elemento;
     @ManagedProperty("#{sessionBean}")
@@ -30,7 +29,6 @@ public class CrudTipoDocumentoBean {
         this.sessionBean = sessionBean;
     }
 
-    
     private List<TipoDocumento> flista;
 
     public List<TipoDocumento> getFlista() {
@@ -40,6 +38,7 @@ public class CrudTipoDocumentoBean {
     public void setFlista(List<TipoDocumento> flista) {
         this.flista = flista;
     }
+
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
@@ -70,26 +69,22 @@ public class CrudTipoDocumentoBean {
         this.elemento = elemento;
     }
 
-    
-    public void delete(){
+    public void delete() {
         sessionBean.marketingUserFacade.deleteTipoDocumentos(elemento);
         lista = sessionBean.marketingUserFacade.findAllTipoDocumentos();
-        sessionBean.registrarlog("eliminar", "tipodocumento", elemento.getNombre());
-            FacesUtil.addInfoMessage("Tipo documento eliminado", elemento.getNombre());
+        FacesUtil.addInfoMessage("Tipo documento eliminado", elemento.getNombre());
         elemento = new TipoDocumento();
     }
-    
-    public void guardar(){
+
+    public void guardar() {
         boolean opcion = sessionBean.marketingUserFacade.guardarTipoDocumentos(elemento);
         lista = sessionBean.marketingUserFacade.findAllTipoDocumentos();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "tipodocumento", elemento.getNombre());
             FacesUtil.addInfoMessage("Tipo documento actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "tipodocumento", elemento.getNombre());
             FacesUtil.addInfoMessage("Tipo documento creado", elemento.getNombre());
         }
         elemento = new TipoDocumento();
     }
-    
+
 }

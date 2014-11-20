@@ -41,24 +41,27 @@
                                     <p:column headerText="Campo" sortBy="#{element.permiso.campo}" filterBy="#{element.permiso.campo}" filterMatchMode="contains" >
                                         <h:outputText value="#{element.permiso.campo}" />
                                     </p:column>
-                                    <p:column headerText="Nuevo Valor" sortBy="#{element.permiso.nuevoValor}" filterBy="#{element.permiso.nuevoValor}" filterMatchMode="contains" >
-                                        <h:outputText value="#{element.permiso.nuevoValor}" />
+                                    <p:column headerText="Valor Actual" sortBy="#{element.permiso.detalleValorActual}" filterBy="#{element.permiso.detalleValorActual}" filterMatchMode="contains" >
+                                        <h:outputText value="#{element.permiso.detalleValorActual}" />
+                                    </p:column>
+                                    <p:column headerText="Valor Nuevo" sortBy="#{element.permiso.detalleNuevoValor}" filterBy="#{element.permiso.detalleNuevoValor}" filterMatchMode="contains" >
+                                        <h:outputText value="#{element.permiso.detalleNuevoValor}" />
                                     </p:column>
 
                                     <p:column headerText="Acciones" >
                                         <p:commandButton id="editButton" update=":#{p:component('editDialog')}" 
                                                          oncomplete="PF('editDialog').show()" icon="ui-icon-pencil" 
                                                          title="#{label['lb_btn.editar']}" >  
-                                            <f:setPropertyActionListener value="#{element.permiso}" target="#{notificaciones.permiso}" />  
+                                            <f:setPropertyActionListener value="#{element}" target="#{notificaciones.permiso}" />  
                                         </p:commandButton>
                                         <p:commandButton id="deleteButton" oncomplete="PF('deleteDialog').show();" 
                                                          icon="ui-icon-trash" title="#{label['lb_btn.borrar']}"  update=":#{p:component('deleteDialog')}">
-                                            <f:setPropertyActionListener value="#{element.permiso}" target="#{notificaciones.permiso}" /> 
+                                            <f:setPropertyActionListener value="#{element}" target="#{notificaciones.permiso}" /> 
                                         </p:commandButton> 
                                     </p:column>
                                 </p:dataTable>
 
-                                <p:confirmDialog id="deleteDialog" message="Quiere borrar la acción #{notificaciones.permiso.tipo}?"  
+                                <p:confirmDialog id="deleteDialog" message="Quiere borrar la acción #{notificaciones.permiso.permiso.tipo}?"  
                                                  header="Borrar" severity="alert" widgetVar="deleteDialog" closable="false">  
 
                                     <p:commandButton  value="Aceptar" oncomplete="PF('deleteDialog').hide()"  
@@ -66,7 +69,7 @@
                                     <p:commandButton  value="Cancelar" onclick="PF('deleteDialog').hide()" type="button" />   
 
                                 </p:confirmDialog> 
-                                <p:confirmDialog id="editDialog" message="Quiere ejecutar la acción #{notificaciones.permiso.tipo}?"  
+                                <p:confirmDialog id="editDialog" message="Quiere ejecutar la acción #{notificaciones.permiso.permiso.tipo}?"  
                                                  header="Borrar" severity="alert" widgetVar="editDialog" closable="false">  
 
                                     <p:commandButton  value="Aceptar" oncomplete="PF('editDialog').hide()"  

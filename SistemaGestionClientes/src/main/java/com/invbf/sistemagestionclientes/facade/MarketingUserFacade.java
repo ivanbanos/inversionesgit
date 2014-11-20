@@ -102,4 +102,10 @@ public interface MarketingUserFacade {
 
     public Date getLCTFecha(Listasclientestareas lct);
 
+    public Casino findCasino(Integer idCasino);
+
+    public Categoria findCategoria(Integer idCategorias);
+
+    public TipoDocumento findTipoDocumento(Integer idTipoDocumento);
+
 }

@@ -5,6 +5,7 @@
 package com.invbf.sistemagestionclientes.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,7 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author ideacentre
  */
-
 @Entity
 @Table(name = "Eventos")
 @XmlRootElement
@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evento.findByDecripcion", query = "SELECT e FROM Evento e WHERE e.decripcion = :decripcion"),
     @NamedQuery(name = "Evento.findByImagen", query = "SELECT e FROM Evento e WHERE e.imagen = :imagen")})
 public class Evento implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +67,6 @@ public class Evento implements Serializable {
     @JoinColumn(name = "idCasino", referencedColumnName = "idCasino")
     @ManyToOne
     private Casino idCasino;
-    
 
     public Evento() {
     }
@@ -102,6 +102,17 @@ public class Evento implements Serializable {
 
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
+        if (fechaFinal != null) {
+            Calendar fechaini = Calendar.getInstance();
+            Calendar fechafin = Calendar.getInstance();
+            fechaini.setTime(fechaInicio);
+            fechafin.setTime(fechaFinal);
+            if (fechafin.before(fechaini)) {
+                fechaFinal = fechaInicio;
+            }
+        } else {
+            fechaFinal = fechaInicio;
+        }
     }
 
     public String getImagen() {
@@ -144,5 +155,5 @@ public class Evento implements Serializable {
     public void setTareasList(List<Tarea> tareasList) {
         this.tareasList = tareasList;
     }
-    
+
 }

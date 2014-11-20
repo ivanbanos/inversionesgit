@@ -5,8 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Configuracion;
-import com.invbf.sistemagestionclientes.facade.SystemFacade;
-import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;

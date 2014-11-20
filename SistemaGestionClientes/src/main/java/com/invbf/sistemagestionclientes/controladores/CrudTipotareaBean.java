@@ -4,12 +4,9 @@
  */
 package com.invbf.sistemagestionclientes.controladores;
 
-
 import com.invbf.sistemagestionclientes.entity.Accion;
 import com.invbf.sistemagestionclientes.entity.Casino;
 import com.invbf.sistemagestionclientes.entity.Tipotarea;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +23,7 @@ import org.primefaces.model.DualListModel;
 @ManagedBean
 @ViewScoped
 public class CrudTipotareaBean {
+
     private List<Tipotarea> lista;
     private Tipotarea elemento;
     @ManagedProperty("#{sessionBean}")
@@ -94,7 +92,6 @@ public class CrudTipotareaBean {
     public void delete() {
         sessionBean.marketingUserFacade.deleteTipotarea(elemento);
         lista = sessionBean.marketingUserFacade.findAllTipotarea();
-        sessionBean.registrarlog("eliminar", "Tipotareas", elemento.getNombre());
         FacesUtil.addInfoMessage("Tipo de evento eliminado", elemento.getNombre());
         elemento = new Tipotarea();
         elemento.setAccionList(new ArrayList<Accion>());
@@ -113,10 +110,8 @@ public class CrudTipotareaBean {
 
         lista = sessionBean.marketingUserFacade.findAllTipotarea();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Tipotareas", elemento.getNombre());
             FacesUtil.addInfoMessage("Tipo de tarea actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "Tipotareas", elemento.getNombre());
             FacesUtil.addInfoMessage("Tipo de tarea creado", elemento.getNombre());
         }
         elemento = new Tipotarea();
@@ -137,5 +132,5 @@ public class CrudTipotareaBean {
     public void setAccionesTodos(DualListModel<Accion> AccionesTodos) {
         this.AccionesTodos = AccionesTodos;
     }
-    
+
 }

@@ -89,6 +89,11 @@ public class PerfilActBean {
     private boolean agregartipoDocumento = false;
     private boolean actualizartipoDocumento = false;
     private boolean eliminartipoDocumento = false;
+    private boolean vistaCargo = false;
+    private boolean agregarCargo = false;
+    private boolean actualizarCargo = false;
+    private boolean eliminarCargo = false;
+    private boolean logs = false;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -138,7 +143,6 @@ public class PerfilActBean {
             sessionBean.adminFacade.guardarPerfiles(elemento);
             sessionBean.actualizarUsuario();
             sessionBean.getAttributes().remove("idPerfil");
-            sessionBean.registrarlog("actualizar", "Perfiles", elemento.getNombre());
             FacesUtil.addInfoMessage("Perfil actualizado", elemento.getNombre());
             FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosSistema.xhtml");
         } catch (PerfilExistenteException ex) {
@@ -153,6 +157,9 @@ public class PerfilActBean {
 
                 if (f.getTabla().equals("tipodocumento")) {
                     agregartipoDocumento = true;
+                }
+                if (f.getTabla().equals("cargo")) {
+                    agregarCargo = true;
                 }
                 if (f.getTabla().equals("Tipotareas")) {
                     agregarTipoevento = true;
@@ -199,6 +206,9 @@ public class PerfilActBean {
                 if (f.getTabla().equals("tipodocumento")) {
                     actualizartipoDocumento = true;
                 }
+                if (f.getTabla().equals("cargo")) {
+                    actualizarCargo = true;
+                }
                 if (f.getTabla().equals("Tipotareas")) {
                     actualizarTipoevento = true;
                 }
@@ -243,6 +253,10 @@ public class PerfilActBean {
 
                 if (f.getTabla().equals("tipodocumento")) {
                     eliminartipoDocumento = true;
+                }
+                
+                if (f.getTabla().equals("cargo")) {
+                    eliminarCargo = true;
                 }
                 if (f.getTabla().equals("Tipotareas")) {
                     eliminarTipoevento = true;
@@ -347,6 +361,12 @@ public class PerfilActBean {
             if (v.getNombreVista().equals("notificaciones")) {
                 vistaNotificacion = true;
             }
+            if (v.getNombreVista().equals("logs")) {
+                logs = true;
+            }
+            if (v.getNombreVista().equals("cargo")) {
+                vistaCargo = true;
+            }
         }
     }
 
@@ -366,6 +386,12 @@ public class PerfilActBean {
             v = sessionBean.adminFacade.findVistasByNombre("Perfiles");
             elemento.getVistasList().add(v);
         }
+        if (vistaCargo == false) {
+            count++;
+        } else {
+            v = sessionBean.adminFacade.findVistasByNombre("cargo");
+            elemento.getVistasList().add(v);
+        }
         if (vistaVistas == false) {
             count++;
         } else {
@@ -378,7 +404,7 @@ public class PerfilActBean {
             v = sessionBean.adminFacade.findVistasByNombre("Formularios");
             elemento.getVistasList().add(v);
         }
-        if (count < 4) {
+        if (count < 5) {
             v = sessionBean.adminFacade.findVistasByNombre("AtributosSistema");
             elemento.getVistasList().add(v);
         }
@@ -467,6 +493,10 @@ public class PerfilActBean {
             v = sessionBean.adminFacade.findVistasByNombre("notificaciones");
             elemento.getVistasList().add(v);
         }
+        if (logs == true) {
+            v = sessionBean.adminFacade.findVistasByNombre("logs");
+            elemento.getVistasList().add(v);
+        }
 
         elemento.getFormulariosList().clear();
         Formulario f;
@@ -480,6 +510,18 @@ public class PerfilActBean {
         }
         if (eliminartipoDocumento == true) {
             f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "tipodocumento");
+            elemento.getFormulariosList().add(f);
+        }
+        if (agregarCargo == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "cargo");
+            elemento.getFormulariosList().add(f);
+        }
+        if (actualizarCargo == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "cargo");
+            elemento.getFormulariosList().add(f);
+        }
+        if (eliminarCargo == true) {
+            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "cargo");
             elemento.getFormulariosList().add(f);
         }
         if (agregarUsuario == true) {
@@ -1167,5 +1209,13 @@ public class PerfilActBean {
 
     public void setVistaNotificacion(boolean vistaNotificacion) {
         this.vistaNotificacion = vistaNotificacion;
+    }
+
+    public boolean isLogs() {
+        return logs;
+    }
+
+    public void setLogs(boolean logs) {
+        this.logs = logs;
     }
 }

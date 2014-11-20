@@ -204,6 +204,19 @@
                                     <h:commandLink  action="#{sessionBean.go(&quot;cuenta&quot;)}" class="navbar-text" value="#{label['cuentausuarios']}"/>
                                 </li>
                             </c:if>
+
+                            <c:if test="#{sessionBean.perfilViewMatch(&quot;logs&quot;)}">
+                                <c:if test="#{sessionBean.isActive(&quot;logs&quot;)}">
+                                    <li>
+                                        <h:commandLink  action="#{sessionBean.go(&quot;logs&quot;)}" class="navbar-text-selected" value="#{label['logs']}"/>
+                                    </li>
+                                </c:if>
+                                <c:if test="#{sessionBean.isNotActive(&quot;logs&quot;)}">
+                                    <li>
+                                        <h:commandLink  action="#{sessionBean.go(&quot;logs&quot;)}" class="navbar-text" value="#{label['logs']}"/>
+                                    </li>
+                                </c:if>
+                            </c:if>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->

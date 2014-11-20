@@ -28,7 +28,7 @@ public class Notificaciones {
     private SessionBean sessionBean;
     private List<Permiso> permisos;
     private List<PermisoCliente> lista;
-    private Permiso permiso;
+    private PermisoCliente permiso;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -49,7 +49,7 @@ public class Notificaciones {
                 sessionBean.managerUserFacade.eliminarPermiso(p);
             }
         }
-        permiso = new Permiso();
+        permiso = new PermisoCliente();
     }
 
     public List<Permiso> getPermisos() {
@@ -60,23 +60,24 @@ public class Notificaciones {
         this.permisos = permisos;
     }
 
-    public Permiso getPermiso() {
+    public PermisoCliente getPermiso() {
         return permiso;
     }
 
-    public void setPermiso(Permiso permiso) {
+    public void setPermiso(PermisoCliente permiso) {
         this.permiso = permiso;
     }
 
     public void ejecutarPermiso() {
         try {
-            String message = sessionBean.managerUserFacade.ejecutarPermiso(permiso);
+            String message = sessionBean.managerUserFacade.ejecutarPermiso(permiso.getPermiso());
+        sessionBean.registrarlog(null, null, "Permiso para cambiar el cliente "+permiso.getCliente().toString()+"campo:"+permiso.getPermiso().getCampo()+":ACEPTADO");
             FacesUtil.addInfoMessage("Acción realizada con éxito", message);
         } catch (clienteInexistenteException ex) {
             FacesUtil.addInfoMessage("Problemas al realizar la accion", "El registro ya no existe");
         }
 
-        sessionBean.managerUserFacade.eliminarPermiso(permiso);
+        sessionBean.managerUserFacade.eliminarPermiso(permiso.getPermiso());
         permisos = sessionBean.managerUserFacade.getAllPermisos();
         lista = new ArrayList<PermisoCliente>();
         for (Permiso p : permisos) {
@@ -87,11 +88,12 @@ public class Notificaciones {
                 sessionBean.managerUserFacade.eliminarPermiso(p);
             }
         }
-        permiso = new Permiso();
+        permiso = new PermisoCliente();
     }
 
     public void eliminarPermiso() {
-        sessionBean.managerUserFacade.eliminarPermiso(permiso);
+        sessionBean.managerUserFacade.eliminarPermiso(permiso.getPermiso());
+        sessionBean.registrarlog(null, null, "Permiso para cambiar el cliente "+permiso.getCliente().toString()+"campo:"+permiso.getPermiso().getCampo()+":RECHAZADO");
         FacesUtil.addInfoMessage("Acción no realizada", "Eliminada con exito");
         permisos = sessionBean.managerUserFacade.getAllPermisos();
         lista = new ArrayList<PermisoCliente>();
@@ -103,7 +105,7 @@ public class Notificaciones {
                 sessionBean.managerUserFacade.eliminarPermiso(p);
             }
         }
-        permiso = new Permiso();
+        permiso = new PermisoCliente();
     }
 
     public List<PermisoCliente> getLista() {

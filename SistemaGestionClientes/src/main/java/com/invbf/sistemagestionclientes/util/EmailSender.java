@@ -55,18 +55,18 @@ public class EmailSender {
         props.put("mail.smtp.port", port);
         switch (protocol) {
             case SMTPS:
-                props.put("mail.smtp.ssl.enable", true);
+                props.put("mail.smtp.ssl.enable", "true");
                 break;
                 
             case SMTP:
             case TLS:
-                props.put("mail.smtp.starttls.enable", true);
+                props.put("mail.smtp.starttls.enable", "true");
                 break;
         }
 
         Authenticator authenticator = null;
         if (auth) {
-            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.auth", "true");
             authenticator = new Authenticator() {
                 private PasswordAuthentication pa = new PasswordAuthentication(username, password);
 

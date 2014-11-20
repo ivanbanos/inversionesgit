@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class HostessTareaManejadorBean {
+
     private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -95,7 +96,7 @@ public class HostessTareaManejadorBean {
             clientesPojo.indexOf(new LCTPojo((Integer) sessionBean.getAttributes().get("idTarea"), idCliente));
 
             LCTPojo l = clientesPojo.get(index);
-            if (l.getAccion() == null || l.getAccion()==0) {
+            if (l.getAccion() == null || l.getAccion() == 0) {
                 FacesUtil.addErrorMessage("No se puede guardar accion de cliente", "Debe seleccionar una Accion");
                 break guardar;
             }
@@ -103,8 +104,10 @@ public class HostessTareaManejadorBean {
             l = clientesPojo.remove(index);
             Accion a = sessionBean.marketingUserFacade.findAccion(l.getAccion());
 
+            sessionBean.hostessFacade.guardarLCE(l.getListaclientetareas(sessionBean.getUsuario(), a), a.getIdAccion());
 
-            sessionBean.hostessFacade.guardarLCE(l.getListaclientetareas(sessionBean.getUsuario(), a),a.getIdAccion());
+            sessionBean.registrarlog(null, null, "Cambio en cliente "+l.getCliente().toString()+" sobre tarea "+elemento.getNombre());
+            
             List<Listasclientestareas> clientes = new ArrayList<Listasclientestareas>();
             for (Iterator<LCTPojo> it = clientesPojo.iterator(); it.hasNext();) {
                 LCTPojo lct = it.next();

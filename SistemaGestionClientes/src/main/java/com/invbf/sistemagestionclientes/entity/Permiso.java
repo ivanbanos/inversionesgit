@@ -50,20 +50,30 @@ public class Permiso implements Serializable {
     private String campo;
     @Column(name = "nuevoValor")
     private String nuevoValor;
-    @JoinColumn(name = "Perfil", referencedColumnName = "idPerfil")
-    @ManyToOne
-    private Perfil perfil;
+    @Column(name = "detalleNuevoValor")
+    private String detalleNuevoValor;
+    @Column(name = "valorActual")
+    private String valorActual;
+    @Column(name = "detalleValorActual")
+    private String detalleValorActual;
+    @Column(name = "observaciones")
+    private String observaciones;
 
     public Permiso() {
     }
 
-    public Permiso(String tipo, String id, String tabla, String campo, String nuevoValor) {
+    public Permiso(String tipo, String id, String tabla, String campo, String nuevoValor, String detalleNuevoValor, String valorActual, String detalleValorActual, String observaciones) {
         this.tipo = tipo;
         this.id = id;
         this.tabla = tabla;
         this.campo = campo;
         this.nuevoValor = nuevoValor;
+        this.detalleNuevoValor = detalleNuevoValor;
+        this.valorActual = valorActual;
+        this.detalleValorActual = detalleValorActual;
+        this.observaciones = observaciones;
     }
+    
 
     public Permiso(Integer idAcciones) {
         this.idAcciones = idAcciones;
@@ -117,12 +127,36 @@ public class Permiso implements Serializable {
         this.nuevoValor = nuevoValor;
     }
 
-    public Perfil getPerfil() {
-        return perfil;
+    public String getDetalleNuevoValor() {
+        return detalleNuevoValor;
     }
 
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+    public void setDetalleNuevoValor(String detalleNuevoValor) {
+        this.detalleNuevoValor = detalleNuevoValor;
+    }
+
+    public String getValorActual() {
+        return valorActual;
+    }
+
+    public void setValorActual(String valorActual) {
+        this.valorActual = valorActual;
+    }
+
+    public String getDetalleValorActual() {
+        return detalleValorActual;
+    }
+
+    public void setDetalleValorActual(String detalleValorActual) {
+        this.detalleValorActual = detalleValorActual;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     @Override

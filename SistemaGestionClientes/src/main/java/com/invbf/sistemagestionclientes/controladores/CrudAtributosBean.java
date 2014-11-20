@@ -5,8 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Atributo;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -21,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudAtributosBean {
+
     private List<Atributo> lista;
     private Atributo elemento;
     @ManagedProperty("#{sessionBean}")
@@ -29,8 +28,8 @@ public class CrudAtributosBean {
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    
-private List<Atributo> flista;
+
+    private List<Atributo> flista;
 
     public List<Atributo> getFlista() {
         return flista;
@@ -39,6 +38,7 @@ private List<Atributo> flista;
     public void setFlista(List<Atributo> flista) {
         this.flista = flista;
     }
+
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
@@ -51,7 +51,7 @@ private List<Atributo> flista;
         sessionBean.setActive("configuracion");
         elemento = new Atributo();
         lista = sessionBean.marketingUserFacade.findAllAtributos();
-        
+
     }
 
     public List<Atributo> getLista() {
@@ -69,27 +69,24 @@ private List<Atributo> flista;
     public void setElemento(Atributo elemento) {
         this.elemento = elemento;
     }
-    
-    public void delete(){
+
+    public void delete() {
         sessionBean.marketingUserFacade.deleteAtributos(elemento);
         lista = sessionBean.marketingUserFacade.findAllAtributos();
-        sessionBean.registrarlog("eliminar", "Atributos", elemento.getNombre());
-            FacesUtil.addInfoMessage("Atributo eliminado", elemento.getNombre());
+        FacesUtil.addInfoMessage("Atributo eliminado", elemento.getNombre());
         elemento = new Atributo();
     }
-    
-    public void guardar(){
+
+    public void guardar() {
         elemento.setTipoDato("Text");
         boolean opcion = sessionBean.marketingUserFacade.guardarAtributos(elemento);
         lista = sessionBean.marketingUserFacade.findAllAtributos();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "Atributos", elemento.getNombre());
             FacesUtil.addInfoMessage("Atributo creado", elemento.getNombre());
         }
         elemento = new Atributo();
     }
-    
+
 }

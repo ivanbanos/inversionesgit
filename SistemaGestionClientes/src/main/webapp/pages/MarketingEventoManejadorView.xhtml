@@ -25,8 +25,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <div class="row clearfix">
                         <div class="form-group col-md-12">
                             <label class="col-md-2 control-label" >#{label['descripcion']}:</label>
@@ -41,7 +41,11 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-4 control-label" >#{label['fechainicio']}:</label>
                             <div class="col-md-8">
-                                <p:calendar id="feciniEventos" value="#{marketingEventoManejadorBean.elemento.fechaInicio}" pattern="dd/MMMM/yyyy HH:mm:ss" locale="es"/>
+                                <p:calendar id="feciniEventos" value="#{marketingEventoManejadorBean.elemento.fechaInicio}" pattern="dd/MMMM/yyyy HH:mm:ss" locale="es">
+
+                                    <p:ajax event="dateSelect" update=":#{p:component('fecfinEventos')}" />
+                                </p:calendar>
+
                             </div>
                         </div>
 

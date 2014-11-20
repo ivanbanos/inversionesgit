@@ -35,8 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Perfiles.findByIdPerfil", query = "SELECT p FROM Perfil p WHERE p.idPerfil = :idPerfil"),
     @NamedQuery(name = "Perfiles.findByNombre", query = "SELECT p FROM Perfil p WHERE p.nombre = :nombre")})
 public class Perfil implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfil")
-    private List<Permiso> permisosList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,8 +54,6 @@ public class Perfil implements Serializable {
         @JoinColumn(name = "idVista", referencedColumnName = "idVista")})
     @ManyToMany
     private List<Vista> vistasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "perfil")
-    private List<Permiso> permisoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
     private List<Usuario> usuariosList;
 
@@ -108,15 +104,6 @@ public class Perfil implements Serializable {
     }
 
     @XmlTransient
-    public List<Permiso> getPermisosList() {
-        return permisosList;
-    }
-
-    public void setPermisosList(List<Permiso> permisosList) {
-        this.permisosList = permisosList;
-    }
-
-    @XmlTransient
     public List<Usuario> getUsuariosList() {
         return usuariosList;
     }
@@ -148,15 +135,6 @@ public class Perfil implements Serializable {
     @Override
     public String toString() {
         return "com.invbf.adminclientesapi.entity.Perfiles[ idPerfil=" + idPerfil + " ]";
-    }
-
-    @XmlTransient
-    public List<Permiso> getPermisoList() {
-        return permisosList;
-    }
-
-    public void setPermisoList(List<Permiso> permisosList) {
-        this.permisosList = permisosList;
     }
     
 }

@@ -6,10 +6,6 @@ package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Casino;
 import com.invbf.sistemagestionclientes.entity.Evento;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.SystemFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.SystemFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.io.IOException;
 import java.util.List;
@@ -107,7 +103,7 @@ public class CrudEventoBean {
     public void delete() {
         sessionBean.marketingUserFacade.deleteEventos(elemento);
         lista = sessionBean.marketingUserFacade.findAllEventos();
-        sessionBean.registrarlog("eliminar", "Eventos", elemento.getNombre());
+        sessionBean.registrarlog("eliminar", "Eventos", "Evento eliminado:"+ elemento.getNombre());
         FacesUtil.addInfoMessage("Evento eliminado", elemento.getNombre());
         elemento = new Evento();
     }
@@ -121,9 +117,9 @@ public class CrudEventoBean {
 
     public void goEventoMarketing(int id) {
         try {
-            sessionBean.getAttributes().put("idEvento", new Integer(id));
+            sessionBean.getAttributes().put("idEvento", id);
             
-            sessionBean.getAttributes().put("imagen",sessionBean.getImage(new Integer(id)));
+            sessionBean.getAttributes().put("imagen",sessionBean.getImage(id));
             FacesContext.getCurrentInstance().getExternalContext().redirect("MarketingEventoManejadorView.xhtml");
         } catch (IOException ex) {
         }
@@ -131,7 +127,7 @@ public class CrudEventoBean {
 
     public void goEventoReporte(int id) {
         try {
-            sessionBean.getAttributes().put("idEvento", new Integer(id));
+            sessionBean.getAttributes().put("idEvento", id);
             FacesContext.getCurrentInstance().getExternalContext().redirect("ReporteEventoEspesifico.xhtml");
         } catch (IOException ex) {
         }

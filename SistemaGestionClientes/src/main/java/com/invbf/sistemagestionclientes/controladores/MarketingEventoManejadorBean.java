@@ -112,10 +112,8 @@ public class MarketingEventoManejadorBean {
                     }
                 }
                 elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
-                sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
-                sessionBean.marketingUserFacade.guardarEventos(elemento);
+                sessionBean.registrarlog("actualizar", "Eventos", "Evento guardado:"+elemento.getNombre());
                 sessionBean.actualizarUsuario();
-                elemento = sessionBean.marketingUserFacade.guardarEventos(elemento);
                 FacesUtil.addInfoMessage("Evento guardado con éxito", elemento.getNombre());
                 
                 return "/pages/eventos.xhtml";
@@ -145,7 +143,7 @@ public class MarketingEventoManejadorBean {
     public void deleteTarea() {
         elemento.getTareasList().remove(tarea);
         sessionBean.marketingUserFacade.deleteTarea(tarea);
-        sessionBean.registrarlog("eliminar", "Tareas", elemento.toString());
+        sessionBean.registrarlog("eliminar", "Tareas", "Tarea "+tarea.getNombre()+" Eliminada del evento "+elemento.toString());
         FacesUtil.addInfoMessage("Tarea eliminada", tarea.getNombre());
         tarea = new Tarea();
     }

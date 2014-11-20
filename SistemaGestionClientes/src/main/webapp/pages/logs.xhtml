@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../WEB-INF/template/Template.xhtml"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="content">
+        <h:form>
+            <div class="container">
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-md-8 col-md-offset-2">
+                        <h:form id="formCambio" class="form-horizontal" >
+
+
+
+                            <div class="panel panel-primary">
+
+                                <div class="panel-heading"><h4>Logs</h4></div>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <c:forEach var="log" items="#{logsBean.logs}">
+                                            <div class="form-group">
+
+                                                <label class="col-md-12 control-label" >#{log}</label>
+                                            </div>
+                                        </c:forEach>
+                                    </fieldset>
+                                </div>
+                                <div class="panel-footer text-right"> 
+                                    <h:commandButton styleClass="btn btn-primary" value="#{label['Confirmar']}" action="#{cuentaUsuarioBean.cambioContrasena()}"/>
+                                </div>
+                            </div>
+
+
+                        </h:form>
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+
+    </ui:define>            
+</ui:composition>

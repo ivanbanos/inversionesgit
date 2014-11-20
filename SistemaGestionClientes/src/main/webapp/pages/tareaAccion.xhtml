@@ -103,7 +103,9 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-4 control-label" >* #{label['fechainicio']}:</label>
                             <div class="col-md-8">
-                                <p:calendar pattern="dd/MMMM/yyyy HH:mm:ss" id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" locale="es" required="true"/>
+                                <p:calendar pattern="dd/MMMM/yyyy HH:mm:ss" id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" locale="es" required="true">
+                                <p:ajax event="dateSelect" update=":#{p:component('fecfinEventos')}" />
+                                </p:calendar>
                             </div>
                         </div>
 

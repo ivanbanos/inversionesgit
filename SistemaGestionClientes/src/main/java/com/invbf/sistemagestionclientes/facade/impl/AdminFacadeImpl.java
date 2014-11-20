@@ -4,6 +4,7 @@
  */
 package com.invbf.sistemagestionclientes.facade.impl;
 
+import com.invbf.sistemagestionclientes.dao.CargoDao;
 import com.invbf.sistemagestionclientes.dao.FormularioDao;
 import com.invbf.sistemagestionclientes.dao.PerfilDao;
 import com.invbf.sistemagestionclientes.dao.TareasDao;
@@ -14,6 +15,7 @@ import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entity.Vista;
+import com.invbf.sistemagestionclientes.entitySGB.Cargos;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
 import com.invbf.sistemagestionclientes.facade.AdminFacade;
@@ -182,6 +184,27 @@ public class AdminFacadeImpl implements AdminFacade {
     @Override
     public Formulario findFormularioByAccionAndTabla(String accion, String tabla) {
       return FormularioDao.findByAccionAndTabla(accion, tabla);
+    }
+
+    @Override
+    public List<Cargos> findAllCargos() {
+        return CargoDao.findAll();
+    }
+
+    @Override
+    public boolean guardarCargos(Cargos elemento) {
+        if (elemento.getIdcargo()== null) {
+            CargoDao.create(elemento);
+            return false;
+        } else {
+            CargoDao.edit(elemento);
+            return true;
+        }
+    }
+
+    @Override
+    public void deleteCargos(Cargos elemento) {
+        CargoDao.remove(elemento);
     }
 
 

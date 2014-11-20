@@ -5,8 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.TipoJuego;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -21,15 +19,16 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudTipoJuegoBean {
+
     private List<TipoJuego> lista;
     private TipoJuego elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    
+
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
-    
+
     private List<TipoJuego> flista;
 
     public List<TipoJuego> getFlista() {
@@ -70,27 +69,23 @@ public class CrudTipoJuegoBean {
         this.elemento = elemento;
     }
 
-    
-    public void delete(){
+    public void delete() {
         sessionBean.marketingUserFacade.deleteTiposjuegos(elemento);
         lista = sessionBean.marketingUserFacade.findAllTiposjuegos();
-        sessionBean.registrarlog("eliminar", "TiposJuegos", elemento.toString());
-            FacesUtil.addInfoMessage("Tipo de juegos eliminado", elemento.getNombre());
+        FacesUtil.addInfoMessage("Tipo de juegos eliminado", elemento.getNombre());
         elemento = new TipoJuego();
     }
-    
-    public void guardar(){
+
+    public void guardar() {
         boolean opcion = sessionBean.marketingUserFacade.guardarTiposjuegos(elemento);
         lista = sessionBean.marketingUserFacade.findAllTiposjuegos();
-        
+
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "TiposJuegos", elemento.toString());
             FacesUtil.addInfoMessage("Tipo de juegos actualizado", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "TiposJuegos", elemento.toString());
             FacesUtil.addInfoMessage("Tipo de juegos creado", elemento.getNombre());
         }
         elemento = new TipoJuego();
     }
-    
+
 }

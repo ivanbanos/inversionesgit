@@ -92,7 +92,7 @@ public class CrudTareasBean {
     public void delete() {
         sessionBean.marketingUserFacade.deleteTarea(elemento);
         sessionBean.registrarlog("eliminar", "Tareas", elemento.getNombre());
-        FacesUtil.addInfoMessage("Tarea eliminada", elemento.getNombre());
+        FacesUtil.addInfoMessage("Tarea eliminada", "Tarea eliminada: "+ elemento.getNombre());
         elemento = new Tarea();
         lista = sessionBean.marketingUserFacade.findAllTareas();
     }

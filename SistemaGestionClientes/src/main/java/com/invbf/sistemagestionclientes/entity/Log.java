@@ -127,7 +127,7 @@ public class Log implements Serializable {
 
     @Override
     public String toString() {
-        return "com.invbf.adminclientesapi.entity.Logs[ idLog=" + idLog + " ]";
+        return fecha+" "+idUsuario.getNombreUsuario()+": "+mensaje;
     }
     
 }

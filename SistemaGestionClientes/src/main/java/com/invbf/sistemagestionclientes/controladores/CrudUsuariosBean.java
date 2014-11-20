@@ -7,7 +7,6 @@ package com.invbf.sistemagestionclientes.controladores;
 import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
-import com.invbf.sistemagestionclientes.facade.AdminFacade;
 import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
 import com.invbf.sistemagestionclientes.observer.Observer;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
@@ -96,8 +95,6 @@ public class CrudUsuariosBean implements Observer {
     public void delete() {
         sessionBean.adminFacade.deleteUsuarios(elemento);
         lista = sessionBean.adminFacade.findAllUsuarios();
-        sessionBean.registrarlog("eliminar", "Usuarios", elemento.toString());
-
         FacesUtil.addInfoMessage("Usuario eliminado", elemento.getNombreUsuario());
 
         setNuevoUsuario();
@@ -110,10 +107,8 @@ public class CrudUsuariosBean implements Observer {
             boolean opcion = sessionBean.adminFacade.guardarUsuarios(elemento);
             lista = sessionBean.adminFacade.findAllUsuarios();
             if (opcion) {
-                sessionBean.registrarlog("actualizar", "Usuarios", elemento.toString());
                 FacesUtil.addInfoMessage("Usuario actualizado", elemento.getNombreUsuario());
             } else {
-                sessionBean.registrarlog("crear", "Usuarios", elemento.toString());
                 FacesUtil.addInfoMessage("Usuario creado", elemento.getNombreUsuario());
             }
 

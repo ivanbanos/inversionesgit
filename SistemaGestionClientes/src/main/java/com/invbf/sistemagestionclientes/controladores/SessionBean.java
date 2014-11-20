@@ -5,7 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.dao.ConfiguracionDao;
-import com.invbf.sistemagestionclientes.dao.EventoDao;
 import com.invbf.sistemagestionclientes.entity.Configuracion;
 import com.invbf.sistemagestionclientes.entity.Evento;
 import com.invbf.sistemagestionclientes.entity.Formulario;
@@ -32,7 +31,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +49,6 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 /**
@@ -108,6 +105,7 @@ public class SessionBean implements Serializable, Subject {
     public String Conectar() {
         try {
             usuario = sessionFacade.iniciarSession(usuario);
+            sessionFacade.registrarlog(null, null, "Inicio de sesion del usuario "+usuario.getNombreUsuario(), usuario);
             active = "inicio";
             return "/pages/index.xhtml";
         } catch (ClavesNoConcuerdanException ex) {
@@ -297,7 +295,10 @@ public class SessionBean implements Serializable, Subject {
         } else if (page.equals("notificaciones")) {
             active = "notificaciones";
             return "/pages/notificaciones.xhtml";
-        }
+        } else if (page.equals("logs")) {
+            active = "logs";
+            return "/pages/logs.xhtml";
+        } 
         return "/pages/InicioSession.xhtml";
     }
 

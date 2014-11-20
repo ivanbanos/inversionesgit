@@ -5,8 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Vista;
-import com.invbf.sistemagestionclientes.facade.AdminFacade;
-import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -72,8 +70,6 @@ public class CrudVistasBean {
     public void delete() {
         sessionBean.adminFacade.deleteVistas(elemento);
         lista = sessionBean.adminFacade.findAllVistas();
-
-        sessionBean.registrarlog("eliminar", "Vistas", elemento.toString());
         FacesUtil.addInfoMessage("Vista borrada", elemento.getNombreVista());
         elemento = new Vista();
 
@@ -84,10 +80,8 @@ public class CrudVistasBean {
         lista = sessionBean.adminFacade.findAllVistas();
 
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Vistas", elemento.toString());
             FacesUtil.addInfoMessage("Vista actualizada", elemento.getNombreVista());
         } else {
-            sessionBean.registrarlog("crear", "Vistas", elemento.toString());
             FacesUtil.addInfoMessage("Vista creada", elemento.getNombreVista());
         }
         elemento = new Vista();

@@ -189,7 +189,7 @@ public class TareaAccionBean {
                 if (fechafinal.before(nowDate)) {
                     elemento.setEstado("VENCIDO");
                 }
-                sessionBean.registrarlog("actualizar", "Eventos", elemento.getNombre());
+                sessionBean.registrarlog("actualizar", "Eventos", "Tarea guardada " + elemento.getNombre());
                 sessionBean.marketingUserFacade.guardarTarea(elemento);
                 
                 Accion estadoscliente = sessionBean.marketingUserFacade.findByNombreAccion("INICIAL");
@@ -302,8 +302,9 @@ public class TareaAccionBean {
                     evento.getTareasList().add(elemento);
                     sessionBean.marketingUserFacade.guardarEventos(evento);
                 }
-                FacesUtil.addInfoMessage("Evento guardado con exito", elemento.getNombre());
-                goBack();
+                goBack();                
+                FacesUtil.addInfoMessage("Tarea guardado con exito", elemento.getNombre());
+
             } catch (ParseException ex) {
                 Logger.getLogger(TareaAccionBean.class.getName()).log(Level.SEVERE, null, ex);
             }

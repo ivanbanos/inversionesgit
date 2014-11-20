@@ -1,10 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Casino;
+import com.invbf.sistemagestionclientes.entitySGB.Cargos;
 import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
@@ -15,14 +17,13 @@ import javax.faces.bean.ViewScoped;
 
 /**
  *
- * @author ideacentre
+ * @author ivan
  */
 @ManagedBean
 @ViewScoped
-public class CrudCasinosBean {
-
-    private List<Casino> lista;
-    private Casino elemento;
+public class CrudCargosBean {
+    private List<Cargos> lista;
+    private Cargos elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -30,63 +31,51 @@ public class CrudCasinosBean {
         this.sessionBean = sessionBean;
     }
 
-    private List<Casino> flista;
-
-    public List<Casino> getFlista() {
-        return flista;
-    }
-
-    public void setFlista(List<Casino> flista) {
-        this.flista = flista;
-    }
-
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public CrudCasinosBean() {
+    public CrudCargosBean() {
     }
 
     @PostConstruct
     public void init() {
-        sessionBean.marketingUserFacade = new MarketingUserFacadeImpl();
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
-        elemento = new Casino();
-        lista = sessionBean.marketingUserFacade.findAllCasinos();
+        elemento = new Cargos();
+        lista = sessionBean.adminFacade.findAllCargos();
     }
 
-    public List<Casino> getLista() {
+    public List<Cargos> getLista() {
         return lista;
     }
 
-    public void setLista(List<Casino> lista) {
+    public void setLista(List<Cargos> lista) {
         this.lista = lista;
     }
 
-    public Casino getElemento() {
+    public Cargos getElemento() {
         return elemento;
     }
 
-    public void setElemento(Casino elemento) {
+    public void setElemento(Cargos elemento) {
         this.elemento = elemento;
     }
 
     public void delete() {
-        sessionBean.marketingUserFacade.deleteCasinos(elemento);
-        lista = sessionBean.marketingUserFacade.findAllCasinos();
+        sessionBean.adminFacade.deleteCargos(elemento);
+        lista = sessionBean.adminFacade.findAllCargos();
         FacesUtil.addInfoMessage("Casino eliminado", elemento.getNombre());
-        elemento = new Casino();
+        elemento = new Cargos();
     }
 
     public void guardar() {
-        boolean opcion = sessionBean.marketingUserFacade.guardarCasinos(elemento);
-        lista = sessionBean.marketingUserFacade.findAllCasinos();
+        boolean opcion = sessionBean.adminFacade.guardarCargos(elemento);
+        lista = sessionBean.adminFacade.findAllCargos();
         if (opcion) {
             FacesUtil.addInfoMessage("Casino actualizado", elemento.getNombre());
         } else {
             FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
         }
-        elemento = new Casino();
+        elemento = new Cargos();
     }
-
 }

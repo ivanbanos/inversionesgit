@@ -50,6 +50,10 @@
                             <h:commandLink  action="#{sessionBean.go(&quot;notificaciones&quot;)}" class="btn btn-primary btn-lg"><i class="fa fa-pencil-square-o fa-5x"></i> 
                                 <br/>#{label['notificaciones']}</h:commandLink>
                         </c:if>
+                        <c:if test="#{sessionBean.perfilViewMatch(&quot;logs&quot;)}">
+                            <h:commandLink  action="#{sessionBean.go(&quot;logs&quot;)}" class="btn btn-primary btn-lg"><i class="fa fa-code fa-5x"></i> 
+                                <br/>#{label['logs']}</h:commandLink>
+                        </c:if>
                         <h:commandLink  action="#{sessionBean.go(&quot;cuenta&quot;)}" class="btn btn-primary btn-lg"><i class="fa fa-pencil fa-5x"></i> 
                             <br/>#{label['cuentausuarios']}</h:commandLink>
                     </div>

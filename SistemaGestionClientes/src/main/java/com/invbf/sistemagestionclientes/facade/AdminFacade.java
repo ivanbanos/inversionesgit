@@ -9,6 +9,7 @@ import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entity.Vista;
+import com.invbf.sistemagestionclientes.entitySGB.Cargos;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
 import java.util.List;
@@ -54,5 +55,11 @@ public interface AdminFacade {
     public Vista findVistasByNombre(String nombre);
 
     public Formulario findFormularioByAccionAndTabla(String accion, String tabla);
+
+    public List<Cargos> findAllCargos();
+
+    public boolean guardarCargos(Cargos elemento);
+
+    public void deleteCargos(Cargos elemento);
     
 }

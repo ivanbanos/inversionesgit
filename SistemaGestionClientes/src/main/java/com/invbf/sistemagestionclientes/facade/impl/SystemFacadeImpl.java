@@ -93,10 +93,13 @@ public class SystemFacadeImpl implements SystemFacade {
 
     @Override
     public void registrarlog(String accion, String tabla, String mensaje, Usuario usuairo) {
-        Formulario f = FormularioDao.findByAccionAndTabla(accion, tabla);
+
         Log log = new Log();
-        if (f != null) {
-            log.setIdFormulario(f);
+        if (accion != null && tabla != null) {
+            Formulario f = FormularioDao.findByAccionAndTabla(accion, tabla);
+            if (f != null) {
+                log.setIdFormulario(f);
+            }
         }
         log.setIdUsuario(usuairo);
         log.setMensaje(mensaje);
@@ -168,5 +171,10 @@ public class SystemFacadeImpl implements SystemFacade {
     @Override
     public Usuario getUsuario(Integer idUsuario) {
         return UsuarioDao.find(idUsuario);
+    }
+
+    @Override
+    public List<Log> getLogs() {
+        return LogDao.findAll();
     }
 }

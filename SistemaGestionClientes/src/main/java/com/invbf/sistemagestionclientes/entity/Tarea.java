@@ -5,6 +5,7 @@
 package com.invbf.sistemagestionclientes.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -119,6 +120,18 @@ public class Tarea implements Serializable {
 
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
+        this.fechaInicio = fechaInicio;
+        if (fechaFinalizacion != null) {
+            Calendar fechaini = Calendar.getInstance();
+            Calendar fechafin = Calendar.getInstance();
+            fechaini.setTime(fechaInicio);
+            fechafin.setTime(fechaFinalizacion);
+            if (fechafin.before(fechaini)) {
+                fechaFinalizacion = fechaInicio;
+            }
+        } else {
+            fechaFinalizacion = fechaInicio;
+        }
     }
 
     public Date getFechaFinalizacion() {

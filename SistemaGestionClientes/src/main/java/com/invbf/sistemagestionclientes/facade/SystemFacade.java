@@ -5,6 +5,7 @@
 package com.invbf.sistemagestionclientes.facade;
 
 import com.invbf.sistemagestionclientes.entity.Configuracion;
+import com.invbf.sistemagestionclientes.entity.Log;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.exceptions.ClavesNoConcuerdanException;
@@ -43,4 +44,6 @@ public interface SystemFacade {
     public List<InfoCorreoCliente> enviarCorreo(Tarea elemento, String asunto, String cuerpo, boolean enviarimagen) ;
 
     public Usuario getUsuario(Integer idUsuario);
+
+    public List<Log> getLogs();
 }

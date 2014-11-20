@@ -5,8 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Categoria;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -21,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class CrudCategoriasBean {
+
     private List<Categoria> lista;
     private Categoria elemento;
     @ManagedProperty("#{sessionBean}")
@@ -30,7 +29,6 @@ public class CrudCategoriasBean {
         this.sessionBean = sessionBean;
     }
 
-    
     private List<Categoria> flista;
 
     public List<Categoria> getFlista() {
@@ -40,6 +38,7 @@ public class CrudCategoriasBean {
     public void setFlista(List<Categoria> flista) {
         this.flista = flista;
     }
+
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
@@ -73,9 +72,7 @@ public class CrudCategoriasBean {
     public void delete() {
         sessionBean.marketingUserFacade.deleteCategorias(elemento);
         lista = sessionBean.marketingUserFacade.findAllCategorias();
-        sessionBean.registrarlog("eliminar", "Categorias", elemento.getNombre());
-        
-            FacesUtil.addInfoMessage("Categoria eliminada", elemento.getNombre());
+        FacesUtil.addInfoMessage("Categoria eliminada", elemento.getNombre());
         elemento = new Categoria();
     }
 
@@ -83,10 +80,8 @@ public class CrudCategoriasBean {
         boolean opcion = sessionBean.marketingUserFacade.guardarCategorias(elemento);
         lista = sessionBean.marketingUserFacade.findAllCategorias();
         if (opcion) {
-            sessionBean.registrarlog("actualizar", "Categorias", elemento.getNombre());
             FacesUtil.addInfoMessage("Categoria actualizada", elemento.getNombre());
         } else {
-            sessionBean.registrarlog("crear", "Categorias", elemento.getNombre());
             FacesUtil.addInfoMessage("Categoria creada", elemento.getNombre());
         }
         elemento = new Categoria();
