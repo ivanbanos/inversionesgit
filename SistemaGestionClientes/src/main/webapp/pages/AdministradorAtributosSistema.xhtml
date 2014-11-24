@@ -78,45 +78,88 @@
 
                                     <div class="panel-body">
                                         <fieldset>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
-                                                    <div class="col-md-9">
-                                                        <h:inputText id="nombreusuario" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" class="form-control"/>
+                                            <div class="row">
+
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputText id="nombreusuario" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" class="form-control"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['contrasena']}</label>
-                                                    <div class="col-md-9">
-                                                        <h:inputSecret id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" class="form-control"/>
+                                            <div class="row">
+
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['contrasena']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputSecret id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" class="form-control"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['repetir']}</label>
-                                                    <div class="col-md-9">
-                                                        <h:inputSecret id="pwd2Usuarios" value="#{crudUsuariosBean.contrasena}" required="true" class="form-control"/>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['repetir']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputSecret id="pwd2Usuarios" value="#{crudUsuariosBean.contrasena}" required="true" class="form-control"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['perfil']}</label>
-                                                    <div class="col-md-9">
-                                                        <p:selectOneMenu id="perfilUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
-                                                            <f:selectItem itemLabel="Select One" itemValue="" />
-                                                            <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
-                                                        </p:selectOneMenu>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['perfil']}</label>
+                                                        <div class="col-md-9">
+                                                            <p:selectOneMenu id="perfilUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
+                                                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                                                <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
+                                                            </p:selectOneMenu>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['correo']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputText id="correo" value="#{crudUsuariosBean.detalleElemento.correo}" class="form-control" size="40"
+                                                                         validatorMessage="#{label['msj.invalid.correo']}">
+                                                                <f:validateRegex
+                                                                    pattern="^([_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)$" />
+                                                            </h:inputText>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['cargo']}</label>
+                                                        <div class="col-md-9">
+                                                            <p:selectOneMenu id="cargaosUsuarios" value="#{crudUsuariosBean.detalleElemento.idcargo.idcargo}">
+                                                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                                                <f:selectItems value="#{crudUsuariosBean.cargos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idcargo}"/>  
+                                                            </p:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
 
                                         </fieldset>
                                     </div>
@@ -136,45 +179,88 @@
 
                                     <div class="panel-body">
                                         <fieldset>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['nombre']}</label>
-                                                    <div class="col-md-9">
-                                                        <h:inputText id="nombreusuario" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" class="form-control"/>
+                                            <div class="row">
+
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['nombre']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputText id="nombreusuario" value="#{crudUsuariosBean.elemento.nombreUsuario}" required="true" class="form-control"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['contrasena']}</label>
-                                                    <div class="col-md-9">
-                                                        <h:inputSecret id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" class="form-control"/>
+                                            <div class="row">
+
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['contrasena']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputSecret id="pwd1Usuarios" value="#{crudUsuariosBean.elemento.contrasena}" required="true" class="form-control"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['repetir']}</label>
-                                                    <div class="col-md-9">
-                                                        <h:inputSecret id="pwd2Usuarios" value="#{crudUsuariosBean.contrasena}" required="true" class="form-control"/>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['repetir']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputSecret id="pwd2Usuarios" value="#{crudUsuariosBean.contrasena}" required="true" class="form-control"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="control-group">
-                                                <!-- Username -->
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label" >#{label['perfil']}</label>
-                                                    <div class="col-md-9">
-                                                        <p:selectOneMenu id="perfilUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
-                                                            <f:selectItem itemLabel="Select One" itemValue="" />
-                                                            <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
-                                                        </p:selectOneMenu>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['perfil']}</label>
+                                                        <div class="col-md-9">
+                                                            <p:selectOneMenu id="perfilUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
+                                                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                                                <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
+                                                            </p:selectOneMenu>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['correo']}</label>
+                                                        <div class="col-md-9">
+                                                            <h:inputText id="correo" value="#{crudUsuariosBean.detalleElemento.correo}" class="form-control" size="40"
+                                                                         validatorMessage="#{label['msj.invalid.correo']}">
+                                                                <f:validateRegex
+                                                                    pattern="^([_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)$" />
+                                                            </h:inputText>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['cargo']}</label>
+                                                        <div class="col-md-9">
+                                                            <p:selectOneMenu id="cargaosUsuarios" value="#{crudUsuariosBean.detalleElemento.idcargo.idcargo}">
+                                                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                                                <f:selectItems value="#{crudUsuariosBean.cargos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idcargo}"/>  
+                                                            </p:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
 
                                         </fieldset>
                                     </div>
@@ -298,7 +384,7 @@
 
                     <!--Fin Perfiles-->
                 </div>
-                
+
                 <div class="col-md-12 column">
 
                     <!--Cargos-->
@@ -313,9 +399,8 @@
                             </div>
                             <div class="panel-body">
                                 <h:form class="form-horizontal">
-                                    <p:dataTable id="detailsTableEstadosClientes" var="element" value="#{crudCargosBean.lista}"  
-                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEstadosClientes" filteredValue="#{crudCargosBean.flista}"
-                                                 rows="#{sessionBean.paginacion}"
+                                    <p:dataTable id="detailsTableCargos" var="element" value="#{crudCargosBean.lista}"  
+                                                 emptyMessage="#{label['lb_table.noelementos']}" widgetVar="detailsTableEstadosClientes" rows="#{sessionBean.paginacion}"
                                                  paginator="true"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                  >
@@ -426,7 +511,7 @@
 
 
                 </div>
-                
+
             </div>
 
 

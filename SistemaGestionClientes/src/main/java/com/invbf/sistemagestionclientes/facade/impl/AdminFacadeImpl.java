@@ -9,6 +9,7 @@ import com.invbf.sistemagestionclientes.dao.FormularioDao;
 import com.invbf.sistemagestionclientes.dao.PerfilDao;
 import com.invbf.sistemagestionclientes.dao.TareasDao;
 import com.invbf.sistemagestionclientes.dao.UsuarioDao;
+import com.invbf.sistemagestionclientes.dao.UsuarioDetalleDao;
 import com.invbf.sistemagestionclientes.dao.VistaDao;
 import com.invbf.sistemagestionclientes.entity.Formulario;
 import com.invbf.sistemagestionclientes.entity.Perfil;
@@ -16,6 +17,7 @@ import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.entitySGB.Cargos;
+import com.invbf.sistemagestionclientes.entitySGB.Usuariosdetalles;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
 import com.invbf.sistemagestionclientes.facade.AdminFacade;
@@ -39,8 +41,8 @@ public class AdminFacadeImpl implements AdminFacade {
     @Override
     public void deleteUsuarios(Usuario elemento) {
         List<Tarea> tareas = TareasDao.findAll();
-        for(Tarea t : tareas){
-            if(t.getUsuarioList().contains(elemento)){
+        for (Tarea t : tareas) {
+            if (t.getUsuarioList().contains(elemento)) {
                 t.getUsuarioList().remove(elemento);
                 TareasDao.edit(t);
             }
@@ -49,24 +51,24 @@ public class AdminFacadeImpl implements AdminFacade {
     }
 
     @Override
-    public boolean guardarUsuarios(Usuario elemento) throws NombreUsuarioExistenteException{
+    public Usuario guardarUsuarios(Usuario elemento) throws NombreUsuarioExistenteException {
         if (elemento.getIdUsuario() == null) {
             try {
                 elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
             } catch (NoSuchAlgorithmException ex) {
             }
-            if(UsuarioDao.findByNombreUsuario(elemento.getNombreUsuario())!=null){
+            if (UsuarioDao.findByNombreUsuario(elemento.getNombreUsuario()) != null) {
                 throw new NombreUsuarioExistenteException();
             }
             UsuarioDao.create(elemento);
-            return false;
+            return elemento;
         } else {
             try {
                 elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
             } catch (NoSuchAlgorithmException ex) {
             }
             UsuarioDao.edit(elemento);
-            return true;
+            return elemento;
         }
     }
 
@@ -81,19 +83,19 @@ public class AdminFacadeImpl implements AdminFacade {
     }
 
     @Override
-    public boolean guardarPerfiles(Perfil elemento) throws PerfilExistenteException{
+    public boolean guardarPerfiles(Perfil elemento) throws PerfilExistenteException {
         if (elemento.getIdPerfil() == null) {
-            if(PerfilDao.findByNombre(elemento.getNombre())!=null){
+            if (PerfilDao.findByNombre(elemento.getNombre()) != null) {
                 throw new PerfilExistenteException();
             }
             PerfilDao.create(elemento);
-            
+
             return false;
         } else {
-            for(Formulario f : elemento.getFormulariosList()){
+            for (Formulario f : elemento.getFormulariosList()) {
                 f = FormularioDao.find(f.getIdFormulario());
             }
-            for(Vista l : elemento.getVistasList()){
+            for (Vista l : elemento.getVistasList()) {
                 l = VistaDao.find(l.getIdVista());
             }
             PerfilDao.edit(elemento);
@@ -154,7 +156,7 @@ public class AdminFacadeImpl implements AdminFacade {
         Vista v = findVistasByNombre("ManejadorEventosHostess");
         for (Iterator<Usuario> it = usuarios.iterator(); it.hasNext();) {
             Usuario usuario = it.next();
-            if(!usuario.getIdPerfil().getVistasList().contains(v)){
+            if (!usuario.getIdPerfil().getVistasList().contains(v)) {
                 it.remove();
             }
         }
@@ -169,7 +171,7 @@ public class AdminFacadeImpl implements AdminFacade {
     @Override
     public void agregarTareaUsuarios(Usuario s, Tarea elemento) {
         Usuario usuario = UsuarioDao.find(s.getIdUsuario());
-        if(usuario.getTareasList()==null){
+        if (usuario.getTareasList() == null) {
             usuario.setTareasList(new ArrayList<Tarea>(0));
         }
         usuario.getTareasList().add(elemento);
@@ -183,7 +185,7 @@ public class AdminFacadeImpl implements AdminFacade {
 
     @Override
     public Formulario findFormularioByAccionAndTabla(String accion, String tabla) {
-      return FormularioDao.findByAccionAndTabla(accion, tabla);
+        return FormularioDao.findByAccionAndTabla(accion, tabla);
     }
 
     @Override
@@ -193,7 +195,7 @@ public class AdminFacadeImpl implements AdminFacade {
 
     @Override
     public boolean guardarCargos(Cargos elemento) {
-        if (elemento.getIdcargo()== null) {
+        if (elemento.getIdcargo() == null) {
             CargoDao.create(elemento);
             return false;
         } else {
@@ -207,5 +209,25 @@ public class AdminFacadeImpl implements AdminFacade {
         CargoDao.remove(elemento);
     }
 
+    @Override
+    public Usuariosdetalles getDetalleUsuariosById(Integer idUsuario) {
+        return UsuarioDetalleDao.find(idUsuario);
+    }
+
+    @Override
+    public void deleteDetalleUsuarios(Usuariosdetalles detalleElemento) {
+        UsuarioDetalleDao.remove(detalleElemento);
+    }
+
+    @Override
+    public Usuariosdetalles guardarDetalleUsuarios(Usuariosdetalles detalleElemento) {
+        if (detalleElemento.getIdUsuario() == null) {
+            UsuarioDetalleDao.create(detalleElemento);
+            return detalleElemento;
+        } else {
+            UsuarioDetalleDao.edit(detalleElemento);
+            return detalleElemento;
+        }
+    }
 
 }

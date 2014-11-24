@@ -259,12 +259,14 @@ public class TareaAccionBean {
                     }
                     if (siCategoria && siTipoJuego) {
                         Listasclientestareas listasclientesevento = new Listasclientestareas(elemento.getIdTarea(), c.getIdCliente());
+                        
                         if (al.contains(listasclientesevento)) {
                             elemento.getListasclientestareasList().add(al.get(al.indexOf(listasclientesevento)));
                         } else {
                             listasclientesevento.setIdAccion(estadoscliente);
                             listasclientesevento.setTareas(elemento);
                             listasclientesevento.setCliente(c);
+                            listasclientesevento.setCount(0);
                             elemento.getListasclientestareasList().add(listasclientesevento);
                         }
                     } else {

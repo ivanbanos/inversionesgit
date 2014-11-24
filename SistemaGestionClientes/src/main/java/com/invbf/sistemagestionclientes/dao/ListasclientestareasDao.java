@@ -4,6 +4,7 @@
  */
 package com.invbf.sistemagestionclientes.dao;
 
+import com.invbf.sistemagestionclientes.entity.Accion;
 import com.invbf.sistemagestionclientes.entity.Listasclientestareas;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,8 @@ import javax.persistence.Persistence;
 public class ListasclientestareasDao {
 
     public static void refresh(Listasclientestareas l) {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         Listasclientestareas listasclientestareas = null;
@@ -40,10 +41,11 @@ public class ListasclientestareasDao {
 
     public ListasclientestareasDao() {
     }
+
     public static void create(Listasclientestareas listasclientestareas) {
         listasclientestareas.setObservaciones(listasclientestareas.getObservaciones().toUpperCase());
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -60,17 +62,26 @@ public class ListasclientestareasDao {
     }
 
     public static void edit(Listasclientestareas listasclientestareas) {
-        listasclientestareas.setObservaciones(listasclientestareas.getObservaciones().toUpperCase());
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        if (listasclientestareas.getObservaciones() != null) {
+            listasclientestareas.setObservaciones(listasclientestareas.getObservaciones().toUpperCase());
+        }
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-
+        System.out.println("guardando");
         tx.begin();
+
+        System.out.println("transaccion empesada");
         try {
+
             em.merge(listasclientestareas);
+            System.out.println("gurdado");
             tx.commit();
+
+            System.out.println("comit");
         } catch (Exception e) {
+            System.out.println(e);
             tx.rollback();
         }
 
@@ -79,8 +90,8 @@ public class ListasclientestareasDao {
     }
 
     public static void remove(Listasclientestareas listasclientestareas) {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -97,8 +108,8 @@ public class ListasclientestareasDao {
     }
 
     public static Listasclientestareas find(Integer id) {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         Listasclientestareas listasclientestareas = null;
@@ -117,8 +128,8 @@ public class ListasclientestareasDao {
     }
 
     public static List<Listasclientestareas> findAll() {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         List<Listasclientestareas> lista = new ArrayList<Listasclientestareas>();
@@ -139,8 +150,8 @@ public class ListasclientestareasDao {
     }
 
     public static List<Listasclientestareas> findRange(int[] range) {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         List<Listasclientestareas> lista = new ArrayList<Listasclientestareas>();
@@ -164,8 +175,8 @@ public class ListasclientestareasDao {
     }
 
     public static int count() {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         int count = 0;
@@ -185,8 +196,48 @@ public class ListasclientestareasDao {
         em.close();
         emf.close();
         return count;
-        
-        
+
     }
-    
+
+    public static List<Listasclientestareas> findByIdTarea(Integer idTarea) {
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        List<Listasclientestareas> listaClienteTarea = null;
+        tx.begin();
+        try {
+            listaClienteTarea = (List<Listasclientestareas>) em.createNamedQuery("Listasclientestareas.findByIdTarea")
+                    .setParameter("idTarea", idTarea)
+                    .getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        }
+
+        em.close();
+        emf.close();
+        return listaClienteTarea;
+    }
+
+    public static List<Listasclientestareas> findByIdTareaInicial(Integer integer) {
+        EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("AdminClientesPU");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        List<Listasclientestareas> listaClienteTarea = new ArrayList<Listasclientestareas>();
+        tx.begin();
+        try {
+            listaClienteTarea = (List<Listasclientestareas>) em.createNamedQuery("Listasclientestareas.findByIdTareaInicial")
+                    .setParameter("idTarea", integer)
+                    .getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+        }
+
+        em.close();
+        emf.close();
+        return listaClienteTarea;
+    }
 }

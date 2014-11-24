@@ -39,7 +39,7 @@ $(function(){
 		var $this = $(this), 
 				$panel = $this.parents('.panel');
 		
-		$panel.find('.panel-body')..slideDown("slow");
+		$panel.find('.panel-body').slideDown("slow");
 		if($this.css('display') != 'none') {
 			$panel.find('.panel-body input').focus();
 		}

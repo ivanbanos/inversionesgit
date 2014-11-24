@@ -5,10 +5,6 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Tarea;
-import com.invbf.sistemagestionclientes.facade.HostessFacade;
-import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
-import com.invbf.sistemagestionclientes.facade.impl.HostessFacadeImpl;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -60,7 +56,8 @@ public class TareasHostessBean {
             } catch (IOException ex) {
             }
         }
-
+        sessionBean.getAttributes().remove("idTarea");
+        sessionBean.getAttributes().remove("isLeavingTarea");
         lista = sessionBean.getUsuario().getTareasList();
         for (Tarea t : lista) {
             if (!t.getEstado().equals("VENCIDO")) {
@@ -87,11 +84,13 @@ public class TareasHostessBean {
 
     public void goEvento(int id) {
         try {
-            sessionBean.getAttributes().put("idTarea", new Integer(id));
+            sessionBean.getAttributes().put("idTarea", id);
             Tarea t = sessionBean.marketingUserFacade.findTarea(id);
             if (t.getIdEvento() != null) {
                 sessionBean.getAttributes().put("imagen", sessionBean.getImage(new Integer(id)));
             }
+            
+        sessionBean.getAttributes().put("isComingTarea",false);
             FacesContext.getCurrentInstance().getExternalContext().redirect("HostessEventoManejadorView.xhtml");
         } catch (IOException ex) {
         }

@@ -11,6 +11,7 @@ import com.invbf.sistemagestionclientes.exceptions.EventoSinClientesPorRevisarEx
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import com.invbf.sistemagestionclientes.util.LCTPojo;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,12 +27,13 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class HostessTareaManejadorBean {
+public class HostessTareaManejadorBean implements Serializable {
 
     private Tarea elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private List<LCTPojo> clientesPojo;
+    private boolean isComing;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -47,6 +49,7 @@ public class HostessTareaManejadorBean {
     public void init() {
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("eventoshostess");
+        
         if (!sessionBean.perfilViewMatch("ManejadorEventosHostess")) {
             try {
                 sessionBean.Desconectar();
@@ -54,6 +57,8 @@ public class HostessTareaManejadorBean {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("InicioSession.xhtml");
 
             } catch (IOException ex) {
+
+                System.out.println(ex);
             }
         }
 
@@ -61,18 +66,27 @@ public class HostessTareaManejadorBean {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("tareasHostess.xhtml");
             } catch (IOException ex) {
+
+                System.out.println(ex);
             }
         }
         elemento = sessionBean.marketingUserFacade.findTarea((Integer) sessionBean.getAttributes().get("idTarea"));
-        try {
-            List<Listasclientestareas> clientes = sessionBean.hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
-            clientesPojo = new ArrayList<LCTPojo>();
-            for (Iterator<Listasclientestareas> it = clientes.iterator(); it.hasNext();) {
-                Listasclientestareas listasclientestareas = it.next();
-                clientesPojo.add(new LCTPojo(listasclientestareas));
+        if ((Boolean)sessionBean.getAttributes().get("isComingTarea")!=null) {
+            sessionBean.getAttributes().remove("isComingTarea");
+            try {
+                List<Listasclientestareas> clientes = sessionBean.hostessFacade.findClienteTareaHostess((Integer) sessionBean.getAttributes().get("idTarea"));
+                clientesPojo = new ArrayList<LCTPojo>();
+                for (Iterator<Listasclientestareas> it = clientes.iterator(); it.hasNext();) {
+                    Listasclientestareas listasclientestareas = it.next();
+                    clientesPojo.add(new LCTPojo(listasclientestareas));
+                }
+            } catch (EventoSinClientesPorRevisarException ex) {
+                System.out.println(ex);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
-        } catch (EventoSinClientesPorRevisarException ex) {
         }
+
     }
 
     public Tarea getElemento() {
@@ -106,8 +120,8 @@ public class HostessTareaManejadorBean {
 
             sessionBean.hostessFacade.guardarLCE(l.getListaclientetareas(sessionBean.getUsuario(), a), a.getIdAccion());
 
-            sessionBean.registrarlog(null, null, "Cambio en cliente "+l.getCliente().toString()+" sobre tarea "+elemento.getNombre());
-            
+            sessionBean.registrarlog(null, null, "Cambio en cliente " + l.getCliente().toString() + " sobre tarea " + elemento.getNombre());
+
             List<Listasclientestareas> clientes = new ArrayList<Listasclientestareas>();
             for (Iterator<LCTPojo> it = clientesPojo.iterator(); it.hasNext();) {
                 LCTPojo lct = it.next();
@@ -127,7 +141,13 @@ public class HostessTareaManejadorBean {
     public void nuevo(Integer idCliente) {
         guardar:
         {
-            int index = clientesPojo.indexOf(new LCTPojo((Integer) sessionBean.getAttributes().get("idTarea"), idCliente));
+            int index = 0;
+            for (int i = 0; i < clientesPojo.size(); i++) {
+                if (clientesPojo.get(index).getCliente().getIdCliente() == idCliente
+                        && clientesPojo.get(index).getTareas().getIdTarea() == (Integer) sessionBean.getAttributes().get("idTarea")) {
+                    index = i;
+                }
+            }
             LCTPojo l = clientesPojo.remove(index);
             Accion a = sessionBean.marketingUserFacade.findByNombreAccion("INICIAL");
 

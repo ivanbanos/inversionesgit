@@ -30,10 +30,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Listasclientestareas.findAll", query = "SELECT l FROM Listasclientestareas l"),
-    @NamedQuery(name = "Listasclientestareas.findByIdTarea", query = "SELECT l FROM Listasclientestareas l WHERE l.listasclientestareasPK.idTarea = :idTarea"),
+    @NamedQuery(name = "Listasclientestareas.findByIdTarea", query = "SELECT l FROM Listasclientestareas l WHERE l.listasclientestareasPK.idTarea = :idTarea ORDER BY l.count"),
     @NamedQuery(name = "Listasclientestareas.findByIdCliente", query = "SELECT l FROM Listasclientestareas l WHERE l.listasclientestareasPK.idCliente = :idCliente"),
     @NamedQuery(name = "Listasclientestareas.findByObservaciones", query = "SELECT l FROM Listasclientestareas l WHERE l.observaciones = :observaciones"),
-    @NamedQuery(name = "Listasclientestareas.findByFechaAtencion", query = "SELECT l FROM Listasclientestareas l WHERE l.fechaAtencion = :fechaAtencion")})
+    @NamedQuery(name = "Listasclientestareas.findByFechaAtencion", query = "SELECT l FROM Listasclientestareas l WHERE l.fechaAtencion = :fechaAtencion"),
+    @NamedQuery(name = "Listasclientestareas.findByIdTareaInicial", query = "SELECT l FROM Listasclientestareas l WHERE l.listasclientestareasPK.idTarea = :idTarea AND l.idAccion.nombre = 'INICIAL' ORDER BY l.count")})
 public class Listasclientestareas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +42,8 @@ public class Listasclientestareas implements Serializable {
     protected ListasclientestareasPK listasclientestareasPK;
     @Column(name = "Observaciones")
     private String observaciones;
+    @Column(name = "count")
+    private Integer count;
     @Column(name = "fechaAtencion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaAtencion;
@@ -148,4 +151,13 @@ public class Listasclientestareas implements Serializable {
     public String toString() {
         return "com.invbf.adminclientesapi.entity.Listasclientestareas[ listasclientestareasPK=" + listasclientestareasPK + " ]";
     }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+    
 }

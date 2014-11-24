@@ -65,6 +65,15 @@
                                     </p:row>
                                     <p:row >
 
+                                        <p:column><label >#{label['cargos']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCargo}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCargo}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCargo}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCargo}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
                                         <p:column><label >#{label['eventos']}</label></p:column>
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEventos}"/></p:column>
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEventos}"/></p:column>

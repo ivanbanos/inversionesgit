@@ -10,6 +10,7 @@ import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.entitySGB.Cargos;
+import com.invbf.sistemagestionclientes.entitySGB.Usuariosdetalles;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
 import java.util.List;
@@ -24,7 +25,7 @@ public interface AdminFacade {
    
     public void deleteUsuarios(Usuario elemento);
     
-    public boolean guardarUsuarios(Usuario elemento) throws NombreUsuarioExistenteException;
+    public Usuario guardarUsuarios(Usuario elemento) throws NombreUsuarioExistenteException;
     
     public void deletePerfiles(Perfil elemento);
     
@@ -57,9 +58,15 @@ public interface AdminFacade {
     public Formulario findFormularioByAccionAndTabla(String accion, String tabla);
 
     public List<Cargos> findAllCargos();
-
+    
     public boolean guardarCargos(Cargos elemento);
 
     public void deleteCargos(Cargos elemento);
+
+    public Usuariosdetalles getDetalleUsuariosById(Integer idUsuario);
+
+    public void deleteDetalleUsuarios(Usuariosdetalles detalleElemento);
+
+    public Usuariosdetalles guardarDetalleUsuarios(Usuariosdetalles detalleElemento);
     
 }

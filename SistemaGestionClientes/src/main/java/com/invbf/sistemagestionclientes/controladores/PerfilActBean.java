@@ -1218,4 +1218,37 @@ public class PerfilActBean {
     public void setLogs(boolean logs) {
         this.logs = logs;
     }
+
+    public boolean isVistaCargo() {
+        return vistaCargo;
+    }
+
+    public void setVistaCargo(boolean vistaCargo) {
+        this.vistaCargo = vistaCargo;
+    }
+
+    public boolean isAgregarCargo() {
+        return agregarCargo;
+    }
+
+    public void setAgregarCargo(boolean agregarCargo) {
+        this.agregarCargo = agregarCargo;
+    }
+
+    public boolean isActualizarCargo() {
+        return actualizarCargo;
+    }
+
+    public void setActualizarCargo(boolean actualizarCargo) {
+        this.actualizarCargo = actualizarCargo;
+    }
+
+    public boolean isEliminarCargo() {
+        return eliminarCargo;
+    }
+
+    public void setEliminarCargo(boolean eliminarCargo) {
+        this.eliminarCargo = eliminarCargo;
+    }
+    
 }

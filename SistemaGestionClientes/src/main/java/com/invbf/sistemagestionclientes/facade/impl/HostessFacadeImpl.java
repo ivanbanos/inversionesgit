@@ -60,22 +60,25 @@ public class HostessFacadeImpl implements HostessFacade {
 
     @Override
     public List<Listasclientestareas> findClienteTareaHostess(Integer integer) throws EventoSinClientesPorRevisarException {
-        Tarea evento = TareasDao.find(integer);
-        List<Listasclientestareas> clientes = evento.getListasclientestareasList();
+        System.out.println("Buscando clientes " + integer);
+        List<Listasclientestareas> clientes = ListasclientestareasDao.findByIdTareaInicial(integer);
+
+        System.out.println("Encontrados");
         List<Listasclientestareas> clientesAEnviar = new ArrayList<Listasclientestareas>();
-        Iterator<Listasclientestareas> iterator = clientes.iterator();
 
         int cantidadClientes = findCantidadClientes();
-        Accion inicial = AccionDao.findByNombreAccion("INICIAL");
+        System.out.println("cantidad de cleitnes " + cantidadClientes);
         for (int i = 0; i < cantidadClientes; i++) {
+            System.out.println("buscando un cliente");
+            if (clientes.size()>i && clientes.get(i) != null) {
+                Listasclientestareas lce = clientes.get(i);
+                lce.setCount(lce.getCount() + 1);
+                System.out.println("encontrado sumandole uno al count");
+                ListasclientestareasDao.edit(lce);
 
-            uncliente:
-            while (iterator.hasNext()) {
-                Listasclientestareas lce = iterator.next();
-                if (lce.getIdAccion().equals(inicial)) {
-                    clientesAEnviar.add(lce);
-                    break uncliente;
-                }
+                System.out.println("editado");
+                clientesAEnviar.add(lce);
+                System.out.println("agregado");
             }
         }
         if (clientesAEnviar.isEmpty()) {
@@ -110,18 +113,16 @@ public class HostessFacadeImpl implements HostessFacade {
 
     @Override
     public Listasclientestareas nuevoLCE(Integer index, List<Listasclientestareas> clientes, Listasclientestareas l) throws EventoSinClientesPorRevisarException {
-        Tarea tarea = TareasDao.find(index);
-        List<Listasclientestareas> clientesEv = tarea.getListasclientestareasList();
-        Iterator<Listasclientestareas> iterator = clientesEv.iterator();
 
-        Accion inicial = AccionDao.findByNombreAccion("Inicial");
+        List<Listasclientestareas> clientesEv = ListasclientestareasDao.findByIdTareaInicial(index);
+        Iterator<Listasclientestareas> iterator = clientesEv.iterator();
 
         while (iterator.hasNext()) {
             Listasclientestareas lce = iterator.next();
-            if (lce.getIdAccion().equals(inicial)) {
-                if (!clientes.contains(lce) && !lce.equals(l)) {
-                    return lce;
-                }
+            if (!clientes.contains(lce) && !lce.equals(l)) {
+                lce.setCount(lce.getCount() + 1);
+                ListasclientestareasDao.edit(lce);
+                return lce;
             }
         }
 

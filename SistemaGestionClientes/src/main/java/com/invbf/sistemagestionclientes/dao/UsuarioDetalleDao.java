@@ -1,10 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.invbf.sistemagestionclientes.dao;
 
-import com.invbf.sistemagestionclientes.entity.Usuario;
+import com.invbf.sistemagestionclientes.entitySGB.Usuariosdetalles;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,12 +15,13 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author ideacentre
+ * @author ivan
  */
-public class UsuarioDao {
-     public static void create(Usuario usuario) {
+public class UsuarioDetalleDao {
+    
+    public static void create(Usuariosdetalles usuario) {
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+                Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -35,9 +37,9 @@ public class UsuarioDao {
         emf.close();
     }
 
-    public static void edit(Usuario usuario) {
+    public static void edit(Usuariosdetalles usuario) {
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+                Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -54,9 +56,9 @@ public class UsuarioDao {
         emf.close();
     }
 
-    public static void remove(Usuario usuario) {
+    public static void remove(Usuariosdetalles usuario) {
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+                Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -72,16 +74,16 @@ public class UsuarioDao {
         emf.close();
     }
 
-    public static Usuario find(Integer id) {
+    public static Usuariosdetalles find(Integer id) {
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+                Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        Usuario usuario = null;
+        Usuariosdetalles usuario = null;
 
         tx.begin();
         try {
-            usuario = em.find(Usuario.class, id);
+            usuario = em.find(Usuariosdetalles.class, id);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -92,17 +94,17 @@ public class UsuarioDao {
         return usuario;
     }
 
-    public static List<Usuario> findAll() {
+    public static List<Usuariosdetalles> findAll() {
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+                Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        List<Usuario> lista = new ArrayList<Usuario>();
+        List<Usuariosdetalles> lista = new ArrayList<Usuariosdetalles>();
 
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Usuario.class));
+            cq.select(cq.from(Usuariosdetalles.class));
             lista = em.createQuery(cq).getResultList();
             tx.commit();
         } catch (Exception e) {
@@ -114,17 +116,17 @@ public class UsuarioDao {
         return lista;
     }
 
-    public static List<Usuario> findRange(int[] range) {
+    public static List<Usuariosdetalles> findRange(int[] range) {
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+                Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        List<Usuario> lista = new ArrayList<Usuario>();
+        List<Usuariosdetalles> lista = new ArrayList<Usuariosdetalles>();
 
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Usuario.class));
+            cq.select(cq.from(Usuariosdetalles.class));
             javax.persistence.Query q = em.createQuery(cq);
             q.setMaxResults(range[1] - range[0]);
             q.setFirstResult(range[0]);
@@ -141,7 +143,7 @@ public class UsuarioDao {
 
     public static int count() {
         EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
+                Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         int count = 0;
@@ -149,7 +151,7 @@ public class UsuarioDao {
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            javax.persistence.criteria.Root<Usuario> rt = cq.from(Usuario.class);
+            javax.persistence.criteria.Root<Usuariosdetalles> rt = cq.from(Usuariosdetalles.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             javax.persistence.Query q = em.createQuery(cq);
             count = ((Long) q.getSingleResult()).intValue();
@@ -164,50 +166,4 @@ public class UsuarioDao {
         
         
     }
-    
-    public static Usuario findByNombreUsuario(String nombreUsuario) {
-        EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        List<Usuario> usuarios = null;
-        tx.begin();
-        try {
-            usuarios = em.createNamedQuery("Usuarios.findByNombreUsuario")
-                .setParameter("nombreUsuario", nombreUsuario)
-                .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-        }
-
-        em.close();
-        emf.close();
-        if (usuarios==null||usuarios.isEmpty()) {
-            return null;
-        } else {
-            return usuarios.get(0);
-        }
-    }
-   
-    public static List<Usuario> findAllHostess() {EntityManagerFactory emf =
-                Persistence.createEntityManagerFactory("AdminClientesPU");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        List<Usuario> usuarios = null;
-        tx.begin();
-        try {
-            usuarios = em.createNamedQuery("Usuarios.findByTipoPerfil")
-                .setParameter("nombrePerfil", "Hostess")
-                .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-        }
-
-        em.close();
-        emf.close();
-        return usuarios;
-    }
-    
 }

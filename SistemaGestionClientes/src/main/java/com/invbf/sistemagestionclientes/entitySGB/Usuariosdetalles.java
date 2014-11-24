@@ -41,7 +41,7 @@ public class Usuariosdetalles implements Serializable {
     @Column(name = "correo")
     private String correo;
     @JoinColumn(name = "idcargo", referencedColumnName = "idcargo")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Cargos idcargo;
 
     public Usuariosdetalles() {

@@ -9,6 +9,7 @@ import com.invbf.sistemagestionclientes.entity.Casino;
 import com.invbf.sistemagestionclientes.entitySGB.Cargos;
 import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -42,16 +43,17 @@ public class CrudCargosBean {
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Cargos();
+        lista = new ArrayList<Cargos>();
         lista = sessionBean.adminFacade.findAllCargos();
     }
 
     public List<Cargos> getLista() {
         return lista;
     }
-
+   
     public void setLista(List<Cargos> lista) {
         this.lista = lista;
-    }
+}
 
     public Cargos getElemento() {
         return elemento;

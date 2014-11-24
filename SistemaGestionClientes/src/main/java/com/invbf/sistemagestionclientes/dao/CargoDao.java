@@ -24,7 +24,7 @@ public class CargoDao {
     }
     
     public static void create(Cargos cargo) {
-        
+    
         cargo.setNombre(cargo.getNombre().toUpperCase());
         EntityManagerFactory emf =
                 Persistence.createEntityManagerFactory("gestionBonosPU");
@@ -37,7 +37,7 @@ public class CargoDao {
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
-        }
+}
 
         em.close();
         emf.close();
@@ -116,6 +116,7 @@ public class CargoDao {
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
+            System.out.println(e);
         }
 
         em.close();
