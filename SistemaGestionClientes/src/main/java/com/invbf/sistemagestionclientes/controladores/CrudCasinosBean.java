@@ -5,6 +5,7 @@
 package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Casino;
+import com.invbf.sistemagestionclientes.entitySGB.Casinosdetalles;
 import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.List;
@@ -23,6 +24,7 @@ public class CrudCasinosBean {
 
     private List<Casino> lista;
     private Casino elemento;
+    private Casinosdetalles detalleElemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -52,6 +54,7 @@ public class CrudCasinosBean {
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
         elemento = new Casino();
+        detalleElemento = new Casinosdetalles();
         lista = sessionBean.marketingUserFacade.findAllCasinos();
     }
 
@@ -68,25 +71,41 @@ public class CrudCasinosBean {
     }
 
     public void setElemento(Casino elemento) {
+        if (elemento.getIdCasino() != null) {
+            detalleElemento = sessionBean.marketingUserFacade.getDetalleCasinoById(elemento.getIdCasino());
+            if (detalleElemento == null) {
+                detalleElemento = new Casinosdetalles(elemento.getIdCasino());
+                detalleElemento = sessionBean.marketingUserFacade.guardarDetalleCasino(detalleElemento);
+            }
+        }
         this.elemento = elemento;
     }
 
     public void delete() {
+        sessionBean.marketingUserFacade.deleteDetalleCasino(detalleElemento);
         sessionBean.marketingUserFacade.deleteCasinos(elemento);
         lista = sessionBean.marketingUserFacade.findAllCasinos();
         FacesUtil.addInfoMessage("Casino eliminado", elemento.getNombre());
         elemento = new Casino();
+        detalleElemento = new Casinosdetalles();
     }
 
     public void guardar() {
-        boolean opcion = sessionBean.marketingUserFacade.guardarCasinos(elemento);
+        elemento = sessionBean.marketingUserFacade.guardarCasinos(elemento);
+        detalleElemento.setIdCasino(elemento.getIdCasino());
+        detalleElemento = sessionBean.marketingUserFacade.guardarDetalleCasino(detalleElemento);
         lista = sessionBean.marketingUserFacade.findAllCasinos();
-        if (opcion) {
-            FacesUtil.addInfoMessage("Casino actualizado", elemento.getNombre());
-        } else {
-            FacesUtil.addInfoMessage("Casino creado", elemento.getNombre());
-        }
+        FacesUtil.addInfoMessage("Casino guardado", elemento.getNombre());
         elemento = new Casino();
+        detalleElemento = new Casinosdetalles();
+    }
+
+    public Casinosdetalles getDetalleElemento() {
+        return detalleElemento;
+    }
+
+    public void setDetalleElemento(Casinosdetalles detalleElemento) {
+        this.detalleElemento = detalleElemento;
     }
 
 }

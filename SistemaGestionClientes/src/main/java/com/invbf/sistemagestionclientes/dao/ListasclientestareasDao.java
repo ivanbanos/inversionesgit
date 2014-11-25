@@ -43,7 +43,9 @@ public class ListasclientestareasDao {
     }
 
     public static void create(Listasclientestareas listasclientestareas) {
-        listasclientestareas.setObservaciones(listasclientestareas.getObservaciones().toUpperCase());
+        if (listasclientestareas.getObservaciones() != null) {
+            listasclientestareas.setObservaciones(listasclientestareas.getObservaciones().toUpperCase());
+        }
         EntityManagerFactory emf
                 = Persistence.createEntityManagerFactory("AdminClientesPU");
         EntityManager em = emf.createEntityManager();

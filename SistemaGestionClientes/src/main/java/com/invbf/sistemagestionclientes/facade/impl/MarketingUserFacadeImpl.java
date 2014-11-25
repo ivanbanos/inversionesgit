@@ -11,12 +11,14 @@ import com.invbf.sistemagestionclientes.dao.CategoriaDao;
 import com.invbf.sistemagestionclientes.dao.ClienteDao;
 import com.invbf.sistemagestionclientes.dao.ClienteatributoDao;
 import com.invbf.sistemagestionclientes.dao.ConfiguracionDao;
+import com.invbf.sistemagestionclientes.dao.DetalleCasinoDao;
 import com.invbf.sistemagestionclientes.dao.EventoDao;
 import com.invbf.sistemagestionclientes.dao.TareasDao;
 import com.invbf.sistemagestionclientes.dao.TipoDocumentoDao;
 import com.invbf.sistemagestionclientes.dao.TipoJuegoDao;
 import com.invbf.sistemagestionclientes.dao.TipostareasDao;
 import com.invbf.sistemagestionclientes.dao.UsuarioDao;
+import com.invbf.sistemagestionclientes.dao.UsuarioDetalleDao;
 import com.invbf.sistemagestionclientes.entity.Accion;
 import com.invbf.sistemagestionclientes.entity.Atributo;
 import com.invbf.sistemagestionclientes.entity.Casino;
@@ -30,6 +32,7 @@ import com.invbf.sistemagestionclientes.entity.TipoDocumento;
 import com.invbf.sistemagestionclientes.entity.TipoJuego;
 import com.invbf.sistemagestionclientes.entity.Tipotarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
+import com.invbf.sistemagestionclientes.entitySGB.Casinosdetalles;
 import com.invbf.sistemagestionclientes.facade.MarketingUserFacade;
 import com.invbf.sistemagestionclientes.util.DBConnection;
 import java.io.BufferedInputStream;
@@ -155,13 +158,13 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     }
 
     @Override
-    public boolean guardarCasinos(Casino elemento) {
+    public Casino guardarCasinos(Casino elemento) {
         if (elemento.getIdCasino() == null) {
             CasinoDao.create(elemento);
-            return false;
+            return elemento;
         } else {
             CasinoDao.edit(elemento);
-            return true;
+            return elemento;
         }
     }
 
@@ -526,5 +529,26 @@ public class MarketingUserFacadeImpl implements MarketingUserFacade {
     @Override
     public TipoDocumento findTipoDocumento(Integer idTipoDocumento) {
         return TipoDocumentoDao.find(idTipoDocumento);
+    }
+
+    @Override
+    public Casinosdetalles getDetalleCasinoById(Integer idCasino) {
+        return DetalleCasinoDao.find(idCasino);
+    }
+
+    @Override
+    public Casinosdetalles guardarDetalleCasino(Casinosdetalles detalleElemento) {
+        if (detalleElemento.getIdCasino()== null) {
+            DetalleCasinoDao.create(detalleElemento);
+            return detalleElemento;
+        } else {
+            DetalleCasinoDao.edit(detalleElemento);
+            return detalleElemento;
+        }
+    }
+
+    @Override
+    public void deleteDetalleCasino(Casinosdetalles detalleElemento) {
+        DetalleCasinoDao.remove(detalleElemento);
     }
 }

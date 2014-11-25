@@ -108,8 +108,8 @@ public class CrudUsuariosBean implements Observer {
     }
 
     public void delete() {
-        sessionBean.adminFacade.deleteUsuarios(elemento);
         sessionBean.adminFacade.deleteDetalleUsuarios(detalleElemento);
+        sessionBean.adminFacade.deleteUsuarios(elemento);
         lista = sessionBean.adminFacade.findAllUsuarios();
         FacesUtil.addInfoMessage("Usuario eliminado", elemento.getNombreUsuario());
 

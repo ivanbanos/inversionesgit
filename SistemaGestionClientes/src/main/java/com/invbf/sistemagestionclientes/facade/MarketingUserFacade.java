@@ -15,6 +15,7 @@ import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.TipoDocumento;
 import com.invbf.sistemagestionclientes.entity.TipoJuego;
 import com.invbf.sistemagestionclientes.entity.Tipotarea;
+import com.invbf.sistemagestionclientes.entitySGB.Casinosdetalles;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public interface MarketingUserFacade {
 
     public void deleteCasinos(Casino elemento);
 
-    public boolean guardarCasinos(Casino elemento);
+    public Casino guardarCasinos(Casino elemento);
 
     public List<Casino> findAllCasinos();
 
@@ -107,5 +108,11 @@ public interface MarketingUserFacade {
     public Categoria findCategoria(Integer idCategorias);
 
     public TipoDocumento findTipoDocumento(Integer idTipoDocumento);
+
+    public Casinosdetalles getDetalleCasinoById(Integer idCasino);
+
+    public Casinosdetalles guardarDetalleCasino(Casinosdetalles detalleElemento);
+
+    public void deleteDetalleCasino(Casinosdetalles detalleElemento);
 
 }

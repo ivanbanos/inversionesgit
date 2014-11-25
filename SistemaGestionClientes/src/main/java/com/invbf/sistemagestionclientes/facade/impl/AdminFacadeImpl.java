@@ -92,12 +92,6 @@ public class AdminFacadeImpl implements AdminFacade {
 
             return false;
         } else {
-            for (Formulario f : elemento.getFormulariosList()) {
-                f = FormularioDao.find(f.getIdFormulario());
-            }
-            for (Vista l : elemento.getVistasList()) {
-                l = VistaDao.find(l.getIdVista());
-            }
             PerfilDao.edit(elemento);
             return true;
         }

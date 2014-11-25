@@ -1,10 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.invbf.sistemagestionclientes.dao;
 
-import com.invbf.sistemagestionclientes.entity.Casino;
+import com.invbf.sistemagestionclientes.entitySGB.Casinosdetalles;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,21 +15,25 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author ideacentre
+ * @author ivan
  */
-public class CasinoDao {
+public class DetalleCasinoDao {
 
-    public CasinoDao() {
+    public DetalleCasinoDao() {
     }
 
-    public static void create(Casino casino) {
-
-        casino.setNombre(casino.getNombre().toUpperCase());
-        if (casino.getDireccion() != null) {
-            casino.setDireccion(casino.getDireccion().toUpperCase());
+    public static void create(Casinosdetalles casino) {
+        if (casino.getCiudad() != null) {
+            casino.setCiudad(casino.getCiudad().toUpperCase());
+        }
+        if (casino.getAbreCiudad() != null) {
+            casino.setAbreCiudad(casino.getAbreCiudad().toUpperCase());
+        }
+        if (casino.getAbreviacion() != null) {
+            casino.setAbreviacion(casino.getAbreviacion().toUpperCase());
         }
         EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("AdminClientesPU");
+                = Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -44,14 +49,18 @@ public class CasinoDao {
         emf.close();
     }
 
-    public static void edit(Casino casino) {
-        
-        if (casino.getDireccion() != null) {
-            casino.setDireccion(casino.getDireccion().toUpperCase());
+    public static void edit(Casinosdetalles casino) {
+        if (casino.getCiudad() != null) {
+            casino.setCiudad(casino.getCiudad().toUpperCase());
         }
-        casino.setNombre(casino.getNombre().toUpperCase());
+        if (casino.getAbreCiudad() != null) {
+            casino.setAbreCiudad(casino.getAbreCiudad().toUpperCase());
+        }
+        if (casino.getAbreviacion() != null) {
+            casino.setAbreviacion(casino.getAbreviacion().toUpperCase());
+        }
         EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("AdminClientesPU");
+                = Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -67,9 +76,9 @@ public class CasinoDao {
         emf.close();
     }
 
-    public static void remove(Casino casino) {
+    public static void remove(Casinosdetalles casino) {
         EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("AdminClientesPU");
+                = Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -85,16 +94,16 @@ public class CasinoDao {
         emf.close();
     }
 
-    public static Casino find(Integer id) {
+    public static Casinosdetalles find(Integer id) {
         EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("AdminClientesPU");
+                = Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        Casino casino = null;
+        Casinosdetalles casino = null;
 
         tx.begin();
         try {
-            casino = em.find(Casino.class, id);
+            casino = em.find(Casinosdetalles.class, id);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -105,17 +114,17 @@ public class CasinoDao {
         return casino;
     }
 
-    public static List<Casino> findAll() {
+    public static List<Casinosdetalles> findAll() {
         EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("AdminClientesPU");
+                = Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        List<Casino> lista = new ArrayList<Casino>();
+        List<Casinosdetalles> lista = new ArrayList<Casinosdetalles>();
 
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Casino.class));
+            cq.select(cq.from(Casinosdetalles.class));
             lista = em.createQuery(cq).getResultList();
             tx.commit();
         } catch (Exception e) {
@@ -127,17 +136,17 @@ public class CasinoDao {
         return lista;
     }
 
-    public static List<Casino> findRange(int[] range) {
+    public static List<Casinosdetalles> findRange(int[] range) {
         EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("AdminClientesPU");
+                = Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        List<Casino> lista = new ArrayList<Casino>();
+        List<Casinosdetalles> lista = new ArrayList<Casinosdetalles>();
 
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Casino.class));
+            cq.select(cq.from(Casinosdetalles.class));
             javax.persistence.Query q = em.createQuery(cq);
             q.setMaxResults(range[1] - range[0]);
             q.setFirstResult(range[0]);
@@ -154,7 +163,7 @@ public class CasinoDao {
 
     public static int count() {
         EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("AdminClientesPU");
+                = Persistence.createEntityManagerFactory("gestionBonosPU");
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         int count = 0;
@@ -162,7 +171,7 @@ public class CasinoDao {
         tx.begin();
         try {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            javax.persistence.criteria.Root<Casino> rt = cq.from(Casino.class);
+            javax.persistence.criteria.Root<Casinosdetalles> rt = cq.from(Casinosdetalles.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             javax.persistence.Query q = em.createQuery(cq);
             count = ((Long) q.getSingleResult()).intValue();
@@ -176,5 +185,4 @@ public class CasinoDao {
         return count;
 
     }
-
 }

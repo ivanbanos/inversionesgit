@@ -48,160 +48,178 @@
                                     <p:row >
 
                                         <p:column><label >#{label['usuarios']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaUsuario}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarUsuario}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarUsuario}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarUsuario}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaUsuario.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarUsuario.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarUsuario.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarUsuario.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['perfiles']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaPerfiles}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarPerfiles}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarPerfiles}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarPerfiles}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaPerfiles.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarPerfiles.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarPerfiles.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarPerfiles.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['cargos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCargo}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCargo}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCargo}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCargo}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCargo.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCargo.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCargo.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCargo.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['eventos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEventos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEventos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarEventos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarEventos}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEventos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEventos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarEventos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarEventos.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['tareas']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTareas}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTareas}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTareas}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTareas}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTareas.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTareas.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTareas.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTareas.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['clientes']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaClientes}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarClientes}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarClientes}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarClientes}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaClientes.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarClientes.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarClientes.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarClientes.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['casinos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCasinos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCasinos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCasinos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCasinos}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCasinos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCasinos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCasinos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCasinos.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['atributos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAtributos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAtributos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAtributos}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAtributos}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAtributos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAtributos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAtributos.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAtributos.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['tipojuegos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipo}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipo}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipo}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipo}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipo.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipo.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipo.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipo.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['categorias']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCat}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCat}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCat}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCat}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCat.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCat.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCat.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCat.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['acciones']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAcciones}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAcciones}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAcciones}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAcciones}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAcciones.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAcciones.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAcciones.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAcciones.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['tipoEvento']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoevento}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoevento}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoevento}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoevento}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoevento.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoevento.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoevento.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoevento.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['tipoDocumento']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistatipoDocumento}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregartipoDocumento}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizartipoDocumento}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminartipoDocumento}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistatipoDocumento.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregartipoDocumento.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizartipoDocumento.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminartipoDocumento.selected}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
+                                        <p:column><label >#{label['denominaciones']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaDenominacion.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarDenominacion.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarDenominacion.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarDenominacion.selected}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
+                                        <p:column><label >#{label['TipoBono']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoBono.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoBono.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoBono.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoBono.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['eventos-marketing']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvMarketing}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvMarketing.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
-                                        <p:column><label >#{label['eventos-hostess']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvHostess}"/></p:column>
+                                        <p:column><label >#{label['eventos-operador']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvHostess.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['reportes']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaReportes}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaReportes.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['configuraciones']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaConfiguraciones}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaConfiguraciones.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['cupofidelizacion']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.cupofidelizacion}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.cupofidelizacion.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['notificaciones']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaNotificacion}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaNotificacion.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
 
                                         <p:column><label >#{label['logs']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.logs}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.logs.selected}"/></p:column>
 
                                     </p:row>
 

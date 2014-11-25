@@ -9,7 +9,10 @@ import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.exceptions.PerfilExistenteException;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
+import com.invbf.sistemagestionclientes.util.FormularioBoolean;
+import com.invbf.sistemagestionclientes.util.VistaBoolean;
 import java.io.IOException;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -27,73 +30,81 @@ public class PerfilActBean {
     private Perfil elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
-    private boolean vistaUsuario = false;
-    private boolean agregarUsuario = false;
-    private boolean actualizarUsuario = false;
-    private boolean eliminarUsuario = false;
-    private boolean vistaTareas = false;
-    private boolean agregarTareas = false;
-    private boolean actualizarTareas = false;
-    private boolean eliminarTareas = false;
-    private boolean vistaPerfiles = false;
-    private boolean agregarPerfiles = false;
-    private boolean actualizarPerfiles = false;
-    private boolean eliminarPerfiles = false;
-    private boolean vistaVistas = false;
-    private boolean agregarVistas = false;
-    private boolean actualizarVistas = false;
-    private boolean eliminarVistas = false;
-    private boolean vistaForm = false;
-    private boolean agregarForm = false;
-    private boolean actualizarForm = false;
-    private boolean eliminarForm = false;
-    private boolean vistaCasinos = false;
-    private boolean agregarCasinos = false;
-    private boolean actualizarCasinos = false;
-    private boolean eliminarCasinos = false;
-    private boolean vistaEventos = false;
-    private boolean agregarEventos = false;
-    private boolean actualizarEventos = false;
-    private boolean eliminarEventos = false;
-    private boolean vistaClientes = false;
-    private boolean agregarClientes = false;
-    private boolean actualizarClientes = false;
-    private boolean eliminarClientes = false;
-    private boolean vistaAtributos = false;
-    private boolean agregarAtributos = false;
-    private boolean actualizarAtributos = false;
-    private boolean eliminarAtributos = false;
-    private boolean vistaTipo = false;
-    private boolean agregarTipo = false;
-    private boolean actualizarTipo = false;
-    private boolean eliminarTipo = false;
-    private boolean vistaCat = false;
-    private boolean agregarCat = false;
-    private boolean actualizarCat = false;
-    private boolean eliminarCat = false;
-    private boolean vistaAcciones = false;
-    private boolean agregarAcciones = false;
-    private boolean actualizarAcciones = false;
-    private boolean eliminarAcciones = false;
-    private boolean vistaTipoevento = false;
-    private boolean agregarTipoevento = false;
-    private boolean actualizarTipoevento = false;
-    private boolean eliminarTipoevento = false;
-    private boolean vistaEvMarketing = false;
-    private boolean vistaEvHostess = false;
-    private boolean vistaReportes = false;
-    private boolean vistaConfiguraciones = false;
-    private boolean vistaNotificacion = false;
-    private boolean cupofidelizacion = false;
-    private boolean vistatipoDocumento = false;
-    private boolean agregartipoDocumento = false;
-    private boolean actualizartipoDocumento = false;
-    private boolean eliminartipoDocumento = false;
-    private boolean vistaCargo = false;
-    private boolean agregarCargo = false;
-    private boolean actualizarCargo = false;
-    private boolean eliminarCargo = false;
-    private boolean logs = false;
+    private VistaBoolean vistaUsuario;
+    private FormularioBoolean agregarUsuario;
+    private FormularioBoolean actualizarUsuario;
+    private FormularioBoolean eliminarUsuario;
+    private VistaBoolean vistaTareas;
+    private FormularioBoolean agregarTareas;
+    private FormularioBoolean actualizarTareas;
+    private FormularioBoolean eliminarTareas;
+    private VistaBoolean vistaPerfiles;
+    private FormularioBoolean agregarPerfiles;
+    private FormularioBoolean actualizarPerfiles;
+    private FormularioBoolean eliminarPerfiles;
+    private VistaBoolean vistaVistas;
+    private FormularioBoolean agregarVistas;
+    private FormularioBoolean actualizarVistas;
+    private FormularioBoolean eliminarVistas;
+    private VistaBoolean vistaForm;
+    private FormularioBoolean agregarForm;
+    private FormularioBoolean actualizarForm;
+    private FormularioBoolean eliminarForm;
+    private VistaBoolean vistaCasinos;
+    private FormularioBoolean agregarCasinos;
+    private FormularioBoolean actualizarCasinos;
+    private FormularioBoolean eliminarCasinos;
+    private VistaBoolean vistaEventos;
+    private FormularioBoolean agregarEventos;
+    private FormularioBoolean actualizarEventos;
+    private FormularioBoolean eliminarEventos;
+    private VistaBoolean vistaClientes;
+    private FormularioBoolean agregarClientes;
+    private FormularioBoolean actualizarClientes;
+    private FormularioBoolean eliminarClientes;
+    private VistaBoolean vistaAtributos;
+    private FormularioBoolean agregarAtributos;
+    private FormularioBoolean actualizarAtributos;
+    private FormularioBoolean eliminarAtributos;
+    private VistaBoolean vistaTipo;
+    private FormularioBoolean agregarTipo;
+    private FormularioBoolean actualizarTipo;
+    private FormularioBoolean eliminarTipo;
+    private VistaBoolean vistaCat;
+    private FormularioBoolean agregarCat;
+    private FormularioBoolean actualizarCat;
+    private FormularioBoolean eliminarCat;
+    private VistaBoolean vistaAcciones;
+    private FormularioBoolean agregarAcciones;
+    private FormularioBoolean actualizarAcciones;
+    private FormularioBoolean eliminarAcciones;
+    private VistaBoolean vistaTipoevento;
+    private FormularioBoolean agregarTipoevento;
+    private FormularioBoolean actualizarTipoevento;
+    private FormularioBoolean eliminarTipoevento;
+    private VistaBoolean vistaEvMarketing;
+    private VistaBoolean vistaEvHostess;
+    private VistaBoolean vistaReportes;
+    private VistaBoolean vistaConfiguraciones;
+    private VistaBoolean vistaNotificacion;
+    private VistaBoolean cupofidelizacion;
+    private VistaBoolean vistatipoDocumento;
+    private FormularioBoolean agregartipoDocumento;
+    private FormularioBoolean actualizartipoDocumento;
+    private FormularioBoolean eliminartipoDocumento;
+    private VistaBoolean vistaCargo;
+    private FormularioBoolean agregarCargo;
+    private FormularioBoolean actualizarCargo;
+    private FormularioBoolean eliminarCargo;
+    private VistaBoolean vistaDenominacion;
+    private FormularioBoolean agregarDenominacion;
+    private FormularioBoolean actualizarDenominacion;
+    private FormularioBoolean eliminarDenominacion;
+    private VistaBoolean vistaTipoBono;
+    private FormularioBoolean agregarTipoBono;
+    private FormularioBoolean actualizarTipoBono;
+    private FormularioBoolean eliminarTipoBono;
+    private VistaBoolean logs;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -126,7 +137,6 @@ public class PerfilActBean {
         elemento = sessionBean.adminFacade.findPerfil((Integer) sessionBean.getAttributes().get("idPerfil"));
         acomodaropciones();
 
-
     }
 
     public Perfil getElemento() {
@@ -139,1116 +149,1449 @@ public class PerfilActBean {
 
     public void guardar() {
         try {
+            System.out.println("empezando");
             acomodaropcionesdevuelta();
+
+            System.out.println("acomodo");
             sessionBean.adminFacade.guardarPerfiles(elemento);
+
+            System.out.println("guardo");
             sessionBean.actualizarUsuario();
             sessionBean.getAttributes().remove("idPerfil");
             FacesUtil.addInfoMessage("Perfil actualizado", elemento.getNombre());
             FacesContext.getCurrentInstance().getExternalContext().redirect("AdministradorAtributosSistema.xhtml");
         } catch (PerfilExistenteException ex) {
+            System.out.println(ex);
         } catch (IOException ex) {
+
+            System.out.println(ex);
         }
     }
 
     private void acomodaropciones() {
-        for (Formulario f : elemento.getFormulariosList()) {
+        List<Vista> vistas = sessionBean.adminFacade.findAllVistas();
+        List<Formulario> formularios = sessionBean.adminFacade.findAllFormularios();
+        for (Formulario f : formularios) {
 
             if (f.getAccion().equals("crear")) {
-
+                
+                if (f.getTabla().equals("TipoBono")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarTipoBono = new FormularioBoolean(f, true);
+                    } else {
+                        agregarTipoBono = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("denominaciones")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarDenominacion = new FormularioBoolean(f, true);
+                    } else {
+                        agregarDenominacion = new FormularioBoolean(f, false);
+                    }
+                }
                 if (f.getTabla().equals("tipodocumento")) {
-                    agregartipoDocumento = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregartipoDocumento = new FormularioBoolean(f, true);
+                    } else {
+                        agregartipoDocumento = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("cargo")) {
-                    agregarCargo = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarCargo = new FormularioBoolean(f, true);
+                    } else {
+                        agregarCargo = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Tipotareas")) {
-                    agregarTipoevento = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarTipoevento = new FormularioBoolean(f, true);
+                    } else {
+                        agregarTipoevento = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Tareas")) {
-                    agregarTareas = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarTareas = new FormularioBoolean(f, true);
+                    } else {
+                        agregarTareas = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Usuarios")) {
-                    agregarUsuario = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarUsuario = new FormularioBoolean(f, true);
+                    } else {
+                        agregarUsuario = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Perfiles")) {
-                    agregarPerfiles = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarPerfiles = new FormularioBoolean(f, true);
+                    } else {
+                        agregarPerfiles = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Vistas")) {
-                    agregarVistas = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarVistas = new FormularioBoolean(f, true);
+                    } else {
+                        agregarVistas = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Formularios")) {
-                    agregarForm = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarForm = new FormularioBoolean(f, true);
+                    } else {
+                        agregarForm = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Casinos")) {
-                    agregarCasinos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarCasinos = new FormularioBoolean(f, true);
+                    } else {
+                        agregarCasinos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Eventos")) {
-                    agregarEventos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarEventos = new FormularioBoolean(f, true);
+                    } else {
+                        agregarEventos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Clientes")) {
-                    agregarClientes = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarClientes = new FormularioBoolean(f, true);
+                    } else {
+                        agregarClientes = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Atributos")) {
-                    agregarAtributos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarAtributos = new FormularioBoolean(f, true);
+                    } else {
+                        agregarAtributos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("TiposJuegos")) {
-                    agregarTipo = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarTipo = new FormularioBoolean(f, true);
+                    } else {
+                        agregarTipo = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Categorias")) {
-                    agregarCat = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarCat = new FormularioBoolean(f, true);
+                    } else {
+                        agregarCat = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Acciones")) {
-                    agregarAcciones = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarAcciones = new FormularioBoolean(f, true);
+                    } else {
+                        agregarAcciones = new FormularioBoolean(f, false);
+                    }
                 }
             }
             if (f.getAccion().equals("actualizar")) {
+                if (f.getTabla().equals("TipoBono")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarTipoBono = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarTipoBono = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("denominaciones")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarDenominacion = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarDenominacion = new FormularioBoolean(f, false);
+                    }
+                }
 
                 if (f.getTabla().equals("tipodocumento")) {
-                    actualizartipoDocumento = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizartipoDocumento = new FormularioBoolean(f, true);
+                    } else {
+                        actualizartipoDocumento = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("cargo")) {
-                    actualizarCargo = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarCargo = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarCargo = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Tipotareas")) {
-                    actualizarTipoevento = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarTipoevento = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarTipoevento = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Tareas")) {
-                    actualizarTareas = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarTareas = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarTareas = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Usuarios")) {
-                    actualizarUsuario = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarUsuario = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarUsuario = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Perfiles")) {
-                    actualizarPerfiles = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarPerfiles = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarPerfiles = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Vistas")) {
-                    actualizarVistas = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarVistas = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarVistas = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Formularios")) {
-                    actualizarForm = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarForm = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarForm = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Casinos")) {
-                    actualizarCasinos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarCasinos = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarCasinos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Eventos")) {
-                    actualizarEventos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarEventos = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarEventos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Clientes")) {
-                    actualizarClientes = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarClientes = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarClientes = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Atributos")) {
-                    actualizarAtributos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarAtributos = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarAtributos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("TiposJuegos")) {
-                    actualizarTipo = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarTipo = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarTipo = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Categorias")) {
-                    actualizarCat = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarCat = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarCat = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Acciones")) {
-                    actualizarAcciones = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarAcciones = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarAcciones = new FormularioBoolean(f, false);
+                    }
                 }
             }
             if (f.getAccion().equals("eliminar")) {
-
-                if (f.getTabla().equals("tipodocumento")) {
-                    eliminartipoDocumento = true;
+                if (f.getTabla().equals("TipoBono")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarTipoBono = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarTipoBono = new FormularioBoolean(f, false);
+                    }
                 }
-                
+                if (f.getTabla().equals("denominaciones")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarDenominacion = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarDenominacion = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("tipodocumento")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminartipoDocumento = new FormularioBoolean(f, true);
+                    } else {
+                        eliminartipoDocumento = new FormularioBoolean(f, false);
+                    }
+                }
+
                 if (f.getTabla().equals("cargo")) {
-                    eliminarCargo = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarCargo = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarCargo = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Tipotareas")) {
-                    eliminarTipoevento = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarTipoevento = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarTipoevento = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Tareas")) {
-                    eliminarTareas = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarTareas = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarTareas = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Usuarios")) {
-                    eliminarUsuario = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarUsuario = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarUsuario = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Perfiles")) {
-                    eliminarPerfiles = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarPerfiles = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarPerfiles = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Vistas")) {
-                    eliminarVistas = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarVistas = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarVistas = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Formularios")) {
-                    eliminarForm = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarForm = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarForm = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Casinos")) {
-                    eliminarCasinos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarCasinos = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarCasinos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Eventos")) {
-                    eliminarEventos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarEventos = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarEventos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Clientes")) {
-                    eliminarClientes = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarClientes = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarClientes = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Atributos")) {
-                    eliminarAtributos = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarAtributos = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarAtributos = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("TiposJuegos")) {
-                    eliminarTipo = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarTipo = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarTipo = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Categorias")) {
-                    eliminarCat = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarCat = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarCat = new FormularioBoolean(f, false);
+                    }
                 }
                 if (f.getTabla().equals("Acciones")) {
-                    eliminarAcciones = true;
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarAcciones = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarAcciones = new FormularioBoolean(f, false);
+                    }
                 }
             }
 
         }
-        for (Vista v : elemento.getVistasList()) {
+        for (Vista v : vistas) {
+
+            if (v.getNombreVista().equals("TipoBono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaTipoBono = new VistaBoolean(v, true);
+                } else {
+                    vistaTipoBono = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("denominaciones")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaDenominacion = new VistaBoolean(v, true);
+                } else {
+                    vistaDenominacion = new VistaBoolean(v, false);
+                }
+            }
             if (v.getNombreVista().equals("Tipotareas")) {
-                vistaTipoevento = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaTipoevento = new VistaBoolean(v, true);
+                } else {
+                    vistaTipoevento = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Tareas")) {
-                vistaTareas = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaTareas = new VistaBoolean(v, true);
+                } else {
+                    vistaTareas = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Usuarios")) {
-                vistaUsuario = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaUsuario = new VistaBoolean(v, true);
+                } else {
+                    vistaUsuario = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Perfiles")) {
-                vistaPerfiles = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaPerfiles = new VistaBoolean(v, true);
+                } else {
+                    vistaPerfiles = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Vistas")) {
-                vistaVistas = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaVistas = new VistaBoolean(v, true);
+                } else {
+                    vistaVistas = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Formularios")) {
-                vistaForm = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaForm = new VistaBoolean(v, true);
+                } else {
+                    vistaForm = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Casinos")) {
-                vistaCasinos = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaCasinos = new VistaBoolean(v, true);
+                } else {
+                    vistaCasinos = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Eventos")) {
-                vistaEventos = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaEventos = new VistaBoolean(v, true);
+                } else {
+                    vistaEventos = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Clientes")) {
-                vistaClientes = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaClientes = new VistaBoolean(v, true);
+                } else {
+                    vistaClientes = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Atributos")) {
-                vistaAtributos = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaAtributos = new VistaBoolean(v, true);
+                } else {
+                    vistaAtributos = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("TipoJuego")) {
-                vistaTipo = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaTipo = new VistaBoolean(v, true);
+                } else {
+                    vistaTipo = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Categorias")) {
-                vistaCat = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaCat = new VistaBoolean(v, true);
+                } else {
+                    vistaCat = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Acciones")) {
-                vistaAcciones = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaAcciones = new VistaBoolean(v, true);
+                } else {
+                    vistaAcciones = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("ManejadorEventosMarketing")) {
-                vistaEvMarketing = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaEvMarketing = new VistaBoolean(v, true);
+                } else {
+                    vistaEvMarketing = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("ManejadorEventosHostess")) {
-                vistaEvHostess = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaEvHostess = new VistaBoolean(v, true);
+                } else {
+                    vistaEvHostess = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("Reportes")) {
-                vistaReportes = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaReportes = new VistaBoolean(v, true);
+                } else {
+                    vistaReportes = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("ConfiguracionesGenerales")) {
-                vistaConfiguraciones = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaConfiguraciones = new VistaBoolean(v, true);
+                } else {
+                    vistaConfiguraciones = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("cupofidelizacion")) {
-                cupofidelizacion = true;
+                if (elemento.getVistasList().contains(v)) {
+                    cupofidelizacion = new VistaBoolean(v, true);
+                } else {
+                    cupofidelizacion = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("tipodocumento")) {
-                vistatipoDocumento = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistatipoDocumento = new VistaBoolean(v, true);
+                } else {
+                    vistatipoDocumento = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("notificaciones")) {
-                vistaNotificacion = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaNotificacion = new VistaBoolean(v, true);
+                } else {
+                    vistaNotificacion = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("logs")) {
-                logs = true;
+                if (elemento.getVistasList().contains(v)) {
+                    logs = new VistaBoolean(v, true);
+                } else {
+                    logs = new VistaBoolean(v, false);
+                }
             }
             if (v.getNombreVista().equals("cargo")) {
-                vistaCargo = true;
+                if (elemento.getVistasList().contains(v)) {
+                    vistaCargo = new VistaBoolean(v, true);
+                } else {
+                    vistaCargo = new VistaBoolean(v, false);
+                }
             }
         }
     }
 
     private void acomodaropcionesdevuelta() {
-        Vista v;
-        int count = 0;
         elemento.getVistasList().clear();
-        if (vistaUsuario == false) {
+        int count = 0;
+        if (!vistaDenominacion.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Usuarios");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaDenominacion.getVista());
         }
-        if (vistaPerfiles == false) {
+        if (!vistaTipoBono.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Perfiles");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaTipoBono.getVista());
         }
-        if (vistaCargo == false) {
-            count++;
-        } else {
-            v = sessionBean.adminFacade.findVistasByNombre("cargo");
-            elemento.getVistasList().add(v);
-        }
-        if (vistaVistas == false) {
-            count++;
-        } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Vistas");
-            elemento.getVistasList().add(v);
-        }
-        if (vistaForm == false) {
-            count++;
-        } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Formularios");
-            elemento.getVistasList().add(v);
-        }
-        if (count < 5) {
-            v = sessionBean.adminFacade.findVistasByNombre("AtributosSistema");
-            elemento.getVistasList().add(v);
-        }
-        if (vistaEventos == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("Eventos");
-            elemento.getVistasList().add(v);
-        }
-        if (vistaTareas == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("Tareas");
-            elemento.getVistasList().add(v);
-        }
-        if (vistaClientes == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("Clientes");
-            elemento.getVistasList().add(v);
+        if (count < 3) {
+            elemento.getVistasList().add(sessionBean.adminFacade.findVistasByNombre("atributosbonos"));
         }
         count = 0;
-        if (vistaCasinos == false) {
+        if (!vistaUsuario.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Casinos");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaUsuario.getVista());
         }
-        if (vistaAtributos == false) {
+        if (!vistaPerfiles.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Tipotareas");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaPerfiles.getVista());
         }
-        if (vistaAtributos == false) {
+        if (!vistaCargo.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Atributos");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaCargo.getVista());
         }
-        if (vistaTipo == false) {
+        if (!vistaVistas.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("TipoJuego");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaVistas.getVista());
         }
-        if (vistaCat == false) {
+        if (!vistaForm.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Categorias");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaForm.getVista());
         }
-        if (vistaAcciones == false) {
-            count++;
-        } else {
-            v = sessionBean.adminFacade.findVistasByNombre("Acciones");
-            elemento.getVistasList().add(v);
+        if (count < 5) {
+            elemento.getVistasList().add(sessionBean.adminFacade.findVistasByNombre("AtributosSistema"));
         }
-        if (vistatipoDocumento == false) {
+        if (vistaEventos.isSelected()) {
+            elemento.getVistasList().add(vistaEventos.getVista());
+        }
+        if (vistaTareas.isSelected()) {
+            elemento.getVistasList().add(vistaTareas.getVista());
+        }
+        if (vistaClientes.isSelected()) {
+            elemento.getVistasList().add(vistaClientes.getVista());
+        }
+        count = 0;
+        if (!vistaCasinos.isSelected()) {
             count++;
         } else {
-            v = sessionBean.adminFacade.findVistasByNombre("tipodocumento");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(vistaCasinos.getVista());
+        }
+        if (!vistaAtributos.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(vistaAtributos.getVista());
+        }
+        if (!vistaTipo.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(vistaTipo.getVista());
+        }
+        if (!vistaTipoevento.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(vistaTipoevento.getVista());
+        }
+        if (!vistaCat.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(vistaCat.getVista());
+        }
+        if (!vistaAcciones.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(vistaAcciones.getVista());
+        }
+        if (!vistatipoDocumento.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(vistatipoDocumento.getVista());
         }
 
         if (count < 7) {
-            v = sessionBean.adminFacade.findVistasByNombre("AtributosMarketing");
-            elemento.getVistasList().add(v);
+            elemento.getVistasList().add(sessionBean.adminFacade.findVistasByNombre("AtributosMarketing"));
         }
 
-        if (vistaEvMarketing == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("ManejadorEventosMarketing");
-            elemento.getVistasList().add(v);
+        if (vistaEvMarketing.isSelected()) {
+            elemento.getVistasList().add(vistaEvMarketing.getVista());
         }
-        if (vistaEvHostess == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("ManejadorEventosHostess");
-            elemento.getVistasList().add(v);
+        if (vistaEvHostess.isSelected()) {
+            elemento.getVistasList().add(vistaEvHostess.getVista());
         }
-        if (vistaReportes == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("Reportes");
-            elemento.getVistasList().add(v);
+        if (vistaReportes.isSelected()) {
+            elemento.getVistasList().add(vistaReportes.getVista());
         }
-        if (vistaConfiguraciones == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("ConfiguracionesGenerales");
-            elemento.getVistasList().add(v);
+        if (vistaConfiguraciones.isSelected()) {
+            elemento.getVistasList().add(vistaConfiguraciones.getVista());
         }
-        if (cupofidelizacion == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("cupofidelizacion");
-            elemento.getVistasList().add(v);
+        if (cupofidelizacion.isSelected()) {
+            elemento.getVistasList().add(cupofidelizacion.getVista());
         }
-        if (vistaNotificacion == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("notificaciones");
-            elemento.getVistasList().add(v);
+        if (vistaNotificacion.isSelected()) {
+            elemento.getVistasList().add(vistaNotificacion.getVista());
         }
-        if (logs == true) {
-            v = sessionBean.adminFacade.findVistasByNombre("logs");
-            elemento.getVistasList().add(v);
+        if (logs.isSelected()) {
+            elemento.getVistasList().add(logs.getVista());
         }
 
         elemento.getFormulariosList().clear();
-        Formulario f;
-        if (agregartipoDocumento == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "tipodocumento");
-            elemento.getFormulariosList().add(f);
+        if (agregarTipoBono.isSelected()) {
+            elemento.getFormulariosList().add(agregarTipoBono.getFormulario());
         }
-        if (actualizartipoDocumento == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "tipodocumento");
-            elemento.getFormulariosList().add(f);
+        if (actualizarTipoBono.isSelected()) {
+            elemento.getFormulariosList().add(actualizarTipoBono.getFormulario());
         }
-        if (eliminartipoDocumento == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "tipodocumento");
-            elemento.getFormulariosList().add(f);
+        if (eliminarTipoBono.isSelected()) {
+            elemento.getFormulariosList().add(eliminarTipoBono.getFormulario());
         }
-        if (agregarCargo == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "cargo");
-            elemento.getFormulariosList().add(f);
+        if (agregarDenominacion.isSelected()) {
+            elemento.getFormulariosList().add(agregarDenominacion.getFormulario());
         }
-        if (actualizarCargo == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "cargo");
-            elemento.getFormulariosList().add(f);
+        if (actualizarDenominacion.isSelected()) {
+            elemento.getFormulariosList().add(actualizarDenominacion.getFormulario());
         }
-        if (eliminarCargo == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "cargo");
-            elemento.getFormulariosList().add(f);
+        if (eliminarDenominacion.isSelected()) {
+            elemento.getFormulariosList().add(eliminarDenominacion.getFormulario());
         }
-        if (agregarUsuario == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Usuarios");
-            elemento.getFormulariosList().add(f);
+        if (agregartipoDocumento.isSelected()) {
+            elemento.getFormulariosList().add(agregartipoDocumento.getFormulario());
         }
-        if (actualizarUsuario == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Usuarios");
-            elemento.getFormulariosList().add(f);
+        if (actualizartipoDocumento.isSelected()) {
+            elemento.getFormulariosList().add(actualizartipoDocumento.getFormulario());
         }
-        if (eliminarUsuario == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Usuarios");
-            elemento.getFormulariosList().add(f);
+        if (eliminartipoDocumento.isSelected()) {
+            elemento.getFormulariosList().add(eliminartipoDocumento.getFormulario());
         }
-        if (agregarTareas == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Tareas");
-            elemento.getFormulariosList().add(f);
+        if (agregarCargo.isSelected()) {
+            elemento.getFormulariosList().add(agregarCargo.getFormulario());
         }
-        if (actualizarTareas == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Tareas");
-            elemento.getFormulariosList().add(f);
+        if (actualizarCargo.isSelected()) {
+            elemento.getFormulariosList().add(actualizarCargo.getFormulario());
         }
-        if (eliminarTareas == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Tareas");
-            elemento.getFormulariosList().add(f);
+        if (eliminarCargo.isSelected()) {
+            elemento.getFormulariosList().add(eliminarCargo.getFormulario());
         }
-        if (agregarPerfiles == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Perfiles");
-            elemento.getFormulariosList().add(f);
+        if (agregarUsuario.isSelected()) {
+            elemento.getFormulariosList().add(agregarUsuario.getFormulario());
         }
-        if (actualizarPerfiles == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Perfiles");
-            elemento.getFormulariosList().add(f);
+        if (actualizarUsuario.isSelected()) {
+            elemento.getFormulariosList().add(actualizarUsuario.getFormulario());
         }
-        if (eliminarPerfiles == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Perfiles");
-            elemento.getFormulariosList().add(f);
+        if (eliminarUsuario.isSelected()) {
+            elemento.getFormulariosList().add(eliminarUsuario.getFormulario());
         }
-        if (agregarVistas == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Vistas");
-            elemento.getFormulariosList().add(f);
+        
+        
+        
+        if (agregarTipoevento.isSelected()) {
+            elemento.getFormulariosList().add(agregarTipoevento.getFormulario());
         }
-        if (actualizarVistas == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Vistas");
-            elemento.getFormulariosList().add(f);
+        if (actualizarTipoevento.isSelected()) {
+            elemento.getFormulariosList().add(actualizarTipoevento.getFormulario());
         }
-        if (eliminarVistas == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Vistas");
-            elemento.getFormulariosList().add(f);
+        if (eliminarTipoevento.isSelected()) {
+            elemento.getFormulariosList().add(eliminarTipoevento.getFormulario());
         }
-        if (agregarForm == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Formularios");
-            elemento.getFormulariosList().add(f);
+        
+        
+        
+        if (agregarTareas.isSelected()) {
+            elemento.getFormulariosList().add(agregarTareas.getFormulario());
         }
-        if (actualizarForm == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Formularios");
-            elemento.getFormulariosList().add(f);
+        if (actualizarTareas.isSelected()) {
+            elemento.getFormulariosList().add(actualizarTareas.getFormulario());
         }
-        if (eliminarForm == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Formularios");
-            elemento.getFormulariosList().add(f);
+        if (eliminarTareas.isSelected()) {
+            elemento.getFormulariosList().add(eliminarTareas.getFormulario());
         }
-        if (agregarCasinos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Tipotareas");
-            elemento.getFormulariosList().add(f);
+        if (agregarPerfiles.isSelected()) {
+            elemento.getFormulariosList().add(agregarPerfiles.getFormulario());
         }
-        if (actualizarCasinos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Tipotareas");
-            elemento.getFormulariosList().add(f);
+        if (actualizarPerfiles.isSelected()) {
+            elemento.getFormulariosList().add(actualizarPerfiles.getFormulario());
         }
-        if (eliminarCasinos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Tipotareas");
-            elemento.getFormulariosList().add(f);
+        if (eliminarPerfiles.isSelected()) {
+            elemento.getFormulariosList().add(eliminarPerfiles.getFormulario());
         }
-        if (agregarCasinos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Casinos");
-            elemento.getFormulariosList().add(f);
+        if (agregarVistas.isSelected()) {
+            elemento.getFormulariosList().add(agregarVistas.getFormulario());
         }
-        if (actualizarCasinos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Casinos");
-            elemento.getFormulariosList().add(f);
+        if (actualizarVistas.isSelected()) {
+            elemento.getFormulariosList().add(actualizarVistas.getFormulario());
         }
-        if (eliminarCasinos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Casinos");
-            elemento.getFormulariosList().add(f);
+        if (eliminarVistas.isSelected()) {
+            elemento.getFormulariosList().add(eliminarVistas.getFormulario());
         }
-        if (agregarEventos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Eventos");
-            elemento.getFormulariosList().add(f);
+        if (agregarForm.isSelected()) {
+            elemento.getFormulariosList().add(agregarForm.getFormulario());
         }
-        if (actualizarEventos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Eventos");
-            elemento.getFormulariosList().add(f);
+        if (actualizarForm.isSelected()) {
+            elemento.getFormulariosList().add(actualizarForm.getFormulario());
         }
-        if (eliminarEventos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Eventos");
-            elemento.getFormulariosList().add(f);
+        if (eliminarForm.isSelected()) {
+            elemento.getFormulariosList().add(eliminarForm.getFormulario());
         }
-        if (agregarClientes == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Clientes");
-            elemento.getFormulariosList().add(f);
+        if (agregarCasinos.isSelected()) {
+            elemento.getFormulariosList().add(agregarCasinos.getFormulario());
         }
-        if (actualizarClientes == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Clientes");
-            elemento.getFormulariosList().add(f);
+        if (actualizarCasinos.isSelected()) {
+            elemento.getFormulariosList().add(actualizarCasinos.getFormulario());
         }
-        if (eliminarClientes == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Clientes");
-            elemento.getFormulariosList().add(f);
+        if (eliminarCasinos.isSelected()) {
+            elemento.getFormulariosList().add(eliminarCasinos.getFormulario());
         }
-        if (agregarAtributos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Atributos");
-            elemento.getFormulariosList().add(f);
+        if (agregarEventos.isSelected()) {
+            elemento.getFormulariosList().add(agregarEventos.getFormulario());
         }
-        if (actualizarAtributos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Atributos");
-            elemento.getFormulariosList().add(f);
+        if (actualizarEventos.isSelected()) {
+            elemento.getFormulariosList().add(actualizarEventos.getFormulario());
         }
-        if (eliminarAtributos == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Atributos");
-            elemento.getFormulariosList().add(f);
+        if (eliminarEventos.isSelected()) {
+            elemento.getFormulariosList().add(eliminarEventos.getFormulario());
         }
-        if (agregarTipo == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "TiposJuegos");
-            elemento.getFormulariosList().add(f);
+        if (agregarClientes.isSelected()) {
+            elemento.getFormulariosList().add(agregarClientes.getFormulario());
         }
-        if (actualizarTipo == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "TiposJuegos");
-            elemento.getFormulariosList().add(f);
+        if (actualizarClientes.isSelected()) {
+            elemento.getFormulariosList().add(actualizarClientes.getFormulario());
         }
-        if (eliminarTipo == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "TiposJuegos");
-            elemento.getFormulariosList().add(f);
+        if (eliminarClientes.isSelected()) {
+            elemento.getFormulariosList().add(eliminarClientes.getFormulario());
         }
-        if (agregarCat == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Categorias");
-            elemento.getFormulariosList().add(f);
+        if (agregarAtributos.isSelected()) {
+            elemento.getFormulariosList().add(agregarAtributos.getFormulario());
         }
-        if (actualizarCat == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Categorias");
-            elemento.getFormulariosList().add(f);
+        if (actualizarAtributos.isSelected()) {
+            elemento.getFormulariosList().add(actualizarAtributos.getFormulario());
         }
-        if (eliminarCat == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Categorias");
-            elemento.getFormulariosList().add(f);
+        if (eliminarAtributos.isSelected()) {
+            elemento.getFormulariosList().add(eliminarAtributos.getFormulario());
         }
-        if (agregarAcciones == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("crear", "Acciones");
-            elemento.getFormulariosList().add(f);
+        if (agregarTipo.isSelected()) {
+            elemento.getFormulariosList().add(agregarTipo.getFormulario());
         }
-        if (actualizarAcciones == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("actualizar", "Acciones");
-            elemento.getFormulariosList().add(f);
+        if (actualizarTipo.isSelected()) {
+            elemento.getFormulariosList().add(actualizarTipo.getFormulario());
         }
-        if (eliminarAcciones == true) {
-            f = sessionBean.adminFacade.findFormularioByAccionAndTabla("eliminar", "Acciones");
-            elemento.getFormulariosList().add(f);
+        if (eliminarTipo.isSelected()) {
+            elemento.getFormulariosList().add(eliminarTipo.getFormulario());
+        }
+        if (agregarCat.isSelected()) {
+            elemento.getFormulariosList().add(agregarCat.getFormulario());
+        }
+        if (actualizarCat.isSelected()) {
+            elemento.getFormulariosList().add(actualizarCat.getFormulario());
+        }
+        if (eliminarCat.isSelected()) {
+            elemento.getFormulariosList().add(eliminarCat.getFormulario());
+        }
+        if (agregarAcciones.isSelected()) {
+            elemento.getFormulariosList().add(agregarAcciones.getFormulario());
+        }
+        if (actualizarAcciones.isSelected()) {
+            elemento.getFormulariosList().add(actualizarAcciones.getFormulario());
+        }
+        if (eliminarAcciones.isSelected()) {
+            elemento.getFormulariosList().add(eliminarAcciones.getFormulario());
         }
 
     }
 
-    public boolean isVistaUsuario() {
+    public VistaBoolean getVistaUsuario() {
         return vistaUsuario;
     }
 
-    public void setVistaUsuario(boolean vistaUsuario) {
+    public void setVistaUsuario(VistaBoolean vistaUsuario) {
         this.vistaUsuario = vistaUsuario;
     }
 
-    public boolean isAgregarUsuario() {
-        return agregarUsuario;
-    }
-
-    public void setAgregarUsuario(boolean agregarUsuario) {
-        this.agregarUsuario = agregarUsuario;
-    }
-
-    public boolean isActualizarUsuario() {
-        return actualizarUsuario;
-    }
-
-    public void setActualizarUsuario(boolean actualizarUsuario) {
-        this.actualizarUsuario = actualizarUsuario;
-    }
-
-    public boolean isEliminarUsuario() {
-        return eliminarUsuario;
-    }
-
-    public void setEliminarUsuario(boolean eliminarUsuario) {
-        this.eliminarUsuario = eliminarUsuario;
-    }
-
-    public boolean isVistaPerfiles() {
-        return vistaPerfiles;
-    }
-
-    public void setVistaPerfiles(boolean vistaPerfiles) {
-        this.vistaPerfiles = vistaPerfiles;
-    }
-
-    public boolean isAgregarPerfiles() {
-        return agregarPerfiles;
-    }
-
-    public void setAgregarPerfiles(boolean agregarPerfiles) {
-        this.agregarPerfiles = agregarPerfiles;
-    }
-
-    public boolean isActualizarPerfiles() {
-        return actualizarPerfiles;
-    }
-
-    public void setActualizarPerfiles(boolean actualizarPerfiles) {
-        this.actualizarPerfiles = actualizarPerfiles;
-    }
-
-    public boolean isEliminarPerfiles() {
-        return eliminarPerfiles;
-    }
-
-    public void setEliminarPerfiles(boolean eliminarPerfiles) {
-        this.eliminarPerfiles = eliminarPerfiles;
-    }
-
-    public boolean isVistaVistas() {
-        return vistaVistas;
-    }
-
-    public void setVistaVistas(boolean vistaVistas) {
-        this.vistaVistas = vistaVistas;
-    }
-
-    public boolean isAgregarVistas() {
-        return agregarVistas;
-    }
-
-    public void setAgregarVistas(boolean agregarVistas) {
-        this.agregarVistas = agregarVistas;
-    }
-
-    public boolean isActualizarVistas() {
-        return actualizarVistas;
-    }
-
-    public void setActualizarVistas(boolean actualizarVistas) {
-        this.actualizarVistas = actualizarVistas;
-    }
-
-    public boolean isEliminarVistas() {
-        return eliminarVistas;
-    }
-
-    public void setEliminarVistas(boolean eliminarVistas) {
-        this.eliminarVistas = eliminarVistas;
-    }
-
-    public boolean isVistaForm() {
-        return vistaForm;
-    }
-
-    public void setVistaForm(boolean vistaForm) {
-        this.vistaForm = vistaForm;
-    }
-
-    public boolean isAgregarForm() {
-        return agregarForm;
-    }
-
-    public void setAgregarForm(boolean agregarForm) {
-        this.agregarForm = agregarForm;
-    }
-
-    public boolean isActualizarForm() {
-        return actualizarForm;
-    }
-
-    public void setActualizarForm(boolean actualizarForm) {
-        this.actualizarForm = actualizarForm;
-    }
-
-    public boolean isEliminarForm() {
-        return eliminarForm;
-    }
-
-    public void setEliminarForm(boolean eliminarForm) {
-        this.eliminarForm = eliminarForm;
-    }
-
-    public boolean isVistaCasinos() {
-        return vistaCasinos;
-    }
-
-    public void setVistaCasinos(boolean vistaCasinos) {
-        this.vistaCasinos = vistaCasinos;
-    }
-
-    public boolean isAgregarCasinos() {
-        return agregarCasinos;
-    }
-
-    public void setAgregarCasinos(boolean agregarCasinos) {
-        this.agregarCasinos = agregarCasinos;
-    }
-
-    public boolean isActualizarCasinos() {
-        return actualizarCasinos;
-    }
-
-    public void setActualizarCasinos(boolean actualizarCasinos) {
-        this.actualizarCasinos = actualizarCasinos;
-    }
-
-    public boolean isEliminarCasinos() {
-        return eliminarCasinos;
-    }
-
-    public void setEliminarCasinos(boolean eliminarCasinos) {
-        this.eliminarCasinos = eliminarCasinos;
-    }
-
-    public boolean isVistaEventos() {
-        return vistaEventos;
-    }
-
-    public void setVistaEventos(boolean vistaEventos) {
-        this.vistaEventos = vistaEventos;
-    }
-
-    public boolean isAgregarEventos() {
-        return agregarEventos;
-    }
-
-    public void setAgregarEventos(boolean agregarEventos) {
-        this.agregarEventos = agregarEventos;
-    }
-
-    public boolean isActualizarEventos() {
-        return actualizarEventos;
-    }
-
-    public void setActualizarEventos(boolean actualizarEventos) {
-        this.actualizarEventos = actualizarEventos;
-    }
-
-    public boolean isEliminarEventos() {
-        return eliminarEventos;
-    }
-
-    public void setEliminarEventos(boolean eliminarEventos) {
-        this.eliminarEventos = eliminarEventos;
-    }
-
-    public boolean isVistaClientes() {
-        return vistaClientes;
-    }
-
-    public void setVistaClientes(boolean vistaClientes) {
-        this.vistaClientes = vistaClientes;
-    }
-
-    public boolean isAgregarClientes() {
-        return agregarClientes;
-    }
-
-    public void setAgregarClientes(boolean agregarClientes) {
-        this.agregarClientes = agregarClientes;
-    }
-
-    public boolean isActualizarClientes() {
-        return actualizarClientes;
-    }
-
-    public void setActualizarClientes(boolean actualizarClientes) {
-        this.actualizarClientes = actualizarClientes;
-    }
-
-    public boolean isEliminarClientes() {
-        return eliminarClientes;
-    }
-
-    public void setEliminarClientes(boolean eliminarClientes) {
-        this.eliminarClientes = eliminarClientes;
-    }
-
-    public boolean isVistaAtributos() {
-        return vistaAtributos;
-    }
-
-    public void setVistaAtributos(boolean vistaAtributos) {
-        this.vistaAtributos = vistaAtributos;
-    }
-
-    public boolean isAgregarAtributos() {
-        return agregarAtributos;
-    }
-
-    public void setAgregarAtributos(boolean agregarAtributos) {
-        this.agregarAtributos = agregarAtributos;
-    }
-
-    public boolean isActualizarAtributos() {
-        return actualizarAtributos;
-    }
-
-    public void setActualizarAtributos(boolean actualizarAtributos) {
-        this.actualizarAtributos = actualizarAtributos;
-    }
-
-    public boolean isEliminarAtributos() {
-        return eliminarAtributos;
-    }
-
-    public void setEliminarAtributos(boolean eliminarAtributos) {
-        this.eliminarAtributos = eliminarAtributos;
-    }
-
-    public boolean isVistaTipo() {
-        return vistaTipo;
-    }
-
-    public void setVistaTipo(boolean vistaTipo) {
-        this.vistaTipo = vistaTipo;
-    }
-
-    public boolean isAgregarTipo() {
-        return agregarTipo;
-    }
-
-    public void setAgregarTipo(boolean agregarTipo) {
-        this.agregarTipo = agregarTipo;
-    }
-
-    public boolean isActualizarTipo() {
-        return actualizarTipo;
-    }
-
-    public void setActualizarTipo(boolean actualizarTipo) {
-        this.actualizarTipo = actualizarTipo;
-    }
-
-    public boolean isEliminarTipo() {
-        return eliminarTipo;
-    }
-
-    public void setEliminarTipo(boolean eliminarTipo) {
-        this.eliminarTipo = eliminarTipo;
-    }
-
-    public boolean isVistaCat() {
-        return vistaCat;
-    }
-
-    public void setVistaCat(boolean vistaCat) {
-        this.vistaCat = vistaCat;
-    }
-
-    public boolean isAgregarCat() {
-        return agregarCat;
-    }
-
-    public void setAgregarCat(boolean agregarCat) {
-        this.agregarCat = agregarCat;
-    }
-
-    public boolean isActualizarCat() {
-        return actualizarCat;
-    }
-
-    public void setActualizarCat(boolean actualizarCat) {
-        this.actualizarCat = actualizarCat;
-    }
-
-    public boolean isEliminarCat() {
-        return eliminarCat;
-    }
-
-    public void setEliminarCat(boolean eliminarCat) {
-        this.eliminarCat = eliminarCat;
-    }
-
-    public boolean isVistaTareas() {
+    public VistaBoolean getVistaTareas() {
         return vistaTareas;
     }
 
-    public void setVistaTareas(boolean vistaTareas) {
+    public void setVistaTareas(VistaBoolean vistaTareas) {
         this.vistaTareas = vistaTareas;
     }
 
-    public boolean isAgregarTareas() {
-        return agregarTareas;
+    public VistaBoolean getVistaPerfiles() {
+        return vistaPerfiles;
     }
 
-    public void setAgregarTareas(boolean agregarTareas) {
-        this.agregarTareas = agregarTareas;
+    public void setVistaPerfiles(VistaBoolean vistaPerfiles) {
+        this.vistaPerfiles = vistaPerfiles;
     }
 
-    public boolean isActualizarTareas() {
-        return actualizarTareas;
+    public VistaBoolean getVistaVistas() {
+        return vistaVistas;
     }
 
-    public void setActualizarTareas(boolean actualizarTareas) {
-        this.actualizarTareas = actualizarTareas;
+    public void setVistaVistas(VistaBoolean vistaVistas) {
+        this.vistaVistas = vistaVistas;
     }
 
-    public boolean isEliminarTareas() {
-        return eliminarTareas;
+    public VistaBoolean getVistaForm() {
+        return vistaForm;
     }
 
-    public void setEliminarTareas(boolean eliminarTareas) {
-        this.eliminarTareas = eliminarTareas;
+    public void setVistaForm(VistaBoolean vistaForm) {
+        this.vistaForm = vistaForm;
     }
 
-    public boolean isVistaAcciones() {
+    public VistaBoolean getVistaCasinos() {
+        return vistaCasinos;
+    }
+
+    public void setVistaCasinos(VistaBoolean vistaCasinos) {
+        this.vistaCasinos = vistaCasinos;
+    }
+
+    public VistaBoolean getVistaEventos() {
+        return vistaEventos;
+    }
+
+    public void setVistaEventos(VistaBoolean vistaEventos) {
+        this.vistaEventos = vistaEventos;
+    }
+
+    public VistaBoolean getVistaClientes() {
+        return vistaClientes;
+    }
+
+    public void setVistaClientes(VistaBoolean vistaClientes) {
+        this.vistaClientes = vistaClientes;
+    }
+
+    public VistaBoolean getVistaAtributos() {
+        return vistaAtributos;
+    }
+
+    public void setVistaAtributos(VistaBoolean vistaAtributos) {
+        this.vistaAtributos = vistaAtributos;
+    }
+
+    public VistaBoolean getVistaTipo() {
+        return vistaTipo;
+    }
+
+    public void setVistaTipo(VistaBoolean vistaTipo) {
+        this.vistaTipo = vistaTipo;
+    }
+
+    public VistaBoolean getVistaCat() {
+        return vistaCat;
+    }
+
+    public void setVistaCat(VistaBoolean vistaCat) {
+        this.vistaCat = vistaCat;
+    }
+
+    public VistaBoolean getVistaAcciones() {
         return vistaAcciones;
     }
 
-    public void setVistaAcciones(boolean vistaAcciones) {
+    public void setVistaAcciones(VistaBoolean vistaAcciones) {
         this.vistaAcciones = vistaAcciones;
     }
 
-    public boolean isAgregarAcciones() {
-        return agregarAcciones;
-    }
-
-    public void setAgregarAcciones(boolean agregarAcciones) {
-        this.agregarAcciones = agregarAcciones;
-    }
-
-    public boolean isActualizarAcciones() {
-        return actualizarAcciones;
-    }
-
-    public void setActualizarAcciones(boolean actualizarAcciones) {
-        this.actualizarAcciones = actualizarAcciones;
-    }
-
-    public boolean isEliminarAcciones() {
-        return eliminarAcciones;
-    }
-
-    public void setEliminarAcciones(boolean eliminarAcciones) {
-        this.eliminarAcciones = eliminarAcciones;
-    }
-
-    public boolean isVistaEstados() {
-        return vistaAcciones;
-    }
-
-    public void setVistaEstados(boolean vistaEstados) {
-        this.vistaAcciones = vistaEstados;
-    }
-
-    public boolean isAgregarEstados() {
-        return agregarAcciones;
-    }
-
-    public void setAgregarEstados(boolean agregarEstados) {
-        this.agregarAcciones = agregarEstados;
-    }
-
-    public boolean isActualizarEstados() {
-        return actualizarAcciones;
-    }
-
-    public void setActualizarEstados(boolean actualizarEstados) {
-        this.actualizarAcciones = actualizarEstados;
-    }
-
-    public boolean isEliminarEstados() {
-        return eliminarAcciones;
-    }
-
-    public void setEliminarEstados(boolean eliminarEstados) {
-        this.eliminarAcciones = eliminarEstados;
-    }
-
-    public boolean isVistaEvMarketing() {
-        return vistaEvMarketing;
-    }
-
-    public void setVistaEvMarketing(boolean vistaEvMarketing) {
-        this.vistaEvMarketing = vistaEvMarketing;
-    }
-
-    public boolean isVistaEvHostess() {
-        return vistaEvHostess;
-    }
-
-    public void setVistaEvHostess(boolean vistaEvHostess) {
-        this.vistaEvHostess = vistaEvHostess;
-    }
-
-    public boolean isVistaReportes() {
-        return vistaReportes;
-    }
-
-    public void setVistaReportes(boolean vistaReportes) {
-        this.vistaReportes = vistaReportes;
-    }
-
-    public boolean isVistaConfiguraciones() {
-        return vistaConfiguraciones;
-    }
-
-    public void setVistaConfiguraciones(boolean vistaConfiguraciones) {
-        this.vistaConfiguraciones = vistaConfiguraciones;
-    }
-
-    public boolean isVistaTipoevento() {
+    public VistaBoolean getVistaTipoevento() {
         return vistaTipoevento;
     }
 
-    public void setVistaTipoevento(boolean vistaTipoevento) {
+    public void setVistaTipoevento(VistaBoolean vistaTipoevento) {
         this.vistaTipoevento = vistaTipoevento;
     }
 
-    public boolean isAgregarTipoevento() {
-        return agregarTipoevento;
+    public VistaBoolean getVistaEvMarketing() {
+        return vistaEvMarketing;
     }
 
-    public void setAgregarTipoevento(boolean agregarTipoevento) {
-        this.agregarTipoevento = agregarTipoevento;
+    public void setVistaEvMarketing(VistaBoolean vistaEvMarketing) {
+        this.vistaEvMarketing = vistaEvMarketing;
     }
 
-    public boolean isActualizarTipoevento() {
-        return actualizarTipoevento;
+    public VistaBoolean getVistaEvHostess() {
+        return vistaEvHostess;
     }
 
-    public void setActualizarTipoevento(boolean actualizarTipoevento) {
-        this.actualizarTipoevento = actualizarTipoevento;
+    public void setVistaEvHostess(VistaBoolean vistaEvHostess) {
+        this.vistaEvHostess = vistaEvHostess;
     }
 
-    public boolean isEliminarTipoevento() {
-        return eliminarTipoevento;
+    public VistaBoolean getVistaReportes() {
+        return vistaReportes;
     }
 
-    public void setEliminarTipoevento(boolean eliminarTipoevento) {
-        this.eliminarTipoevento = eliminarTipoevento;
+    public void setVistaReportes(VistaBoolean vistaReportes) {
+        this.vistaReportes = vistaReportes;
     }
 
-    public boolean isCupofidelizacion() {
-        return cupofidelizacion;
+    public VistaBoolean getVistaConfiguraciones() {
+        return vistaConfiguraciones;
     }
 
-    public void setCupofidelizacion(boolean cupofidelizacion) {
-        this.cupofidelizacion = cupofidelizacion;
+    public void setVistaConfiguraciones(VistaBoolean vistaConfiguraciones) {
+        this.vistaConfiguraciones = vistaConfiguraciones;
     }
 
-    public boolean isVistatipoDocumento() {
-        return vistatipoDocumento;
-    }
-
-    public void setVistatipoDocumento(boolean vistatipoDocumento) {
-        this.vistatipoDocumento = vistatipoDocumento;
-    }
-
-    public boolean isAgregartipoDocumento() {
-        return agregartipoDocumento;
-    }
-
-    public void setAgregartipoDocumento(boolean agregartipoDocumento) {
-        this.agregartipoDocumento = agregartipoDocumento;
-    }
-
-    public boolean isActualizartipoDocumento() {
-        return actualizartipoDocumento;
-    }
-
-    public void setActualizartipoDocumento(boolean actualizartipoDocumento) {
-        this.actualizartipoDocumento = actualizartipoDocumento;
-    }
-
-    public boolean isEliminartipoDocumento() {
-        return eliminartipoDocumento;
-    }
-
-    public void setEliminartipoDocumento(boolean eliminartipoDocumento) {
-        this.eliminartipoDocumento = eliminartipoDocumento;
-    }
-
-    public boolean isVistaNotificacion() {
+    public VistaBoolean getVistaNotificacion() {
         return vistaNotificacion;
     }
 
-    public void setVistaNotificacion(boolean vistaNotificacion) {
+    public void setVistaNotificacion(VistaBoolean vistaNotificacion) {
         this.vistaNotificacion = vistaNotificacion;
     }
 
-    public boolean isLogs() {
-        return logs;
+    public VistaBoolean getCupofidelizacion() {
+        return cupofidelizacion;
     }
 
-    public void setLogs(boolean logs) {
-        this.logs = logs;
+    public void setCupofidelizacion(VistaBoolean cupofidelizacion) {
+        this.cupofidelizacion = cupofidelizacion;
     }
 
-    public boolean isVistaCargo() {
+    public VistaBoolean getVistatipoDocumento() {
+        return vistatipoDocumento;
+    }
+
+    public void setVistatipoDocumento(VistaBoolean vistatipoDocumento) {
+        this.vistatipoDocumento = vistatipoDocumento;
+    }
+
+    public VistaBoolean getVistaCargo() {
         return vistaCargo;
     }
 
-    public void setVistaCargo(boolean vistaCargo) {
+    public void setVistaCargo(VistaBoolean vistaCargo) {
         this.vistaCargo = vistaCargo;
     }
 
-    public boolean isAgregarCargo() {
+    public VistaBoolean getLogs() {
+        return logs;
+    }
+
+    public void setLogs(VistaBoolean logs) {
+        this.logs = logs;
+    }
+
+    public FormularioBoolean getAgregarUsuario() {
+        return agregarUsuario;
+    }
+
+    public void setAgregarUsuario(FormularioBoolean agregarUsuario) {
+        this.agregarUsuario = agregarUsuario;
+    }
+
+    public FormularioBoolean getActualizarUsuario() {
+        return actualizarUsuario;
+    }
+
+    public void setActualizarUsuario(FormularioBoolean actualizarUsuario) {
+        this.actualizarUsuario = actualizarUsuario;
+    }
+
+    public FormularioBoolean getEliminarUsuario() {
+        return eliminarUsuario;
+    }
+
+    public void setEliminarUsuario(FormularioBoolean eliminarUsuario) {
+        this.eliminarUsuario = eliminarUsuario;
+    }
+
+    public FormularioBoolean getAgregarTareas() {
+        return agregarTareas;
+    }
+
+    public void setAgregarTareas(FormularioBoolean agregarTareas) {
+        this.agregarTareas = agregarTareas;
+    }
+
+    public FormularioBoolean getActualizarTareas() {
+        return actualizarTareas;
+    }
+
+    public void setActualizarTareas(FormularioBoolean actualizarTareas) {
+        this.actualizarTareas = actualizarTareas;
+    }
+
+    public FormularioBoolean getEliminarTareas() {
+        return eliminarTareas;
+    }
+
+    public void setEliminarTareas(FormularioBoolean eliminarTareas) {
+        this.eliminarTareas = eliminarTareas;
+    }
+
+    public FormularioBoolean getAgregarPerfiles() {
+        return agregarPerfiles;
+    }
+
+    public void setAgregarPerfiles(FormularioBoolean agregarPerfiles) {
+        this.agregarPerfiles = agregarPerfiles;
+    }
+
+    public FormularioBoolean getActualizarPerfiles() {
+        return actualizarPerfiles;
+    }
+
+    public void setActualizarPerfiles(FormularioBoolean actualizarPerfiles) {
+        this.actualizarPerfiles = actualizarPerfiles;
+    }
+
+    public FormularioBoolean getEliminarPerfiles() {
+        return eliminarPerfiles;
+    }
+
+    public void setEliminarPerfiles(FormularioBoolean eliminarPerfiles) {
+        this.eliminarPerfiles = eliminarPerfiles;
+    }
+
+    public FormularioBoolean getAgregarVistas() {
+        return agregarVistas;
+    }
+
+    public void setAgregarVistas(FormularioBoolean agregarVistas) {
+        this.agregarVistas = agregarVistas;
+    }
+
+    public FormularioBoolean getActualizarVistas() {
+        return actualizarVistas;
+    }
+
+    public void setActualizarVistas(FormularioBoolean actualizarVistas) {
+        this.actualizarVistas = actualizarVistas;
+    }
+
+    public FormularioBoolean getEliminarVistas() {
+        return eliminarVistas;
+    }
+
+    public void setEliminarVistas(FormularioBoolean eliminarVistas) {
+        this.eliminarVistas = eliminarVistas;
+    }
+
+    public FormularioBoolean getAgregarForm() {
+        return agregarForm;
+    }
+
+    public void setAgregarForm(FormularioBoolean agregarForm) {
+        this.agregarForm = agregarForm;
+    }
+
+    public FormularioBoolean getActualizarForm() {
+        return actualizarForm;
+    }
+
+    public void setActualizarForm(FormularioBoolean actualizarForm) {
+        this.actualizarForm = actualizarForm;
+    }
+
+    public FormularioBoolean getEliminarForm() {
+        return eliminarForm;
+    }
+
+    public void setEliminarForm(FormularioBoolean eliminarForm) {
+        this.eliminarForm = eliminarForm;
+    }
+
+    public FormularioBoolean getAgregarCasinos() {
+        return agregarCasinos;
+    }
+
+    public void setAgregarCasinos(FormularioBoolean agregarCasinos) {
+        this.agregarCasinos = agregarCasinos;
+    }
+
+    public FormularioBoolean getActualizarCasinos() {
+        return actualizarCasinos;
+    }
+
+    public void setActualizarCasinos(FormularioBoolean actualizarCasinos) {
+        this.actualizarCasinos = actualizarCasinos;
+    }
+
+    public FormularioBoolean getEliminarCasinos() {
+        return eliminarCasinos;
+    }
+
+    public void setEliminarCasinos(FormularioBoolean eliminarCasinos) {
+        this.eliminarCasinos = eliminarCasinos;
+    }
+
+    public FormularioBoolean getAgregarEventos() {
+        return agregarEventos;
+    }
+
+    public void setAgregarEventos(FormularioBoolean agregarEventos) {
+        this.agregarEventos = agregarEventos;
+    }
+
+    public FormularioBoolean getActualizarEventos() {
+        return actualizarEventos;
+    }
+
+    public void setActualizarEventos(FormularioBoolean actualizarEventos) {
+        this.actualizarEventos = actualizarEventos;
+    }
+
+    public FormularioBoolean getEliminarEventos() {
+        return eliminarEventos;
+    }
+
+    public void setEliminarEventos(FormularioBoolean eliminarEventos) {
+        this.eliminarEventos = eliminarEventos;
+    }
+
+    public FormularioBoolean getAgregarClientes() {
+        return agregarClientes;
+    }
+
+    public void setAgregarClientes(FormularioBoolean agregarClientes) {
+        this.agregarClientes = agregarClientes;
+    }
+
+    public FormularioBoolean getActualizarClientes() {
+        return actualizarClientes;
+    }
+
+    public void setActualizarClientes(FormularioBoolean actualizarClientes) {
+        this.actualizarClientes = actualizarClientes;
+    }
+
+    public FormularioBoolean getEliminarClientes() {
+        return eliminarClientes;
+    }
+
+    public void setEliminarClientes(FormularioBoolean eliminarClientes) {
+        this.eliminarClientes = eliminarClientes;
+    }
+
+    public FormularioBoolean getAgregarAtributos() {
+        return agregarAtributos;
+    }
+
+    public void setAgregarAtributos(FormularioBoolean agregarAtributos) {
+        this.agregarAtributos = agregarAtributos;
+    }
+
+    public FormularioBoolean getActualizarAtributos() {
+        return actualizarAtributos;
+    }
+
+    public void setActualizarAtributos(FormularioBoolean actualizarAtributos) {
+        this.actualizarAtributos = actualizarAtributos;
+    }
+
+    public FormularioBoolean getEliminarAtributos() {
+        return eliminarAtributos;
+    }
+
+    public void setEliminarAtributos(FormularioBoolean eliminarAtributos) {
+        this.eliminarAtributos = eliminarAtributos;
+    }
+
+    public FormularioBoolean getAgregarTipo() {
+        return agregarTipo;
+    }
+
+    public void setAgregarTipo(FormularioBoolean agregarTipo) {
+        this.agregarTipo = agregarTipo;
+    }
+
+    public FormularioBoolean getActualizarTipo() {
+        return actualizarTipo;
+    }
+
+    public void setActualizarTipo(FormularioBoolean actualizarTipo) {
+        this.actualizarTipo = actualizarTipo;
+    }
+
+    public FormularioBoolean getEliminarTipo() {
+        return eliminarTipo;
+    }
+
+    public void setEliminarTipo(FormularioBoolean eliminarTipo) {
+        this.eliminarTipo = eliminarTipo;
+    }
+
+    public FormularioBoolean getAgregarCat() {
+        return agregarCat;
+    }
+
+    public void setAgregarCat(FormularioBoolean agregarCat) {
+        this.agregarCat = agregarCat;
+    }
+
+    public FormularioBoolean getActualizarCat() {
+        return actualizarCat;
+    }
+
+    public void setActualizarCat(FormularioBoolean actualizarCat) {
+        this.actualizarCat = actualizarCat;
+    }
+
+    public FormularioBoolean getEliminarCat() {
+        return eliminarCat;
+    }
+
+    public void setEliminarCat(FormularioBoolean eliminarCat) {
+        this.eliminarCat = eliminarCat;
+    }
+
+    public FormularioBoolean getAgregarAcciones() {
+        return agregarAcciones;
+    }
+
+    public void setAgregarAcciones(FormularioBoolean agregarAcciones) {
+        this.agregarAcciones = agregarAcciones;
+    }
+
+    public FormularioBoolean getActualizarAcciones() {
+        return actualizarAcciones;
+    }
+
+    public void setActualizarAcciones(FormularioBoolean actualizarAcciones) {
+        this.actualizarAcciones = actualizarAcciones;
+    }
+
+    public FormularioBoolean getEliminarAcciones() {
+        return eliminarAcciones;
+    }
+
+    public void setEliminarAcciones(FormularioBoolean eliminarAcciones) {
+        this.eliminarAcciones = eliminarAcciones;
+    }
+
+    public FormularioBoolean getAgregarTipoevento() {
+        return agregarTipoevento;
+    }
+
+    public void setAgregarTipoevento(FormularioBoolean agregarTipoevento) {
+        this.agregarTipoevento = agregarTipoevento;
+    }
+
+    public FormularioBoolean getActualizarTipoevento() {
+        return actualizarTipoevento;
+    }
+
+    public void setActualizarTipoevento(FormularioBoolean actualizarTipoevento) {
+        this.actualizarTipoevento = actualizarTipoevento;
+    }
+
+    public FormularioBoolean getEliminarTipoevento() {
+        return eliminarTipoevento;
+    }
+
+    public void setEliminarTipoevento(FormularioBoolean eliminarTipoevento) {
+        this.eliminarTipoevento = eliminarTipoevento;
+    }
+
+    public FormularioBoolean getAgregartipoDocumento() {
+        return agregartipoDocumento;
+    }
+
+    public void setAgregartipoDocumento(FormularioBoolean agregartipoDocumento) {
+        this.agregartipoDocumento = agregartipoDocumento;
+    }
+
+    public FormularioBoolean getActualizartipoDocumento() {
+        return actualizartipoDocumento;
+    }
+
+    public void setActualizartipoDocumento(FormularioBoolean actualizartipoDocumento) {
+        this.actualizartipoDocumento = actualizartipoDocumento;
+    }
+
+    public FormularioBoolean getEliminartipoDocumento() {
+        return eliminartipoDocumento;
+    }
+
+    public void setEliminartipoDocumento(FormularioBoolean eliminartipoDocumento) {
+        this.eliminartipoDocumento = eliminartipoDocumento;
+    }
+
+    public FormularioBoolean getAgregarCargo() {
         return agregarCargo;
     }
 
-    public void setAgregarCargo(boolean agregarCargo) {
+    public void setAgregarCargo(FormularioBoolean agregarCargo) {
         this.agregarCargo = agregarCargo;
     }
 
-    public boolean isActualizarCargo() {
+    public FormularioBoolean getActualizarCargo() {
         return actualizarCargo;
     }
 
-    public void setActualizarCargo(boolean actualizarCargo) {
+    public void setActualizarCargo(FormularioBoolean actualizarCargo) {
         this.actualizarCargo = actualizarCargo;
     }
 
-    public boolean isEliminarCargo() {
+    public FormularioBoolean getEliminarCargo() {
         return eliminarCargo;
     }
 
-    public void setEliminarCargo(boolean eliminarCargo) {
+    public void setEliminarCargo(FormularioBoolean eliminarCargo) {
         this.eliminarCargo = eliminarCargo;
     }
-    
+
+    public VistaBoolean getVistaDenominacion() {
+        return vistaDenominacion;
+    }
+
+    public void setVistaDenominacion(VistaBoolean vistaDenominacion) {
+        this.vistaDenominacion = vistaDenominacion;
+    }
+
+    public FormularioBoolean getAgregarDenominacion() {
+        return agregarDenominacion;
+    }
+
+    public void setAgregarDenominacion(FormularioBoolean agregarDenominacion) {
+        this.agregarDenominacion = agregarDenominacion;
+    }
+
+    public FormularioBoolean getActualizarDenominacion() {
+        return actualizarDenominacion;
+    }
+
+    public void setActualizarDenominacion(FormularioBoolean actualizarDenominacion) {
+        this.actualizarDenominacion = actualizarDenominacion;
+    }
+
+    public FormularioBoolean getEliminarDenominacion() {
+        return eliminarDenominacion;
+    }
+
+    public void setEliminarDenominacion(FormularioBoolean eliminarDenominacion) {
+        this.eliminarDenominacion = eliminarDenominacion;
+    }
+
+    public VistaBoolean getVistaTipoBono() {
+        return vistaTipoBono;
+    }
+
+    public void setVistaTipoBono(VistaBoolean vistaTipoBono) {
+        this.vistaTipoBono = vistaTipoBono;
+    }
+
+    public FormularioBoolean getAgregarTipoBono() {
+        return agregarTipoBono;
+    }
+
+    public void setAgregarTipoBono(FormularioBoolean agregarTipoBono) {
+        this.agregarTipoBono = agregarTipoBono;
+    }
+
+    public FormularioBoolean getActualizarTipoBono() {
+        return actualizarTipoBono;
+    }
+
+    public void setActualizarTipoBono(FormularioBoolean actualizarTipoBono) {
+        this.actualizarTipoBono = actualizarTipoBono;
+    }
+
+    public FormularioBoolean getEliminarTipoBono() {
+        return eliminarTipoBono;
+    }
+
+    public void setEliminarTipoBono(FormularioBoolean eliminarTipoBono) {
+        this.eliminarTipoBono = eliminarTipoBono;
+    }
+
 }
