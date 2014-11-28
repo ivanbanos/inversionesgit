@@ -122,5 +122,5 @@ public class Casinosdetalles implements Serializable {
     public String toString() {
         return "com.invbf.sistemagestionbonos.entity.Casinosdetalles[ idCasino=" + idCasino + " ]";
     }
-    
+
 }

@@ -105,6 +105,7 @@ public class PerfilActBean {
     private FormularioBoolean actualizarTipoBono;
     private FormularioBoolean eliminarTipoBono;
     private VistaBoolean logs;
+    private VistaBoolean generarSolictudLotesBons;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -704,6 +705,13 @@ public class PerfilActBean {
                     logs = new VistaBoolean(v, false);
                 }
             }
+            if (v.getNombreVista().equals("GenerarSolicitudLotesBonos")) {
+                if (elemento.getVistasList().contains(v)) {
+                    generarSolictudLotesBons = new VistaBoolean(v, true);
+                } else {
+                    generarSolictudLotesBons = new VistaBoolean(v, false);
+                }
+            }
             if (v.getNombreVista().equals("cargo")) {
                 if (elemento.getVistasList().contains(v)) {
                     vistaCargo = new VistaBoolean(v, true);
@@ -829,6 +837,9 @@ public class PerfilActBean {
         }
         if (logs.isSelected()) {
             elemento.getVistasList().add(logs.getVista());
+        }
+        if (generarSolictudLotesBons.isSelected()) {
+            elemento.getVistasList().add(generarSolictudLotesBons.getVista());
         }
 
         elemento.getFormulariosList().clear();
@@ -1168,6 +1179,14 @@ public class PerfilActBean {
 
     public void setLogs(VistaBoolean logs) {
         this.logs = logs;
+    }
+
+    public VistaBoolean getGenerarSolictudLotesBons() {
+        return generarSolictudLotesBons;
+    }
+
+    public void setGenerarSolictudLotesBons(VistaBoolean generarSolictudLotesBons) {
+        this.generarSolictudLotesBons = generarSolictudLotesBons;
     }
 
     public FormularioBoolean getAgregarUsuario() {

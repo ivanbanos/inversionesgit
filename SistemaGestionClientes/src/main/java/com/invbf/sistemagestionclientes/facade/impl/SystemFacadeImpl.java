@@ -32,7 +32,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -94,16 +101,27 @@ public class SystemFacadeImpl implements SystemFacade {
     @Override
     public void registrarlog(String accion, String tabla, String mensaje, Usuario usuairo) {
 
-        Log log = new Log();
-        if (accion != null && tabla != null) {
-            Formulario f = FormularioDao.findByAccionAndTabla(accion, tabla);
-            if (f != null) {
-                log.setIdFormulario(f);
+        try {
+            Log log = new Log();
+            if (accion != null && tabla != null) {
+                Formulario f = FormularioDao.findByAccionAndTabla(accion, tabla);
+                if (f != null) {
+                    log.setIdFormulario(f);
+                }
             }
+            log.setIdUsuario(usuairo);
+            log.setMensaje(mensaje);
+            DateFormat df = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+            DateFormat df2 = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+            TimeZone timeZone = TimeZone.getTimeZone("GMT-5");
+            df.setTimeZone(timeZone);
+            Calendar nowDate = Calendar.getInstance();
+            nowDate.setTime(df2.parse(df.format(nowDate.getTime())));
+            log.setFecha(nowDate.getTime());
+            LogDao.create(log);
+        } catch (ParseException ex) {
+            Logger.getLogger(SystemFacadeImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        log.setIdUsuario(usuairo);
-        log.setMensaje(mensaje);
-        LogDao.create(log);
     }
 
     @Override
