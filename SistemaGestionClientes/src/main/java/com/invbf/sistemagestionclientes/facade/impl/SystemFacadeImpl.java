@@ -4,11 +4,13 @@
  */
 package com.invbf.sistemagestionclientes.facade.impl;
 
+import com.invbf.sistemagestionclientes.dao.AccesoDao;
 import com.invbf.sistemagestionclientes.dao.AccionDao;
 import com.invbf.sistemagestionclientes.dao.ConfiguracionDao;
 import com.invbf.sistemagestionclientes.dao.FormularioDao;
 import com.invbf.sistemagestionclientes.dao.LogDao;
 import com.invbf.sistemagestionclientes.dao.UsuarioDao;
+import com.invbf.sistemagestionclientes.dao.UsuarioDetalleDao;
 import com.invbf.sistemagestionclientes.entity.Accion;
 import com.invbf.sistemagestionclientes.entity.Configuracion;
 import com.invbf.sistemagestionclientes.entity.Formulario;
@@ -16,10 +18,14 @@ import com.invbf.sistemagestionclientes.entity.Listasclientestareas;
 import com.invbf.sistemagestionclientes.entity.Log;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
+import com.invbf.sistemagestionclientes.entitySGB.Accesos;
+import com.invbf.sistemagestionclientes.entitySGB.Usuariosdetalles;
 import com.invbf.sistemagestionclientes.exceptions.ClavesNoConcuerdanException;
 import com.invbf.sistemagestionclientes.exceptions.NoCambioContrasenaException;
+import com.invbf.sistemagestionclientes.exceptions.UsuarioInactivoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoConectadoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoExisteException;
+import com.invbf.sistemagestionclientes.exceptions.UsuarioSinAccesoalSistemaException;
 import com.invbf.sistemagestionclientes.facade.SystemFacade;
 import com.invbf.sistemagestionclientes.util.EmailSender;
 import com.invbf.sistemagestionclientes.util.EncryptUtil;
@@ -49,11 +55,22 @@ import javax.imageio.ImageIO;
 public class SystemFacadeImpl implements SystemFacade {
 
     @Override
-    public Usuario iniciarSession(Usuario usuario) throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException {
+    public Usuario iniciarSession(Usuario usuario) throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException, UsuarioInactivoException, UsuarioSinAccesoalSistemaException {
         try {
             Usuario usuarios = UsuarioDao.findByNombreUsuario(usuario.getNombreUsuario());
             if (usuarios != null) {
                 Usuario usuarioConectado = usuarios;
+                if (usuarioConectado.getEstado()==null||usuarioConectado.getEstado().equals("INACTIVO")) {
+                    throw new UsuarioInactivoException();
+                }
+                Usuariosdetalles du = UsuarioDetalleDao.find(usuarioConectado.getIdUsuario());
+                if(du==null){
+                    UsuarioDetalleDao.create(du);
+                }
+                Accesos a = AccesoDao.findByNombreAcceso("SGC");
+                if(du.getAccesosList()==null||du.getAccesosList().isEmpty()||!du.getAccesosList().contains(a)){
+                    throw new UsuarioSinAccesoalSistemaException();
+                }
                 if (!EncryptUtil.comparePassword(usuario.getContrasena(), usuarioConectado.getContrasena())) {
                     throw new ClavesNoConcuerdanException();
                 }

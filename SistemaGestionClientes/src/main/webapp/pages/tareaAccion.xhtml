@@ -104,7 +104,7 @@
                             <label class="col-md-4 control-label" >* #{label['fechainicio']}:</label>
                             <div class="col-md-8">
                                 <p:calendar pattern="dd/MMMM/yyyy HH:mm:ss" id="feciniEventos" value="#{tareaAccionBean.elemento.fechaInicio}" locale="es" required="true">
-                                <p:ajax event="dateSelect" update=":#{p:component('fecfinEventos')}" />
+                                    <p:ajax event="dateSelect" update=":#{p:component('fecfinEventos')}" />
                                 </p:calendar>
                             </div>
                         </div>
@@ -208,10 +208,10 @@
                     </c:if>
                 </div>
                 <div class="panel-footer text-right"> 
-                    
+
                     <p:commandButton id="btnconfirm" value="#{label['Confirmar']}" actionListener="#{tareaAccionBean.guardar()}" style="margin:0" />
                     <p:commandButton id="btnclose" value="#{label['Volver']}" actionListener="#{tareaAccionBean.goBack()}" style="margin:0" />
-                    
+
                     <c:if test="#{tareaAccionBean.elemento.tipo.nombre eq 'EMAIL'}">
                         <p:commandButton id="btncorreo" oncomplete="PF('email').show();" 
                                          value="#{label['EnviarCorreo']}" icon="ui-icon-plusthick" title="#{label['EnviarCorreo']}" /> 
@@ -238,8 +238,8 @@
                                 <!-- Username -->
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                                <h:selectBooleanCheckbox id="envioimagen" value="#{tareaAccionBean.enviarcorreo}" />
-                                                <label>#{label['enviarimagen']}</label>
+                                        <h:selectBooleanCheckbox id="envioimagen" value="#{tareaAccionBean.enviarcorreo}" />
+                                        <label>#{label['enviarimagen']}</label>
                                     </div>
                                 </div>
                             </div>

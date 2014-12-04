@@ -24,7 +24,7 @@ function toggle(source) {
             inputchechbox.prop('checked', false);
 
         }
-        
+
     }
 }
 function deselecttodo(source) {
@@ -33,5 +33,5 @@ function deselecttodo(source) {
     var litodo = $(lielements[0]);
     var inputchechboxtodo = $(litodo.children()[0]);
     inputchechboxtodo.prop('checked', false);
-    
+
 }

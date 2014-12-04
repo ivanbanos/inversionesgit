@@ -12,8 +12,10 @@ import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entity.Vista;
 import com.invbf.sistemagestionclientes.exceptions.ClavesNoConcuerdanException;
+import com.invbf.sistemagestionclientes.exceptions.UsuarioInactivoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoConectadoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoExisteException;
+import com.invbf.sistemagestionclientes.exceptions.UsuarioSinAccesoalSistemaException;
 import com.invbf.sistemagestionclientes.facade.AdminFacade;
 import com.invbf.sistemagestionclientes.facade.HostessFacade;
 import com.invbf.sistemagestionclientes.facade.ManagerUserFacade;
@@ -105,6 +107,7 @@ public class SessionBean implements Serializable, Subject {
     public String Conectar() {
         try {
             usuario = sessionFacade.iniciarSession(usuario);
+            
             sessionFacade.registrarlog(null, null, "Inicio de sesion del usuario "+usuario.getNombreUsuario(), usuario);
             active = "inicio";
             return "/pages/index.xhtml";
@@ -116,6 +119,12 @@ public class SessionBean implements Serializable, Subject {
             usuario = new Usuario();
         } catch (UsuarioNoConectadoException ex) {
             FacesUtil.addErrorMessage("Usuario no conectado", ex.getMessage());
+            usuario = new Usuario();
+        } catch (UsuarioInactivoException ex) {
+            FacesUtil.addErrorMessage("Usuario inactivo", ex.getMessage());
+            usuario = new Usuario();
+        } catch (UsuarioSinAccesoalSistemaException ex) {
+            FacesUtil.addErrorMessage("Usuario sin acceso", ex.getMessage());
             usuario = new Usuario();
         }
         return "";

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
-	debug="true">
+                     debug="true">
 
     <appender name="console-out"
-		class="org.apache.log4j.ConsoleAppender">
+              class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
-				value="%d{yyyy/MMM/dd HH:mm:ss.SSS} [%t] %-5p %c{1} - %m%n" />
+                   value="%d{yyyy/MMM/dd HH:mm:ss.SSS} [%t] %-5p %c{1} - %m%n" />
         </layout>
     </appender>
 
     <appender name="file-out"
-		class="org.apache.log4j.RollingFileAppender">
+              class="org.apache.log4j.RollingFileAppender">
         <param name="MaxBackupIndex" value="10" />
         <param name="MaxFileSize" value="4096KB" />
         <param name="File" value="C:/logs/certificados_digitales.log" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
-				value="%d{yyyy/MMM/dd HH:mm:ss.SSS} - %5p - %c{1}:%L - %m%n" />
+                   value="%d{yyyy/MMM/dd HH:mm:ss.SSS} - %5p - %c{1}:%L - %m%n" />
         </layout>
     </appender>
 

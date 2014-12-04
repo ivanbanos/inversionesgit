@@ -4,6 +4,7 @@
  */
 package com.invbf.sistemagestionclientes.facade.impl;
 
+import com.invbf.sistemagestionclientes.dao.AccesoDao;
 import com.invbf.sistemagestionclientes.dao.CargoDao;
 import com.invbf.sistemagestionclientes.dao.FormularioDao;
 import com.invbf.sistemagestionclientes.dao.PerfilDao;
@@ -16,6 +17,7 @@ import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entity.Vista;
+import com.invbf.sistemagestionclientes.entitySGB.Accesos;
 import com.invbf.sistemagestionclientes.entitySGB.Cargos;
 import com.invbf.sistemagestionclientes.entitySGB.Usuariosdetalles;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
@@ -63,9 +65,14 @@ public class AdminFacadeImpl implements AdminFacade {
             UsuarioDao.create(elemento);
             return elemento;
         } else {
-            try {
-                elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
-            } catch (NoSuchAlgorithmException ex) {
+            if (elemento.getContrasena() == null||elemento.getContrasena().equals("")) {
+                Usuario u = UsuarioDao.find(elemento.getIdUsuario());
+                elemento.setContrasena(u.getContrasena());
+            } else {
+                try {
+                    elemento.setContrasena(EncryptUtil.encryptPassword(elemento.getContrasena()));
+                } catch (NoSuchAlgorithmException ex) {
+                }
             }
             UsuarioDao.edit(elemento);
             return elemento;
@@ -222,6 +229,27 @@ public class AdminFacadeImpl implements AdminFacade {
             UsuarioDetalleDao.edit(detalleElemento);
             return detalleElemento;
         }
+    }
+
+    @Override
+    public List<Accesos> findAllAccesos() {
+        return AccesoDao.findAll();
+    }
+
+    @Override
+    public boolean guardarAccesos(Accesos elemento) {
+        if (elemento.getId() == null) {
+            AccesoDao.create(elemento);
+            return false;
+        } else {
+            AccesoDao.edit(elemento);
+            return true;
+        }
+    }
+
+    @Override
+    public void deleteAccesos(Accesos elemento) {
+        AccesoDao.remove(elemento);
     }
 
 }

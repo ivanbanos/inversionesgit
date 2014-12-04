@@ -6,12 +6,15 @@ package com.invbf.sistemagestionclientes.controladores;
 
 import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Usuario;
+import com.invbf.sistemagestionclientes.entitySGB.Accesos;
 import com.invbf.sistemagestionclientes.entitySGB.Cargos;
 import com.invbf.sistemagestionclientes.entitySGB.Usuariosdetalles;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
 import com.invbf.sistemagestionclientes.facade.impl.AdminFacadeImpl;
 import com.invbf.sistemagestionclientes.observer.Observer;
+import com.invbf.sistemagestionclientes.util.AccesoBoolean;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -32,6 +35,7 @@ public class CrudUsuariosBean implements Observer {
     private Usuariosdetalles detalleElemento;
     private List<Perfil> listaperfiles;
     private List<Cargos> cargos;
+    private List<AccesoBoolean> accesos;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
     private String contrasena;
@@ -65,6 +69,12 @@ public class CrudUsuariosBean implements Observer {
         lista = sessionBean.adminFacade.findAllUsuarios();
         listaperfiles = sessionBean.adminFacade.findAllPerfiles();
         cargos = sessionBean.adminFacade.findAllCargos();
+        List<Accesos> listaAccesos = sessionBean.adminFacade.findAllAccesos();
+        accesos = new ArrayList<AccesoBoolean>(2);
+        for (Accesos a : listaAccesos) {
+
+            accesos.add(new AccesoBoolean(a, false));
+        }
         sessionBean.registerObserver(this);
     }
 
@@ -86,17 +96,29 @@ public class CrudUsuariosBean implements Observer {
     }
 
     public void setElemento(Usuario elemento) {
+
+        this.elemento = elemento;
         if (elemento.getIdUsuario() != null) {
+            System.out.println("si entra");
             detalleElemento = sessionBean.adminFacade.getDetalleUsuariosById(elemento.getIdUsuario());
             if (detalleElemento == null) {
                 detalleElemento = new Usuariosdetalles(elemento.getIdUsuario());
                 detalleElemento = sessionBean.adminFacade.guardarDetalleUsuarios(detalleElemento);
             }
-            if(detalleElemento.getIdcargo()==null){
+            if (detalleElemento.getIdcargo() == null) {
                 detalleElemento.setIdcargo(new Cargos());
             }
+            if (detalleElemento.getAccesosList() == null) {
+                detalleElemento.setAccesosList(new ArrayList<Accesos>());
+            }
+            for (AccesoBoolean a : accesos) {
+                if (detalleElemento.getAccesosList().contains(a.getAcceso())) {
+                    a.setSelected(true);
+                }
+            }
+
+            System.out.println("y no pasa nada");
         }
-        this.elemento = elemento;
     }
 
     public List<Perfil> getListaperfiles() {
@@ -118,17 +140,38 @@ public class CrudUsuariosBean implements Observer {
     }
 
     public void guardar() {
-        if (contrasena.equals(elemento.getContrasena())) {
+
+        System.out.println("primero compara");
+        if (elemento.getContrasena() == null || contrasena.equals(elemento.getContrasena())) {
             try {
+                System.out.println("empezando");
                 elemento = sessionBean.adminFacade.guardarUsuarios(elemento);
+
+                System.out.println("ahora el detalle");
                 detalleElemento.setIdUsuario(elemento.getIdUsuario());
+
+                System.out.println("limmpio la lsiat de accesos");
+                detalleElemento.getAccesosList().clear();
+
+                System.out.println("empiezo a llenarla");
+                for (AccesoBoolean a : accesos) {
+                    if (a.getSelected()) {
+                        detalleElemento.getAccesosList().add(a.getAcceso());
+                    }
+                }
+
+                System.out.println("guardo el detallo");
                 detalleElemento = sessionBean.adminFacade.guardarDetalleUsuarios(detalleElemento);
+
+                System.out.println("llamo a los usuarios");
                 lista = sessionBean.adminFacade.findAllUsuarios();
                 FacesUtil.addInfoMessage("Usuario guardado", elemento.getNombreUsuario());
 
                 setNuevoUsuario();
             } catch (NombreUsuarioExistenteException ex) {
                 FacesUtil.addErrorMessage("Usuario no creado", "Nombre de usuario existente");
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
         } else {
             FacesUtil.addErrorMessage("Usuario no creado", "Las contraseñas deben coincidir");
@@ -145,6 +188,7 @@ public class CrudUsuariosBean implements Observer {
         elemento.setIdPerfil(new Perfil());
         detalleElemento = new Usuariosdetalles();
         detalleElemento.setIdcargo(new Cargos());
+        detalleElemento.setAccesosList(new ArrayList<Accesos>());
     }
 
     public String getContrasena() {
@@ -169,6 +213,14 @@ public class CrudUsuariosBean implements Observer {
 
     public void setCargos(List<Cargos> cargos) {
         this.cargos = cargos;
+    }
+
+    public List<AccesoBoolean> getAccesos() {
+        return accesos;
+    }
+
+    public void setAccesos(List<AccesoBoolean> accesos) {
+        this.accesos = accesos;
     }
 
 }

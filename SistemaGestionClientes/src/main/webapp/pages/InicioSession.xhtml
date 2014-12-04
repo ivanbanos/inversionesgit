@@ -12,11 +12,13 @@
             <h:outputStylesheet library="css" name="bootstrap.min.css" />
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <f:loadBundle var="label" basename="labels" />
+
+            <h:outputScript library="js" name="GetMac.js"/>
+            <h:outputScript library="js" name="deployJava.js"/>
             <title>#{label['title.app']}</title>
         </h:head>
 
         <h:body>
-
             <nav class="navbar navbar-primary navbar-static-top navbar-background" role="navigation">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->

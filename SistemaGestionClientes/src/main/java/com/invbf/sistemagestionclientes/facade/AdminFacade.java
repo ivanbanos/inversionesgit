@@ -9,6 +9,7 @@ import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entity.Vista;
+import com.invbf.sistemagestionclientes.entitySGB.Accesos;
 import com.invbf.sistemagestionclientes.entitySGB.Cargos;
 import com.invbf.sistemagestionclientes.entitySGB.Usuariosdetalles;
 import com.invbf.sistemagestionclientes.exceptions.NombreUsuarioExistenteException;
@@ -68,5 +69,11 @@ public interface AdminFacade {
     public void deleteDetalleUsuarios(Usuariosdetalles detalleElemento);
 
     public Usuariosdetalles guardarDetalleUsuarios(Usuariosdetalles detalleElemento);
+
+    public List<Accesos> findAllAccesos();
+
+    public boolean guardarAccesos(Accesos elemento);
+
+    public void deleteAccesos(Accesos elemento);
     
 }

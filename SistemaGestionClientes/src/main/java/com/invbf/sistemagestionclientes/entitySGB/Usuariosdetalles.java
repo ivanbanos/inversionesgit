@@ -6,11 +6,14 @@
 package com.invbf.sistemagestionclientes.entitySGB;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -18,6 +21,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,6 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuariosdetalles.findByIdUsuario", query = "SELECT u FROM Usuariosdetalles u WHERE u.idUsuario = :idUsuario"),
     @NamedQuery(name = "Usuariosdetalles.findByCorreo", query = "SELECT u FROM Usuariosdetalles u WHERE u.correo = :correo")})
 public class Usuariosdetalles implements Serializable {
+    @JoinTable(name = "UsuariosDetalles_has_Accesos", joinColumns = {
+        @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")}, inverseJoinColumns = {
+        @JoinColumn(name = "Accesos_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Accesos> accesosList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -98,6 +107,15 @@ public class Usuariosdetalles implements Serializable {
     @Override
     public String toString() {
         return "com.invbf.sistemagestionbonos.entity.Usuariosdetalles[ idUsuario=" + idUsuario + " ]";
+    }
+
+    @XmlTransient
+    public List<Accesos> getAccesosList() {
+        return accesosList;
+    }
+
+    public void setAccesosList(List<Accesos> accesosList) {
+        this.accesosList = accesosList;
     }
     
 }

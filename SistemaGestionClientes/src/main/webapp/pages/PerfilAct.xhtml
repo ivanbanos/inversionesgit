@@ -27,7 +27,7 @@
                     <div class="container-fluid">
                         <div class="row">
 
-                            <div class="col-lg-4 col-lg-offset-4 col-sm-12 col-md-12 main">
+                            <div class="col-lg-12 col-sm-12 col-md-12 main">
                                 <p:panelGrid id="editForm" > 
 
                                     <f:facet name="header">
@@ -70,6 +70,15 @@
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCargo.selected}"/></p:column>
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCargo.selected}"/></p:column>
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCargo.selected}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
+                                        <p:column><label >#{label['acceso']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAcceso.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAcceso.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAcceso.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAcceso.selected}"/></p:column>
 
                                     </p:row>
                                     <p:row >
@@ -182,6 +191,24 @@
                                     </p:row>
                                     <p:row >
 
+                                        <p:column><label >#{label['SolicitudesLotesBonos']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaSolicitudesLotes.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarSolicitudesLotes.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarSolicitudesLotes.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarSolicitudesLotes.selected}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
+                                        <p:column><label >#{label['lotesbonos']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaLoteBono.selected}"/></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarLoteBono.selected}"/></p:column>
+                                        <p:column></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarLoteBono.selected}"/></p:column>
+
+                                    </p:row>
+                                    <p:row >
+
                                         <p:column><label >#{label['eventos-marketing']}</label></p:column>
                                         <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvMarketing.selected}"/></p:column>
 
@@ -224,8 +251,8 @@
                                     </p:row>
                                     <p:row >
 
-                                        <p:column><label >#{label['GenerarSolicitudLotesBonos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.generarSolictudLotesBons.selected}"/></p:column>
+                                        <p:column><label >#{label['AceptarSolicitudLotesBonos']}</label></p:column>
+                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.aceptarSolictudLotesBons.selected}"/></p:column>
 
                                     </p:row>
 

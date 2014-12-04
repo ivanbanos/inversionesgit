@@ -10,8 +10,10 @@ import com.invbf.sistemagestionclientes.entity.Tarea;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.exceptions.ClavesNoConcuerdanException;
 import com.invbf.sistemagestionclientes.exceptions.NoCambioContrasenaException;
+import com.invbf.sistemagestionclientes.exceptions.UsuarioInactivoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoConectadoException;
 import com.invbf.sistemagestionclientes.exceptions.UsuarioNoExisteException;
+import com.invbf.sistemagestionclientes.exceptions.UsuarioSinAccesoalSistemaException;
 import com.invbf.sistemagestionclientes.util.InfoCorreoCliente;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -23,7 +25,7 @@ import java.util.List;
  */
 public interface SystemFacade {
 
-    public Usuario iniciarSession(Usuario usuario)throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException ;
+    public Usuario iniciarSession(Usuario usuario)throws ClavesNoConcuerdanException, UsuarioNoExisteException, UsuarioNoConectadoException, UsuarioInactivoException,UsuarioSinAccesoalSistemaException ;
 
     public Usuario actualizarUsuario(Usuario usuario);
 

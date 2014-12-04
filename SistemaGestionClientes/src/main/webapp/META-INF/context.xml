@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/SistemaGestionClientes">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/gestionBono" password="Luff1.kun" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/easl4284_GestionBonos?zeroDateTimeBehavior=convertToNull" username="root"/>
+    
+    <ResourceLink name="jdbc/sgcDS"
+             global="jdbc/sgcDS"
+              type="javax.sql.DataSource" />
+    <ResourceLink name="jdbc/sgbDS"
+             global="jdbc/sgbDS"
+              type="javax.sql.DataSource" />
 </Context>

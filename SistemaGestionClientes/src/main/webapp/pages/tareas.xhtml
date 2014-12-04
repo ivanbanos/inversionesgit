@@ -69,7 +69,7 @@
                                         </p:column>
 
                                         <p:column headerText="Acciones" filterBy="#{element.nombre}" filterMatchMode="contains" filterStyle="display:none">
-                                            
+
                                             <p:commandButton id="marketing" icon="ui-icon-pencil" 
                                                              title="#{label['lb_btn.Go']}" action="#{crudTareasBean.goTareaMarketing(element.idTarea)}"
                                                              rendered="#{sessionBean.perfilViewMatch(&quot;ManejadorEventosMarketing&quot;) 
@@ -83,7 +83,7 @@
                                         </p:column>
 
                                         <f:facet name="footer"> 
-                                            
+
                                             <p:commandButton id="addButton" icon="ui-icon-plusthick" value="#{label['lb_btn.agregar']}"
                                                              title="#{label['lb_btn.Go']}" action="#{crudTareasBean.goTareaMarketing(0)}"
                                                              rendered="#{sessionBean.perfilFormMatch(&quot;Tareas&quot;, &quot;crear&quot;)}">
@@ -107,7 +107,7 @@
             </div>
         </h:form>
 
-        
+
         <h:form>
             <p:confirmDialog id="deleteDialogEventos" message="Quiere borrar la tarea #{crudTareasBean.elemento.nombre}?"  
                              header="Borrar" severity="alert" widgetVar="deleteDialogEventos" closable="false">  

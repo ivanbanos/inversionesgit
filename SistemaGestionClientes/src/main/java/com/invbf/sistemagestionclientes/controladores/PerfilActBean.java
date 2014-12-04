@@ -100,12 +100,23 @@ public class PerfilActBean {
     private FormularioBoolean agregarDenominacion;
     private FormularioBoolean actualizarDenominacion;
     private FormularioBoolean eliminarDenominacion;
+    private VistaBoolean vistaAcceso;
+    private FormularioBoolean agregarAcceso;
+    private FormularioBoolean actualizarAcceso;
+    private FormularioBoolean eliminarAcceso;
     private VistaBoolean vistaTipoBono;
     private FormularioBoolean agregarTipoBono;
     private FormularioBoolean actualizarTipoBono;
     private FormularioBoolean eliminarTipoBono;
     private VistaBoolean logs;
-    private VistaBoolean generarSolictudLotesBons;
+    private VistaBoolean aceptarSolictudLotesBons;
+    private VistaBoolean vistaSolicitudesLotes;
+    private FormularioBoolean agregarSolicitudesLotes;
+    private FormularioBoolean actualizarSolicitudesLotes;
+    private FormularioBoolean eliminarSolicitudesLotes;
+    private VistaBoolean vistaLoteBono;
+    private FormularioBoolean agregarLoteBono;
+    private FormularioBoolean eliminarLoteBono;
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -175,7 +186,28 @@ public class PerfilActBean {
         for (Formulario f : formularios) {
 
             if (f.getAccion().equals("crear")) {
-                
+                if (f.getTabla().equals("LoteBono")) {
+                    
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarLoteBono = new FormularioBoolean(f, true);
+                    } else {
+                        agregarLoteBono = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("SolicitudLotes")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarSolicitudesLotes = new FormularioBoolean(f, true);
+                    } else {
+                        agregarSolicitudesLotes = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("acceso")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarAcceso = new FormularioBoolean(f, true);
+                    } else {
+                        agregarAcceso = new FormularioBoolean(f, false);
+                    }
+                }
                 if (f.getTabla().equals("TipoBono")) {
                     if (elemento.getFormulariosList().contains(f)) {
                         agregarTipoBono = new FormularioBoolean(f, true);
@@ -297,6 +329,20 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("actualizar")) {
+                if (f.getTabla().equals("SolicitudLotes")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarSolicitudesLotes = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarSolicitudesLotes = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("acceso")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarAcceso = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarAcceso = new FormularioBoolean(f, false);
+                    }
+                }
                 if (f.getTabla().equals("TipoBono")) {
                     if (elemento.getFormulariosList().contains(f)) {
                         actualizarTipoBono = new FormularioBoolean(f, true);
@@ -419,6 +465,27 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("eliminar")) {
+                if (f.getTabla().equals("SolicitudLotes")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarSolicitudesLotes = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarSolicitudesLotes = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("LoteBono")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarLoteBono = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarLoteBono = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("acceso")) {
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarAcceso = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarAcceso = new FormularioBoolean(f, false);
+                    }
+                }
                 if (f.getTabla().equals("TipoBono")) {
                     if (elemento.getFormulariosList().contains(f)) {
                         eliminarTipoBono = new FormularioBoolean(f, true);
@@ -556,6 +623,13 @@ public class PerfilActBean {
                     vistaDenominacion = new VistaBoolean(v, true);
                 } else {
                     vistaDenominacion = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("acceso")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaAcceso = new VistaBoolean(v, true);
+                } else {
+                    vistaAcceso = new VistaBoolean(v, false);
                 }
             }
             if (v.getNombreVista().equals("Tipotareas")) {
@@ -705,11 +779,25 @@ public class PerfilActBean {
                     logs = new VistaBoolean(v, false);
                 }
             }
-            if (v.getNombreVista().equals("GenerarSolicitudLotesBonos")) {
+            if (v.getNombreVista().equals("AceptarSolicitudLotesBonos")) {
                 if (elemento.getVistasList().contains(v)) {
-                    generarSolictudLotesBons = new VistaBoolean(v, true);
+                    aceptarSolictudLotesBons = new VistaBoolean(v, true);
                 } else {
-                    generarSolictudLotesBons = new VistaBoolean(v, false);
+                    aceptarSolictudLotesBons = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("SolicitudLotes")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaSolicitudesLotes = new VistaBoolean(v, true);
+                } else {
+                    vistaSolicitudesLotes = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("LoteBono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaLoteBono = new VistaBoolean(v, true);
+                } else {
+                    vistaLoteBono = new VistaBoolean(v, false);
                 }
             }
             if (v.getNombreVista().equals("cargo")) {
@@ -764,7 +852,12 @@ public class PerfilActBean {
         } else {
             elemento.getVistasList().add(vistaForm.getVista());
         }
-        if (count < 5) {
+        if (!vistaAcceso.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(vistaAcceso.getVista());
+        }
+        if (count < 6) {
             elemento.getVistasList().add(sessionBean.adminFacade.findVistasByNombre("AtributosSistema"));
         }
         if (vistaEventos.isSelected()) {
@@ -838,11 +931,26 @@ public class PerfilActBean {
         if (logs.isSelected()) {
             elemento.getVistasList().add(logs.getVista());
         }
-        if (generarSolictudLotesBons.isSelected()) {
-            elemento.getVistasList().add(generarSolictudLotesBons.getVista());
+        if (aceptarSolictudLotesBons.isSelected()) {
+            elemento.getVistasList().add(aceptarSolictudLotesBons.getVista());
+        }
+        if (vistaSolicitudesLotes.isSelected()) {
+            elemento.getVistasList().add(vistaSolicitudesLotes.getVista());
+        }
+        if (vistaLoteBono.isSelected()) {
+            elemento.getVistasList().add(vistaLoteBono.getVista());
         }
 
         elemento.getFormulariosList().clear();
+        if (eliminarAcceso.isSelected()) {
+            elemento.getFormulariosList().add(eliminarAcceso.getFormulario());
+        }
+        if (actualizarAcceso.isSelected()) {
+            elemento.getFormulariosList().add(actualizarAcceso.getFormulario());
+        }
+        if (agregarAcceso.isSelected()) {
+            elemento.getFormulariosList().add(agregarAcceso.getFormulario());
+        }
         if (agregarTipoBono.isSelected()) {
             elemento.getFormulariosList().add(agregarTipoBono.getFormulario());
         }
@@ -1001,6 +1109,21 @@ public class PerfilActBean {
         }
         if (eliminarAcciones.isSelected()) {
             elemento.getFormulariosList().add(eliminarAcciones.getFormulario());
+        }
+        if (agregarSolicitudesLotes.isSelected()) {
+            elemento.getFormulariosList().add(agregarSolicitudesLotes.getFormulario());
+        }
+        if (actualizarSolicitudesLotes.isSelected()) {
+            elemento.getFormulariosList().add(actualizarSolicitudesLotes.getFormulario());
+        }
+        if (eliminarSolicitudesLotes.isSelected()) {
+            elemento.getFormulariosList().add(eliminarSolicitudesLotes.getFormulario());
+        }
+        if (agregarLoteBono.isSelected()) {
+            elemento.getFormulariosList().add(agregarLoteBono.getFormulario());
+        }
+        if (eliminarLoteBono.isSelected()) {
+            elemento.getFormulariosList().add(eliminarLoteBono.getFormulario());
         }
 
     }
@@ -1181,12 +1304,44 @@ public class PerfilActBean {
         this.logs = logs;
     }
 
-    public VistaBoolean getGenerarSolictudLotesBons() {
-        return generarSolictudLotesBons;
+    public VistaBoolean getAceptarSolictudLotesBons() {
+        return aceptarSolictudLotesBons;
     }
 
-    public void setGenerarSolictudLotesBons(VistaBoolean generarSolictudLotesBons) {
-        this.generarSolictudLotesBons = generarSolictudLotesBons;
+    public void setAceptarSolictudLotesBons(VistaBoolean aceptarSolictudLotesBons) {
+        this.aceptarSolictudLotesBons = aceptarSolictudLotesBons;
+    }
+
+    public VistaBoolean getVistaSolicitudesLotes() {
+        return vistaSolicitudesLotes;
+    }
+
+    public void setVistaSolicitudesLotes(VistaBoolean vistaSolicitudesLotes) {
+        this.vistaSolicitudesLotes = vistaSolicitudesLotes;
+    }
+
+    public FormularioBoolean getAgregarSolicitudesLotes() {
+        return agregarSolicitudesLotes;
+    }
+
+    public void setAgregarSolicitudesLotes(FormularioBoolean agregarSolicitudesLotes) {
+        this.agregarSolicitudesLotes = agregarSolicitudesLotes;
+    }
+
+    public FormularioBoolean getActualizarSolicitudesLotes() {
+        return actualizarSolicitudesLotes;
+    }
+
+    public void setActualizarSolicitudesLotes(FormularioBoolean actualizarSolicitudesLotes) {
+        this.actualizarSolicitudesLotes = actualizarSolicitudesLotes;
+    }
+
+    public FormularioBoolean getEliminarSolicitudesLotes() {
+        return eliminarSolicitudesLotes;
+    }
+
+    public void setEliminarSolicitudesLotes(FormularioBoolean eliminarSolicitudesLotes) {
+        this.eliminarSolicitudesLotes = eliminarSolicitudesLotes;
     }
 
     public FormularioBoolean getAgregarUsuario() {
@@ -1611,6 +1766,62 @@ public class PerfilActBean {
 
     public void setEliminarTipoBono(FormularioBoolean eliminarTipoBono) {
         this.eliminarTipoBono = eliminarTipoBono;
+    }
+
+    public VistaBoolean getVistaAcceso() {
+        return vistaAcceso;
+    }
+
+    public void setVistaAcceso(VistaBoolean vistaAcceso) {
+        this.vistaAcceso = vistaAcceso;
+    }
+
+    public FormularioBoolean getAgregarAcceso() {
+        return agregarAcceso;
+    }
+
+    public void setAgregarAcceso(FormularioBoolean agregarAcceso) {
+        this.agregarAcceso = agregarAcceso;
+    }
+
+    public FormularioBoolean getActualizarAcceso() {
+        return actualizarAcceso;
+    }
+
+    public void setActualizarAcceso(FormularioBoolean actualizarAcceso) {
+        this.actualizarAcceso = actualizarAcceso;
+    }
+
+    public FormularioBoolean getEliminarAcceso() {
+        return eliminarAcceso;
+    }
+
+    public void setEliminarAcceso(FormularioBoolean eliminarAcceso) {
+        this.eliminarAcceso = eliminarAcceso;
+    }
+
+    public VistaBoolean getVistaLoteBono() {
+        return vistaLoteBono;
+    }
+
+    public void setVistaLoteBono(VistaBoolean vistaLoteBono) {
+        this.vistaLoteBono = vistaLoteBono;
+    }
+
+    public FormularioBoolean getAgregarLoteBono() {
+        return agregarLoteBono;
+    }
+
+    public void setAgregarLoteBono(FormularioBoolean agregarLoteBono) {
+        this.agregarLoteBono = agregarLoteBono;
+    }
+
+    public FormularioBoolean getEliminarLoteBono() {
+        return eliminarLoteBono;
+    }
+
+    public void setEliminarLoteBono(FormularioBoolean eliminarLoteBono) {
+        this.eliminarLoteBono = eliminarLoteBono;
     }
 
 }

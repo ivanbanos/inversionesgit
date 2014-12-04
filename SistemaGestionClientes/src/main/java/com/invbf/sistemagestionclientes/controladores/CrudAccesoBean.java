@@ -5,9 +5,7 @@
  */
 package com.invbf.sistemagestionclientes.controladores;
 
-import com.invbf.sistemagestionclientes.entity.Casino;
-import com.invbf.sistemagestionclientes.entitySGB.Cargos;
-import com.invbf.sistemagestionclientes.facade.impl.MarketingUserFacadeImpl;
+import com.invbf.sistemagestionclientes.entitySGB.Accesos;
 import com.invbf.sistemagestionclientes.util.FacesUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +18,12 @@ import javax.faces.bean.ViewScoped;
  *
  * @author ivan
  */
+
 @ManagedBean
 @ViewScoped
-public class CrudCargosBean {
-    private List<Cargos> lista;
-    private Cargos elemento;
+public class CrudAccesoBean {
+     private List<Accesos> lista;
+    private Accesos elemento;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
 
@@ -35,49 +34,49 @@ public class CrudCargosBean {
     /**
      * Creates a new instance of AtributosSistemaViewBean
      */
-    public CrudCargosBean() {
+    public CrudAccesoBean() {
     }
 
     @PostConstruct
     public void init() {
         sessionBean.checkUsuarioConectado();
         sessionBean.setActive("configuracion");
-        elemento = new Cargos();
-        lista = new ArrayList<Cargos>();
-        lista = sessionBean.adminFacade.findAllCargos();
+        elemento = new Accesos();
+        lista = new ArrayList<Accesos>();
+        lista = sessionBean.adminFacade.findAllAccesos();
     }
 
-    public List<Cargos> getLista() {
+    public List<Accesos> getLista() {
         return lista;
     }
    
-    public void setLista(List<Cargos> lista) {
+    public void setLista(List<Accesos> lista) {
         this.lista = lista;
 }
 
-    public Cargos getElemento() {
+    public Accesos getElemento() {
         return elemento;
     }
 
-    public void setElemento(Cargos elemento) {
+    public void setElemento(Accesos elemento) {
         this.elemento = elemento;
     }
 
     public void delete() {
-        sessionBean.adminFacade.deleteCargos(elemento);
-        lista = sessionBean.adminFacade.findAllCargos();
-        FacesUtil.addInfoMessage("Cargo eliminado", elemento.getNombre());
-        elemento = new Cargos();
+        sessionBean.adminFacade.deleteAccesos(elemento);
+        lista = sessionBean.adminFacade.findAllAccesos();
+        FacesUtil.addInfoMessage("Casino eliminado", elemento.getNombre());
+        elemento = new Accesos();
     }
 
     public void guardar() {
-        boolean opcion = sessionBean.adminFacade.guardarCargos(elemento);
-        lista = sessionBean.adminFacade.findAllCargos();
+        boolean opcion = sessionBean.adminFacade.guardarAccesos(elemento);
+        lista = sessionBean.adminFacade.findAllAccesos();
         if (opcion) {
-            FacesUtil.addInfoMessage("Cargo actualizado", elemento.getNombre());
+            FacesUtil.addInfoMessage("Acceso actualizado", elemento.getNombre());
         } else {
-            FacesUtil.addInfoMessage("Cargo creado", elemento.getNombre());
+            FacesUtil.addInfoMessage("Acceso creado", elemento.getNombre());
         }
-        elemento = new Cargos();
+        elemento = new Accesos();
     }
 }
