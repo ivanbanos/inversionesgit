@@ -4,6 +4,7 @@
  */
 package com.invbf.sistemagestionclientes.controladores;
 
+import com.invbf.sistemagestionclientes.entity.Casino;
 import com.invbf.sistemagestionclientes.entity.Perfil;
 import com.invbf.sistemagestionclientes.entity.Usuario;
 import com.invbf.sistemagestionclientes.entitySGB.Accesos;
@@ -35,6 +36,7 @@ public class CrudUsuariosBean implements Observer {
     private Usuariosdetalles detalleElemento;
     private List<Perfil> listaperfiles;
     private List<Cargos> cargos;
+    private List<Casino> casinos;
     private List<AccesoBoolean> accesos;
     @ManagedProperty("#{sessionBean}")
     private SessionBean sessionBean;
@@ -69,6 +71,7 @@ public class CrudUsuariosBean implements Observer {
         lista = sessionBean.adminFacade.findAllUsuarios();
         listaperfiles = sessionBean.adminFacade.findAllPerfiles();
         cargos = sessionBean.adminFacade.findAllCargos();
+        casinos = sessionBean.marketingUserFacade.findAllCasinos();
         List<Accesos> listaAccesos = sessionBean.adminFacade.findAllAccesos();
         accesos = new ArrayList<AccesoBoolean>(2);
         for (Accesos a : listaAccesos) {
@@ -98,6 +101,9 @@ public class CrudUsuariosBean implements Observer {
     public void setElemento(Usuario elemento) {
 
         this.elemento = elemento;
+        if(this.elemento.getIdCasino()==null){
+            this.elemento.setIdCasino(new Casino());
+        }
         if (elemento.getIdUsuario() != null) {
             System.out.println("si entra");
             detalleElemento = sessionBean.adminFacade.getDetalleUsuariosById(elemento.getIdUsuario());
@@ -186,6 +192,7 @@ public class CrudUsuariosBean implements Observer {
     private void setNuevoUsuario() {
         elemento = new Usuario();
         elemento.setIdPerfil(new Perfil());
+        elemento.setIdCasino(new Casino());
         detalleElemento = new Usuariosdetalles();
         detalleElemento.setIdcargo(new Cargos());
         detalleElemento.setAccesosList(new ArrayList<Accesos>());
@@ -221,6 +228,14 @@ public class CrudUsuariosBean implements Observer {
 
     public void setAccesos(List<AccesoBoolean> accesos) {
         this.accesos = accesos;
+    }
+
+    public List<Casino> getCasinos() {
+        return casinos;
+    }
+
+    public void setCasinos(List<Casino> casinos) {
+        this.casinos = casinos;
     }
 
 }

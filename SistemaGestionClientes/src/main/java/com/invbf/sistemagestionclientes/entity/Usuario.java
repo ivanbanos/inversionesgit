@@ -62,6 +62,9 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "idPerfil", referencedColumnName = "idPerfil")
     @ManyToOne(optional = false)
     private Perfil idPerfil;
+    @JoinColumn(name = "idCasino", referencedColumnName = "idCasino")
+    @ManyToOne
+    private Casino idCasino;
 
     public Usuario() {
     }
@@ -168,4 +171,11 @@ public class Usuario implements Serializable {
         this.listasclientestareasList = listasclientestareasList;
     }
     
+    public Casino getIdCasino() {
+        return idCasino;
+    }
+
+    public void setIdCasino(Casino idCasino) {
+        this.idCasino = idCasino;
+    }
 }

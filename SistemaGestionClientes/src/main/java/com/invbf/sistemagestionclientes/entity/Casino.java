@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Casinos.findByNombre", query = "SELECT c FROM Casino c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Casinos.findByDireccion", query = "SELECT c FROM Casino c WHERE c.direccion = :direccion")})
 public class Casino implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,8 @@ public class Casino implements Serializable {
     private List<Evento> eventosList;
     @OneToMany(mappedBy = "idCasinoPreferencial")
     private List<Cliente> clientesList;
+    @OneToMany(mappedBy = "idCasino")
+    private List<Usuario> usuariosList;
 
     public Casino() {
     }
@@ -127,5 +130,13 @@ public class Casino implements Serializable {
     public String toString() {
         return "com.invbf.adminclientesapi.entity.Casinos[ idCasino=" + idCasino + " ]";
     }
-    
+
+    @XmlTransient
+    public List<Usuario> getUsuariosList() {
+        return usuariosList;
+    }
+
+    public void setUsuariosList(List<Usuario> usuariosList) {
+        this.usuariosList = usuariosList;
+    }
 }

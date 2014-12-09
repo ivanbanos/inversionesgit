@@ -176,6 +176,20 @@
                                                 <div class="control-group">
                                                     <!-- Username -->
                                                     <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['casino']}</label>
+                                                        <div class="col-md-9">
+                                                            <p:selectOneMenu id="casinoUsuarios" value="#{crudUsuariosBean.elemento.idCasino.idCasino}">
+                                                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                                                <f:selectItems value="#{crudUsuariosBean.casinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
+                                                            </p:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
                                                         <label class="col-md-3 control-label" >#{label['accesos']}</label>
                                                         <div class="col-md-9">
                                                             <ul>
@@ -257,6 +271,21 @@
                                                             <p:selectOneMenu id="perfilUsuarios" value="#{crudUsuariosBean.elemento.idPerfil.idPerfil}"  required="true">
                                                                 <f:selectItem itemLabel="Select One" itemValue="" />
                                                                 <f:selectItems value="#{crudUsuariosBean.listaperfiles}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idPerfil}"/>  
+                                                            </p:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="control-group">
+                                                    <!-- Username -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" >#{label['casino']}</label>
+                                                        <div class="col-md-9">
+                                                            <p:selectOneMenu id="casinoUsuarios" value="#{crudUsuariosBean.elemento.idCasino.idCasino}">
+                                                                <f:selectItem itemLabel="Select One" itemValue="" />
+                                                                <f:selectItems value="#{crudUsuariosBean.casinos}" var="var" itemLabel="#{var.nombre}" itemValue="#{var.idCasino}"/>  
                                                             </p:selectOneMenu>
                                                         </div>
                                                     </div>

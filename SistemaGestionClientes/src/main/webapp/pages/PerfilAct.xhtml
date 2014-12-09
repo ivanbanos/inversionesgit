@@ -10,284 +10,318 @@
     <ui:define name="content">
         <h:form>
 
-            <div class="panel panel-primary">
+            <div class="container">
+                <div class="row clearfix">
 
-                <div class="panel-heading">Actualizar Perfil</div>
-                <div class="panel-body">
+                    <div class="panel panel-primary">
 
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" >#{label['nombres']}</label>
-                        <div class="col-md-9">
-                            <h:inputText id="nombres" class="form-control" value="#{perfilActBean.elemento.nombre}" required="true" />
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Actualizar Perfil</h3>
                         </div>
-                    </div>
+                        <div class="panel-body">
 
 
-                    <div class="container-fluid">
-                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" >#{label['nombres']}</label>
+                                <div class="col-md-9">
+                                    <h:inputText id="nombres" class="form-control" value="#{perfilActBean.elemento.nombre}" required="true" />
+                                </div>
+                            </div>
 
-                            <div class="col-lg-12 col-sm-12 col-md-12 main">
-                                <p:panelGrid id="editForm" > 
 
-                                    <f:facet name="header">
-                                        <p:row>
-                                            <p:column colspan="5">Permisos</p:column>
-                                        </p:row>
+                            <div class="container-fluid">
+                                <div class="row">
 
-                                    </f:facet>
-                                    <p:row >
+                                    <div class="col-lg-12 col-sm-12 col-md-12 main">
 
-                                        <p:column></p:column>
-                                        <p:column><label >#{label['ver']}</label></p:column>
-                                        <p:column><label >#{label['agregar']}</label></p:column>
-                                        <p:column><label >#{label['actualizar']}</label></p:column>
-                                        <p:column><label >#{label['borrar']}</label></p:column>
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Permisos de administración</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-bordered table-striped">
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>#{label['ver']}</th>
+                                                        <th>#{label['agregar']}</th>
+                                                        <th>#{label['actualizar']}</th>
+                                                        <th>#{label['borrar']}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['usuarios']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaUsuario.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarUsuario.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarUsuario.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarUsuario.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['perfiles']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaPerfiles.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarPerfiles.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarPerfiles.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarPerfiles.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['cargos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaCargo.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarCargo.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCargo.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCargo.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['acceso']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaAcceso.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarAcceso.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAcceso.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAcceso.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['casinos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaCasinos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarCasinos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCasinos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCasinos.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['atributos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaAtributos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarAtributos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAtributos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAtributos.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['tipojuegos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipo.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipo.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipo.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipo.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['categorias']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaCat.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarCat.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCat.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCat.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['acciones']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaAcciones.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarAcciones.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAcciones.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAcciones.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['tipoEvento']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoevento.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoevento.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoevento.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoevento.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['tipoDocumento']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistatipoDocumento.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregartipoDocumento.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizartipoDocumento.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminartipoDocumento.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['denominaciones']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaDenominacion.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarDenominacion.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarDenominacion.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarDenominacion.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['TipoBono']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoBono.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoBono.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoBono.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoBono.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['propositos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaPropositos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarPropositos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarPropositos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarPropositos.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['areas']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaAreas.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarAreas.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAreas.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAreas.selected}"/></td>
+                                                    </tr>
 
-                                    </p:row>
-                                    <p:row >
+                                                    <tr>
+                                                        <td>#{label['configuraciones']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaConfiguraciones.selected}"/></td>
+                                                    </tr>
 
-                                        <p:column><label >#{label['usuarios']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaUsuario.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarUsuario.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarUsuario.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarUsuario.selected}"/></p:column>
+                                                    <tr>
+                                                        <td>#{label['logs']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.logs.selected}"/></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
 
-                                    </p:row>
-                                    <p:row >
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Permisos de SGC</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-bordered table-striped">
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>#{label['ver']}</th>
+                                                        <th>#{label['agregar']}</th>
+                                                        <th>#{label['actualizar']}</th>
+                                                        <th>#{label['borrar']}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['eventos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaEventos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarEventos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarEventos.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarEventos.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['tareas']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaTareas.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarTareas.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTareas.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTareas.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['clientes']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaClientes.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarClientes.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarClientes.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarClientes.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['eventos-marketing']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvMarketing.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['eventos-operador']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvHostess.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['reportes']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaReportes.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['cupofidelizacion']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.cupofidelizacion.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['notificaciones']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaNotificacion.selected}"/></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
 
-                                        <p:column><label >#{label['perfiles']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaPerfiles.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarPerfiles.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarPerfiles.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarPerfiles.selected}"/></p:column>
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Permisos de SGB</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-bordered table-striped">
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>#{label['ver']}</th>
+                                                        <th>#{label['agregar']}</th>
+                                                        <th>#{label['actualizar']}</th>
+                                                        <th>#{label['borrar']}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['SolicitudesLotesBonos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaSolicitudesLotes.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarSolicitudesLotes.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarSolicitudesLotes.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarSolicitudesLotes.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['lotesbonos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaLoteBono.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarLoteBono.selected}"/></td>
+                                                        <td></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarLoteBono.selected}"/></td>
+                                                    </tr>
 
-                                    </p:row>
-                                    <p:row >
+                                                    <tr>
+                                                        <td>#{label['clientes']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaClientesSGB.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarClientesSGB.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.actualizarClientesSGB.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarClientesSGB.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['peticionescupo']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vistaPeticionesCupo.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.agregarPeticionesCupo.selected}"/></td>
+                                                        <td></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.eliminarPeticionesCupo.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['AceptarSolicitudLotesBonos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.aceptarSolictudLotesBons.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['generarsolicitudbonos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.generarSolicitudBono.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['preaprobarsolicitudbonos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.preAprobarSolicitudBono.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['aprobarsolicitudbonos']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.aprobarSolicitudBono.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['vertodoslosclientes']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.vertodoslosclientes.selected}"/></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
 
-                                        <p:column><label >#{label['cargos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCargo.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCargo.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCargo.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCargo.selected}"/></p:column>
+                                    </div>
 
-                                    </p:row>
-                                    <p:row >
+                                </div>
 
-                                        <p:column><label >#{label['acceso']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAcceso.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAcceso.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAcceso.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAcceso.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['eventos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEventos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarEventos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarEventos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarEventos.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['tareas']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTareas.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTareas.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTareas.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTareas.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['clientes']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaClientes.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarClientes.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarClientes.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarClientes.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['casinos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCasinos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCasinos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCasinos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCasinos.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['atributos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAtributos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAtributos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAtributos.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAtributos.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['tipojuegos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipo.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipo.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipo.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipo.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['categorias']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaCat.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarCat.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarCat.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarCat.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['acciones']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaAcciones.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarAcciones.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarAcciones.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarAcciones.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['tipoEvento']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoevento.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoevento.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoevento.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoevento.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['tipoDocumento']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistatipoDocumento.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregartipoDocumento.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizartipoDocumento.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminartipoDocumento.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['denominaciones']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaDenominacion.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarDenominacion.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarDenominacion.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarDenominacion.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['TipoBono']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaTipoBono.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarTipoBono.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarTipoBono.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarTipoBono.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['SolicitudesLotesBonos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaSolicitudesLotes.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarSolicitudesLotes.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.actualizarSolicitudesLotes.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarSolicitudesLotes.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['lotesbonos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaLoteBono.selected}"/></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.agregarLoteBono.selected}"/></p:column>
-                                        <p:column></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.eliminarLoteBono.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['eventos-marketing']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvMarketing.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['eventos-operador']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaEvHostess.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['reportes']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaReportes.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['configuraciones']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaConfiguraciones.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['cupofidelizacion']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.cupofidelizacion.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['notificaciones']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.vistaNotificacion.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['logs']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.logs.selected}"/></p:column>
-
-                                    </p:row>
-                                    <p:row >
-
-                                        <p:column><label >#{label['AceptarSolicitudLotesBonos']}</label></p:column>
-                                        <p:column><h:selectBooleanCheckbox value="#{perfilActBean.aceptarSolictudLotesBons.selected}"/></p:column>
-
-                                    </p:row>
-
-                                </p:panelGrid> 
                             </div>
 
                         </div>
+                        <div class="panel-footer text-right"> 
+                            <h:commandLink action="#{perfilActBean.guardar()}" 
+                                           class="btn btn-primary">
+                                <i class="icon-search"></i> #{label['guardar']}
+                            </h:commandLink> 
 
+                            <h:link outcome="/pages/AdministradorAtributosSistema.xhtml" class="btn btn-primary">
+                                <i class="icon-search"></i> Volver</h:link>
+
+                        </div>
                     </div>
 
-                </div>
-                <div class="panel-footer text-right"> 
-                    <h:commandLink action="#{perfilActBean.guardar()}" 
-                                   class="btn btn-primary">
-                        <i class="icon-search"></i> #{label['guardar']}
-                    </h:commandLink> 
 
-                    <h:link outcome="/pages/AdministradorAtributosSistema.xhtml" class="btn btn-primary">
-                        <i class="icon-search"></i> Volver</h:link>
+
+
+
+
+
+
+
+
+
 
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
         </h:form>
 
 

@@ -118,6 +118,26 @@ public class PerfilActBean {
     private FormularioBoolean agregarLoteBono;
     private FormularioBoolean eliminarLoteBono;
 
+    private VistaBoolean vistaClientesSGB;
+    private VistaBoolean vertodoslosclientes;
+    private FormularioBoolean agregarClientesSGB;
+    private FormularioBoolean actualizarClientesSGB;
+    private FormularioBoolean eliminarClientesSGB;
+    private VistaBoolean vistaPropositos;
+    private FormularioBoolean agregarPropositos;
+    private FormularioBoolean actualizarPropositos;
+    private FormularioBoolean eliminarPropositos;
+    private VistaBoolean vistaAreas;
+    private FormularioBoolean agregarAreas;
+    private FormularioBoolean actualizarAreas;
+    private FormularioBoolean eliminarAreas;
+    private VistaBoolean vistaPeticionesCupo;
+    private FormularioBoolean agregarPeticionesCupo;
+    private FormularioBoolean eliminarPeticionesCupo;
+    private VistaBoolean generarSolicitudBono;
+    private VistaBoolean preAprobarSolicitudBono;
+    private VistaBoolean aprobarSolicitudBono;
+
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
     }
@@ -186,8 +206,40 @@ public class PerfilActBean {
         for (Formulario f : formularios) {
 
             if (f.getAccion().equals("crear")) {
+                if (f.getTabla().equals("PeticionesCupo")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarPeticionesCupo = new FormularioBoolean(f, true);
+                    } else {
+                        agregarPeticionesCupo = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("Areas")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarAreas = new FormularioBoolean(f, true);
+                    } else {
+                        agregarAreas = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("Propositos")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarPropositos = new FormularioBoolean(f, true);
+                    } else {
+                        agregarPropositos = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("ClientesSGB")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        agregarClientesSGB = new FormularioBoolean(f, true);
+                    } else {
+                        agregarClientesSGB = new FormularioBoolean(f, false);
+                    }
+                }
                 if (f.getTabla().equals("LoteBono")) {
-                    
+
                     if (elemento.getFormulariosList().contains(f)) {
                         agregarLoteBono = new FormularioBoolean(f, true);
                     } else {
@@ -329,6 +381,30 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("actualizar")) {
+                if (f.getTabla().equals("Areas")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarAreas = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarAreas = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("Propositos")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarPropositos = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarPropositos = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("ClientesSGB")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        actualizarClientesSGB = new FormularioBoolean(f, true);
+                    } else {
+                        actualizarClientesSGB = new FormularioBoolean(f, false);
+                    }
+                }
                 if (f.getTabla().equals("SolicitudLotes")) {
                     if (elemento.getFormulariosList().contains(f)) {
                         actualizarSolicitudesLotes = new FormularioBoolean(f, true);
@@ -465,6 +541,38 @@ public class PerfilActBean {
                 }
             }
             if (f.getAccion().equals("eliminar")) {
+                if (f.getTabla().equals("PeticionesCupo")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarPeticionesCupo = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarPeticionesCupo = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("Areas")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarAreas = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarAreas = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("Propositos")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarPropositos = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarPropositos = new FormularioBoolean(f, false);
+                    }
+                }
+                if (f.getTabla().equals("ClientesSGB")) {
+
+                    if (elemento.getFormulariosList().contains(f)) {
+                        eliminarClientesSGB = new FormularioBoolean(f, true);
+                    } else {
+                        eliminarClientesSGB = new FormularioBoolean(f, false);
+                    }
+                }
                 if (f.getTabla().equals("SolicitudLotes")) {
                     if (elemento.getFormulariosList().contains(f)) {
                         eliminarSolicitudesLotes = new FormularioBoolean(f, true);
@@ -610,7 +718,63 @@ public class PerfilActBean {
 
         }
         for (Vista v : vistas) {
-
+            if (v.getNombreVista().equals("verTodosClientes")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vertodoslosclientes = new VistaBoolean(v, true);
+                } else {
+                    vertodoslosclientes = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("GenerarSolicitudBono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    generarSolicitudBono = new VistaBoolean(v, true);
+                } else {
+                    generarSolicitudBono = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("PreAprobarSolicitudBono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    preAprobarSolicitudBono = new VistaBoolean(v, true);
+                } else {
+                    preAprobarSolicitudBono = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("AprobarSolicitudBono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    aprobarSolicitudBono = new VistaBoolean(v, true);
+                } else {
+                    aprobarSolicitudBono = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("ClientesSGB")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaClientesSGB = new VistaBoolean(v, true);
+                } else {
+                    vistaClientesSGB = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("Propositos")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaPropositos = new VistaBoolean(v, true);
+                } else {
+                    vistaPropositos = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("Areas")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaAreas = new VistaBoolean(v, true);
+                } else {
+                    vistaAreas = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("PeticionesCupo")) {
+                if (elemento.getVistasList().contains(v)) {
+                    vistaPeticionesCupo = new VistaBoolean(v, true);
+                } else {
+                    vistaPeticionesCupo = new VistaBoolean(v, false);
+                }
+            }
+            
             if (v.getNombreVista().equals("TipoBono")) {
                 if (elemento.getVistasList().contains(v)) {
                     vistaTipoBono = new VistaBoolean(v, true);
@@ -910,6 +1074,30 @@ public class PerfilActBean {
             elemento.getVistasList().add(sessionBean.adminFacade.findVistasByNombre("AtributosMarketing"));
         }
 
+        if (vertodoslosclientes.isSelected()) {
+            elemento.getVistasList().add(vertodoslosclientes.getVista());
+        }
+        if (generarSolicitudBono.isSelected()) {
+            elemento.getVistasList().add(generarSolicitudBono.getVista());
+        }
+        if (vistaClientesSGB.isSelected()) {
+            elemento.getVistasList().add(vistaClientesSGB.getVista());
+        }
+        if (vistaPropositos.isSelected()) {
+            elemento.getVistasList().add(vistaPropositos.getVista());
+        }
+        if (vistaAreas.isSelected()) {
+            elemento.getVistasList().add(vistaAreas.getVista());
+        }
+        if (preAprobarSolicitudBono.isSelected()) {
+            elemento.getVistasList().add(preAprobarSolicitudBono.getVista());
+        }
+        if (aprobarSolicitudBono.isSelected()) {
+            elemento.getVistasList().add(aprobarSolicitudBono.getVista());
+        }
+        if (vistaPeticionesCupo.isSelected()) {
+            elemento.getVistasList().add(vistaPeticionesCupo.getVista());
+        }
         if (vistaEvMarketing.isSelected()) {
             elemento.getVistasList().add(vistaEvMarketing.getVista());
         }
@@ -942,6 +1130,39 @@ public class PerfilActBean {
         }
 
         elemento.getFormulariosList().clear();
+        if (agregarClientesSGB.isSelected()) {
+            elemento.getFormulariosList().add(agregarClientesSGB.getFormulario());
+        }
+        if (actualizarClientesSGB.isSelected()) {
+            elemento.getFormulariosList().add(actualizarClientesSGB.getFormulario());
+        }
+        if (eliminarClientesSGB.isSelected()) {
+            elemento.getFormulariosList().add(eliminarClientesSGB.getFormulario());
+        }
+        if (agregarPropositos.isSelected()) {
+            elemento.getFormulariosList().add(agregarPropositos.getFormulario());
+        }
+        if (actualizarPropositos.isSelected()) {
+            elemento.getFormulariosList().add(actualizarPropositos.getFormulario());
+        }
+        if (eliminarPropositos.isSelected()) {
+            elemento.getFormulariosList().add(eliminarPropositos.getFormulario());
+        }
+        if (agregarAreas.isSelected()) {
+            elemento.getFormulariosList().add(agregarAreas.getFormulario());
+        }
+        if (actualizarAreas.isSelected()) {
+            elemento.getFormulariosList().add(actualizarAreas.getFormulario());
+        }
+        if (eliminarAreas.isSelected()) {
+            elemento.getFormulariosList().add(eliminarAreas.getFormulario());
+        }
+        if (agregarPeticionesCupo.isSelected()) {
+            elemento.getFormulariosList().add(agregarPeticionesCupo.getFormulario());
+        }
+        if (eliminarPeticionesCupo.isSelected()) {
+            elemento.getFormulariosList().add(eliminarPeticionesCupo.getFormulario());
+        }
         if (eliminarAcceso.isSelected()) {
             elemento.getFormulariosList().add(eliminarAcceso.getFormulario());
         }
@@ -996,9 +1217,7 @@ public class PerfilActBean {
         if (eliminarUsuario.isSelected()) {
             elemento.getFormulariosList().add(eliminarUsuario.getFormulario());
         }
-        
-        
-        
+
         if (agregarTipoevento.isSelected()) {
             elemento.getFormulariosList().add(agregarTipoevento.getFormulario());
         }
@@ -1008,9 +1227,7 @@ public class PerfilActBean {
         if (eliminarTipoevento.isSelected()) {
             elemento.getFormulariosList().add(eliminarTipoevento.getFormulario());
         }
-        
-        
-        
+
         if (agregarTareas.isSelected()) {
             elemento.getFormulariosList().add(agregarTareas.getFormulario());
         }
@@ -1822,6 +2039,158 @@ public class PerfilActBean {
 
     public void setEliminarLoteBono(FormularioBoolean eliminarLoteBono) {
         this.eliminarLoteBono = eliminarLoteBono;
+    }
+
+    public VistaBoolean getVistaClientesSGB() {
+        return vistaClientesSGB;
+    }
+
+    public void setVistaClientesSGB(VistaBoolean vistaClientesSGB) {
+        this.vistaClientesSGB = vistaClientesSGB;
+    }
+
+    public FormularioBoolean getAgregarClientesSGB() {
+        return agregarClientesSGB;
+    }
+
+    public void setAgregarClientesSGB(FormularioBoolean agregarClientesSGB) {
+        this.agregarClientesSGB = agregarClientesSGB;
+    }
+
+    public FormularioBoolean getActualizarClientesSGB() {
+        return actualizarClientesSGB;
+    }
+
+    public void setActualizarClientesSGB(FormularioBoolean actualizarClientesSGB) {
+        this.actualizarClientesSGB = actualizarClientesSGB;
+    }
+
+    public FormularioBoolean getEliminarClientesSGB() {
+        return eliminarClientesSGB;
+    }
+
+    public void setEliminarClientesSGB(FormularioBoolean eliminarClientesSGB) {
+        this.eliminarClientesSGB = eliminarClientesSGB;
+    }
+
+    public VistaBoolean getVistaPropositos() {
+        return vistaPropositos;
+    }
+
+    public void setVistaPropositos(VistaBoolean vistaPropositos) {
+        this.vistaPropositos = vistaPropositos;
+    }
+
+    public FormularioBoolean getAgregarPropositos() {
+        return agregarPropositos;
+    }
+
+    public void setAgregarPropositos(FormularioBoolean agregarPropositos) {
+        this.agregarPropositos = agregarPropositos;
+    }
+
+    public FormularioBoolean getActualizarPropositos() {
+        return actualizarPropositos;
+    }
+
+    public void setActualizarPropositos(FormularioBoolean actualizarPropositos) {
+        this.actualizarPropositos = actualizarPropositos;
+    }
+
+    public FormularioBoolean getEliminarPropositos() {
+        return eliminarPropositos;
+    }
+
+    public void setEliminarPropositos(FormularioBoolean eliminarPropositos) {
+        this.eliminarPropositos = eliminarPropositos;
+    }
+
+    public VistaBoolean getVistaAreas() {
+        return vistaAreas;
+    }
+
+    public void setVistaAreas(VistaBoolean vistaAreas) {
+        this.vistaAreas = vistaAreas;
+    }
+
+    public FormularioBoolean getAgregarAreas() {
+        return agregarAreas;
+    }
+
+    public void setAgregarAreas(FormularioBoolean agregarAreas) {
+        this.agregarAreas = agregarAreas;
+    }
+
+    public FormularioBoolean getActualizarAreas() {
+        return actualizarAreas;
+    }
+
+    public void setActualizarAreas(FormularioBoolean actualizarAreas) {
+        this.actualizarAreas = actualizarAreas;
+    }
+
+    public FormularioBoolean getEliminarAreas() {
+        return eliminarAreas;
+    }
+
+    public void setEliminarAreas(FormularioBoolean eliminarAreas) {
+        this.eliminarAreas = eliminarAreas;
+    }
+
+    public VistaBoolean getVistaPeticionesCupo() {
+        return vistaPeticionesCupo;
+    }
+
+    public void setVistaPeticionesCupo(VistaBoolean vistaPeticionesCupo) {
+        this.vistaPeticionesCupo = vistaPeticionesCupo;
+    }
+
+    public FormularioBoolean getAgregarPeticionesCupo() {
+        return agregarPeticionesCupo;
+    }
+
+    public void setAgregarPeticionesCupo(FormularioBoolean agregarPeticionesCupo) {
+        this.agregarPeticionesCupo = agregarPeticionesCupo;
+    }
+
+    public FormularioBoolean getEliminarPeticionesCupo() {
+        return eliminarPeticionesCupo;
+    }
+
+    public void setEliminarPeticionesCupo(FormularioBoolean eliminarPeticionesCupo) {
+        this.eliminarPeticionesCupo = eliminarPeticionesCupo;
+    }
+
+    public VistaBoolean getGenerarSolicitudBono() {
+        return generarSolicitudBono;
+    }
+
+    public void setGenerarSolicitudBono(VistaBoolean generarSolicitudBono) {
+        this.generarSolicitudBono = generarSolicitudBono;
+    }
+
+    public VistaBoolean getPreAprobarSolicitudBono() {
+        return preAprobarSolicitudBono;
+    }
+
+    public void setPreAprobarSolicitudBono(VistaBoolean preAprobarSolicitudBono) {
+        this.preAprobarSolicitudBono = preAprobarSolicitudBono;
+    }
+
+    public VistaBoolean getAprobarSolicitudBono() {
+        return aprobarSolicitudBono;
+    }
+
+    public void setAprobarSolicitudBono(VistaBoolean aprobarSolicitudBono) {
+        this.aprobarSolicitudBono = aprobarSolicitudBono;
+    }
+
+    public VistaBoolean getVertodoslosclientes() {
+        return vertodoslosclientes;
+    }
+
+    public void setVertodoslosclientes(VistaBoolean vertodoslosclientes) {
+        this.vertodoslosclientes = vertodoslosclientes;
     }
 
 }
