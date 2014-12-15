@@ -137,6 +137,10 @@ public class PerfilActBean {
     private VistaBoolean generarSolicitudBono;
     private VistaBoolean preAprobarSolicitudBono;
     private VistaBoolean aprobarSolicitudBono;
+    private VistaBoolean actSolicitudSalida;
+    private VistaBoolean aceprtarSolicitudSalida;
+    private VistaBoolean controlSalidaBonos;
+
 
     public void setSessionBean(SessionBean sessionBean) {
         this.sessionBean = sessionBean;
@@ -718,6 +722,27 @@ public class PerfilActBean {
 
         }
         for (Vista v : vistas) {
+            if (v.getNombreVista().equals("ActSolicitudSalida")) {
+                if (elemento.getVistasList().contains(v)) {
+                    actSolicitudSalida = new VistaBoolean(v, true);
+                } else {
+                    actSolicitudSalida = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("AceptarSolicitudSalida")) {
+                if (elemento.getVistasList().contains(v)) {
+                    aceprtarSolicitudSalida = new VistaBoolean(v, true);
+                } else {
+                    aceprtarSolicitudSalida = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("Controlsalidabonos")) {
+                if (elemento.getVistasList().contains(v)) {
+                    controlSalidaBonos = new VistaBoolean(v, true);
+                } else {
+                    controlSalidaBonos = new VistaBoolean(v, false);
+                }
+            }
             if (v.getNombreVista().equals("verTodosClientes")) {
                 if (elemento.getVistasList().contains(v)) {
                     vertodoslosclientes = new VistaBoolean(v, true);
@@ -977,6 +1002,21 @@ public class PerfilActBean {
     private void acomodaropcionesdevuelta() {
         elemento.getVistasList().clear();
         int count = 0;
+        if (!actSolicitudSalida.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(actSolicitudSalida.getVista());
+        }
+        if (!aceprtarSolicitudSalida.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(aceprtarSolicitudSalida.getVista());
+        }
+        if (!controlSalidaBonos.isSelected()) {
+            count++;
+        } else {
+            elemento.getVistasList().add(controlSalidaBonos.getVista());
+        }
         if (!vistaDenominacion.isSelected()) {
             count++;
         } else {
@@ -2191,6 +2231,30 @@ public class PerfilActBean {
 
     public void setVertodoslosclientes(VistaBoolean vertodoslosclientes) {
         this.vertodoslosclientes = vertodoslosclientes;
+    }
+
+    public VistaBoolean getActSolicitudSalida() {
+        return actSolicitudSalida;
+    }
+
+    public void setActSolicitudSalida(VistaBoolean actSolicitudSalida) {
+        this.actSolicitudSalida = actSolicitudSalida;
+    }
+
+    public VistaBoolean getAceprtarSolicitudSalida() {
+        return aceprtarSolicitudSalida;
+    }
+
+    public void setAceprtarSolicitudSalida(VistaBoolean aceprtarSolicitudSalida) {
+        this.aceprtarSolicitudSalida = aceprtarSolicitudSalida;
+    }
+
+    public VistaBoolean getControlSalidaBonos() {
+        return controlSalidaBonos;
+    }
+
+    public void setControlSalidaBonos(VistaBoolean controlSalidaBonos) {
+        this.controlSalidaBonos = controlSalidaBonos;
     }
 
 }
