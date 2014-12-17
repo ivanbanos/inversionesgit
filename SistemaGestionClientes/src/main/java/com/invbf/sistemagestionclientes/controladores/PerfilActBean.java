@@ -140,6 +140,17 @@ public class PerfilActBean {
     private VistaBoolean actSolicitudSalida;
     private VistaBoolean aceprtarSolicitudSalida;
     private VistaBoolean controlSalidaBonos;
+    
+    private VistaBoolean bonosValidarVer;
+    private VistaBoolean bonosValidarEjecutar;
+    private VistaBoolean bonosEntregarCajaVer;
+    private VistaBoolean bonosEntregarCajaEjecutar;
+    private VistaBoolean bonosRecibirVer;
+    private VistaBoolean bonosRecibirEjecutar;
+    private VistaBoolean bonosEntregarClienteVer;
+    private VistaBoolean bonosEntregarClienteEjecutar;
+    private VistaBoolean bonoCanjearVer;
+    private VistaBoolean bonoCanjearEjecutar;
 
 
     public void setSessionBean(SessionBean sessionBean) {
@@ -722,6 +733,72 @@ public class PerfilActBean {
 
         }
         for (Vista v : vistas) {
+            if (v.getNombreVista().equals("Verbonosporvalidar")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosValidarVer = new VistaBoolean(v, true);
+                } else {
+                    bonosValidarVer = new VistaBoolean(v, false);
+                }
+            }if (v.getNombreVista().equals("Validarbono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosValidarEjecutar = new VistaBoolean(v, true);
+                } else {
+                    bonosValidarEjecutar = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("Verbonosporentregarcaja")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosEntregarCajaVer = new VistaBoolean(v, true);
+                } else {
+                    bonosEntregarCajaVer = new VistaBoolean(v, false);
+                }
+            }if (v.getNombreVista().equals("Entregarbonocaja")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosEntregarCajaEjecutar = new VistaBoolean(v, true);
+                } else {
+                    bonosEntregarCajaEjecutar = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("Verbonosporrecibir")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosRecibirVer = new VistaBoolean(v, true);
+                } else {
+                    bonosRecibirVer = new VistaBoolean(v, false);
+                }
+            }if (v.getNombreVista().equals("Recibirbono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosRecibirEjecutar = new VistaBoolean(v, true);
+                } else {
+                    bonosRecibirEjecutar = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("Verbonosporentregarcliente")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosEntregarClienteVer = new VistaBoolean(v, true);
+                } else {
+                    bonosEntregarClienteVer = new VistaBoolean(v, false);
+                }
+            }if (v.getNombreVista().equals("Entregarbonocliente")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonosEntregarClienteEjecutar = new VistaBoolean(v, true);
+                } else {
+                    bonosEntregarClienteEjecutar = new VistaBoolean(v, false);
+                }
+            }
+            if (v.getNombreVista().equals("Verbonosporcanjear")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonoCanjearVer = new VistaBoolean(v, true);
+                } else {
+                    bonoCanjearVer = new VistaBoolean(v, false);
+                }
+            }if (v.getNombreVista().equals("Canjearbono")) {
+                if (elemento.getVistasList().contains(v)) {
+                    bonoCanjearEjecutar = new VistaBoolean(v, true);
+                } else {
+                    bonoCanjearEjecutar = new VistaBoolean(v, false);
+                }
+            }
+            
             if (v.getNombreVista().equals("ActSolicitudSalida")) {
                 if (elemento.getVistasList().contains(v)) {
                     actSolicitudSalida = new VistaBoolean(v, true);
@@ -1073,6 +1150,38 @@ public class PerfilActBean {
         if (vistaClientes.isSelected()) {
             elemento.getVistasList().add(vistaClientes.getVista());
         }
+        
+        if (bonosValidarVer.isSelected()) {
+            elemento.getVistasList().add(bonosValidarVer.getVista());
+        }
+        if (bonosValidarEjecutar.isSelected()) {
+            elemento.getVistasList().add(bonosValidarEjecutar.getVista());
+        }
+        if (bonosEntregarCajaVer.isSelected()) {
+            elemento.getVistasList().add(bonosEntregarCajaVer.getVista());
+        }
+        if (bonosEntregarCajaEjecutar.isSelected()) {
+            elemento.getVistasList().add(bonosEntregarCajaEjecutar.getVista());
+        }
+        if (bonosRecibirVer.isSelected()) {
+            elemento.getVistasList().add(bonosRecibirVer.getVista());
+        }
+        if (bonosRecibirEjecutar.isSelected()) {
+            elemento.getVistasList().add(bonosRecibirEjecutar.getVista());
+        }
+        if (bonosEntregarClienteVer.isSelected()) {
+            elemento.getVistasList().add(bonosEntregarClienteVer.getVista());
+        }
+        if (bonosEntregarClienteEjecutar.isSelected()) {
+            elemento.getVistasList().add(bonosEntregarClienteEjecutar.getVista());
+        }
+        if (bonoCanjearVer.isSelected()) {
+            elemento.getVistasList().add(bonoCanjearVer.getVista());
+        }
+        if (bonoCanjearEjecutar.isSelected()) {
+            elemento.getVistasList().add(bonoCanjearEjecutar.getVista());
+        }
+        
         count = 0;
         if (!vistaCasinos.isSelected()) {
             count++;
@@ -2255,6 +2364,86 @@ public class PerfilActBean {
 
     public void setControlSalidaBonos(VistaBoolean controlSalidaBonos) {
         this.controlSalidaBonos = controlSalidaBonos;
+    }
+
+    public VistaBoolean getBonosValidarVer() {
+        return bonosValidarVer;
+    }
+
+    public void setBonosValidarVer(VistaBoolean bonosValidarVer) {
+        this.bonosValidarVer = bonosValidarVer;
+    }
+
+    public VistaBoolean getBonosValidarEjecutar() {
+        return bonosValidarEjecutar;
+    }
+
+    public void setBonosValidarEjecutar(VistaBoolean bonosValidarEjecutar) {
+        this.bonosValidarEjecutar = bonosValidarEjecutar;
+    }
+
+    public VistaBoolean getBonosEntregarCajaVer() {
+        return bonosEntregarCajaVer;
+    }
+
+    public void setBonosEntregarCajaVer(VistaBoolean bonosEntregarCajaVer) {
+        this.bonosEntregarCajaVer = bonosEntregarCajaVer;
+    }
+
+    public VistaBoolean getBonosEntregarCajaEjecutar() {
+        return bonosEntregarCajaEjecutar;
+    }
+
+    public void setBonosEntregarCajaEjecutar(VistaBoolean bonosEntregarCajaEjecutar) {
+        this.bonosEntregarCajaEjecutar = bonosEntregarCajaEjecutar;
+    }
+
+    public VistaBoolean getBonosRecibirVer() {
+        return bonosRecibirVer;
+    }
+
+    public void setBonosRecibirVer(VistaBoolean bonosRecibirVer) {
+        this.bonosRecibirVer = bonosRecibirVer;
+    }
+
+    public VistaBoolean getBonosRecibirEjecutar() {
+        return bonosRecibirEjecutar;
+    }
+
+    public void setBonosRecibirEjecutar(VistaBoolean bonosRecibirEjecutar) {
+        this.bonosRecibirEjecutar = bonosRecibirEjecutar;
+    }
+
+    public VistaBoolean getBonosEntregarClienteVer() {
+        return bonosEntregarClienteVer;
+    }
+
+    public void setBonosEntregarClienteVer(VistaBoolean bonosEntregarClienteVer) {
+        this.bonosEntregarClienteVer = bonosEntregarClienteVer;
+    }
+
+    public VistaBoolean getBonosEntregarClienteEjecutar() {
+        return bonosEntregarClienteEjecutar;
+    }
+
+    public void setBonosEntregarClienteEjecutar(VistaBoolean bonosEntregarClienteEjecutar) {
+        this.bonosEntregarClienteEjecutar = bonosEntregarClienteEjecutar;
+    }
+
+    public VistaBoolean getBonoCanjearVer() {
+        return bonoCanjearVer;
+    }
+
+    public void setBonoCanjearVer(VistaBoolean bonoCanjearVer) {
+        this.bonoCanjearVer = bonoCanjearVer;
+    }
+
+    public VistaBoolean getBonoCanjearEjecutar() {
+        return bonoCanjearEjecutar;
+    }
+
+    public void setBonoCanjearEjecutar(VistaBoolean bonoCanjearEjecutar) {
+        this.bonoCanjearEjecutar = bonoCanjearEjecutar;
     }
 
 }

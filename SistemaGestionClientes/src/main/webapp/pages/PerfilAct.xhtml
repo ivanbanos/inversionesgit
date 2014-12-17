@@ -299,6 +299,40 @@
                                                         <td><h:selectBooleanCheckbox value="#{perfilActBean.actSolicitudSalida.selected}"/></td>
                                                     </tr>
                                                 </table>
+                                                <h2>#{label['bonos']}</h2>
+                                                <table class="table table-bordered table-striped">
+                                                    <tr>
+                                                        <th>Accion sobre el bono</th>
+                                                        <th>#{label['ver']}</th>
+                                                        <th>#{label['ejecutar']}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['validar']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosValidarVer.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosValidarEjecutar.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['entregarcaja']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosEntregarCajaVer.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosEntregarCajaEjecutar.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['recibirencaja']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosRecibirVer.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosRecibirEjecutar.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['entregarcliente']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosEntregarClienteVer.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonosEntregarClienteEjecutar.selected}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>#{label['canjear']}</td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonoCanjearVer.selected}"/></td>
+                                                        <td><h:selectBooleanCheckbox value="#{perfilActBean.bonoCanjearEjecutar.selected}"/></td>
+                                                    </tr>
+                                                    
+                                                </table>
                                             </div>
                                         </div>
 
